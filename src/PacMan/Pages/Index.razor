@@ -1,0 +1,188 @@
+﻿@page "/"
+@using Blazor.Extensions
+@using Blazor.Extensions.Canvas.Canvas2D
+@using JetBrains.Annotations
+@using PacMan.GameComponents
+@using PacMan.GameComponents.Audio
+@using System.Diagnostics
+@using System.Diagnostics.CodeAnalysis
+
+@inject IJSRuntime JsRuntime;
+@inject IGame Game;
+@inject IGameSoundPlayer GameSoundPlayer;
+@inject IHumanInterfaceParser HumanInterfaceParser;
+@inject IExceptionNotificationService ExceptionNotificationService 
+
+<img @ref="SpritesheetReference" hidden src="Assets/spritesheet.png" />
+
+<div id="theCanvas" style="position: fixed; opacity: 1; background-color: aqua; width: 100%; height: 100%">
+    <BECanvas Width="672" Height="944" @ref="_canvasReference"></BECanvas>
+</div>
+<div style="visibility: hidden">
+    <BECanvas Width="224" Height="248" @ref="_player1MazeReference"></BECanvas>
+    <BECanvas Width="224" Height="248" @ref="_player2MazeReference"></BECanvas>
+</div>
+
+@code
+{
+    bool _running;
+
+    ElementReference SpritesheetReference { get; [UsedImplicitly] set; }
+
+    // ReSharper disable once FieldCanBeMadeReadOnly.Local
+    BECanvasComponent _canvasReference = null;
+
+    // ReSharper disable once FieldCanBeMadeReadOnly.Local
+    BECanvasComponent _player1MazeReference = null;
+
+    // ReSharper disable once FieldCanBeMadeReadOnly.Local
+    BECanvasComponent _player2MazeReference = null;
+
+    Canvas2DContext _outputCanvasContext;
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.ExceptionNotificationService.OnException += handleExceptions;
+
+        await Game.Initialise(JsRuntime);
+
+        await JsRuntime.InvokeAsync<object>("setDrawCallback", DotNetObjectReference.Create(this));
+
+        await base.OnInitializedAsync();
+    }
+
+
+    // ReSharper disable once UnusedParameter.Local
+    private void handleExceptions(object sender, string s) => Console.WriteLine(s);
+
+
+    async ValueTask<Canvas2DContext> createScaledCanvasContext(BECanvasComponent canvas, bool scale)
+    {
+        var context = await canvas.CreateCanvas2DAsync();
+
+        await context.SetTextBaselineAsync(TextBaseline.Top);
+
+        if (scale)
+        {
+            await context.ScaleAsync(3, 3);
+        }
+
+        await context.SetFontAsync("10px Joystix");
+
+        return context;
+    }
+
+    [JSInvokable, UsedImplicitly]
+    public ValueTask SoundEnded(string name)
+    {
+        GameSoundPlayer.MarkAsFinished(name);
+        return default;
+    }
+
+    [JSInvokable, UsedImplicitly]
+    public ValueTask KeyDown(int key)
+    {
+        HumanInterfaceParser.KeyDown((byte) key);
+        return default;
+    }
+   
+    [JSInvokable, UsedImplicitly]
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public ValueTask OnGesture(string name)
+    {
+        Debug.WriteLine(name);
+        
+        if (name == "swipeleft" || name == "panleft")
+        {
+            HumanInterfaceParser.Swiped(Keys.Left);
+        }
+        
+        if (name == "swiperight" || name == "panright")
+        {
+            HumanInterfaceParser.Swiped(Keys.Right);
+        }
+
+        if (name == "swipedown" || name == "pandown")
+        {
+            HumanInterfaceParser.Swiped(Keys.Down);
+        }
+
+        if (name == "swipeup" || name == "panup")
+        {
+            HumanInterfaceParser.Swiped(Keys.Up);
+
+        }
+        
+        if (name == "tap")
+        {
+            HumanInterfaceParser.TapHappened();
+        }
+        
+        if (name == "press")
+        {
+            HumanInterfaceParser.LongPressHappened();
+        }
+        
+        return default;
+    }
+
+    [JSInvokable, UsedImplicitly]
+    public ValueTask KeyUp(int key)
+    {
+        HumanInterfaceParser.KeyUp((byte) key);
+        
+        return default;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        Console.WriteLine($"OnAfterRenderAsync {firstRender}");
+
+        if (firstRender)
+        {
+            _outputCanvasContext = await createScaledCanvasContext(_canvasReference, true);
+
+            var player1MazeCanvas = await createScaledCanvasContext(_player1MazeReference, false);
+            var player2MazeCanvas = await createScaledCanvasContext(_player2MazeReference, false);
+
+            Game.PostRenderInitialize(_outputCanvasContext, player1MazeCanvas, player2MazeCanvas, SpritesheetReference);
+        }
+    }
+
+    [JSInvokable, UsedImplicitly]
+    public async ValueTask CSharpGameLoop(float timeStamp)
+    {
+        //await JSRuntime.InvokeAsync<object>("inspect", DotNetObjectReference.Create(this));
+
+        if (_running)
+        {
+            return;
+        }
+
+        _running = true;
+        try
+        {
+
+            await Game.RunGameLoop(timeStamp);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            Console.WriteLine(e);
+        }
+        finally
+        {
+            _running = false;
+
+        }
+
+    }
+
+    // bool log(Exception e)
+    // {
+    //
+    //     Debug.WriteLine(e);
+    //     return true;
+    // }
+}
+

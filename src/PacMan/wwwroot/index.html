@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width user-scalable=no" />
+    <title>PacMan in Blazor WebAssembly</title>
+    <base href="/" />
+    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/site.css" rel="stylesheet" />
+</head>
+
+<body id="body" style="background-color: darkorange">
+    <app>Loading...</app>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+    <script src="_framework/blazor.webassembly.js"></script>
+    <script src="_content/Blazor.Extensions.Canvas/blazor.extensions.canvas.js"></script>
+    <script src="lib/howler.core.js"></script>
+    <script src="lib/hammer.min.js"></script>
+    <script src="sounds.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.10/webfont.js"></script>
+
+    <script>
+
+        WebFont.load({
+            custom: {
+                families: ['Joystix']
+            }
+        });
+
+        function init() {
+            var e = document.getElementById('theCanvas');
+
+            e.imageSmoothingEnabled = false;
+            // Start the first frame request
+            window.requestAnimationFrame(gameLoop);
+
+        }
+
+        window.inspect = (instance) => {
+            var e = document.getElementById('spritesheet');
+            console.info(e);
+        }
+
+        window.setDrawCallback = (instance) => {
+            //console.info("IN SETDRAWCALLBACK");
+
+            window.theInstance = instance;
+
+            window.addEventListener("resize", resizeGame);
+            resizeGame();
+
+            var e = document.getElementById('theCanvas');
+
+            var mc = new Hammer(e);
+            mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+            mc.on("panup pandown panleft panright tap press", function (ev) {
+                window.theInstance.invokeMethodAsync('OnGesture', ev.type);
+                console.info(ev.type + " gesture detected.");
+            });
+
+            window.onkeydown = e => {
+                //console.info(e);
+                return window.theInstance.invokeMethodAsync('KeyDown', e.keyCode);
+            };
+
+            window.onkeyup = e => {
+                //console.info(e);
+                return window.theInstance.invokeMethodAsync('KeyUp', e.keyCode);
+            };
+
+            window.requestAnimationFrame(gameLoop);
+        }
+
+        function gameLoop(timeStamp) {
+            window.requestAnimationFrame(gameLoop);
+            theInstance.invokeMethodAsync('CSharpGameLoop', timeStamp);
+//            theInstance.invokeMethodAsync('CSharpGameLoop', timeStamp).then(() => {
+//
+//                window.requestAnimationFrame(gameLoop);
+//            });
+        }
+
+
+        function resizeGame() {
+            var game = {
+                canvas: document.getElementById("theCanvas"),
+                width: 672,
+                height: 944
+            }
+
+            var newGameWidth, newGameHeight;
+
+            // Get the dimensions of the viewport
+            var viewport = {
+                width: window.innerWidth,
+                height: window.innerHeight
+            };
+
+            // Determine game size
+            const ratio = game.height / game.width;
+
+            const viewportRatio = viewport.height / viewport.width;
+
+            if (ratio > viewportRatio) {
+                newGameHeight = viewport.height;
+                newGameWidth = newGameHeight * game.width / game.height;
+            } else {
+                newGameWidth = viewport.width;
+                newGameHeight = newGameWidth * game.height / game.width;
+            }
+
+            game.canvas.style.width = newGameWidth + "px";
+            game.canvas.style.height = newGameHeight + "px";
+
+            var paddingX = (viewport.width - newGameWidth) / 2;
+            var paddingY = (viewport.height - newGameHeight) / 2;
+
+            var margin = paddingY + "px " + paddingX + "px";
+
+            // Set the new margin of the game so it will be centered
+            game.canvas.style.margin = margin;
+        };
+
+    </script>
+</body>
+
+</html>
