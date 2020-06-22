@@ -6,6 +6,9 @@ namespace PacMan.GameComponents
 {
     public static class DiagInfo
     {
+        static float _lastTimestamp;
+        static TimeSpan _lastTimeKeyboardChecked;
+
         public static bool ShouldShow { get; private set; }
 
         public static int Fps
@@ -14,7 +17,7 @@ namespace PacMan.GameComponents
             set;
         }
 
-        public static TimeSpan TotalTime { get; set; }
+        public static TimeSpan TotalTime { get; private set; }
 
         public static ValueTask Update(CanvasTimingInformation info, IHumanInterfaceParser input)
         {
@@ -24,34 +27,27 @@ namespace PacMan.GameComponents
             {
                 _lastTimeKeyboardChecked = info.TotalTime;
 
-                if(input.IsKeyCurrentlyDown(Keys.D))
+                if (input.IsKeyCurrentlyDown(Keys.D))
                 {
                     ShouldShow = !ShouldShow;
                 }
-
-                if (input.WasKeyPressedAndReleased(Keys.A))
-                {
-                    Constants.FramesPerSecond -= 5;
-                    Constants.FramesPerSecond = Math.Max(5, Constants.FramesPerSecond);
-                }
-
-                if (input.WasKeyPressedAndReleased(Keys.S))
-                {
-                    Constants.FramesPerSecond += 5;
-                }
             }
 
+            if (input.WasKeyPressedAndReleased(Keys.A))
+            {
+                Constants.FramesPerSecond -= 5;
+                Constants.FramesPerSecond = Math.Max(5, Constants.FramesPerSecond);
+            }
+
+            if (input.WasKeyPressedAndReleased(Keys.S))
+            {
+                Constants.FramesPerSecond += 5;
+            }
 
             return default;
         }
 
-        public static void IncrementUpdateCount()
-        {
-            ++UpdateCount;
-        }
-
-        static float _lastTimestamp;
-        static TimeSpan _lastTimeKeyboardChecked;
+        public static void IncrementUpdateCount() => ++UpdateCount;
 
         public static void IncrementDrawCount(float timestamp)
         {
@@ -68,14 +64,14 @@ namespace PacMan.GameComponents
         
         public static TimeSpan Elapsed { get; private set; }
 
-        public static void UpdateTimeLoopTaken(in long elapsedms)
+        public static void UpdateTimeLoopTaken(in long elapsedMs)
         {
-            if (elapsedms > 17)
+            if (elapsedMs > 17)
             {
                 ++SlowElapsedCount;
             }
             
-            GameLoopDurationMs = elapsedms;
+            GameLoopDurationMs = elapsedMs;
             
             MaxGameLoopDurationMs = Math.Max(MaxGameLoopDurationMs, GameLoopDurationMs);
         }
