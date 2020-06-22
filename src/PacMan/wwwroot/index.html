@@ -81,10 +81,6 @@
         function gameLoop(timeStamp) {
             window.requestAnimationFrame(gameLoop);
             theInstance.invokeMethodAsync('CSharpGameLoop', timeStamp);
-//            theInstance.invokeMethodAsync('CSharpGameLoop', timeStamp).then(() => {
-//
-//                window.requestAnimationFrame(gameLoop);
-//            });
         }
 
 

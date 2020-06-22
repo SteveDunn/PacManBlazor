@@ -8,7 +8,11 @@ namespace PacMan.GameComponents
     {
         public static bool ShouldShow { get; private set; }
 
-        public static int Fps => Constants.FramesPerSecond;
+        public static int Fps
+        {
+            get;
+            set;
+        }
 
         public static TimeSpan TotalTime { get; set; }
 
@@ -16,21 +20,27 @@ namespace PacMan.GameComponents
         {
             TotalTime = info.TotalTime;
 
-            if (input.WasKeyPressedAndReleased(Keys.D))
+            if (info.TotalTime - _lastTimeKeyboardChecked > .25f.Seconds())
             {
-                ShouldShow = !ShouldShow;
+                _lastTimeKeyboardChecked = info.TotalTime;
+
+                if(input.IsKeyCurrentlyDown(Keys.D))
+                {
+                    ShouldShow = !ShouldShow;
+                }
+
+                if (input.WasKeyPressedAndReleased(Keys.A))
+                {
+                    Constants.FramesPerSecond -= 5;
+                    Constants.FramesPerSecond = Math.Max(5, Constants.FramesPerSecond);
+                }
+
+                if (input.WasKeyPressedAndReleased(Keys.S))
+                {
+                    Constants.FramesPerSecond += 5;
+                }
             }
 
-            if (input.WasKeyPressedAndReleased(Keys.A))
-            {
-                Constants.FramesPerSecond -= 5;
-                Constants.FramesPerSecond = Math.Max(5, Constants.FramesPerSecond);
-            }
-
-            if (input.WasKeyPressedAndReleased(Keys.S))
-            {
-                Constants.FramesPerSecond += 5;
-            }
 
             return default;
         }
@@ -41,6 +51,7 @@ namespace PacMan.GameComponents
         }
 
         static float _lastTimestamp;
+        static TimeSpan _lastTimeKeyboardChecked;
 
         public static void IncrementDrawCount(float timestamp)
         {

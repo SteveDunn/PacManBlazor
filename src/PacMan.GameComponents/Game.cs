@@ -231,7 +231,10 @@ namespace PacMan.GameComponents
             _delta += timestamp - _lastTimestamp;
             _lastTimestamp = timestamp;
 
+            // timestep would normally be fixed (at 60FPS), but we have
+            // the ability to slow down and speed up the game (via the A and S keys)
             var timestep = getTimestep();
+            
             while (_delta >= timestep)
             {
                 _canvasTimingInformation!.Update(timestep);
@@ -253,16 +256,10 @@ namespace PacMan.GameComponents
 
             ++_frameCount;
 
-            // ReSharper disable once UnusedVariable
             int fps = (int) (_canvasTimingInformation!.TotalTime.TotalMilliseconds / _frameCount);
+            DiagInfo.Fps = fps;
 
-            long elapsedms = _stopWatch.ElapsedMilliseconds;
-            
-            //Console.WriteLine($"** game loop took {elapsedms} ms - {fps} FPS");
-
-            DiagInfo.UpdateTimeLoopTaken(elapsedms);
-
-         //   Debug.WriteLine($"slow:{DiagInfo.SlowElapsedCount:D} GameLoopDurationMs:{DiagInfo.GameLoopDurationMs:D} max dur:{DiagInfo.MaxGameLoopDurationMs:D}");
+            DiagInfo.UpdateTimeLoopTaken(_stopWatch.ElapsedMilliseconds);
         }
 
 
@@ -271,7 +268,6 @@ namespace PacMan.GameComponents
             Canvas2DContext player2MazeCanvas,
             in ElementReference spritesheetReference)
         {
-
             SetCanvasContextForOutput(outputCanvasContext);
             SetCanvasesForPlayerMazes(player1MazeCanvas, player2MazeCanvas);
 
