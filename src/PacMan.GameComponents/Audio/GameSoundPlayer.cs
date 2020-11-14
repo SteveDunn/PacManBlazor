@@ -1,9 +1,10 @@
-﻿using System;
+﻿// ReSharper disable HeapView.ObjectAllocation.Evident
+#pragma warning disable 8618
+
+using System;
 using System.Threading.Tasks;
 using Microsoft.JSInterop;
 using PacMan.GameComponents.Ghosts;
-// ReSharper disable HeapView.ObjectAllocation.Evident
-#pragma warning disable 8618
 
 namespace PacMan.GameComponents.Audio
 {
@@ -32,7 +33,7 @@ namespace PacMan.GameComponents.Audio
             await _loader.LoadAll(runtime);
 
             _frightened = _loader.GetSoundEffect(SoundName.Frightened);
-            _ghostEyes =  _loader.GetSoundEffect(SoundName.GhostEyes);
+            _ghostEyes = _loader.GetSoundEffect(SoundName.GhostEyes);
 
             _sirens = new[]
             {
@@ -191,6 +192,7 @@ namespace PacMan.GameComponents.Audio
             {
                 return;
             }
+
             _enabled = false;
 
             foreach (var s in _loader.AllSounds)
@@ -285,7 +287,7 @@ namespace PacMan.GameComponents.Audio
         async ValueTask play(SoundName soundName)
         {
             throwIfNotLoaded(); SoundEffect audio = _loader.GetSoundEffect(soundName);
-            
+
             await audio.Play();
         }
 
@@ -293,12 +295,12 @@ namespace PacMan.GameComponents.Audio
         {
             throwIfNotLoaded();
             bool parsed = Enum.TryParse(name, out SoundName val);
-            
+
             if (!parsed)
             {
                 throw new InvalidOperationException($"No such sound: {name}");
             }
-            
+
             _loader.GetSoundEffect(val).MarkAsFinished();
         }
 

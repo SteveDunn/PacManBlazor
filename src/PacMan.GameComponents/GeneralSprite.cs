@@ -29,13 +29,14 @@ namespace PacMan.GameComponents
 
             _currentFrame = _frame1;
         }
+
         public GeneralSprite(
             Vector2 pos,
             Size size,
             Vector2 offsetForOrigin,
             Vector2 frame1,
             Vector2 frame2,
-            TimeSpan animationSpeed) : this(pos,size,offsetForOrigin,frame1)
+            TimeSpan animationSpeed) : this(pos, size, offsetForOrigin, frame1)
         {
             // ReSharper disable once HeapView.ObjectAllocation.Evident
             _animator = new TwoFrameAnimation(animationSpeed);
@@ -55,7 +56,7 @@ namespace PacMan.GameComponents
             return default;
         }
 
-        public ValueTask Draw(CanvasWrapper session) => 
+        public ValueTask Draw(CanvasWrapper session) =>
             session.DrawSprite(this, Spritesheet.Reference);
 
         public Vector2 Origin { get; }

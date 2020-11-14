@@ -22,7 +22,8 @@ namespace PacMan.GameComponents.GameActs
 
         LoopingTimer _currentTimer = LoopingTimer.DoNothing;
 
-        public DemoPlayerIntroAct(IMediator mediator,
+        public DemoPlayerIntroAct(
+            IMediator mediator,
             IGame game,
             IGhostCollection ghostCollection,
             IPacMan pacman,
@@ -42,7 +43,7 @@ namespace PacMan.GameComponents.GameActs
         {
             _progress = 0;
 
-            var timeToShowPlayerNumberAndHideGhosts = 0.Seconds() ;
+            var timeToShowPlayerNumberAndHideGhosts = 0.Seconds();
 
             _currentTimer = new LoopingTimer(timeToShowPlayerNumberAndHideGhosts, () =>
             {
@@ -62,7 +63,7 @@ namespace PacMan.GameComponents.GameActs
             {
                 // ReSharper disable once HeapView.BoxingAllocation
                 var act = await _mediator.Send(new GetActRequest("GameAct"));
-                
+
                 _game.SetAct(act);
             }
 

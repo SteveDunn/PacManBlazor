@@ -12,10 +12,17 @@
 
   <ItemGroup>
     <PackageReference Include="Blazor.Extensions.Canvas" Version="1.1.0-preview1" />
-    <PackageReference Include="jetbrains.annotations" Version="2020.1.0" />
-    <PackageReference Include="MediatR" Version="8.0.1" />
-    <PackageReference Include="Microsoft.JSInterop" Version="5.0.0-preview.5.20279.2" />
+    <PackageReference Include="jetbrains.annotations" Version="2020.2.0-eap" />
+    <PackageReference Include="MediatR" Version="8.0.2" />
+    <PackageReference Include="Microsoft.JSInterop" Version="5.0.0-preview.6.20312.15" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="StyleCop.Analyzers" Version="1.2.0-beta.164">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

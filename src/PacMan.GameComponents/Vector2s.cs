@@ -14,10 +14,10 @@ namespace PacMan.GameComponents
 
         public static bool AreNear(Vector2 first, Vector2 second, double range)
         {
-            var r1 = new Rectangle((int) first.X, (int) first.Y, 1, 1);
+            var r1 = new Rectangle((int)first.X, (int)first.Y, 1, 1);
             r1 = r1.Expand(range);
 
-            var r2 = new Rectangle((int) second.X, (int) second.Y, 1, 1);
+            var r2 = new Rectangle((int)second.X, (int)second.Y, 1, 1);
             r2 = r2.Expand(range);
 
             return r1.Intersects(r2);

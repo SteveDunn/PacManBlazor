@@ -4,30 +4,24 @@
     {
         public LevelProps(
             IntroCutScene introCutScene,
-
             FruitItem fruit,
             int fruitPoints,
-
             float pacManSpeedPc,
             float pacManDotsSpeedPc,
-
             float ghostSpeedPc,
             float ghostTunnelSpeedPc,
-
             int elroy1DotsLeft,
             float elroy1SpeedPc,
             int elroy2DotsLeft,
             float elroy2SpeedPc,
-
             float frightPacManSpeedPc,
             float frightPacManDotSpeedPc,
-
             float frightGhostSpeedPc,
             int frightGhostTime,
             int frightGhostFlashes)
         {
-            IntroCutScene = introCutScene;
-            Fruit = fruit;
+            CutScene = introCutScene;
+            Fruit1 = fruit;
             FruitPoints = fruitPoints;
             PacManSpeedPc = pacManSpeedPc;
             PacManDotsSpeedPc = pacManDotsSpeedPc;
@@ -44,27 +38,36 @@
             FrightGhostFlashes = frightGhostFlashes;
         }
 
-        public readonly IntroCutScene IntroCutScene;
+        public IntroCutScene CutScene { get; }
 
-        public readonly FruitItem Fruit ;
-        public readonly int FruitPoints;
+        public FruitItem Fruit1 { get; }
 
-        public readonly float PacManSpeedPc;
-        public readonly float PacManDotsSpeedPc;
+        public int FruitPoints { get; }
 
-        public readonly float GhostSpeedPc;
-        public readonly float GhostTunnelSpeedPc;
+        public float PacManSpeedPc { get; }
 
-        public readonly int Elroy1DotsLeft;
-        public readonly float Elroy1SpeedPc;
-        public readonly int Elroy2DotsLeft;
-        public readonly float Elroy2SpeedPc;
+        public float PacManDotsSpeedPc { get; }
 
-        public readonly float FrightPacManSpeedPc;
-        public readonly float FrightPacManDotSpeedPc;
+        public float GhostSpeedPc { get; }
 
-        public readonly float FrightGhostSpeedPc;
-        public readonly int FrightGhostTime;
-        public readonly int FrightGhostFlashes;
+        public float GhostTunnelSpeedPc { get; }
+
+        public int Elroy1DotsLeft { get; }
+
+        public float Elroy1SpeedPc { get; }
+
+        public int Elroy2DotsLeft { get; }
+
+        public float Elroy2SpeedPc { get; }
+
+        public float FrightPacManSpeedPc { get; }
+
+        public float FrightPacManDotSpeedPc { get; }
+
+        public float FrightGhostSpeedPc { get; }
+
+        public int FrightGhostTime { get; }
+
+        public int FrightGhostFlashes { get; }
     }
 }

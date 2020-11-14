@@ -17,7 +17,7 @@ namespace PacMan.GameComponents.Canvas
         readonly Point _origin = new Point(0, 0);
 
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
-        protected CanvasWrapper(Canvas2DContext canvas2DContext) => 
+        protected CanvasWrapper(Canvas2DContext canvas2DContext) =>
             _canvas2DContext = canvas2DContext ?? throw new InvalidOperationException("null canvas 2d context!");
 
         public CanvasWrapper(Canvas2DContext canvas2DContext, Point origin) : this(canvas2DContext)
@@ -37,7 +37,8 @@ namespace PacMan.GameComponents.Canvas
             await _canvas2DContext.FillTextAsync(text, p.X, p.Y);
         }
 
-        public async ValueTask DrawText(string text,
+        public async ValueTask DrawText(
+            string text,
             Point pos,
             Color color,
             CanvasTextFormat canvasTextFormat)
@@ -100,10 +101,10 @@ namespace PacMan.GameComponents.Canvas
                 r.Height);
         }
 
-        public Task Clear(int x, int y, int width, int height) => 
+        public Task Clear(int x, int y, int width, int height) =>
             _canvas2DContext.ClearRectAsync(x, y, width, height);
 
-        public Task Clear(int width, int height) => 
+        public Task Clear(int width, int height) =>
             _canvas2DContext.ClearRectAsync(0, 0, width, height);
 
         public async ValueTask FillRect(int x, int y, int width, int height, Color color)
@@ -120,7 +121,7 @@ namespace PacMan.GameComponents.Canvas
         {
             var f = from + _origin.ToVector2();
             var t = to + _origin.ToVector2();
-            
+
             await _canvas2DContext.BeginPathAsync();
             await _canvas2DContext.SetStrokeStyleAsync($"rgb({color.R},{color.G},{color.B})");
             await _canvas2DContext.SetLineWidthAsync(3);
@@ -131,7 +132,6 @@ namespace PacMan.GameComponents.Canvas
 
             await _canvas2DContext.StrokeAsync();
         }
-
 
         public async ValueTask DrawMyText(string text, Vector2 pos, Color color)
         {

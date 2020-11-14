@@ -14,7 +14,8 @@ namespace PacMan.GameComponents.Events
             readonly IMediator _mediator;
             readonly IHaveTheMazeCanvases _mazeCanvases;
 
-            public Handler(IGameSoundPlayer gameSoundPlayer,
+            public Handler(
+                IGameSoundPlayer gameSoundPlayer,
                 IGameStats gameStats,
                 IMediator mediator,
                 IHaveTheMazeCanvases mazeCanvases)

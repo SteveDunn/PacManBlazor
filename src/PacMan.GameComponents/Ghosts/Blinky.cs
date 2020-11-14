@@ -10,23 +10,20 @@ namespace PacMan.GameComponents.Ghosts
         readonly IPacMan _pacman;
         readonly ValueTask<CellIndex> _scatterTarget;
 
-        public Blinky(IGameStats gameStats, IMediator mediator, IMaze maze, IPacMan pacman, IHumanInterfaceParser input) : 
-            base(
+        public Blinky(IGameStats gameStats, IMediator mediator, IMaze maze, IPacMan pacman, IHumanInterfaceParser input) : base(
                 gameStats,
                 mediator,
                 input,
                 pacman,
-                GhostNickname.Blinky, 
-                maze,  
-                new Vector2(13.5f, 11), 
+                GhostNickname.Blinky,
+                maze,
+                new Vector2(13.5f, 11),
                 GameComponents.Directions.Left)
         {
             _pacman = pacman;
             HouseOffset = 0;
             _scatterTarget = new ValueTask<CellIndex>(new CellIndex(25, 0));
-
         }
-
 
         public override Color GetColor() => Color.Red;
 
@@ -57,18 +54,18 @@ namespace PacMan.GameComponents.Ghosts
             return new ValueTask<CellIndex>(pacCellPos);
         }
 
-// we are reading these properties:
-// elroy1DotsLeft
-// elroy1SpeedPc
-// elroy2DotsLeft
-// elroy2SpeedPc
+        // we are reading these properties:
+        // elroy1DotsLeft
+        // elroy1SpeedPc
+        // elroy2DotsLeft
+        // elroy2SpeedPc
 
         protected override float GetNormalGhostSpeedPercent()
         {
             LevelStats levelStats = CurrentPlayerStats.LevelStats;
-            
+
             LevelProps levelProps = levelStats.GetLevelProps();
-            
+
             int pillsRemaining = levelStats.PillsRemaining;
 
             if (pillsRemaining > levelProps.Elroy1DotsLeft)

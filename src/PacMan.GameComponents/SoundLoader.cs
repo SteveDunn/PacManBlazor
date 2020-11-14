@@ -35,7 +35,7 @@ namespace PacMan.GameComponents
                 [SoundName.Siren4] = await loadFile(SoundName.Siren4, "assets/audio/siren4.wav"),
                 [SoundName.Siren5] = await loadFile(SoundName.Siren5, "assets/audio/siren5.wav")
             };
-            
+
             // ReSharper disable once HeapView.ClosureAllocation
             async ValueTask<SoundEffect> loadFile(SoundName name, string path)
             {
@@ -43,12 +43,10 @@ namespace PacMan.GameComponents
                 // ReSharper disable once HeapView.BoxingAllocation
                 var s = name.ToString();
                 await runtime.InvokeAsync<object>("soundPlayer.loadSound", new object[] { s, path });
-                
+
                 // ReSharper disable once HeapView.ObjectAllocation.Evident
                 return new SoundEffect(runtime, s);
             }
         }
-
-
     }
 }

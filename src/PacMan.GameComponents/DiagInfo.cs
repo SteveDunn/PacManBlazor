@@ -52,16 +52,16 @@ namespace PacMan.GameComponents
         public static void IncrementDrawCount(float timestamp)
         {
             ++DrawCount;
-        
+
             Elapsed = TimeSpan.FromMilliseconds(timestamp - _lastTimestamp);
 
             _lastTimestamp = timestamp;
         }
 
         public static int UpdateCount { get; private set; }
-        
+
         public static int DrawCount { get; private set; }
-        
+
         public static TimeSpan Elapsed { get; private set; }
 
         public static void UpdateTimeLoopTaken(in long elapsedMs)
@@ -70,16 +70,16 @@ namespace PacMan.GameComponents
             {
                 ++SlowElapsedCount;
             }
-            
+
             GameLoopDurationMs = elapsedMs;
-            
+
             MaxGameLoopDurationMs = Math.Max(MaxGameLoopDurationMs, GameLoopDurationMs);
         }
 
         public static int SlowElapsedCount { get; private set; }
 
         public static long GameLoopDurationMs { get; private set; }
-        
+
         public static long MaxGameLoopDurationMs { get; private set; }
     }
 }

@@ -9,15 +9,15 @@ namespace PacMan.GameComponents
 {
     public class Maze : ISprite, IMaze
     {
-        /// the point where the ghost goes to just before going into chase/scatter mode
-        public static readonly Vector2 TileHouseEntrance = Tile.FromCell(13.5f, 11);
+        // the point where the ghost goes to just before going into chase/scatter mode
+        public readonly static Vector2 TileHouseEntrance = Tile.FromCell(13.5f, 11);
 
-        public static readonly Vector2 PixelHouseEntrancePoint = Tile.ToCenterCanvas(new Vector2(13.5f, 11));
+        public readonly static Vector2 PixelHouseEntrancePoint = Tile.ToCenterCanvas(new Vector2(13.5f, 11));
 
-        /// the point where the ghost goes to before going up and out of the house
-        public static readonly Vector2 PixelCenterOfHouse = Tile.ToCenterCanvas(new Vector2(13.5f, 14));
+        // the point where the ghost goes to before going up and out of the house
+        public readonly static Vector2 PixelCenterOfHouse = Tile.ToCenterCanvas(new Vector2(13.5f, 14));
 
-        static readonly CellIndex[] _specialIntersections =
+        readonly static CellIndex[] _specialIntersections =
         {
             new CellIndex(12, 11),
             new CellIndex(15, 11),
@@ -25,7 +25,7 @@ namespace PacMan.GameComponents
             new CellIndex(15, 26)
         };
 
-        static readonly CellIndex[] _powerPillPositions =
+        readonly static CellIndex[] _powerPillPositions =
         {
             new CellIndex(1, 3),
             new CellIndex(26, 3),
@@ -43,10 +43,10 @@ namespace PacMan.GameComponents
 
         bool _flashing;
 
-        static readonly Size _spritesheetSize = new Size(225, 248);
-        static readonly Rectangle _mazeRect = new Rectangle(0,0, 225, 248);
+        readonly static Size _spritesheetSize = new Size(225, 248);
+        readonly static Rectangle _mazeRect = new Rectangle(0, 0, 225, 248);
 
-        static readonly Directions[] _directions =
+        readonly static Directions[] _directions =
         {
             Directions.Left,
             Directions.Right,
@@ -66,8 +66,8 @@ namespace PacMan.GameComponents
             _timer = new LoopingTimer(250.Milliseconds(), () => _tickTock = !_tickTock);
 
             _whiteMazeCanvas = new GeneralSprite(
-                Vector2.Zero, 
-                _spritesheetSize, 
+                Vector2.Zero,
+                _spritesheetSize,
                 Vector2.Zero, new Vector2(228, 0));
         }
 
@@ -77,7 +77,6 @@ namespace PacMan.GameComponents
 
         public Size Size => _spritesheetSize;
 
-
         // special intersections have an extra restriction
         // ghosts can not choose to turn upwards from these tiles.
         public static bool IsSpecialIntersection(CellIndex cell) =>
@@ -85,7 +84,6 @@ namespace PacMan.GameComponents
             cell == _specialIntersections[1] ||
             cell == _specialIntersections[2] ||
             cell == _specialIntersections[3];
-
 
         public Vector2 Position => Vector2.Zero;
 
@@ -107,16 +105,17 @@ namespace PacMan.GameComponents
                 }
                 else
                 {
-                    await session.DrawFromOther(_currentPlayerCanvas!, new Point(0,0), _mazeRect);
+                    await session.DrawFromOther(_currentPlayerCanvas!, new Point(0, 0), _mazeRect);
                 }
 
                 return;
             }
 
-            await session.DrawFromOther(_currentPlayerCanvas!, new Point(0,0), _mazeRect);
+            await session.DrawFromOther(_currentPlayerCanvas!, new Point(0, 0), _mazeRect);
 
             await drawPowerPills(session);
-            //            this.drawGrid(8, 8, canvas);
+
+            // this.drawGrid(8, 8, canvas);
         }
 
         void ensureCanvas()
@@ -137,7 +136,7 @@ namespace PacMan.GameComponents
             {
                 if (_levelStats!.GetCellContent(p) == '*')
                 {
-                    _powerPill.Position = p.ToVector2() * Vector2s.Eight;//- Vector2s.Four;
+                    _powerPill.Position = p.ToVector2() * Vector2s.Eight;// - Vector2s.Four;
 
                     await session.DrawSprite(_powerPill, Spritesheet.Reference);
                 }
@@ -154,17 +153,16 @@ namespace PacMan.GameComponents
 
         public async ValueTask ClearCell(CellIndex cell)
         {
-            Vector2 topLeft = Tile.FromIndex(cell).TopLeft;
+            var topLeft = Tile.FromIndex(cell).TopLeft;
 
-//            CanvasBitmap bitmap = _bitmapsForPlayers[_gameStats.CurrentPlayerStats.PlayerIndex];
+            // CanvasBitmap bitmap = _bitmapsForPlayers[_gameStats.CurrentPlayerStats.PlayerIndex];
 
+            // await bitmap.BeginBatch();
 
-//await bitmap.BeginBatch();
+            await _currentPlayerCanvas!.Clear((int) topLeft.X, (int) topLeft.Y, 8, 8);
 
-            await _currentPlayerCanvas!.Clear((int)topLeft.X, (int)topLeft.Y, 8, 8);
-//            await bitmap.FillRect((int)topLeft.X, (int)topLeft.Y, 8, 8, Color.Black);
-
-//            await bitmap.EndBatch();
+            // await bitmap.FillRect((int)topLeft.X, (int)topLeft.Y, 8, 8, Color.Black);
+            // await bitmap.EndBatch();
         }
 
         public static bool IsInTunnel(CellIndex point)
@@ -200,7 +198,7 @@ namespace PacMan.GameComponents
 
             var tile = Tile.FromIndex(cellPos);
 
-            foreach (Directions eachDirection in _directions)
+            foreach (var eachDirection in _directions)
             {
                 if (!isAWall(tile.NextTileWrapped(eachDirection)))
                 {
@@ -213,20 +211,14 @@ namespace PacMan.GameComponents
 
         bool isAWall(Tile tile) => GetTileContent(tile) == TileContent.Wall;
 
-        public void StartFlashing()
-        {
-            _flashing = true;
-        }
+        public void StartFlashing() => _flashing = true;
 
-        public void StopFlashing()
-        {
-            _flashing = false;
-        }
+        public void StopFlashing() => _flashing = false;
 
         public TileContent GetTileContent(Tile cell)
         {
             ensureLevelStats();
-            char a = _levelStats!.GetCellContent(cell.Index);
+            var a = _levelStats!.GetCellContent(cell.Index);
 
             if (a == ' ')
             {
@@ -251,7 +243,7 @@ namespace PacMan.GameComponents
             return TileContent.Nothing;
         }
 
-        //todo: use clamp
+        // todo: use clamp
         public static CellIndex ConstrainCell(CellIndex cell)
         {
             var x = cell.X;

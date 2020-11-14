@@ -52,7 +52,7 @@ namespace PacMan.GameComponents
             _lifeStatus = LifeStatus.Alive;
 
             _tile = new Tile();
-            
+
             _keyPress = new KeyPressedEvent();
             _framePointers = new Dictionary<Directions, FramePointers>();
 
@@ -76,7 +76,7 @@ namespace PacMan.GameComponents
 
             for (var i = 0; i < 12; i++)
             {
-                _dyingFrames.Add(new Vector2(489 + i * 16, 0));
+                _dyingFrames.Add(new Vector2(489 + (i * 16), 0));
             }
 
             _animDirection = new TwoFrameAnimation(65.Milliseconds());
@@ -109,7 +109,6 @@ namespace PacMan.GameComponents
         public Size Size { get; } = new Size(15, 15);
 
         public ValueTask Draw(CanvasWrapper session) => session.DrawSprite(this, Spritesheet.Reference);
-
 
         public Vector2 Origin => Vector2s.Eight;
 
@@ -209,7 +208,7 @@ namespace PacMan.GameComponents
             {
                 pcToUse = inPillCell ? levelProps.FrightPacManDotSpeedPc : levelProps.FrightPacManSpeedPc;
             }
-            
+
             if (!inPillCell)
             {
                 _pillEatenAt = CellIndex.Zero;
@@ -251,8 +250,7 @@ namespace PacMan.GameComponents
 
                 await _mediator.Publish(new PillEatenEvent(_tile.Index));
 
-
-                //_ = _game.PillEaten(_tile.Index);
+                // _ = _game.PillEaten(_tile.Index);
             }
 
             if (contents == TileContent.PowerPill)
@@ -261,7 +259,7 @@ namespace PacMan.GameComponents
 
                 await _mediator.Publish(new PowerPillEatenEvent(_tile.Index));
 
-                //_ = _game.PowerPillEaten(_tile.Index);
+                // _ = _game.PowerPillEaten(_tile.Index);
             }
         }
 
@@ -329,8 +327,7 @@ namespace PacMan.GameComponents
             _keyPress.When = context.TotalTime.TotalMilliseconds;
         }
 
-
-        //debt: SD: refactor into something common as this is also used for the ghosts
+        // debt: SD: refactor into something common as this is also used for the ghosts
         void recenterInLane()
         {
             var tileCenter = _tile.CenterPos;
@@ -375,7 +372,7 @@ namespace PacMan.GameComponents
             _currentPlayerStats = playerStats;
 
             resetAll(isDemo);
-            
+
             return default;
         }
     }

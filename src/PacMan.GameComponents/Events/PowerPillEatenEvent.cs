@@ -22,7 +22,8 @@ namespace PacMan.GameComponents.Events
             readonly IMediator _mediator;
             readonly IGhostCollection _ghostCollection;
 
-            public Handler(IGame game,
+            public Handler(
+                IGame game,
                 IGameStats gameStats,
                 IGameSoundPlayer gameSoundPlayer,
                 IMediator mediator,
@@ -44,12 +45,12 @@ namespace PacMan.GameComponents.Events
                 foreach (IGhost eachGhost in _ghostCollection.Ghosts)
                 {
                     GhostFrightSession? frightSession = _gameStats.CurrentPlayerStats.FrightSession;
-                    
+
                     if (frightSession == null)
                     {
                         throw new InvalidOperationException("no fright session");
                     }
-                    
+
                     eachGhost.PowerPillEaten(frightSession);
                 }
 
@@ -62,9 +63,9 @@ namespace PacMan.GameComponents.Events
                 {
                     // ReSharper disable once HeapView.BoxingAllocation
                     var act = await _mediator.Send(new GetActRequest("LevelFinishedAct"));
-                    
+
                     await act.Reset();
-                    
+
                     _game.SetAct(act);
                 }
             }

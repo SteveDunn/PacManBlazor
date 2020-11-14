@@ -15,9 +15,9 @@ namespace PacMan.GameComponents.GameActs
         public IAct GetActNamed(string name)
         {
             IAct act = _acts[name];
-            
+
             act.Reset();
-            
+
             return act;
         }
     }

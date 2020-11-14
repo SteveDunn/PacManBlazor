@@ -16,6 +16,7 @@ namespace PacMan.GameComponents.GameActs
             Stationary,
             ScrollingOut
         }
+
         readonly MarqueeText[] _texts;
         MarqueeText _current;
         int _index;
@@ -35,13 +36,13 @@ namespace PacMan.GameComponents.GameActs
             selectNext();
 
             _tweeningFunction = Tweener.CreateTweeningFunction<Elastic>(Easing.EaseInOut);
-            
+
             var colorTweeningFunction = Tweener.CreateTweeningFunction<Linear>(Easing.EaseNone);
-            
-            _colorTweener=new Tweener(.33f,1,.33f.Seconds(), colorTweeningFunction);
+
+            _colorTweener = new Tweener(.33f, 1, .33f.Seconds(), colorTweeningFunction);
             _colorTweener.Ended += () =>
             {
-                 _colorTweener.Reverse();
+                _colorTweener.Reverse();
                 _colorTweener.Reset();
             };
         }
@@ -52,12 +53,11 @@ namespace PacMan.GameComponents.GameActs
             {
                 _index = 0;
             }
-            
+
             _current = _texts[_index];
             _state = State.Idle;
             _timer = new EggTimer(_current.TimeIdle);
             _pos = new Vector2(300, _current.YPosition);
-
         }
 
         public async ValueTask Update(CanvasTimingInformation timing)
@@ -75,14 +75,17 @@ namespace PacMan.GameComponents.GameActs
             {
                 await idle();
             }
+
             if (_state == State.ScrollingIn)
             {
                 await scrollingIn();
             }
+
             if (_state == State.Stationary)
             {
                 await stationary();
             }
+
             if (_state == State.ScrollingOut)
             {
                 await scrollingOut();

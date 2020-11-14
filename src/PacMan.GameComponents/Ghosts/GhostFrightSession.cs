@@ -6,25 +6,26 @@ namespace PacMan.GameComponents.Ghosts
     public class GhostFrightSession
     {
         readonly TimeSpan _eachFlashDurationMs = TimeSpan.FromMilliseconds(166);
+        readonly LoopingTimer _timer;
 
         int _amountOfGhostsEaten;
 
         TimeSpan _timeLeft;
-        //1s = 1000ms
-        //1/60th second = 16.66ms
-        //1 frame = 16.66ms
-        //each flash takes 1/6th of a second (or 10 frames), 166ms
-        //so there can be 6 flashes a second
+
+        // 1s = 1000ms
+        // 1/60th second = 16.66ms
+        // 1 frame = 16.66ms
+        // each flash takes 1/6th of a second (or 10 frames), 166ms
+        // so there can be 6 flashes a second
         TimeSpan _timeLeftToStartFlashing;
         bool _tickTock;
-        readonly LoopingTimer _timer;
 
         public GhostFrightSession(LevelProps levelProps)
         {
             _amountOfGhostsEaten = 0;
             _timeLeft = TimeSpan.FromMilliseconds(levelProps.FrightGhostTime * 1000);
 
-            int flashesLeft = levelProps.FrightGhostFlashes;
+            var flashesLeft = levelProps.FrightGhostFlashes;
 
             _timeLeftToStartFlashing = _timeLeft -
                                        TimeSpan.FromMilliseconds(flashesLeft * _eachFlashDurationMs.TotalMilliseconds);
@@ -41,17 +42,16 @@ namespace PacMan.GameComponents.Ghosts
             _timeLeftToStartFlashing -= elapsed;
         }
 
-        //todo:
-        //public int GhostsEaten => _amountOfGhostsEaten;
+        // todo:
+        // public int GhostsEaten => _amountOfGhostsEaten;
 
         public bool IsWhite => _timeLeftToStartFlashing <= TimeSpan.Zero && _tickTock;
 
-
-        //todo: cqs
+        // todo: cqs
         public int GhostEaten()
         {
             ++_amountOfGhostsEaten;
-            return (int)(Math.Pow(2, _amountOfGhostsEaten) * 100);
+            return (int) (Math.Pow(2, _amountOfGhostsEaten) * 100);
         }
 
         public bool IsFinished => _timeLeft <= TimeSpan.Zero;

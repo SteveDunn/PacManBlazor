@@ -14,21 +14,23 @@ namespace PacMan.GameComponents
 
         // ReSharper disable once HeapView.ObjectAllocation.Evident
         readonly StringBuilder _sb = new StringBuilder();
-        
+
         readonly Vector2 _creditTextPoint = new Vector2(10, 00);
 
         readonly LoopingTimer _timer;
 
-        readonly SimpleFruit _fruit ;
+        readonly SimpleFruit _fruit;
 
         bool _tickTock = true;
 
-        public StatusPanel(IGameStats gameStats, ICoinBox coinBox) 
+        public StatusPanel(IGameStats gameStats, ICoinBox coinBox)
         {
             _gameStats = gameStats;
             _coinBox = coinBox;
+
             // ReSharper disable once HeapView.ObjectAllocation.Evident
             _timer = new LoopingTimer(250.Milliseconds(), () => _tickTock = !_tickTock);
+
             // ReSharper disable once HeapView.ObjectAllocation.Evident
             _fruit = new SimpleFruit();
         }
@@ -57,14 +59,14 @@ namespace PacMan.GameComponents
 
             for (var i = 0; i < _gameStats.CurrentPlayerStats.LivesRemaining; i++, x += 16)
             {
-                await ds.DrawImage(Spritesheet.Reference,
+                await ds.DrawImage(
+                    Spritesheet.Reference,
                     new Rectangle(x, 0, 16, 16),
                     new Rectangle(
-                        (int) PacMan.FacingLeftSpritesheetPos.X, 
-                        (int) PacMan.FacingLeftSpritesheetPos.Y, 
+                        (int)PacMan.FacingLeftSpritesheetPos.X,
+                        (int)PacMan.FacingLeftSpritesheetPos.Y,
                         16,
                         16));
-
             }
         }
 
@@ -95,12 +97,11 @@ namespace PacMan.GameComponents
             // starting from the right
             for (var i = lowestLevel; i <= highestLevel; i++, x -= 16)
             {
-                var item = LevelStats.GetLevelProps(i).Fruit;
+                var item = LevelStats.GetLevelProps(i).Fruit1;
 
                 _fruit.SetFruitItem(item);
                 _fruit.Position = new Vector2(x, 10);
 
-               
                 await ds.DrawSprite(_fruit, Spritesheet.Reference);
             }
         }

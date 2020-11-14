@@ -20,7 +20,8 @@ namespace PacMan.GameComponents.Events
             readonly IHaveTheMazeCanvases _mazeCanvases;
             readonly IGameStats _gameStats;
 
-            public Handler(IGameStats gameStats,
+            public Handler(
+                IGameStats gameStats,
                 IMediator mediator,
                 ICoinBox coinBox,
                 IHaveTheMazeCanvases mazeCanvases)
@@ -37,7 +38,7 @@ namespace PacMan.GameComponents.Events
                 await _mazeCanvases.GetForPlayer(1).Reset();
 
                 _coinBox.UseCredits(notification.AmountOfPlayers);
-                
+
                 await _gameStats.Reset(notification.AmountOfPlayers);
                 _gameStats.ChoseNextPlayer();
 

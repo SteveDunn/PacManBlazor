@@ -37,6 +37,5 @@ namespace PacMan.GameComponents.Events
                 await _game.GhostEaten(notification.Ghost, points);
             }
         }
-
     }
 }

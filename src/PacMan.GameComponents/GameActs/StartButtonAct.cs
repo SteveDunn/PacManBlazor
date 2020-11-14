@@ -38,7 +38,7 @@ namespace PacMan.GameComponents.GameActs
             if (_input.WasKeyPressedAndReleased(Keys.Two) && _coinBox.Credits >= 2)
             {
                 await _mediator.Publish(new NewGameEvent(2));
-                
+
                 return ActUpdateResult.Finished;
             }
 

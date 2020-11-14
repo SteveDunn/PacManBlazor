@@ -6,7 +6,7 @@ namespace PacMan.GameComponents
 {
     public class TimedSpriteList
     {
-        readonly List<TimedSprite>  _sprites;
+        readonly List<TimedSprite> _sprites;
 
         public TimedSpriteList()
         {
@@ -19,7 +19,7 @@ namespace PacMan.GameComponents
         {
             foreach (var s in _sprites)
             {
-                s.Update(timing);                
+                s.Update(timing);
             }
 
             for (int i = _sprites.Count - 1; i >= 0; i--)
@@ -36,7 +36,7 @@ namespace PacMan.GameComponents
         {
             foreach (var s in _sprites)
             {
-                await s.Draw(session);   
+                await s.Draw(session);
             }
         }
     }

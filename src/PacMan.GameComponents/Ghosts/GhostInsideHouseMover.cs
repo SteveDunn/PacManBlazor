@@ -21,19 +21,18 @@ namespace PacMan.GameComponents.Ghosts
         bool _finished;
 
         public GhostInsideHouseMover(
-            Ghost ghost, 
+            Ghost ghost,
             IMaze maze,
-            GhostHouseDoor ghostHouseDoor) :
-                base(ghost, GhostMovementMode.InHouse, maze, () => new ValueTask<CellIndex>(CellIndex.Zero))
+            GhostHouseDoor ghostHouseDoor) : base(ghost, GhostMovementMode.InHouse, maze, () => new ValueTask<CellIndex>(CellIndex.Zero))
         {
             _door = ghostHouseDoor;
 
             Vector2 center = Maze.PixelCenterOfHouse;
 
-            float x = center.X + ghost.OffsetInHouse * 16;
+            float x = center.X + (ghost.OffsetInHouse * 16);
 
-            _topPos = new Vector2(x, (float) (13.5 * 8 + 4));
-            _bottomPos = new Vector2(x, (float) (15.5 * 8 - 4));
+            _topPos = new Vector2(x, (float)((13.5 * 8) + 4));
+            _bottomPos = new Vector2(x, (float)((15.5 * 8) - 4));
 
             var centerOfUpDown = new Vector2(_topPos.X, Maze.PixelCenterOfHouse.Y);
 
@@ -54,7 +53,7 @@ namespace PacMan.GameComponents.Ghosts
                 throw new InvalidOperationException("Ghost must be pointing up or down at start.");
             }
 
-            _routeOut = new[] {centerOfUpDown, Maze.PixelCenterOfHouse, Maze.PixelHouseEntrancePoint};
+            _routeOut = new[] { centerOfUpDown, Maze.PixelCenterOfHouse, Maze.PixelHouseEntrancePoint };
         }
 
         void whenAtTargetCell()
@@ -104,9 +103,9 @@ namespace PacMan.GameComponents.Ghosts
 
             if (diff != Vector2.Zero)
             {
-               diff= diff.Normalize();
+                diff = diff.Normalize();
 
-                Ghost.Position = Ghost.Position + diff / Vector2s.Two;
+                Ghost.Position = Ghost.Position + (diff / Vector2s.Two);
 
                 var dir = DirectionToIndexLookup.GetDirectionFromVector(diff);
 

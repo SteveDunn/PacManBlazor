@@ -15,7 +15,7 @@ namespace PacMan.GameComponents
 
         readonly Dictionary<GhostNickname, DotCounter> _ghostCounters;
         readonly GlobalDotCounter _globalCounter;
-        readonly DotCounter _nullCounter ;
+        readonly DotCounter _nullCounter;
 
         DotCounter _activeCounter;
         TimeSpan _pillConsumptionTimeIdle;
@@ -89,6 +89,7 @@ namespace PacMan.GameComponents
                 {
                     switchActive(_nullCounter);
                 }
+
                 return;
             }
 
@@ -146,7 +147,7 @@ namespace PacMan.GameComponents
         void switchActive(DotCounter counter)
         {
             _activeCounter.Deactivate();
-            
+
             _activeCounter = counter;
 
             _activeCounter.Activate();
@@ -171,7 +172,7 @@ namespace PacMan.GameComponents
                 {
                     // ReSharper disable once HeapView.BoxingAllocation
                     var state = await _mediator.Send(new GetGameStateRequest());
-                    
+
                     if (state.IsClydeInHouse)
                     {
                         Console.WriteLine(

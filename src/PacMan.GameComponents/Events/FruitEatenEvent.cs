@@ -38,7 +38,6 @@ namespace PacMan.GameComponents.Events
                 await _game.FruitEaten(points);
             }
         }
-
     }
 
     public readonly struct ExtraLifeEvent : INotification
@@ -52,9 +51,8 @@ namespace PacMan.GameComponents.Events
                 _gameSoundPlayer = gameSoundPlayer;
             }
 
-            public async Task Handle(ExtraLifeEvent notification, CancellationToken cancellationToken) => 
+            public async Task Handle(ExtraLifeEvent notification, CancellationToken cancellationToken) =>
                 await _gameSoundPlayer.GotExtraLife();
         }
-
     }
 }

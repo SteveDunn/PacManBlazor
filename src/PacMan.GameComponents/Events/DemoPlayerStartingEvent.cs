@@ -24,7 +24,8 @@ namespace PacMan.GameComponents.Events
             readonly IGameStats _gameStats;
             readonly IHaveTheMazeCanvases _mazeCanvases;
 
-            public Handler(IGameSoundPlayer gameSoundPlayer,
+            public Handler(
+                IGameSoundPlayer gameSoundPlayer,
                 IGhostCollection ghostCollection,
                 IFruit fruit,
                 IMaze maze,
@@ -50,19 +51,20 @@ namespace PacMan.GameComponents.Events
                 var playerStats = _gameStats.CurrentPlayerStats;
 
                 await _gameSoundPlayer.Disable();
-                
+
                 _ghostCollection.Ghosts.ForEach(g => g.Reset());
 
                 _fruit.HandlePlayerStarted(playerStats, true);
 
-                await _maze.HandlePlayerStarted(playerStats, 
+                await _maze.HandlePlayerStarted(
+                    playerStats,
                     _mazeCanvases.GetForPlayer(_gameStats.CurrentPlayerStats.PlayerIndex));
 
                 await _pacman.HandlePlayerStarting(playerStats, true);
 
                 var act = _acts.GetActNamed("DemoPlayerIntroAct");
                 await act.Reset();
-                
+
                 _game.SetAct(act);
             }
         }

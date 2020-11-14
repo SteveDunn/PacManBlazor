@@ -22,14 +22,13 @@ namespace PacMan.GameComponents
         }
 
         public IGhost[] Ghosts { get; }
-        
+
         public async ValueTask DrawAll(CanvasWrapper canvas)
         {
             foreach (IGhost eachGhost in Ghosts)
             {
                 await eachGhost.Draw(canvas);
             }
-
         }
 
         public async ValueTask Update(CanvasTimingInformation timing)

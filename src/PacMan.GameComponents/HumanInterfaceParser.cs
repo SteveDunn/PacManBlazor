@@ -22,6 +22,7 @@ namespace PacMan.GameComponents
         public const byte Six = 54;
         public const byte Space = 32;
     }
+
     public class HumanInterfaceParser : IHumanInterfaceParser
     {
         // ReSharper disable once HeapView.ObjectAllocation.Evident
@@ -40,17 +41,19 @@ namespace PacMan.GameComponents
             _keyPresses = Enumerable.Range(0, 256).Select(_ => -oneSecondAgo).ToArray();
             _swipes = Enumerable.Range(0, 256).Select(_ => -oneSecondAgo).ToArray();
             _timeLongPressed = -oneSecondAgo;
-            _timeTapped =-oneSecondAgo;
+            _timeTapped = -oneSecondAgo;
             _totalGameTime = 0.Seconds();
         }
 
         TimeSpan _totalGameTime;
 
-        //20 milliseconds when 60 fps - should be 120 for 30 fps = e.g. fps * 2
-        TimeSpan getRetention() => (60/Constants.FramesPerSecond * 20).Milliseconds();
+        // 20 milliseconds when 60 fps - should be 120 for 30 fps = e.g. fps * 2
+        TimeSpan getRetention() => (60 / Constants.FramesPerSecond * 20).Milliseconds();
 
-        public bool IsRightKeyDown => IsKeyCurrentlyDown(Keys.Right) ;
+        public bool IsRightKeyDown => IsKeyCurrentlyDown(Keys.Right);
+
         public bool WasTapped => _totalGameTime - _timeTapped <= getRetention();
+
         public bool WasLongPress => _totalGameTime - _timeLongPressed <= getRetention();
 
         public bool IsLeftKeyDown => IsKeyCurrentlyDown(Keys.Left);
@@ -78,11 +81,11 @@ namespace PacMan.GameComponents
 
             bool wasKeyPressed = _totalGameTime - whenLastPressed <= getRetention();
 
-            //Debug.WriteLine($"Total game time: {_totalGameTime}, keypress for {key}: {whenLastPressed} - key was pressed {_totalGameTime - whenLastPressed} ago.  Was key pressed? {wasKeyPressed}");
+            // Debug.WriteLine($"Total game time: {_totalGameTime}, keypress for {key}: {whenLastPressed} - key was pressed {_totalGameTime - whenLastPressed} ago.  Was key pressed? {wasKeyPressed}");
 
             return wasKeyPressed;
         }
-        
+
         /// <summary>
         /// A 'press' is pressing and releasing, not just 'pushed'
         /// To see if a key is 'down', use 'IsKeyCurrentlyDown'
@@ -95,17 +98,17 @@ namespace PacMan.GameComponents
 
             bool wasKeyPressed = _totalGameTime - whenLastPressed <= getRetention();
 
-            //Debug.WriteLine($"Total game time: {_totalGameTime}, keypress for {key}: {whenLastPressed} - key was pressed {_totalGameTime - whenLastPressed} ago.  Was key pressed? {wasKeyPressed}");
+            // Debug.WriteLine($"Total game time: {_totalGameTime}, keypress for {key}: {whenLastPressed} - key was pressed {_totalGameTime - whenLastPressed} ago.  Was key pressed? {wasKeyPressed}");
 
             return wasKeyPressed;
         }
-        
+
         public void TapHappened() => _timeTapped = _totalGameTime;
+
         public void LongPressHappened() => _timeLongPressed = _totalGameTime;
 
-
         public void KeyDown(byte key) => _keysCurrentlyDown[key] = true;
-        
+
         public void Swiped(byte key) => _swipes[key] = _totalGameTime;
 
         public void KeyUp(byte key)

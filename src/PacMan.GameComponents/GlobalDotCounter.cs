@@ -61,7 +61,8 @@ namespace PacMan.GameComponents
                     break;
                 case GhostNickname.Clyde when Counter == 32:
                     canLeave = true;
-                    //debt: SD: confusing!
+                    
+                    // debt: SD: confusing!
                     _finished = Counter == 32;
                     break;
             }

@@ -12,9 +12,11 @@ namespace PacMan.GameComponents
         bool _isFinished;
         TimeSpan _currentTime;
 
-        static void doNothing() { }
+        static void doNothing()
+        {
+        }
 
-        public EggTimer(TimeSpan duration, Action whenFinished): this(duration) => 
+        public EggTimer(TimeSpan duration, Action whenFinished) : this(duration) =>
             _whenFinished = whenFinished;
 
         public EggTimer(TimeSpan duration)
@@ -35,9 +37,10 @@ namespace PacMan.GameComponents
             return pc;
         }
 
-        public float Progress => (float) (getPercentProgress() / 100f);
+        public float Progress => (float)(getPercentProgress() / 100f);
 
         public bool Finished => _isFinished;
+
         public static EggTimer Unset => new EggTimer(TimeSpan.MaxValue);
 
         public void Run(CanvasTimingInformation timing)

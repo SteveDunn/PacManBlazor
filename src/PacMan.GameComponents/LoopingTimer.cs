@@ -12,7 +12,6 @@ namespace PacMan.GameComponents
 
         public static LoopingTimer DoNothing => new LoopingTimer(TimeSpan.MaxValue, () =>
         {
-            
         });
 
         public LoopingTimer(TimeSpan firesEvery, Action callback)
@@ -26,7 +25,7 @@ namespace PacMan.GameComponents
         {
             _currentTime -= timing.ElapsedTime;
 
-            if (_currentTime< TimeSpan.Zero)
+            if (_currentTime < TimeSpan.Zero)
             {
                 _currentTime += _firesEvery;
 

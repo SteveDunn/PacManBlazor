@@ -22,9 +22,10 @@ namespace PacMan.GameComponents.Canvas
 
             var dim = Constants.UnscaledCanvasSize;
 
-            await Clear((int) dim.X, (int) dim.Y);
+            await Clear((int)dim.X, (int)dim.Y);
 
-            await DrawImage(Spritesheet.Reference, 
+            await DrawImage(
+                Spritesheet.Reference,
                 new Point(0, 0),
                 new Rectangle(0, 0, width, height));
         }

@@ -14,7 +14,7 @@ namespace PacMan.GameComponents
             {
                 throw new InvalidOperationException("Cannot get maze canvas for player as they've not been set.");
             }
-            
+
             return _mazeCanvases[index];
         }
 

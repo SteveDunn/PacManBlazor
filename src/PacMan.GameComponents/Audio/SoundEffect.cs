@@ -36,7 +36,7 @@ namespace PacMan.GameComponents.Audio
 
         public async ValueTask Mute()
         {
-            _previousVolume = await _runtime.InvokeAsync<float>("soundPlayer.getVolume",new object[]{_name});
+            _previousVolume = await _runtime.InvokeAsync<float>("soundPlayer.getVolume", new object[] { _name });
 
             await SetVolume(0f);
         }
@@ -58,14 +58,14 @@ namespace PacMan.GameComponents.Audio
             }
 
             await Stop();
-            
+
             await _runtime.InvokeVoidAsync("soundPlayer.play", _name);
 
             IsPlaying = true;
         }
 
         /// <summary>
-        /// Called via Howler when finished
+        /// Called via Howler when finished.
         /// </summary>
         public void MarkAsFinished() => IsPlaying = false;
     }

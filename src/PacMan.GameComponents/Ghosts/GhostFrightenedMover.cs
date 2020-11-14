@@ -15,7 +15,7 @@ namespace PacMan.GameComponents.Ghosts
 
             var cell = (random % 4) switch
             {
-                0 => new CellIndex((int) MazeBounds.TopLeft.X, (int) MazeBounds.TopLeft.Y),
+                0 => new CellIndex((int)MazeBounds.TopLeft.X, (int)MazeBounds.TopLeft.Y),
                 1 => new CellIndex(MazeBounds.Dimensions.Width, 0),
                 2 => new CellIndex(MazeBounds.Dimensions.Width, MazeBounds.Dimensions.Height),
                 _ => new CellIndex(0, MazeBounds.Dimensions.Height)

@@ -70,10 +70,10 @@ namespace PacMan.GameComponents.Tweening
             {
                 return;
             }
-            
+
             Position = _tweeningFunction(_elapsed, _from, _change, _duration);
             _elapsed += (float)gameTime.ElapsedTime.TotalSeconds;
-            
+
             if (_elapsed >= _duration)
             {
                 _elapsed = _duration;
@@ -107,11 +107,10 @@ namespace PacMan.GameComponents.Tweening
             Position = f;
             _change = _to - _from;
             _elapsed = 0.0f;
-
         }
 
         [SuppressMessage("ReSharper", "HeapView.BoxingAllocation")]
-        public override string ToString() => 
+        public override string ToString() =>
             $@"{_tweeningFunction.Method.DeclaringType.Name}.{_tweeningFunction.Method.Name}. Tween {_from} -> {_from + _change} in {_duration}s. Elapsed {_elapsed:##0.##}s";
     }
 }

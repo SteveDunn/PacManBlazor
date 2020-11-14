@@ -9,7 +9,7 @@ using PacMan.GameComponents.Requests;
 namespace PacMan.GameComponents.Events
 {
     /// <summary>
-    /// When all the dots have been eaten, start the <see cref="LevelFinishedAct"/>
+    /// When all the dots have been eaten, start the <see cref="LevelFinishedAct"/>.
     /// </summary>
     public readonly struct AllPillsEatenEvent : INotification
     {
@@ -22,7 +22,12 @@ namespace PacMan.GameComponents.Events
             readonly IPacMan _pacman;
             readonly IGhostCollection _ghostCollection;
 
-            public Handler(IMediator mediator, IGame game, IGameSoundPlayer gameSoundPlayer, IPacMan pacman, IGhostCollection ghostCollection)
+            public Handler(
+                IMediator mediator,
+                IGame game,
+                IGameSoundPlayer gameSoundPlayer,
+                IPacMan pacman,
+                IGhostCollection ghostCollection)
             {
                 _mediator = mediator;
                 _game = game;
@@ -38,12 +43,12 @@ namespace PacMan.GameComponents.Events
                 _pacman.StartDigesting();
 
                 _ghostCollection.Ghosts.ForEach(g => g.StopMoving());
-                
+
                 // ReSharper disable once HeapView.BoxingAllocation
                 var act = await _mediator.Send(new GetActRequest("LevelFinishedAct"), cancellationToken);
-                    
+
                 await act.Reset();
-                    
+
                 _game.SetAct(act);
             }
         }

@@ -33,7 +33,7 @@ namespace PacMan.GameComponents.GameActs
         public ValueTask Reset()
         {
             _finished = false;
-            
+
             _timer = new LoopingTimer(2.Seconds(), () =>
             {
                 _step += 1;
@@ -61,6 +61,7 @@ namespace PacMan.GameComponents.GameActs
             {
                 return ActUpdateResult.Finished;
             }
+
             _timer.Run(timing);
 
             await _maze.Update(timing);

@@ -7,8 +7,8 @@ namespace PacMan.GameComponents
     public class ScorePanel : IScorePanel
     {
         readonly IGameStats _gameStats;
-        readonly Vector2 _scorePos2Up= new Vector2(206, 8);
-        readonly Vector2 _scorePos1Up= new Vector2(62, 8);
+        readonly Vector2 _scorePos2Up = new Vector2(206, 8);
+        readonly Vector2 _scorePos1Up = new Vector2(62, 8);
         readonly Vector2 _highScorePos = new Vector2(140, 8);
         readonly Vector2 _highScoreTextPos = new Vector2(72, 0);
 
@@ -23,10 +23,12 @@ namespace PacMan.GameComponents
         public ScorePanel(IGameStats gameStats)
         {
             _gameStats = gameStats;
+
             // ReSharper disable HeapView.ObjectAllocation.Evident
             // ReSharper disable HeapView.DelegateAllocation
             _timer = new LoopingTimer(250.Milliseconds(), () => _tickTock = !_tickTock);
             _trialTimer = new LoopingTimer(2.Seconds(), () => _trialTickTock = !_trialTickTock);
+
             // ReSharper restore HeapView.DelegateAllocation
             // ReSharper restore HeapView.ObjectAllocation.Evident
         }
@@ -55,7 +57,7 @@ namespace PacMan.GameComponents
         {
             await drawPlayerText(ds, 0, "1UP", _playerOneTextPos);
 
-            int score = 0;
+            var score = 0;
 
             if (_gameStats.HasPlayerStats(0))
             {
@@ -65,7 +67,7 @@ namespace PacMan.GameComponents
             await drawRightAlignedScoreText(ds, score, _scorePos1Up);
         }
 
-        static async ValueTask drawRightAlignedScoreText(CanvasWrapper ds, int score, Vector2 pos)
+        async static ValueTask drawRightAlignedScoreText(CanvasWrapper ds, int score, Vector2 pos)
         {
             var scoreText = score.ToString();
 
@@ -86,7 +88,7 @@ namespace PacMan.GameComponents
             if (_gameStats.AmountOfPlayers > 1)
             {
                 await drawPlayerText(ds, 1, "2UP", _playerTwoTextPos);
-                int score = 0;
+                var score = 0;
 
                 if (_gameStats.HasPlayerStats(1))
                 {

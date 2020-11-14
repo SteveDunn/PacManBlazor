@@ -18,7 +18,6 @@ namespace PacMan.GameComponents
 {
     public class Game : IGame
     {
-        CanvasTimingInformation? _canvasTimingInformation;
         // ReSharper disable once UnusedMember.Local
         readonly DiagPanel _diagPanel = new DiagPanel();
 
@@ -31,15 +30,16 @@ namespace PacMan.GameComponents
         readonly IFruit _fruit;
         readonly IStatusPanel _statusPanel;
 
-        // ReSharper disable once UnusedMember.Local
+        CanvasTimingInformation? _canvasTimingInformation;
 
         IAct? _currentAct;
         TimedSpriteList? _tempSprites;
         EggTimer _pauser = EggTimer.Unset;
-        
+
         CanvasWrapper? _scoreCanvas;
         CanvasWrapper? _mazeCanvas;
         CanvasWrapper? _statusCanvas;
+
         // ReSharper disable once NotAccessedField.Local
         CanvasWrapper? _diagCanvas;
 
@@ -61,9 +61,7 @@ namespace PacMan.GameComponents
             _gameSoundPlayer = gameSoundPlayer;
             _input = input;
             _pacman = pacman;
-
         }
-
 
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
         public async ValueTask Initialise(IJSRuntime jsRuntime)
@@ -74,10 +72,9 @@ namespace PacMan.GameComponents
 
             _pauser = new EggTimer(0.Milliseconds(), () => { });
 
-
             // POINTER: You can change the starting Act by using something like:
-            //_currentAct = new TornGhostChaseAct(new AttractAct());
-            
+            // _currentAct = new TornGhostChaseAct(new AttractAct());
+
             // ReSharper disable once HeapView.BoxingAllocation
             _currentAct = await _mediator.Send(new GetActRequest("AttractAct"));
 
@@ -112,8 +109,8 @@ namespace PacMan.GameComponents
             {
                 // ReSharper disable once HeapView.BoxingAllocation
                 _currentAct = await _mediator.Send(new GetActRequest("LevelFinishedAct"));
-
             }
+
             if (Cheats.AllowDebugKeys && _input.IsKeyCurrentlyDown(Keys.Four))
             {
                 await _mediator.Publish(new PacManEatenEvent());
@@ -123,13 +120,12 @@ namespace PacMan.GameComponents
             {
                 await _mediator.Publish(new AllPillsEatenEvent());
             }
-
         }
 
         async ValueTask draw()
         {
             ensureInitialised();
-            
+
             var dim = Constants.UnscaledCanvasSize;
 
             if (_underlyingCanvasContext == null)
@@ -139,11 +135,11 @@ namespace PacMan.GameComponents
             }
 
             await _underlyingCanvasContext.BeginBatchAsync();
-            
-            await _mazeCanvas!.Clear((int) dim.X,(int) dim.Y);
+
+            await _mazeCanvas!.Clear((int) dim.X, (int) dim.Y);
 
             await _scorePanel.Draw(_scoreCanvas!);
-            
+
             await _statusPanel.Draw(_statusCanvas!);
             await _currentAct!.Draw(_mazeCanvas);
             await _tempSprites!.Draw(_mazeCanvas);
@@ -168,7 +164,7 @@ namespace PacMan.GameComponents
         {
             ensureInitialised();
             _tempSprites!.Add(new TimedSprite(3000, new ScoreSprite(_fruit.Position, points)));
-            
+
             return default;
         }
 
@@ -180,8 +176,7 @@ namespace PacMan.GameComponents
             ghost.Visible = false;
             _pacman.Visible = false;
 
-            _pauser = new EggTimer(1000.Milliseconds(), () =>
-            {
+            _pauser = new EggTimer(1000.Milliseconds(), () => {
                 ghost.Visible = true;
                 _pacman.Visible = true;
             });
@@ -192,7 +187,7 @@ namespace PacMan.GameComponents
         public void SetCanvasContextForOutput(Canvas2DContext context)
         {
             _underlyingCanvasContext = context ?? throw new ArgumentNullException(nameof(context));
-            
+
             _scoreCanvas = new CanvasWrapper(context, new Point(0, 0));
             _mazeCanvas = new CanvasWrapper(context, new Point(0, 26));
             _diagCanvas = new CanvasWrapper(context, new Point(0, 220));
@@ -209,10 +204,10 @@ namespace PacMan.GameComponents
 
         static readonly Stopwatch _stopWatch = new Stopwatch();
 
-        static float getTimestep() => 1000 / (float)Constants.FramesPerSecond;
+        static float getTimestep() => 1000 / (float) Constants.FramesPerSecond;
 
         static float _delta;
-        
+
         float _lastTimestamp;
         Canvas2DContext? _underlyingCanvasContext;
 
@@ -222,7 +217,7 @@ namespace PacMan.GameComponents
         public async ValueTask RunGameLoop(float timestamp)
         {
             _stopWatch.Restart();
-            
+
             if (!_initialised || !_postRenderInitialised)
             {
                 return;
@@ -234,7 +229,7 @@ namespace PacMan.GameComponents
             // timestep would normally be fixed (at 60FPS), but we have
             // the ability to slow down and speed up the game (via the A and S keys)
             var timestep = getTimestep();
-            
+
             while (_delta >= timestep)
             {
                 _canvasTimingInformation!.Update(timestep);
@@ -256,14 +251,14 @@ namespace PacMan.GameComponents
 
             ++_frameCount;
 
-            int fps = (int) (_canvasTimingInformation!.TotalTime.TotalMilliseconds / _frameCount);
+            var fps = (int) (_canvasTimingInformation!.TotalTime.TotalMilliseconds / _frameCount);
             DiagInfo.Fps = fps;
 
             DiagInfo.UpdateTimeLoopTaken(_stopWatch.ElapsedMilliseconds);
         }
 
-
-        public void PostRenderInitialize(Canvas2DContext outputCanvasContext,
+        public void PostRenderInitialize(
+            Canvas2DContext outputCanvasContext,
             Canvas2DContext player1MazeCanvas,
             Canvas2DContext player2MazeCanvas,
             in ElementReference spritesheetReference)
@@ -276,9 +271,6 @@ namespace PacMan.GameComponents
             _postRenderInitialised = true;
         }
 
-        public void SetAct(IAct act)
-        {
-            _currentAct = act ?? throw new ArgumentNullException(nameof(act));
-        }
+        public void SetAct(IAct act) => _currentAct = act ?? throw new ArgumentNullException(nameof(act));
     }
 }

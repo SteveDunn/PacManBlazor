@@ -1,6 +1,7 @@
-﻿using System;
+﻿// ReSharper disable HeapView.ObjectAllocation.Evident
+
+using System;
 using PacMan.GameComponents.Ghosts;
-// ReSharper disable HeapView.ObjectAllocation.Evident
 
 namespace PacMan.GameComponents
 {
@@ -20,7 +21,7 @@ namespace PacMan.GameComponents
 
         static readonly LevelProps[] _levelProps =
         {
-            //                                  pn   pd  gn  gt                      pf  pfd gf
+            // pn   pd  gn  gt                      pf  pfd gf
             new LevelProps(IntroCutScene.None, FruitItem.Cherry, 300, 80, 71, 80, 40, 30, 90, 15, 95, 90, 79, 50, 6, 5),
             new LevelProps(IntroCutScene.None, FruitItem.Strawberry, 300, 90, 79, 85, 45, 30, 90, 15, 95, 95, 83, 55, 5,
                 5),
@@ -59,9 +60,11 @@ namespace PacMan.GameComponents
             new LevelProps(IntroCutScene.None, FruitItem.Key, 5000, 90, 79, 95, 50, 120, 100, 60, 105, 0, 0, 0, 0, 0)
         };
 
-        //todo: move to another class (and related properties)
+        // todo: move to another class (and related properties)
         static readonly char[] _map = (
+
             // 0,0                     29,0
+
             "                             " +
             " oooooooooooo  oooooooooooo  " +
             " o    o     o  o     o    o  " +
@@ -95,13 +98,12 @@ namespace PacMan.GameComponents
             "                             ").ToCharArray();
         // 0,30                   //27,29
 
-
         public LevelStats(int levelNumber)
         {
             LevelNumber = levelNumber;
 
             PillsRemaining = _startingAmountOfPills;
-            _currentMap = (char[])_map.Clone();
+            _currentMap = (char[]) _map.Clone();
 
             FruitSession = new FruitSession();
         }
@@ -124,7 +126,7 @@ namespace PacMan.GameComponents
 
         public GhostsLevelPatternProperties GetGhostPatternProperties()
         {
-            //debug:
+            // debug:
             // if (this.levelNumber === 0) {
             //     p.Scatter1 = 111117;
             //     p.Chase1 = 20;
@@ -135,7 +137,7 @@ namespace PacMan.GameComponents
             //     p.Scatter4 = 5;
             //     p.Chase4 = Number.MAX_VALUE;
 
-            //     return p;
+            // return p;
             // }
 
             if (LevelNumber == 0)
@@ -187,12 +189,12 @@ namespace PacMan.GameComponents
 
             --PillsRemaining;
 
-            int index = cellPosition.Y * 29 + cellPosition.X;
+            var index = (cellPosition.Y * 29) + cellPosition.X;
 
             _currentMap[index] = '+';
         }
 
-        static int getArrayIndex(CellIndex point) => point.Y * 29 + point.X;
+        static int getArrayIndex(CellIndex point) => (point.Y * 29) + point.X;
 
         public char GetCellContent(CellIndex point) => _currentMap[getArrayIndex(point)];
     }

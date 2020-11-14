@@ -51,13 +51,11 @@ namespace PacMan.GameComponents.Events
                 if (_gameStats.CurrentPlayerStats.LevelStats.PillsRemaining == 0)
                 {
                     // _gameStats.levelFinished();
-                    //don't call levelFinished - the act does that when it's finished
+                    // don't call levelFinished - the act does that when it's finished
 
                     await _mediator.Publish(new AllPillsEatenEvent());
                 }
             }
-
         }
-
     }
 }

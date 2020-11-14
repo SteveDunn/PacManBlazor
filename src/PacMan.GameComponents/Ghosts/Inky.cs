@@ -16,10 +16,10 @@ namespace PacMan.GameComponents.Ghosts
         public override Color GetColor() => Color.Aqua;
 
         public override ValueTask<CellIndex> GetScatterTarget() => new ValueTask<CellIndex>(new CellIndex(27, 29));
+
         public override ValueTask<CellIndex> GetChaseTarget() => getChaseTargetCell();
 
-        public Inky(IGameStats gameStats, IMediator mediator, IMaze maze, IPacMan pacman, IHumanInterfaceParser input) : 
-            base(
+        public Inky(IGameStats gameStats, IMediator mediator, IMaze maze, IPacMan pacman, IHumanInterfaceParser input) : base(
                 gameStats,
                 mediator,
                 input,
@@ -46,18 +46,17 @@ namespace PacMan.GameComponents.Ghosts
             SetMover(new GhostInsideHouseMover(this, _maze, CurrentPlayerStats.ghostHouseDoor));
         }
 
-
         // To locate Inky’s target, we first start by selecting the position two tiles in front of Pac-Man
-// in his current direction of travel.
-// From there, imagine drawing a vector from Blinky’s position to this tile, and then doubling
-// the length of the vector. The tile that this new, extended vector ends on will be Inky’s actual target
+        // in his current direction of travel.
+        // From there, imagine drawing a vector from Blinky’s position to this tile, and then doubling
+        // the length of the vector. The tile that this new, extended vector ends on will be Inky’s actual target
         async ValueTask<CellIndex> getChaseTargetCell()
         {
             // ReSharper disable once HeapView.BoxingAllocation
             var blinky = await _mediator.Send(_getBlinkyRequest);
 
             var blinkyCell = blinky.Tile.Index;
-            
+
             var pacDir = _pacman.Direction;
 
             CellIndex pacCellPos = _pacman.Tile.Index;
@@ -74,11 +73,11 @@ namespace PacMan.GameComponents.Ghosts
             return newTarget;
         }
 
-        //todo:
-//    draw(canvas: Canvas) : void {
-//    super.draw(canvas);
-//    if (Diags.enabled) {
-//        this.maze.highlightCell(canvas, this.getChaseTargetCell(), "aqua");
-//    }
+        // todo:
+        //    draw(canvas: Canvas) : void {
+        //    super.draw(canvas);
+        //    if (Diags.enabled) {
+        //        this.maze.highlightCell(canvas, this.getChaseTargetCell(), "aqua");
+        //    }
     }
 }

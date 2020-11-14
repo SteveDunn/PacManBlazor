@@ -18,7 +18,7 @@
             if (++_counter == _toShowAt)
             {
                 ShouldShow = true;
-                
+
                 if (_toShowAt == 70)
                 {
                     _toShowAt = 170;

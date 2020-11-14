@@ -11,7 +11,6 @@ namespace PacMan.GameComponents.GameActs
         readonly GeneralSprite _blazorLogo;
         readonly Tweener _colorTweener;
 
-
         public BlazorLogo()
         {
             _blazorLogo = new GeneralSprite(
@@ -20,12 +19,9 @@ namespace PacMan.GameComponents.GameActs
                 Vector2.Zero,
                 new Vector2(547, 160));
 
-
-
             var colorTweeningFunction = Tweener.CreateTweeningFunction<Linear>(Easing.EaseNone);
 
-
-            _colorTweener=new Tweener(.12f,.8f,3.Seconds(), colorTweeningFunction);
+            _colorTweener = new Tweener(.12f, .8f, 3.Seconds(), colorTweeningFunction);
             _colorTweener.Ended += () =>
             {
                 _colorTweener.Reverse();
@@ -35,9 +31,9 @@ namespace PacMan.GameComponents.GameActs
 
         public ValueTask<ActUpdateResult> Update(CanvasTimingInformation timing)
         {
-             _colorTweener.Update(timing);
+            _colorTweener.Update(timing);
 
-             return default;
+            return default;
         }
 
         public async ValueTask Draw(CanvasWrapper session)

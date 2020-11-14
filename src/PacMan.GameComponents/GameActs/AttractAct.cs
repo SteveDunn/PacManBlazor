@@ -33,7 +33,6 @@ namespace PacMan.GameComponents.GameActs
             public Color Color;
         }
 
-        ChaseSubAct _chaseSubAct;
         readonly SimpleGhost _blinky;
         readonly SimpleGhost _pinky;
         readonly SimpleGhost _inky;
@@ -41,16 +40,16 @@ namespace PacMan.GameComponents.GameActs
 
         readonly List<Instruction> _instructions;
 
-        //IAct _nextAct;
+        readonly object _lock;
+        readonly BlazorLogo _blazorLogo;
+        readonly TimeSpan _chaseSubActReadyAt;
 
+        ChaseSubAct _chaseSubAct;
         TimeSpan _startTime;
         TimeSpan _drawUpTo;
-        readonly TimeSpan _chaseSubActReadyAt;
         bool _chaseSubActReady;
 
-        readonly object _lock;
         bool _finished;
-        readonly BlazorLogo _blazorLogo;
 
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
         public AttractAct(
@@ -59,7 +58,7 @@ namespace PacMan.GameComponents.GameActs
             IHumanInterfaceParser input,
             IGameSoundPlayer gameSoundPlayer)
         {
-            MarqueeText[] texts = 
+            MarqueeText[] texts =
             {
                 new MarqueeText
                 {
@@ -144,18 +143,19 @@ namespace PacMan.GameComponents.GameActs
 
                 return ActUpdateResult.Running;
             }
-            
-            if (_input.WasKeyPressedAndReleased(Keys.Space) || 
+
+            if (_input.WasKeyPressedAndReleased(Keys.Space) ||
                 _input.WasKeyPressedAndReleased(Keys.One) ||
                 _input.WasTapped)
             {
-                await _gameSoundPlayer.Enable(); 
+                await _gameSoundPlayer.Enable();
                 _coinBox.CoinInserted();
                 await _mediator.Publish(new NewGameEvent(1));
 
                 return ActUpdateResult.Running;
             }
-            if (_input.WasKeyPressedAndReleased(Keys.Two) ||_input.WasLongPress)
+
+            if (_input.WasKeyPressedAndReleased(Keys.Two) || _input.WasLongPress)
             {
                 _coinBox.CoinInserted();
 
@@ -218,7 +218,6 @@ namespace PacMan.GameComponents.GameActs
 
             await _marquee.Draw(session);
 
-
             await session.SetGlobalAlphaAsync(.75f);
             await session.DrawSprite(_pacmanLogo, Spritesheet.Reference);
             await session.SetGlobalAlphaAsync(1f);
@@ -231,7 +230,6 @@ namespace PacMan.GameComponents.GameActs
             lock (_lock)
             {
                 TimeSpan clock = 1500.Milliseconds();
-
 
                 _instructions.Add(new Instruction
                 {
@@ -268,7 +266,8 @@ namespace PacMan.GameComponents.GameActs
             return canvasWrapper.DrawMyText(text, point, color);
         }
 
-        void writeInstructionsForGhost(ref TimeSpan clock,
+        void writeInstructionsForGhost(
+            ref TimeSpan clock,
             SimpleGhost ghost,
             Color color,
             string name,

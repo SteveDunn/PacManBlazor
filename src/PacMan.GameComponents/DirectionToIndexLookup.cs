@@ -11,10 +11,10 @@ namespace PacMan.GameComponents
         {
             _lookup = new Dictionary<Directions, Vector2>
             {
-                {Directions.Up, new Vector2(0, -1)},
-                {Directions.Down, new Vector2(0, 1)},
-                {Directions.Left, new Vector2(-1, 0)},
-                {Directions.Right, new Vector2(1, 0)}
+                { Directions.Up, new Vector2(0, -1) },
+                { Directions.Down, new Vector2(0, 1) },
+                { Directions.Left, new Vector2(-1, 0) },
+                { Directions.Right, new Vector2(1, 0) }
             };
         }
 
@@ -24,16 +24,23 @@ namespace PacMan.GameComponents
         {
             var unitVector = new Vector2(vector.X, vector.Y).Normalize();
 
-            if(unitVector.X< 0) {
+            if (unitVector.X < 0)
+            {
                 return Directions.Left;
             }
-            if(unitVector.X > 0) {
+
+            if (unitVector.X > 0)
+            {
                 return Directions.Right;
             }
-            if(unitVector.Y< 0) {
+
+            if (unitVector.Y < 0)
+            {
                 return Directions.Up;
             }
-            if(unitVector.Y > 0) {
+
+            if (unitVector.Y > 0)
+            {
                 return Directions.Down;
             }
 

@@ -5,12 +5,19 @@ namespace PacMan.GameComponents
     public interface IHumanInterfaceParser
     {
         bool IsLeftKeyDown { get; }
+
         bool IsUpKeyDown { get; }
+
         bool IsDownKeyDown { get; }
+
         bool IsRightKeyDown { get; }
-        bool WasTapped { get;  }
-        bool WasLongPress { get;  }
+
+        bool WasTapped { get; }
+
+        bool WasLongPress { get; }
+
         void Update(CanvasTimingInformation timing);
+
         bool IsKeyCurrentlyDown(byte key);
 
         /// <summary>
@@ -22,12 +29,15 @@ namespace PacMan.GameComponents
         bool WasKeyPressedAndReleased(byte key);
 
         void KeyDown(byte key);
+
         void KeyUp(byte key);
 
         bool IsPanning(byte key);
 
         void Swiped(byte key);
+
         void TapHappened();
+
         void LongPressHappened();
     }
 }

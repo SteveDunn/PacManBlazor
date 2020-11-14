@@ -30,28 +30,27 @@ namespace PacMan.GameComponents
             _showTimer = new EggTimer(10.Seconds(), () => { Visible = false; });
 
             Position = Tile.ToCenterCanvas(new Vector2(14, 17.2f));
-            
+
             Visible = false;
         }
 
-        public virtual async ValueTask Update(CanvasTimingInformation timing)
+        public async virtual ValueTask Update(CanvasTimingInformation timing)
         {
             if (Visible)
             {
                 _showTimer.Run(timing);
-                
+
                 if (Vector2s.AreNear(_pacman.Position, Position, 4))
                 {
                     await _mediator.Publish(new FruitEatenEvent(this));
 
-                    //_ = _game.FruitEaten();
+                    // _ = _game.FruitEaten();
 
                     Visible = false;
                 }
-                
+
                 return;
             }
-
 
             if (_playerStats == null)
             {
@@ -67,7 +66,7 @@ namespace PacMan.GameComponents
                 _showTimer.Reset();
             }
 
-            SetFruitItem(levelStats.GetLevelProps().Fruit);
+            SetFruitItem(levelStats.GetLevelProps().Fruit1);
         }
 
         public void HandlePlayerStarted(PlayerStats playerStats, bool isDemo)
@@ -75,7 +74,6 @@ namespace PacMan.GameComponents
             _playerStats = playerStats;
             _isDemo = isDemo;
             reset();
-
         }
     }
 }

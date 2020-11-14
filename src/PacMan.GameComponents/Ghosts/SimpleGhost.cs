@@ -13,7 +13,7 @@ namespace PacMan.GameComponents.Ghosts
 
         readonly FrightenedSpritesheet _spritesheetInfoFrightened;
         readonly EyesSpritesheetInfo _spriteSheetEyes;
-        
+
         readonly TwoFrameAnimation _toggle = new TwoFrameAnimation(65.Milliseconds());
 
         GhostFrightSession? _frightSession;

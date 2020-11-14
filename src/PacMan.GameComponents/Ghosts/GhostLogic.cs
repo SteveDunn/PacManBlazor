@@ -6,7 +6,7 @@ namespace PacMan.GameComponents.Ghosts
 {
     public class GhostLogic
     {
-        readonly DistanceAndDirectionComparer _distanceAndDirectionComparer= new DistanceAndDirectionComparer();
+        readonly DistanceAndDirectionComparer _distanceAndDirectionComparer = new DistanceAndDirectionComparer();
 
         readonly List<Directions> _availableDirections = new List<Directions>(4);
         readonly List<DistanceAndDirection> _distanceAndDirections = new List<DistanceAndDirection>(4);
@@ -151,11 +151,11 @@ namespace PacMan.GameComponents.Ghosts
         {
             public int Compare(DistanceAndDirection l, DistanceAndDirection r)
             {
-                decimal dist = Math.Floor((decimal) (l.Distance - r.Distance));
+                decimal dist = Math.Floor((decimal)(l.Distance - r.Distance));
 
                 if (dist != 0)
                 {
-                    return (int) dist;
+                    return (int)dist;
                 }
 
                 int ret = weightDir(l.Direction) - weightDir(r.Direction);
@@ -164,7 +164,7 @@ namespace PacMan.GameComponents.Ghosts
             }
         }
 
-        //From the spec: To break the tie, the ghost prefers directions in this order: up, left, down, right
+        // From the spec: To break the tie, the ghost prefers directions in this order: up, left, down, right
         static int weightDir(Directions direction) =>
             direction switch
             {

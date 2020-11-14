@@ -2,7 +2,7 @@
 
 namespace PacMan.GameComponents
 {
-    public class GameEventArgs:EventArgs
+    public class GameEventArgs : EventArgs
     {
     }
 }

@@ -6,9 +6,9 @@ using PacMan.GameComponents.Events;
 
 namespace PacMan.GameComponents.GameActs
 {
-    /// The main 'Game' act.  Draws everything (maze, ghosts, pacman), and updates
-    /// everything (keyboard, sound etc.)
-    /// Transitions to the 'player intro' act
+    /// <summary>
+    /// The main 'Game' act.  Draws everything (maze, ghosts, pacman), and updates everything (keyboard, sound etc.). Transitions to the 'player intro' act.
+    /// </summary>
     public class GameAct : IAct
     {
         readonly ICoinBox _coinBox;
@@ -22,7 +22,6 @@ namespace PacMan.GameComponents.GameActs
         readonly IFruit _fruit;
 
         bool _paused;
-        //readonly GameSoundPlayer _gameSounds;
 
         public GameAct(
             ICoinBox coinBox,
@@ -57,22 +56,22 @@ namespace PacMan.GameComponents.GameActs
 
         public async ValueTask<ActUpdateResult> Update(CanvasTimingInformation timing)
         {
-            if(_gameStats.IsDemo)
+            if (_gameStats.IsDemo)
             {
-                if (_input.WasKeyPressedAndReleased(Keys.Space) || 
+                if (_input.WasKeyPressedAndReleased(Keys.Space) ||
                    _input.WasKeyPressedAndReleased(Keys.One) ||
                    _input.WasTapped)
                 {
-                    await _gameSoundPlayer.Enable(); 
+                    await _gameSoundPlayer.Enable();
                     _coinBox.CoinInserted();
                     await _mediator.Publish(new NewGameEvent(1));
 
                     return ActUpdateResult.Running;
                 }
 
-                if (_input.WasKeyPressedAndReleased(Keys.Two) ||_input.WasLongPress)
+                if (_input.WasKeyPressedAndReleased(Keys.Two) || _input.WasLongPress)
                 {
-                    await _gameSoundPlayer.Enable(); 
+                    await _gameSoundPlayer.Enable();
 
                     _coinBox.CoinInserted();
                     _coinBox.CoinInserted();
@@ -93,18 +92,17 @@ namespace PacMan.GameComponents.GameActs
             if (_input.WasKeyPressedAndReleased(Keys.P))
             {
                 _paused = !_paused;
-            
+
                 if (_paused)
                 {
                     await _gameSoundPlayer.Disable();
                 }
-                
+
                 else
                 {
                     await _gameSoundPlayer.Enable();
                 }
             }
-
 
             if (_paused)
             {
@@ -124,7 +122,7 @@ namespace PacMan.GameComponents.GameActs
             await _fruit.Update(timing);
 
             await _ghostCollection.Update(timing);
-            
+
             return ActUpdateResult.Running;
         }
 
@@ -132,7 +130,7 @@ namespace PacMan.GameComponents.GameActs
         {
             await _maze.Draw(session);
             await _pacman.Draw(session);
-            
+
             await _fruit.Draw(session);
 
             await _ghostCollection.DrawAll(session);

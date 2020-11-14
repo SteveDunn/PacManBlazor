@@ -24,7 +24,8 @@ namespace PacMan.GameComponents.Events
             readonly IActs _acts;
             readonly IGameStats _gameStats;
 
-            public Handler(IGhostCollection ghostCollection,
+            public Handler(
+                IGhostCollection ghostCollection,
                 IFruit fruit,
                 IMaze maze,
                 IPacMan pacman,

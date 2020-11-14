@@ -14,7 +14,7 @@ namespace PacMan.GameComponents.GameActs
 {
     public class BigPacChaseAct : IAct
     {
-        //these need to send playerstartingevent when finished
+        // these need to send playerstartingevent when finished
         readonly IMediator _mediator;
         readonly IGameSoundPlayer _gameSoundPlayer;
         readonly AttractScenePacMan _pacMan;
@@ -45,7 +45,8 @@ namespace PacMan.GameComponents.GameActs
 
             _pacMan = new AttractScenePacMan { Direction = Directions.Left };
 
-            _bigPacMan = new GeneralSprite(Vector2.Zero,
+            _bigPacMan = new GeneralSprite(
+                Vector2.Zero,
                 new Size(31, 32),
                 new Vector2(16, 16),
                 new Vector2(488, 16),
@@ -54,7 +55,6 @@ namespace PacMan.GameComponents.GameActs
             {
                 Visible = false
             };
-
 
             _blinky = new AttractGhost(GhostNickname.Blinky, Directions.Left);
 
@@ -114,7 +114,7 @@ namespace PacMan.GameComponents.GameActs
         void reverseChase()
         {
             _blinkyTimer = new EggTimer(4600.Milliseconds(), () => { });
-            
+
             _pacTimer = new EggTimer(4350.Milliseconds(), async () =>
             {
                 _finished = true;

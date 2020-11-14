@@ -26,9 +26,9 @@ namespace PacMan.GameComponents.Events
             public async Task Handle(CoinInsertedEvent notification, CancellationToken cancellationToken)
             {
                 _coinBox.CoinInserted();
-                
+
                 await _gameSoundPlayer.CoinInserted();
-                
+
                 IAct currentAct = _acts.GetActNamed("StartButtonAct");
 
                 _game.SetAct(currentAct);

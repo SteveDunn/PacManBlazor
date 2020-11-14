@@ -12,13 +12,13 @@ namespace PacMan.GameComponents.Ghosts
         {
             const int left = 457;
 
-            int x = left + 8 * 16;
+            int x = left + (8 * 16);
 
             _frightened = new FrightenedSpritesheet(
                 new FramePair(new Vector2(x, 64), new Vector2(x += 16, 64)),
                 new FramePair(new Vector2(x += 16, 64), new Vector2(x + 16, 64)));
 
-            x = left + 8 * 16;
+            x = left + (8 * 16);
             Eyes = new EyesSpritesheetInfo(new Vector2(x, 64 + 16));
 
             _entries = new Dictionary<GhostNickname, GhostSpritesheetInfo>

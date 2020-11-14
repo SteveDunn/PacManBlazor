@@ -28,6 +28,5 @@ namespace PacMan.GameComponents.Requests
                 return Task.FromResult(_acts.GetActNamed(request.ActName));
             }
         }
-
     }
 }

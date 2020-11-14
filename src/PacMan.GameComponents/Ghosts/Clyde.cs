@@ -12,8 +12,7 @@ namespace PacMan.GameComponents.Ghosts
         readonly IPacMan _pacman;
         readonly ValueTask<CellIndex> _scatterTarget = new ValueTask<CellIndex>(new CellIndex(0, 29));
 
-        public Clyde(IGameStats gameStats, IMediator mediator, IMaze maze, IPacMan pacman, IHumanInterfaceParser input) : 
-            base(
+        public Clyde(IGameStats gameStats, IMediator mediator, IMaze maze, IPacMan pacman, IHumanInterfaceParser input) : base(
                 gameStats,
                 mediator,
                 input,
@@ -28,11 +27,9 @@ namespace PacMan.GameComponents.Ghosts
 
         public override Color GetColor() => Color.YellowGreen;
 
-
         public override ValueTask<CellIndex> GetScatterTarget() => _scatterTarget;
 
         public override ValueTask<CellIndex> GetChaseTarget() => _getChaseTargetCell();
-
 
         public override void Reset()
         {
@@ -43,7 +40,6 @@ namespace PacMan.GameComponents.Ghosts
             State = GhostState.Normal;
 
             MovementMode = GhostMovementMode.InHouse;
-            
 
             SetMover(new GhostInsideHouseMover(this, _maze, CurrentPlayerStats.ghostHouseDoor));
         }
@@ -72,13 +68,13 @@ namespace PacMan.GameComponents.Ghosts
             return _scatterTarget;
         }
 
-        //todo:
-        //draw(canvas: Canvas) : void {
+        // todo:
+        // draw(canvas: Canvas) : void {
         //    super.draw(canvas);
         //
         //    if (Diags.enabled) {
         //        this.maze.highlightCell(canvas, this._getChaseTargetCell(), "orange");
         //    }
-        //};
+        // };
     }
 }

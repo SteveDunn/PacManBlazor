@@ -44,7 +44,8 @@ namespace PacMan.GameComponents.GameActs
                 Direction = Directions.Left
             };
 
-            _worm = new GeneralSprite(Vector2.Zero,
+            _worm = new GeneralSprite(
+                Vector2.Zero,
                 new Size(22, 11),
                 new Vector2(11, 5.5f),
                 new Vector2(594, 132),
@@ -54,14 +55,13 @@ namespace PacMan.GameComponents.GameActs
                 Visible = false
             };
 
-
-            _blinky = new GeneralSprite(Vector2.Zero,
+            _blinky = new GeneralSprite(
+                Vector2.Zero,
                 new Size(14, 14),
                 new Vector2(7.5f, 7.5f),
                 new Vector2(618, 113),
                 new Vector2(634, 113),
                 110.Milliseconds());
-
 
             _pacPositions = new StartAndEndPos(justOffScreen, new Vector2(-70, justOffScreen.Y));
 
@@ -120,7 +120,7 @@ namespace PacMan.GameComponents.GameActs
         {
             _ghostTimer = new EggTimer(4600.Milliseconds(), async () =>
             {
-                _finished = true; 
+                _finished = true;
                 await _mediator.Publish(new CutSceneFinishedEvent());
             });
 

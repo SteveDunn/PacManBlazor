@@ -18,6 +18,5 @@ namespace PacMan.GameComponents.Requests
                 return Task.FromResult(_ghostCollection.GetGhost(GhostNickname.Blinky));
             }
         }
-
     }
 }

@@ -24,6 +24,5 @@ namespace PacMan.GameComponents.Requests
                 });
             }
         }
-
     }
 }

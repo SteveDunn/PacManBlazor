@@ -22,7 +22,6 @@ namespace PacMan.GameComponents
             _mediator = mediator;
             _storage = storage;
 
-          
             _playerStats = new List<PlayerStats>();
 
 #pragma warning disable 4014
@@ -33,10 +32,10 @@ namespace PacMan.GameComponents
         public async ValueTask Reset(int players)
         {
             _ghostsThatAreEyes = 0;
-            
+
             HighScore =
                 Math.Max(await _storage.GetHighScore(), HighScore);
-    
+
             HasPlayedIntroTune = false;
 
             IsDemo = false;
@@ -61,7 +60,7 @@ namespace PacMan.GameComponents
         }
 
         public bool AreAnyGhostsInEyeState => _ghostsThatAreEyes > 0;
-        
+
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
         public PlayerStats ResetForDemo()
         {
@@ -96,7 +95,6 @@ namespace PacMan.GameComponents
         public int AmountOfPlayers => _playerStats.Count;
 
         public bool AnyonePlaying => _currentPlayerIndex != -1;
-
 
         public bool IsGameOver => _playerStats.All(p => p.LivesRemaining == 0);
 
@@ -179,7 +177,7 @@ namespace PacMan.GameComponents
         public ValueTask HandleGhostBackInsideHouse()
         {
             --_ghostsThatAreEyes;
-            
+
             return default;
         }
     }

@@ -10,8 +10,8 @@ namespace PacMan.GameComponents.GameActs
         string Name { get; }
 
         ValueTask Reset();
-        
-        ValueTask<ActUpdateResult> Update(CanvasTimingInformation timing) ;
+
+        ValueTask<ActUpdateResult> Update(CanvasTimingInformation timing);
 
         ValueTask Draw(CanvasWrapper session);
     }

@@ -36,9 +36,9 @@ namespace PacMan.GameComponents.Events
                 if (_gameStats.IsDemo)
                 {
                     IAct act = await _mediator.Send(new GetActRequest("AttractAct"), cancellationToken);
-                    
+
                     await act.Reset();
-                    
+
                     _game.SetAct(act);
 
                     return;
@@ -49,7 +49,7 @@ namespace PacMan.GameComponents.Events
                 if (currentPlayerStats.LivesRemaining == 0 || _gameStats.IsGameOver)
                 {
                     await _mediator.Publish(new PlayerHasNoLivesEvent(), cancellationToken);
-                    
+
                     return;
                 }
 

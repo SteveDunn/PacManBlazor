@@ -15,7 +15,7 @@ namespace PacMan.GameComponents.Ghosts
         public GhostMovementConductor(GhostsLevelPatternProperties properties)
         {
             _index = -1;
-            
+
             _items = new List<ModeAndDuration>
             {
                 new ModeAndDuration(GhostMovementMode.Scatter, properties.Scatter1.Seconds()),
@@ -46,7 +46,7 @@ namespace PacMan.GameComponents.Ghosts
         void incrementIndex()
         {
             _index += 1;
-            
+
             if (_index >= _items.Count)
             {
                 throw new InvalidOperationException("No more move patterns!?");

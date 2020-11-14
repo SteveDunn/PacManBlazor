@@ -11,7 +11,7 @@ namespace PacMan.GameComponents.GameActs
     {
         readonly IMediator _mediator;
         readonly IGameStats _gameStats;
-        
+
         IAct? _gameOverAct;
 
         public PlayerGameOverAct(IMediator mediator, IGameStats gameStats)
@@ -34,11 +34,11 @@ namespace PacMan.GameComponents.GameActs
         }
 
         public string Name => "PlayerGameOverAct";
-        
+
         public async ValueTask Reset()
         {
             var a = await resolveGameOverAct();
-            
+
             await a.Reset();
         }
 
@@ -52,7 +52,7 @@ namespace PacMan.GameComponents.GameActs
             {
                 await _mediator.Publish(new GameOverEvent());
             }
-            
+
             return result;
         }
 

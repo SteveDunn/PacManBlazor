@@ -8,8 +8,8 @@ using PacMan.GameComponents.Requests;
 namespace PacMan.GameComponents.Events
 {
     /// <summary>
-    /// When pacman has been caught, eaten, and the player game over screen has shown
-    /// and finished.
+    /// When pacman has been caught, eaten, and the player game over screen has
+    /// been shown and finished.
     /// </summary>
     public readonly struct GameOverEvent : INotification
     {
@@ -38,7 +38,7 @@ namespace PacMan.GameComponents.Events
                     // ReSharper disable once HeapView.BoxingAllocation
                     IAct act = await _mediator.Send(new GetActRequest("AttractAct"), cancellationToken);
                     await act.Reset();
-                    
+
                     _game.SetAct(act);
 
                     return;
@@ -46,7 +46,7 @@ namespace PacMan.GameComponents.Events
 
                 _gameStats.ChoseNextPlayer();
 
-                await _mediator.Publish(new PlayerStartingEvent());
+                await _mediator.Publish(new PlayerStartingEvent(), cancellationToken);
             }
         }
     }

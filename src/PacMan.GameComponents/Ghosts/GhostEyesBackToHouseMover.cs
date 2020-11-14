@@ -75,7 +75,7 @@ namespace PacMan.GameComponents.Ghosts
             return new ValueTask<MovementResult>(MovementResult.NotFinished);
         }
 
-        public override async ValueTask<MovementResult> Update(CanvasTimingInformation context) => await _currentAction(context);
+        public async override ValueTask<MovementResult> Update(CanvasTimingInformation context) => await _currentAction(context);
 
         bool isNearHouseEntrance() => Vector2s.AreNear(Ghost.Position, Maze.PixelHouseEntrancePoint, .75);
     }

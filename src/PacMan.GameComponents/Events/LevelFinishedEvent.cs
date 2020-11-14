@@ -24,11 +24,11 @@ namespace PacMan.GameComponents.Events
             public Handler(IMediator mediator, IGame game, IGameStats gameStats, IHaveTheMazeCanvases mazeCanvases)
             {
                 _mediator = mediator;
-                
+
                 _game = game;
-                
+
                 _gameStats = gameStats;
-                
+
                 _mazeCanvases = mazeCanvases;
             }
 
@@ -37,15 +37,15 @@ namespace PacMan.GameComponents.Events
             {
                 try
                 {
-                    PlayerStats playerStats = _gameStats.CurrentPlayerStats;
+                    var playerStats = _gameStats.CurrentPlayerStats;
 
                     var maze = _mazeCanvases.GetForPlayer(playerStats.PlayerIndex);
-                
+
                     await maze.Reset();
 
                     _gameStats.LevelFinished();
 
-                    IntroCutScene cutScene = playerStats.LevelStats.GetLevelProps().IntroCutScene;
+                    var cutScene = playerStats.LevelStats.GetLevelProps().CutScene;
 
                     if (cutScene == IntroCutScene.None)
                     {
@@ -59,6 +59,7 @@ namespace PacMan.GameComponents.Events
                         IntroCutScene.BigPac => await getAct("BigPacChaseAct"),
                         IntroCutScene.GhostSnagged => await getAct("GhostTearAct"),
                         IntroCutScene.TornGhostAndWorm => await getAct("TornGhostChaseAct"),
+
                         // ReSharper disable once HeapView.BoxingAllocation
                         _ => throw new InvalidOperationException($"Don't know how to handle cut scene of {cutScene}")
                     };

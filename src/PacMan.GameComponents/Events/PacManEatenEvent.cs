@@ -34,9 +34,9 @@ namespace PacMan.GameComponents.Events
                 {
                     // ReSharper disable once HeapView.BoxingAllocation
                     var dyingAct = await _mediator.Send(new GetActRequest("PacManDyingAct"), cancellationToken);
-                    
+
                     await dyingAct.Reset();
-                    
+
                     _game.SetAct(dyingAct);
                 }
             }

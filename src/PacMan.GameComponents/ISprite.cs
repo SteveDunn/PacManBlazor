@@ -7,7 +7,7 @@ namespace PacMan.GameComponents
 {
     public interface ISprite
     {
-        public Vector2 Position { get;  }
+        public Vector2 Position { get; }
 
         public ValueTask Draw(CanvasWrapper session);
 
@@ -20,4 +20,3 @@ namespace PacMan.GameComponents
         public bool Visible { get; }
     }
 }
-

@@ -10,7 +10,7 @@ using PacMan.GameComponents.Ghosts;
 
 namespace PacMan.GameComponents.GameActs
 {
-    public class GhostTearAct :IAct
+    public class GhostTearAct : IAct
     {
         readonly IGameSoundPlayer _gameSoundPlayer;
         readonly IMediator _mediator;
@@ -42,8 +42,8 @@ namespace PacMan.GameComponents.GameActs
 
         readonly Vector2 _centerPoint = new Vector2(120, 140);
 
-        readonly Vector2[]  _tearFrames;
-        readonly Vector2[]  _blinkyLookFrames;
+        readonly Vector2[] _tearFrames;
+        readonly Vector2[] _blinkyLookFrames;
 
         readonly Size _tearSize = new Size(13, 13);
         readonly Vector2 _tearOffset = new Vector2(7, 6.5f);
@@ -54,7 +54,7 @@ namespace PacMan.GameComponents.GameActs
             _mediator = mediator;
 
             _finished = false;
-            //NextAct = nextAct;
+
             _stage = Stage.MovingBlinky;
             _animFrame = 0;
 
@@ -69,14 +69,16 @@ namespace PacMan.GameComponents.GameActs
                 new Vector2(649, 98)
             };
 
-            _blinkyLookFrames = new[] {
+            _blinkyLookFrames = new[]
+            {
                 new Vector2(584, 113),
                 new Vector2(600, 113)
             };
 
             _blinkyTimer = new EggTimer(4500.Milliseconds(), blinkyCaught);
 
-            _tearTimer = new LoopingTimer(500.Milliseconds(),
+            _tearTimer = new LoopingTimer(
+                500.Milliseconds(),
                 () => {
                     if (_stage == Stage.TearingBlinky)
                     {
@@ -105,7 +107,7 @@ namespace PacMan.GameComponents.GameActs
 
             _pacPositions = new StartAndEndPos(justOffScreen, new Vector2(-70, justOffScreen.Y));
 
-            _blinkyPositions = new StartAndEndPos(justOffScreen+new Vector2(120, 0), _centerPoint-new Vector2(10, 0));
+            _blinkyPositions = new StartAndEndPos(justOffScreen + new Vector2(120, 0), _centerPoint - new Vector2(10, 0));
         }
 
         public async ValueTask Reset()
@@ -115,10 +117,10 @@ namespace PacMan.GameComponents.GameActs
             _blinky.Position = _blinkyPositions.Start;
         }
 
-
         public string Name => "GhostTearAct";
 
-        public async ValueTask<ActUpdateResult> Update(CanvasTimingInformation timing)  {
+        public async ValueTask<ActUpdateResult> Update(CanvasTimingInformation timing)
+        {
             _blinkyTimer.Run(timing);
             _pacTimer.Run(timing);
             _tearTimer.Run(timing);
@@ -139,7 +141,6 @@ namespace PacMan.GameComponents.GameActs
             return _finished ? ActUpdateResult.Finished : ActUpdateResult.Running;
         }
 
-
         public async ValueTask Draw(CanvasWrapper canvas)
         {
             await _pacMan.Draw(canvas);
@@ -150,21 +151,18 @@ namespace PacMan.GameComponents.GameActs
 
         void lerpBlinky()
         {
-            float pc = _blinkyTimer.Progress;
+            var pc = _blinkyTimer.Progress;
             _blinky.Position = Vector2.Lerp(_blinkyPositions.Start, _blinkyPositions.End, pc);
         }
 
         void lerpPacMan()
         {
-            float pc = _pacTimer.Progress;
+            var pc = _pacTimer.Progress;
 
             _pacMan.Position = Vector2.Lerp(_pacPositions.Start, _pacPositions.End, pc);
         }
 
-        void blinkyCaught()
-        {
-            _stage = Stage.TearingBlinky;
-        }
+        void blinkyCaught() => _stage = Stage.TearingBlinky;
 
         void updateTearAnimation()
         {
@@ -177,9 +175,9 @@ namespace PacMan.GameComponents.GameActs
                     _tearOffset,
                     _tearFrames[_animFrame]);
 
-                //this.snagSprite.position = this.snagSprite.position.minus(new Point(1, 0));
+                // this.snagSprite.position = this.snagSprite.position.minus(new Point(1, 0));
 
-                _blinky.Position = _blinky.Position-new Vector2(1, 0);
+                _blinky.Position = _blinky.Position - new Vector2(1, 0);
 
                 return;
             }
@@ -194,8 +192,7 @@ namespace PacMan.GameComponents.GameActs
             _stage = Stage.BlinkyLooking;
         }
 
-        void setLookingBlinky(int frame)
-        {
+        void setLookingBlinky(int frame) =>
             _lookingBlinky = new GeneralSprite(
                 _blinky.Position,
                 _blinky.Size,
@@ -204,8 +201,6 @@ namespace PacMan.GameComponents.GameActs
             {
                 Visible = true
             };
-
-        }
 
         async ValueTask updateBlinkyLookAnimation()
         {

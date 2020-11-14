@@ -57,7 +57,7 @@ namespace PacMan.GameComponents.GameActs
             _powerPillToEat = new PowerPill
             {
                 Visible = false,
-                Position = new Vector2(30, justOffScreen.Y-4)
+                Position = new Vector2(30, justOffScreen.Y - 4)
             };
 
             _pillLegend = new Pill { Position = new Vector2(70, 178) };
@@ -202,10 +202,9 @@ namespace PacMan.GameComponents.GameActs
             await _pacMan.Draw(session);
 
             var gp = _ghosts[0].Position;
-            
-            await session.DrawText("STEVE DUNN 2020", new Point((int) gp.X+2, (int) (gp.Y+22)), Color.Black);
-            await session.DrawText("STEVE DUNN 2020", new Point((int) gp.X, (int) (gp.Y+20)), Color.Yellow);
 
+            await session.DrawText("STEVE DUNN 2020", new Point((int)gp.X + 2, (int)(gp.Y + 22)), Color.Black);
+            await session.DrawText("STEVE DUNN 2020", new Point((int)gp.X, (int)(gp.Y + 20)), Color.Yellow);
         }
 
         void ghostEaten(AttractGhost ghost)
@@ -218,7 +217,7 @@ namespace PacMan.GameComponents.GameActs
             _pacTimer.Pause();
 
             showScore(ghost.Position, _ghostScore);
-            
+
             _ghostScore *= 2;
 
             // ReSharper disable once HeapView.ObjectAllocation.Evident
@@ -230,7 +229,7 @@ namespace PacMan.GameComponents.GameActs
             });
         }
 
-        void showScore(Vector2 pos, int amount) => 
+        void showScore(Vector2 pos, int amount) =>
             _tempSprites.Add(new TimedSprite(900, new ScoreSprite(pos, amount)));
 
         void lerpGhost(AttractGhost ghost)
@@ -260,7 +259,7 @@ namespace PacMan.GameComponents.GameActs
                 eachGhost.Direction.Update(Directions.Right);
                 eachGhost.SetFrightSession(frightSessions);
                 eachGhost.SetFrightened();
-             
+
                 _ghostPositions[eachGhost.NickName] = _ghostPositions[eachGhost.NickName].Reverse();
             }
 

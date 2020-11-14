@@ -15,7 +15,7 @@ namespace PacMan.GameComponents.GameActs
         readonly IGameSoundPlayer _gameSoundPlayer;
         readonly IPacMan _pacman;
         readonly IMaze _maze;
-        
+
         int _step;
         LoopingTimer _timer = LoopingTimer.DoNothing;
         bool _finished;
@@ -44,7 +44,7 @@ namespace PacMan.GameComponents.GameActs
             _timer = new LoopingTimer(2.Seconds(), () =>
             {
                 _step += 1;
-                _=_gameSoundPlayer.PacManDying();
+                _ = _gameSoundPlayer.PacManDying();
 
                 _pacman.StartDying();
 
@@ -63,7 +63,7 @@ namespace PacMan.GameComponents.GameActs
             {
                 return ActUpdateResult.Finished;
             }
-            
+
             _timer.Run(timing);
 
             await _pacman.Update(timing);

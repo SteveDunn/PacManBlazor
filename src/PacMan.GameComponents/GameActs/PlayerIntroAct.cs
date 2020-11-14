@@ -25,7 +25,8 @@ namespace PacMan.GameComponents.GameActs
 
         LoopingTimer _currentTimer = LoopingTimer.DoNothing;
 
-        public PlayerIntroAct(IMediator mediator,
+        public PlayerIntroAct(
+            IMediator mediator,
             IGhostCollection ghostCollection,
             IGameStats gameStats,
             IGameSoundPlayer gameSoundPlayer,
@@ -89,7 +90,6 @@ namespace PacMan.GameComponents.GameActs
             _currentTimer.Run(timing);
 
             return new ValueTask<ActUpdateResult>(ActUpdateResult.Running);
-
         }
 
         public async ValueTask Draw(CanvasWrapper session)

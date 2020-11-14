@@ -28,11 +28,11 @@ namespace PacMan.GameComponents
 
             Score = 0;
 
-            //cheat
+            // cheat
             LivesRemaining = Constants.PacManLives;
             _levelNumber = -1;
 
-            _extraLives = new List<int> {10000};
+            _extraLives = new List<int> { 10000 };
             _levelStats = new LevelStats(0);
             _ghostHouseDoor = new GhostHouseDoor(0, _mediator);
 
@@ -76,7 +76,7 @@ namespace PacMan.GameComponents
 
         public int LivesRemaining { get; protected set; }
 
-        protected virtual async ValueTask IncreaseScoreBy(int amount)
+        protected async virtual ValueTask IncreaseScoreBy(int amount)
         {
             Score += amount;
 
@@ -88,9 +88,9 @@ namespace PacMan.GameComponents
             if (Score > _extraLives[0])
             {
                 await _mediator.Publish(new ExtraLifeEvent());
-               
+
                 LivesRemaining += 1;
-                
+
                 _extraLives.RemoveAt(0);
             }
         }
@@ -102,7 +102,7 @@ namespace PacMan.GameComponents
             _levelStats.PillEaten(point);
         }
 
-        public async ValueTask FruitEaten()  
+        public async ValueTask FruitEaten()
         {
             await IncreaseScoreBy(_levelStats.GetLevelProps().FruitPoints);
             LevelStats.FruitSession.FruitEaten();
@@ -141,7 +141,7 @@ namespace PacMan.GameComponents
             {
                 throw new InvalidOperationException("ghost can't be eaten as there's no fright session");
             }
-            
+
             var points = FrightSession.GhostEaten();
 
             await IncreaseScoreBy(points);

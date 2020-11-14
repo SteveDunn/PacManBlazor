@@ -12,13 +12,13 @@ namespace PacMan.GameComponents
         ValueTask Initialise(IJSRuntime jsRuntime);
 
         ValueTask FruitEaten(int points);
-        
+
         ValueTask RunGameLoop(float timestamp);
-        
+
         void PostRenderInitialize(Canvas2DContext outputCanvasContext, Canvas2DContext player1MazeCanvas, Canvas2DContext player2MazeCanvas, in ElementReference spritesheetReference);
-        
+
         void SetAct(IAct act);
-        
+
         ValueTask GhostEaten(IGhost ghost, int points);
     }
 }

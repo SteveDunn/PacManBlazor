@@ -26,7 +26,7 @@ namespace PacMan.GameComponents.Events
             public Task Handle(GhostInsideHouseEvent notification, CancellationToken cancellationToken)
             {
                 _gameStats.HandleGhostBackInsideHouse();
-                
+
                 return Task.CompletedTask;
             }
         }

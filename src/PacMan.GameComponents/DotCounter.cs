@@ -7,7 +7,7 @@ namespace PacMan.GameComponents
     {
         readonly string _name;
         readonly int _limit;
-        
+
         bool _timedOut;
 
         public DotCounter(int limit, string name)
@@ -39,7 +39,6 @@ namespace PacMan.GameComponents
         }
 
         public bool LimitReached => Counter == _limit || _timedOut;
-
 
         public int Counter { get; protected set; }
 

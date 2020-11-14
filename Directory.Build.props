@@ -1,0 +1,6 @@
+<Project>
+  <ItemGroup>
+    <!-- Add reference to StyleCop analyzers to all projects  -->
+    <!-- <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" /> -->
+  </ItemGroup>
+</Project>

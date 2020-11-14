@@ -18,26 +18,26 @@ namespace PacMan.GameComponents.Tweening
             _tweenerX = new Tweener(start.X, end.X, duration, Tweener.CreateTweeningFunction(type, easing));
             _tweenerY = new Tweener(start.Y, end.Y, duration, Tweener.CreateTweeningFunction(type, easing));
             _tweenerX.Ended += () =>
-                                   {
-                                       if (_tweenerY.HasEnded)
-                                       {
-                                           if (Ended != null)
-                                           {
-                                               Ended();
-                                           }
-                                       }
-                                   };
+            {
+                if (_tweenerY.HasEnded)
+                {
+                    if (Ended != null)
+                    {
+                        Ended();
+                    }
+                }
+            };
 
             _tweenerY.Ended += () =>
-                                   {
-                                       if (_tweenerX.HasEnded)
-                                       {
-                                           if (Ended != null)
-                                           {
-                                               Ended();
-                                           }
-                                       }
-                                   };
+            {
+                if (_tweenerX.HasEnded)
+                {
+                    if (Ended != null)
+                    {
+                        Ended();
+                    }
+                }
+            };
         }
 
         public Vector2 Position

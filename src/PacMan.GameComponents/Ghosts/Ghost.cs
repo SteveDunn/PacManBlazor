@@ -230,7 +230,7 @@ namespace PacMan.GameComponents.Ghosts
             _isMoving = false;
         }
 
-        public override async ValueTask Update(CanvasTimingInformation timing)
+        public async override ValueTask Update(CanvasTimingInformation timing)
         {
             await base.Update(timing);
 
@@ -248,6 +248,7 @@ namespace PacMan.GameComponents.Ghosts
                 {
                     throw new InvalidOperationException("no action for when in centre of next tile");
                 }
+
                 _whenInCenterOfNextTile();
                 _whenInCenterOfNextTile = () => { };
             }
@@ -271,7 +272,7 @@ namespace PacMan.GameComponents.Ghosts
             }
         }
 
-        public override async ValueTask Draw(CanvasWrapper session)
+        public async override ValueTask Draw(CanvasWrapper session)
         {
             await base.Draw(session);
 
@@ -279,7 +280,7 @@ namespace PacMan.GameComponents.Ghosts
             {
                 if (_mover != null)
                 {
-                    //var targetPoint = ((await GetChaseTarget()).ToVector2() * Vector2s.Eight);
+                    // var targetPoint = ((await GetChaseTarget()).ToVector2() * Vector2s.Eight);
                     var targetPoint = _mover.TargetCell.ToVector2() * Vector2s.Eight;
 
                     await session.SetGlobalAlphaAsync(.25f);
@@ -289,20 +290,17 @@ namespace PacMan.GameComponents.Ghosts
                     await drawLine(Position , targetPoint, session);
 
                     await session.DrawSprite(s,Spritesheet.Reference);
-
                 }
             }
 
             await session.SetGlobalAlphaAsync(1f);
 
-            
-//            await session.DrawText("X", ((await GetChaseTarget()).ToVector2() * Vector2s.Eight).ToPoint(), Spritesheet.Reference);
+// await session.DrawText("X", ((await GetChaseTarget()).ToVector2() * Vector2s.Eight).ToPoint(), Spritesheet.Reference);
         }
 
         async Task drawLine(Vector2 cellIndex, Vector2 moverTargetCell, CanvasWrapper session)
         {
             await session.DrawLine(cellIndex, moverTargetCell, GetColor());
-
         }
 
         void setNextScatterOrChaseMoverAndMode()
@@ -329,7 +327,6 @@ namespace PacMan.GameComponents.Ghosts
             }
 
             throw new InvalidOperationException("Don't know what mover to create!");
-
         }
 
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
@@ -338,7 +335,6 @@ namespace PacMan.GameComponents.Ghosts
             var isScatterOrChase = MovementMode == GhostMovementMode.Undecided
                                    || MovementMode == GhostMovementMode.Chase
                                    || MovementMode == GhostMovementMode.Scatter;
-
 
             if (isScatterOrChase)
             {
@@ -351,7 +347,7 @@ namespace PacMan.GameComponents.Ghosts
                 return;
             }
 
-            //sets ghost movement mode to unknown at end
+            // sets ghost movement mode to unknown at end
             if (MovementMode == GhostMovementMode.InHouse)
             {
                 State = GhostState.Normal;
@@ -367,7 +363,7 @@ namespace PacMan.GameComponents.Ghosts
                 return;
             }
 
-            //sets ghost movement mode to unknown at end
+            // sets ghost movement mode to unknown at end
             if (MovementMode == GhostMovementMode.Frightened)
             {
                 _mover = new GhostFrightenedMover(this, _maze);
@@ -386,7 +382,7 @@ namespace PacMan.GameComponents.Ghosts
 
             if (State == GhostState.Normal)
             {
-                //cheat:
+                // cheat:
                 if (!(Cheats.AllowDebugKeys && _input.IsKeyCurrentlyDown(Keys.Five)))
                 {
                     await _mediator.Publish(new PacManEatenEvent());

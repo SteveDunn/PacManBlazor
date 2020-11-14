@@ -15,7 +15,7 @@ namespace PacMan.GameComponents.Events
 
             public Handler(IMediator mediator) => _mediator = mediator;
 
-            public async Task Handle(CutSceneFinishedEvent notification, CancellationToken cancellationToken) => 
+            public async Task Handle(CutSceneFinishedEvent notification, CancellationToken cancellationToken) =>
                 await _mediator.Publish(new PlayerStartingEvent(), cancellationToken);
         }
     }

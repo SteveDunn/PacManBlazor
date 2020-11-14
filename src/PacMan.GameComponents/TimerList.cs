@@ -27,7 +27,7 @@ namespace PacMan.GameComponents
                 if (eggTimer.Finished)
                 {
                     _timers.RemoveAt(i);
-                    
+
                     break;
                 }
             }

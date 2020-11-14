@@ -10,8 +10,7 @@ namespace PacMan.GameComponents.Ghosts
     /// * Scatter (they scatter back to their 'home corners')
     /// * Frightened (run away from Pacman)
     /// * 'Eyes back to house' (they've been eaten by Pacman and are making their way back to the 'house')
-    /// * 'Inside house' (they're inside the house waiting to come out)
-
+    /// * 'Inside house' (they're inside the house waiting to come out).
     /// </summary>
     public abstract class GhostMover
     {
@@ -36,7 +35,7 @@ namespace PacMan.GameComponents.Ghosts
             _intersectionLogic = new GhostLogic(maze, ghost);
         }
 
-        public virtual async ValueTask<MovementResult> Update(CanvasTimingInformation context)
+        public async virtual ValueTask<MovementResult> Update(CanvasTimingInformation context)
         {
             var tile = Ghost.Tile;
 

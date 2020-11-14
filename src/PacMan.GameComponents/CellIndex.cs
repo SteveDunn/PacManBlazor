@@ -34,7 +34,7 @@ namespace PacMan.GameComponents
                 return false;
             }
 
-            return obj is CellIndex && Equals((CellIndex) obj);
+            return obj is CellIndex && Equals((CellIndex)obj);
         }
 
         public override int GetHashCode()
@@ -50,15 +50,15 @@ namespace PacMan.GameComponents
         public static CellIndex operator -(CellIndex left, CellIndex right) => new CellIndex(left.X - right.X, left.Y - right.Y);
 
         [Pure]
-        public static CellIndex FromSpritePos( Vector2 spritePos)
+        public static CellIndex FromSpritePos(Vector2 spritePos)
         {
             Vector2 vector2 = spritePos / Vector2s.Eight;
 
-            return new CellIndex((int) vector2.X, (int) vector2.Y);
+            return new CellIndex((int)vector2.X, (int)vector2.Y);
         }
 
-// #if DEBUG
-//         public override string ToString() => $"{X}, {Y}, IsInBounds={IsInBounds}";
-// #endif
+        // #if DEBUG
+        //         public override string ToString() => $"{X}, {Y}, IsInBounds={IsInBounds}";
+        // #endif
     }
 }

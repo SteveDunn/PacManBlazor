@@ -10,8 +10,7 @@ namespace PacMan.GameComponents.Ghosts
         readonly IMaze _maze;
         readonly IPacMan _pacman;
 
-        public Pinky(IGameStats gameStats, IMediator mediator, IMaze maze, IPacMan pacman, IHumanInterfaceParser input) : 
-            base(
+        public Pinky(IGameStats gameStats, IMediator mediator, IMaze maze, IPacMan pacman, IHumanInterfaceParser input) : base(
                 gameStats,
                 mediator,
                 input,
@@ -24,7 +23,6 @@ namespace PacMan.GameComponents.Ghosts
         }
 
         public override Color GetColor() => Color.Pink;
-
 
         public override ValueTask<CellIndex> GetScatterTarget() => new ValueTask<CellIndex>(new CellIndex(2, 0));
 
@@ -64,7 +62,7 @@ namespace PacMan.GameComponents.Ghosts
             return new ValueTask<CellIndex>(newTarget);
         }
 
-        //todo:
+        // todo:
         //        draw(canvas: Canvas) : void {
         //            super.draw(canvas);
         //            if (Diags.enabled) {

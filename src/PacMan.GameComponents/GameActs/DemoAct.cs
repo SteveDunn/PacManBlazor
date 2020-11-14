@@ -26,7 +26,7 @@ namespace PacMan.GameComponents.GameActs
             IFruit fruit,
             IMaze maze,
             IPacMan pacman,
-            IGhostCollection ghostCollection, 
+            IGhostCollection ghostCollection,
             IHumanInterfaceParser input,
             IGameStats gameStats)
         {

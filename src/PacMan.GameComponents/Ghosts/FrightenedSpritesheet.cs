@@ -7,7 +7,9 @@
             Blue = blue;
             White = white;
         }
+
         public FramePair Blue { get; }
+
         public FramePair White { get; }
     }
 }
