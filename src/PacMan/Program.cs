@@ -91,8 +91,6 @@ namespace PacMan
                 thisAssembly,
                 componentsAssembly);
 
-            //RegisterPolymorphicNotificationHandler<INotification, Handler>(services, thisAssembly, componentsAssembly);
-
             services.AddSingleton(new HttpClient
             {
                 BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
