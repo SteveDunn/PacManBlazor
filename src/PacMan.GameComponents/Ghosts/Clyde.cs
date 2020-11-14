@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Numerics;
 using System.Threading.Tasks;
 using MediatR;
 
@@ -10,14 +9,14 @@ namespace PacMan.GameComponents.Ghosts
     {
         readonly IMaze _maze;
         readonly IPacMan _pacman;
-        readonly ValueTask<CellIndex> _scatterTarget = new ValueTask<CellIndex>(new CellIndex(0, 29));
+        readonly ValueTask<CellIndex> _scatterTarget = new(new CellIndex(0, 29));
 
         public Clyde(IGameStats gameStats, IMediator mediator, IMaze maze, IPacMan pacman, IHumanInterfaceParser input) : base(
                 gameStats,
                 mediator,
                 input,
                 pacman,
-                GhostNickname.Clyde, maze, new Vector2(11.5f, 12), GameComponents.Directions.Up)
+                GhostNickname.Clyde, maze, new(11.5f, 12), Directions.Up)
         {
             _maze = maze;
             _pacman = pacman;
@@ -35,13 +34,13 @@ namespace PacMan.GameComponents.Ghosts
         {
             base.Reset();
 
-            Direction = new DirectionInfo(GameComponents.Directions.Up, GameComponents.Directions.Up);
+            Direction = new(Directions.Up, Directions.Up);
 
             State = GhostState.Normal;
 
             MovementMode = GhostMovementMode.InHouse;
 
-            SetMover(new GhostInsideHouseMover(this, _maze, CurrentPlayerStats.ghostHouseDoor));
+            SetMover(new(this, _maze, CurrentPlayerStats.ghostHouseDoor));
         }
 
         // Whenever Clyde needs to determine his target tile, he first calculates his distance from Pac-Man.
@@ -62,7 +61,7 @@ namespace PacMan.GameComponents.Ghosts
 
             if (distance >= 8)
             {
-                return new ValueTask<CellIndex>(pacCellPos);
+                return new(pacCellPos);
             }
 
             return _scatterTarget;

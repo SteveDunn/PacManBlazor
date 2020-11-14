@@ -8,7 +8,7 @@ namespace PacMan.GameComponents
 
         public DirectionChoices()
         {
-            _lookup = new Dictionary<Directions, bool>();
+            _lookup = new();
         }
 
         public int Possibilities { get; private set; }

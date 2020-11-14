@@ -15,7 +15,7 @@ namespace PacMan.GameComponents.Ghosts
         Func<CanvasTimingInformation, ValueTask<MovementResult>> _currentAction;
 
         public GhostEyesBackToHouseMover(Ghost ghost, IMaze maze, IMediator mediator)
-            : base(ghost, GhostMovementMode.GoingToHouse, maze, () => new ValueTask<CellIndex>(Maze.TileHouseEntrance.ToCellIndex()))
+            : base(ghost, GhostMovementMode.GoingToHouse, maze, () => new(Maze.TileHouseEntrance.ToCellIndex()))
         {
             _mediator = mediator;
             _ghostPosInHouse = Maze.PixelCenterOfHouse + new Vector2(ghost.OffsetInHouse * 16, 0);
@@ -52,7 +52,7 @@ namespace PacMan.GameComponents.Ghosts
                 _currentAction = navigateToGhostIndexInHouse;
             }
 
-            return new ValueTask<MovementResult>(MovementResult.NotFinished);
+            return new(MovementResult.NotFinished);
         }
 
         ValueTask<MovementResult> navigateToGhostIndexInHouse(CanvasTimingInformation context)
@@ -67,12 +67,12 @@ namespace PacMan.GameComponents.Ghosts
 
             if (Ghost.Position.Round() == _ghostPosInHouse)
             {
-                Ghost.Direction = new DirectionInfo(Directions.Down, Directions.Down);
+                Ghost.Direction = new(Directions.Down, Directions.Down);
                 Ghost.SetMovementMode(GhostMovementMode.InHouse);
-                return new ValueTask<MovementResult>(MovementResult.Finished);
+                return new(MovementResult.Finished);
             }
 
-            return new ValueTask<MovementResult>(MovementResult.NotFinished);
+            return new(MovementResult.NotFinished);
         }
 
         public async override ValueTask<MovementResult> Update(CanvasTimingInformation context) => await _currentAction(context);

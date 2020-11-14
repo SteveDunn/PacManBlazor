@@ -50,7 +50,7 @@ namespace PacMan.GameComponents.Ghosts
             _pacman = pacman;
             _startingPoint = startingPoint;
             _startingDirection = startingDirection;
-            Tile = new Tile();
+            Tile = new();
         }
 
         public override void PowerPillEaten(GhostFrightSession session)
@@ -64,7 +64,7 @@ namespace PacMan.GameComponents.Ghosts
 
             State = GhostState.Frightened;
 
-            if (MovementMode == GhostMovementMode.Chase || MovementMode == GhostMovementMode.Scatter)
+            if (MovementMode is GhostMovementMode.Chase or GhostMovementMode.Scatter)
             {
                 _whenInCenterOfNextTile = () =>
                 {
@@ -110,7 +110,7 @@ namespace PacMan.GameComponents.Ghosts
             Tile.UpdateWithSpritePos(Tile.ToCenterCanvas(_startingPoint));
 
             // ReSharper disable once HeapView.ObjectAllocation.Evident
-            Direction = new DirectionInfo(_startingDirection, _startingDirection);
+            Direction = new(_startingDirection, _startingDirection);
 
             Position = Tile.CenterPos;
 
@@ -121,7 +121,7 @@ namespace PacMan.GameComponents.Ghosts
 
         void recenterInLane()
         {
-            if (!(MovementMode == GhostMovementMode.Chase || MovementMode == GhostMovementMode.Scatter))
+            if (MovementMode is not (GhostMovementMode.Chase or GhostMovementMode.Scatter))
             {
                 return;
             }
@@ -131,35 +131,35 @@ namespace PacMan.GameComponents.Ghosts
             var speed = getSpeed();
             var currentDirection = Direction.Current;
 
-            if (currentDirection == Down || currentDirection == Up)
+            if (currentDirection is Down or Up)
             {
                 var wayToMove = new Vector2(speed, 0);
 
                 if (Position.X > tileCenter.X)
                 {
                     Position = Position - wayToMove;
-                    Position = new Vector2(Math.Max(Position.X, tileCenter.X), Position.Y);
+                    Position = new(Math.Max(Position.X, tileCenter.X), Position.Y);
                 }
                 else if (Position.X < tileCenter.X)
                 {
                     Position = Position + wayToMove;
-                    Position = new Vector2(Math.Min(Position.X, tileCenter.X), Position.Y);
+                    Position = new(Math.Min(Position.X, tileCenter.X), Position.Y);
                 }
             }
 
-            if (currentDirection == Left || currentDirection == Right)
+            if (currentDirection is Left or Right)
             {
                 var wayToMove = new Vector2(0, speed);
 
                 if (Position.Y > tileCenter.Y)
                 {
                     Position = Position - wayToMove;
-                    Position = new Vector2(Position.X, Math.Max(Position.Y, tileCenter.Y));
+                    Position = new(Position.X, Math.Max(Position.Y, tileCenter.Y));
                 }
                 else if (Position.Y < tileCenter.Y)
                 {
                     Position = Position + wayToMove;
-                    Position = new Vector2(Position.X, Math.Min(Position.Y, tileCenter.Y));
+                    Position = new(Position.X, Math.Min(Position.Y, tileCenter.Y));
                 }
             }
         }
@@ -285,7 +285,7 @@ namespace PacMan.GameComponents.Ghosts
 
                     await session.SetGlobalAlphaAsync(.25f);
 
-                    GeneralSprite s = new GeneralSprite(targetPoint, Size, Origin, SpriteSheetPos);
+                    GeneralSprite s = new(targetPoint, Size, Origin, SpriteSheetPos);
 
                     await drawLine(Position , targetPoint, session);
 
@@ -332,9 +332,10 @@ namespace PacMan.GameComponents.Ghosts
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
         void setMoverAndMode()
         {
-            var isScatterOrChase = MovementMode == GhostMovementMode.Undecided
-                                   || MovementMode == GhostMovementMode.Chase
-                                   || MovementMode == GhostMovementMode.Scatter;
+            var isScatterOrChase = MovementMode 
+                is GhostMovementMode.Undecided
+                or GhostMovementMode.Chase
+                or GhostMovementMode.Scatter;
 
             if (isScatterOrChase)
             {

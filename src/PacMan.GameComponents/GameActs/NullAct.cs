@@ -18,7 +18,7 @@ namespace PacMan.GameComponents.GameActs
         }
 
         public ValueTask<ActUpdateResult> Update(CanvasTimingInformation timing) =>
-            new ValueTask<ActUpdateResult>(ActUpdateResult.Running);
+            new(ActUpdateResult.Running);
 
         public ValueTask Draw(CanvasWrapper session) => default;
     }

@@ -10,9 +10,10 @@ namespace PacMan.GameComponents
         readonly TimeSpan _firesEvery;
         readonly Action _callback;
 
-        public static LoopingTimer DoNothing => new LoopingTimer(TimeSpan.MaxValue, () =>
-        {
-        });
+        public static LoopingTimer DoNothing => new(
+            TimeSpan.MaxValue,
+            static() => {
+            });
 
         public LoopingTimer(TimeSpan firesEvery, Action callback)
         {

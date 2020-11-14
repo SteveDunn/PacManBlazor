@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
 using System.Numerics;
 using System.Threading.Tasks;
 using MediatR;
@@ -39,28 +38,28 @@ namespace PacMan.GameComponents.GameActs
 
             var justOffScreen = new Vector2(250, 140);
 
-            _blinkyTimer = new EggTimer(4500.Milliseconds(), reverseChase);
+            _blinkyTimer = new(4500.Milliseconds(), reverseChase);
 
-            _pacTimer = new EggTimer(4750.Milliseconds(), () => { });
+            _pacTimer = new(4750.Milliseconds(), static () => { });
 
-            _pacMan = new AttractScenePacMan { Direction = Directions.Left };
+            _pacMan = new() { Direction = Directions.Left };
 
-            _bigPacMan = new GeneralSprite(
+            _bigPacMan = new(
                 Vector2.Zero,
-                new Size(31, 32),
-                new Vector2(16, 16),
-                new Vector2(488, 16),
-                new Vector2(520, 16),
+                new(31, 32),
+                new(16, 16),
+                new(488, 16),
+                new(520, 16),
                 110.Milliseconds())
             {
                 Visible = false
             };
 
-            _blinky = new AttractGhost(GhostNickname.Blinky, Directions.Left);
+            _blinky = new(GhostNickname.Blinky, Directions.Left);
 
-            _pacPositions = new StartAndEndPos(justOffScreen, new Vector2(-70, justOffScreen.Y));
+            _pacPositions = new(justOffScreen, new(-70, justOffScreen.Y));
 
-            _blinkyPositions = new StartAndEndPos(justOffScreen + new Vector2(20, 0), new Vector2(-40, justOffScreen.Y));
+            _blinkyPositions = new(justOffScreen + new Vector2(20, 0), new(-40, justOffScreen.Y));
         }
 
         public string Name { get; } = "BigPacChaseAct";
@@ -113,9 +112,9 @@ namespace PacMan.GameComponents.GameActs
 
         void reverseChase()
         {
-            _blinkyTimer = new EggTimer(4600.Milliseconds(), () => { });
+            _blinkyTimer = new(4600.Milliseconds(), static () => { });
 
-            _pacTimer = new EggTimer(4350.Milliseconds(), async () =>
+            _pacTimer = new(4350.Milliseconds(), async () =>
             {
                 _finished = true;
                 await _mediator.Publish(new CutSceneFinishedEvent());
@@ -127,13 +126,13 @@ namespace PacMan.GameComponents.GameActs
             var s = new LevelStats(0);
             var sess = new GhostFrightSession(s.GetLevelProps());
 
-            _blinky.Direction = new DirectionInfo(Directions.Right, Directions.Right);
+            _blinky.Direction = new(Directions.Right, Directions.Right);
             _blinky.SetFrightSession(sess);
             _blinky.SetFrightened();
             _blinkyPositions = _blinkyPositions.Reverse();
 
             var bigPacPos = _pacPositions.Reverse();
-            bigPacPos = new StartAndEndPos(bigPacPos.Start - new Vector2(100, 0), bigPacPos.End);
+            bigPacPos = new(bigPacPos.Start - new Vector2(100, 0), bigPacPos.End);
 
             _pacPositions = bigPacPos;
         }

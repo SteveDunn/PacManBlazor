@@ -7,7 +7,7 @@ namespace PacMan.GameComponents
 {
     public class SoundLoader : ISoundLoader
     {
-        Dictionary<SoundName, SoundEffect> _sounds = new Dictionary<SoundName, SoundEffect>();
+        Dictionary<SoundName, SoundEffect> _sounds = new();
 
         public SoundEffect GetSoundEffect(SoundName name) => _sounds[name];
 
@@ -15,8 +15,7 @@ namespace PacMan.GameComponents
 
         public async ValueTask LoadAll(IJSRuntime runtime)
         {
-            _sounds = new Dictionary<SoundName, SoundEffect>
-            {
+            _sounds = new() {
                 [SoundName.CoinInserted] =
                     await loadFile(SoundName.CoinInserted, "assets/audio/coin.wav"),
                 [SoundName.CutScene] = await loadFile(SoundName.CutScene, "assets/audio/cutscene.wav"),
@@ -45,7 +44,7 @@ namespace PacMan.GameComponents
                 await runtime.InvokeAsync<object>("soundPlayer.loadSound", new object[] { s, path });
 
                 // ReSharper disable once HeapView.ObjectAllocation.Evident
-                return new SoundEffect(runtime, s);
+                return new(runtime, s);
             }
         }
     }

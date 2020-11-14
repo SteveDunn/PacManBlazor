@@ -23,7 +23,7 @@ namespace PacMan.GameComponents.Ghosts
         public GhostInsideHouseMover(
             Ghost ghost,
             IMaze maze,
-            GhostHouseDoor ghostHouseDoor) : base(ghost, GhostMovementMode.InHouse, maze, () => new ValueTask<CellIndex>(CellIndex.Zero))
+            GhostHouseDoor ghostHouseDoor) : base(ghost, GhostMovementMode.InHouse, maze, () => new(CellIndex.Zero))
         {
             _door = ghostHouseDoor;
 
@@ -31,8 +31,8 @@ namespace PacMan.GameComponents.Ghosts
 
             float x = center.X + (ghost.OffsetInHouse * 16);
 
-            _topPos = new Vector2(x, (float)((13.5 * 8) + 4));
-            _bottomPos = new Vector2(x, (float)((15.5 * 8) - 4));
+            _topPos = new(x, (float)((13.5 * 8) + 4));
+            _bottomPos = new(x, (float)((15.5 * 8) - 4));
 
             var centerOfUpDown = new Vector2(_topPos.X, Maze.PixelCenterOfHouse.Y);
 
@@ -89,14 +89,14 @@ namespace PacMan.GameComponents.Ghosts
             if (!_readyToExit && _door.CanGhostLeave(Ghost))
             {
                 _readyToExit = true;
-                return new ValueTask<MovementResult>(MovementResult.NotFinished);
+                return new(MovementResult.NotFinished);
             }
 
             if (_finished)
             {
-                Ghost.Direction = new DirectionInfo(Directions.Left, Directions.Left);
+                Ghost.Direction = new(Directions.Left, Directions.Left);
                 Ghost.SetMovementMode(GhostMovementMode.Undecided);
-                return new ValueTask<MovementResult>(MovementResult.Finished);
+                return new(MovementResult.Finished);
             }
 
             Vector2 diff = _cellToMoveTo - _cellToMoveFrom;
@@ -109,7 +109,7 @@ namespace PacMan.GameComponents.Ghosts
 
                 var dir = DirectionToIndexLookup.GetDirectionFromVector(diff);
 
-                Ghost.Direction = new DirectionInfo(dir, dir);
+                Ghost.Direction = new(dir, dir);
             }
 
             if (Ghost.Position.Floor() == _cellToMoveTo.Floor())
@@ -118,7 +118,7 @@ namespace PacMan.GameComponents.Ghosts
                 whenAtTargetCell();
             }
 
-            return new ValueTask<MovementResult>(MovementResult.NotFinished);
+            return new(MovementResult.NotFinished);
         }
     }
 }

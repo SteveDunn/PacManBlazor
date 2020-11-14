@@ -22,7 +22,7 @@ namespace PacMan.GameComponents
             _mediator = mediator;
             _storage = storage;
 
-            _playerStats = new List<PlayerStats>();
+            _playerStats = new();
 
 #pragma warning disable 4014
             Reset(0);
@@ -41,11 +41,11 @@ namespace PacMan.GameComponents
             IsDemo = false;
 
             // ReSharper disable once HeapView.ObjectAllocation.Evident
-            _playerStats = new List<PlayerStats>();
+            _playerStats = new();
 
             for (int i = 0; i < players; i++)
             {
-                _playerStats.Add(new PlayerStats(i, _mediator));
+                _playerStats.Add(new(i, _mediator));
             }
 
             _currentPlayerIndex = -1;
@@ -66,7 +66,7 @@ namespace PacMan.GameComponents
         {
             IsDemo = true;
 
-            _playerStats = new List<PlayerStats>();
+            _playerStats = new();
 
             var playerStats = new DemoPlayerStats(_mediator);
 

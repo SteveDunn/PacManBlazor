@@ -32,7 +32,7 @@ namespace PacMan.GameComponents.Ghosts
             _getTargetCellPoint = getTargetCellPoint;
             Ghost = ghost;
             MovementMode = movementMode;
-            _intersectionLogic = new GhostLogic(maze, ghost);
+            _intersectionLogic = new(maze, ghost);
         }
 
         public async virtual ValueTask<MovementResult> Update(CanvasTimingInformation context)

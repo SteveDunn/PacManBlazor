@@ -61,13 +61,13 @@ namespace PacMan.GameComponents.GameActs
                 _ = _gameSoundPlayer.PlayerStart();
             }
 
-            _currentTimer = new LoopingTimer(timeToShowPlayerNumberAndHideGhosts, () =>
+            _currentTimer = new(timeToShowPlayerNumberAndHideGhosts, () =>
             {
                 _progress += 1;
 
                 _gameStats.CurrentPlayerStats.DecreaseLives();
 
-                _currentTimer = new LoopingTimer(2.Seconds(), async () =>
+                _currentTimer = new(2.Seconds(), async () =>
                 {
                     _finished = true;
 
@@ -84,12 +84,12 @@ namespace PacMan.GameComponents.GameActs
         {
             if (_finished)
             {
-                return new ValueTask<ActUpdateResult>(ActUpdateResult.Running);
+                return new(ActUpdateResult.Running);
             }
 
             _currentTimer.Run(timing);
 
-            return new ValueTask<ActUpdateResult>(ActUpdateResult.Running);
+            return new(ActUpdateResult.Running);
         }
 
         public async ValueTask Draw(CanvasWrapper session)

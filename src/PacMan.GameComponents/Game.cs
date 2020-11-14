@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
 using System.Threading.Tasks;
 using Blazor.Extensions.Canvas.Canvas2D;
 using MediatR;
@@ -19,7 +18,7 @@ namespace PacMan.GameComponents
     public class Game : IGame
     {
         // ReSharper disable once UnusedMember.Local
-        readonly DiagPanel _diagPanel = new DiagPanel();
+        readonly DiagPanel _diagPanel = new();
 
         readonly IGameSoundPlayer _gameSoundPlayer;
         readonly IHumanInterfaceParser _input;
@@ -66,11 +65,11 @@ namespace PacMan.GameComponents
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
         public async ValueTask Initialise(IJSRuntime jsRuntime)
         {
-            _canvasTimingInformation = new CanvasTimingInformation();
+            _canvasTimingInformation = new();
 
-            _tempSprites = new TimedSpriteList();
+            _tempSprites = new();
 
-            _pauser = new EggTimer(0.Milliseconds(), () => { });
+            _pauser = new(0.Milliseconds(), () => { });
 
             // POINTER: You can change the starting Act by using something like:
             // _currentAct = new TornGhostChaseAct(new AttractAct());
@@ -163,7 +162,7 @@ namespace PacMan.GameComponents
         public ValueTask FruitEaten(int points)
         {
             ensureInitialised();
-            _tempSprites!.Add(new TimedSprite(3000, new ScoreSprite(_fruit.Position, points)));
+            _tempSprites!.Add(new(3000, new ScoreSprite(_fruit.Position, points)));
 
             return default;
         }
@@ -171,12 +170,12 @@ namespace PacMan.GameComponents
         public ValueTask GhostEaten(IGhost ghost, int points)
         {
             ensureInitialised();
-            _tempSprites!.Add(new TimedSprite(900, new ScoreSprite(_pacman.Position, points)));
+            _tempSprites!.Add(new(900, new ScoreSprite(_pacman.Position, points)));
 
             ghost.Visible = false;
             _pacman.Visible = false;
 
-            _pauser = new EggTimer(1000.Milliseconds(), () => {
+            _pauser = new(1000.Milliseconds(), () => {
                 ghost.Visible = true;
                 _pacman.Visible = true;
             });
@@ -188,10 +187,10 @@ namespace PacMan.GameComponents
         {
             _underlyingCanvasContext = context ?? throw new ArgumentNullException(nameof(context));
 
-            _scoreCanvas = new CanvasWrapper(context, new Point(0, 0));
-            _mazeCanvas = new CanvasWrapper(context, new Point(0, 26));
-            _diagCanvas = new CanvasWrapper(context, new Point(0, 220));
-            _statusCanvas = new CanvasWrapper(context, new Point(0, 274));
+            _scoreCanvas = new(context, new(0, 0));
+            _mazeCanvas = new(context, new(0, 26));
+            _diagCanvas = new(context, new(0, 220));
+            _statusCanvas = new(context, new(0, 274));
         }
 
         public void SetCanvasesForPlayerMazes(Canvas2DContext player1MazeCanvas, Canvas2DContext player2MazeCanvas)
@@ -199,10 +198,10 @@ namespace PacMan.GameComponents
             _ = player1MazeCanvas ?? throw new InvalidOperationException("null canvas!");
             _ = player2MazeCanvas ?? throw new InvalidOperationException("null canvas!");
 
-            MazeCanvases.Populate(new MazeCanvas(player1MazeCanvas), new MazeCanvas(player2MazeCanvas));
+            MazeCanvases.Populate(new(player1MazeCanvas), new(player2MazeCanvas));
         }
 
-        static readonly Stopwatch _stopWatch = new Stopwatch();
+        static readonly Stopwatch _stopWatch = new();
 
         static float getTimestep() => 1000 / (float) Constants.FramesPerSecond;
 
@@ -232,6 +231,7 @@ namespace PacMan.GameComponents
 
             while (_delta >= timestep)
             {
+                Pnrg.Update();
                 _canvasTimingInformation!.Update(timestep);
 
                 DiagInfo.IncrementUpdateCount();

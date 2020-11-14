@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MediatR;
 using PacMan.GameComponents.Canvas;
 using PacMan.GameComponents.Events;
@@ -52,13 +51,13 @@ namespace PacMan.GameComponents.GameActs
 
         public async ValueTask Draw(CanvasWrapper session)
         {
-            await session.DrawMyText("PUSH START BUTTON", new Vector2(50, 115), Colors.Orange);
+            await session.DrawMyText("PUSH START BUTTON", new(50, 115), Colors.Orange);
 
             var text = _coinBox.Credits < 2 ? "1 PLAYER ONLY" : "1 OR 2 PLAYERS";
 
-            await session.DrawMyText(text, new Vector2(70, 145), Colors.Cyan);
-            await session.DrawMyText("BONUS PAC-MAN FOR 10000 PTS", new Vector2(0, 175), Colors.White);
-            await session.DrawMyText("(C) 1980 MIDWAY MFG. CO.", new Vector2(15, 190), Colors.White);
+            await session.DrawMyText(text, new(70, 145), Colors.Cyan);
+            await session.DrawMyText("BONUS PAC-MAN FOR 10000 PTS", new(0, 175), Colors.White);
+            await session.DrawMyText("(C) 1980 MIDWAY MFG. CO.", new(15, 190), Colors.White);
         }
     }
 }

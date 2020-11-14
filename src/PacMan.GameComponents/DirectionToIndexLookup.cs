@@ -9,12 +9,11 @@ namespace PacMan.GameComponents
 
         static DirectionToIndexLookup()
         {
-            _lookup = new Dictionary<Directions, Vector2>
-            {
-                { Directions.Up, new Vector2(0, -1) },
-                { Directions.Down, new Vector2(0, 1) },
-                { Directions.Left, new Vector2(-1, 0) },
-                { Directions.Right, new Vector2(1, 0) }
+            _lookup = new() {
+                { Directions.Up, new(0, -1) },
+                { Directions.Down, new(0, 1) },
+                { Directions.Left, new(-1, 0) },
+                { Directions.Right, new(1, 0) }
             };
         }
 

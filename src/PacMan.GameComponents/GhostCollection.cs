@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,6 +37,14 @@ namespace PacMan.GameComponents
             foreach (IGhost eachGhost in Ghosts)
             {
                 await eachGhost.Update(timing);
+            }
+        }
+
+        public void ForAll(Action<IGhost> action)
+        {
+            foreach (var eachGhost in Ghosts)
+            {
+                action(eachGhost);
             }
         }
     }

@@ -45,11 +45,11 @@ namespace PacMan.GameComponents.GameActs
 
             var timeToShowPlayerNumberAndHideGhosts = 0.Seconds();
 
-            _currentTimer = new LoopingTimer(timeToShowPlayerNumberAndHideGhosts, () =>
+            _currentTimer = new(timeToShowPlayerNumberAndHideGhosts, () =>
             {
                 _progress += 1;
 
-                _currentTimer = new LoopingTimer(2.Seconds(), () => _finished = true);
+                _currentTimer = new(2.Seconds(), () => _finished = true);
             });
 
             return default;

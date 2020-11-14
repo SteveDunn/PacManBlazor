@@ -14,7 +14,7 @@ namespace PacMan.GameComponents.Ghosts
         readonly FrightenedSpritesheet _spritesheetInfoFrightened;
         readonly EyesSpritesheetInfo _spriteSheetEyes;
 
-        readonly TwoFrameAnimation _toggle = new TwoFrameAnimation(65.Milliseconds());
+        readonly TwoFrameAnimation _toggle = new(65.Milliseconds());
 
         GhostFrightSession? _frightSession;
 
@@ -22,7 +22,7 @@ namespace PacMan.GameComponents.Ghosts
         public SimpleGhost(GhostNickname nickName, Directions direction)
         {
             NickName = nickName;
-            Direction = new DirectionInfo(direction, direction);
+            Direction = new(direction, direction);
 
             Visible = true;
 
@@ -41,7 +41,7 @@ namespace PacMan.GameComponents.Ghosts
 
         public bool Visible { get; set; }
 
-        public Size Size => new Size(16, 16);
+        public Size Size => new(16, 16);
 
         protected GhostMovementMode MovementMode { get; set; }
 

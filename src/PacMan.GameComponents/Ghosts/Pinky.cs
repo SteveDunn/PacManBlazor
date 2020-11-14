@@ -15,7 +15,7 @@ namespace PacMan.GameComponents.Ghosts
                 mediator,
                 input,
                 pacman,
-                GhostNickname.Pinky, maze, Tile.FromCell(15.5f, 11f), GameComponents.Directions.Down)
+                GhostNickname.Pinky, maze, Tile.FromCell(15.5f, 11f), Directions.Down)
         {
             _maze = maze;
             _pacman = pacman;
@@ -24,7 +24,7 @@ namespace PacMan.GameComponents.Ghosts
 
         public override Color GetColor() => Color.Pink;
 
-        public override ValueTask<CellIndex> GetScatterTarget() => new ValueTask<CellIndex>(new CellIndex(2, 0));
+        public override ValueTask<CellIndex> GetScatterTarget() => new(new CellIndex(2, 0));
 
         public override ValueTask<CellIndex> GetChaseTarget() => getChaseTargetCell();
 
@@ -32,11 +32,11 @@ namespace PacMan.GameComponents.Ghosts
         {
             base.Reset();
 
-            Direction = new DirectionInfo(GameComponents.Directions.Down, GameComponents.Directions.Down);
+            Direction = new(Directions.Down, Directions.Down);
 
             State = GhostState.Normal;
             MovementMode = GhostMovementMode.InHouse;
-            SetMover(new GhostInsideHouseMover(this, _maze, CurrentPlayerStats.ghostHouseDoor));
+            SetMover(new(this, _maze, CurrentPlayerStats.ghostHouseDoor));
         }
 
         // Pac-Man’s current position and orientation, and selecting the location four tiles straight
@@ -52,14 +52,14 @@ namespace PacMan.GameComponents.Ghosts
                 pacTile + (DirectionToIndexLookup.IndexVectorFor(pacDir) * Vector2s.Four).ToCellIndex());
 
             // for the bug in the original pacman
-            if (pacDir == GameComponents.Directions.Up)
+            if (pacDir == Directions.Up)
             {
                 offset = (offset.ToVector2() + new Vector2(-4, 0)).ToCellIndex();
             }
 
             var newTarget = Maze.ConstrainCell(pacTile + offset);
 
-            return new ValueTask<CellIndex>(newTarget);
+            return new(newTarget);
         }
 
         // todo:

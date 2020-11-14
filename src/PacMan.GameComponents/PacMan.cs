@@ -14,7 +14,7 @@ namespace PacMan.GameComponents
         readonly IMaze _maze;
         readonly IHumanInterfaceParser _input;
         readonly IMediator _mediator;
-        public static readonly Vector2 FacingLeftSpritesheetPos = new Vector2(455, 16);
+        public static readonly Vector2 FacingLeftSpritesheetPos = new(455, 16);
 
         CellIndex _lastDemoKeyPressAt = CellIndex.Zero;
 
@@ -47,39 +47,39 @@ namespace PacMan.GameComponents
             _maze = maze;
             _input = input;
             _mediator = mediator;
-            _demoKeyPresses = new DemoKeyPresses();
+            _demoKeyPresses = new();
 
             _lifeStatus = LifeStatus.Alive;
 
-            _tile = new Tile();
+            _tile = new();
 
-            _keyPress = new KeyPressedEvent();
-            _framePointers = new Dictionary<Directions, FramePointers>();
+            _keyPress = new();
+            _framePointers = new();
 
             const int left = 456;
             const int left2 = 472;
 
-            _framePointers[Directions.Up] = new FramePointers(
-                new Vector2(left, 32), new Vector2(left2, 32));
+            _framePointers[Directions.Up] = new(
+                new(left, 32), new(left2, 32));
 
-            _framePointers[Directions.Down] = new FramePointers(
-                new Vector2(left, 48), new Vector2(left2, 48));
+            _framePointers[Directions.Down] = new(
+                new(left, 48), new(left2, 48));
 
-            _framePointers[Directions.Left] = new FramePointers(
-                new Vector2(left, 16), new Vector2(left2, 16));
+            _framePointers[Directions.Left] = new(
+                new(left, 16), new(left2, 16));
 
-            _framePointers[Directions.Right] = new FramePointers(
-                new Vector2(left, 0), new Vector2(left2, 0));
+            _framePointers[Directions.Right] = new(
+                new(left, 0), new(left2, 0));
 
-            _dyingFrames = new List<Vector2>();
+            _dyingFrames = new();
             _dyingFramePointer = 0;
 
             for (var i = 0; i < 12; i++)
             {
-                _dyingFrames.Add(new Vector2(489 + (i * 16), 0));
+                _dyingFrames.Add(new(489 + (i * 16), 0));
             }
 
-            _animDirection = new TwoFrameAnimation(65.Milliseconds());
+            _animDirection = new(65.Milliseconds());
 
             Reset();
         }
@@ -92,10 +92,10 @@ namespace PacMan.GameComponents
             _direction = Directions.Left;
             _speed = Constants.PacManBaseSpeed;
             _dyingFramePointer = 0;
-            Position = Tile.ToCenterCanvas(new Vector2(13.5f, 23));
+            Position = Tile.ToCenterCanvas(new(13.5f, 23));
             _lifeStatus = LifeStatus.Alive;
 
-            _animDirection = new TwoFrameAnimation(65.Milliseconds());
+            _animDirection = new(65.Milliseconds());
             _frame1InSpriteMap = _framePointers[_direction].Frame1;
             _frame2InSpriteMap = _framePointers[_direction].Frame2;
 
@@ -106,7 +106,7 @@ namespace PacMan.GameComponents
 
         public Vector2 SpriteSheetPos => _spriteSheetPos;
 
-        public Size Size { get; } = new Size(15, 15);
+        public Size Size { get; } = new(15, 15);
 
         public ValueTask Draw(CanvasWrapper session) => session.DrawSprite(this, Spritesheet.Reference);
 
@@ -171,7 +171,7 @@ namespace PacMan.GameComponents
                 return;
             }
 
-            if (_lifeStatus == LifeStatus.Dying || _lifeStatus == LifeStatus.Dead)
+            if (_lifeStatus is LifeStatus.Dying or LifeStatus.Dead)
             {
                 handleDying();
                 return;
@@ -341,12 +341,12 @@ namespace PacMan.GameComponents
                 if (Position.X > tileCenter.X)
                 {
                     Position = Position - wayToMove;
-                    Position = new Vector2(Math.Max(Position.X, tileCenter.X), Position.Y);
+                    Position = new(Math.Max(Position.X, tileCenter.X), Position.Y);
                 }
                 else if (Position.X < tileCenter.X)
                 {
                     Position = Position + wayToMove;
-                    Position = new Vector2(Math.Min(Position.X, tileCenter.X), Position.Y);
+                    Position = new(Math.Min(Position.X, tileCenter.X), Position.Y);
                 }
             }
 
@@ -357,12 +357,12 @@ namespace PacMan.GameComponents
                 if (Position.Y > tileCenter.Y)
                 {
                     Position = Position - wayToMove;
-                    Position = new Vector2(Position.X, Math.Max(Position.Y, tileCenter.Y));
+                    Position = new(Position.X, Math.Max(Position.Y, tileCenter.Y));
                 }
                 else if (Position.Y < tileCenter.Y)
                 {
                     Position = Position + wayToMove;
-                    Position = new Vector2(Position.X, Math.Min(Position.Y, tileCenter.Y));
+                    Position = new(Position.X, Math.Min(Position.Y, tileCenter.Y));
                 }
             }
         }

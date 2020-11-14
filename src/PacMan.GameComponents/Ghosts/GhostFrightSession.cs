@@ -29,7 +29,7 @@ namespace PacMan.GameComponents.Ghosts
 
             _timeLeftToStartFlashing = _timeLeft -
                                        TimeSpan.FromMilliseconds(flashesLeft * _eachFlashDurationMs.TotalMilliseconds);
-            _timer = new LoopingTimer(
+            _timer = new(
                 _eachFlashDurationMs, () => _tickTock = !_tickTock);
         }
 

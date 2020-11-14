@@ -15,16 +15,14 @@ namespace PacMan.GameComponents.Tweening
 
         public Vector2Tweener(Vector2 start, Vector2 end, Type type, Easing easing, TimeSpan duration)
         {
-            _tweenerX = new Tweener(start.X, end.X, duration, Tweener.CreateTweeningFunction(type, easing));
-            _tweenerY = new Tweener(start.Y, end.Y, duration, Tweener.CreateTweeningFunction(type, easing));
+            _tweenerX = new(start.X, end.X, duration, Tweener.CreateTweeningFunction(type, easing));
+            _tweenerY = new(start.Y, end.Y, duration, Tweener.CreateTweeningFunction(type, easing));
+            
             _tweenerX.Ended += () =>
             {
                 if (_tweenerY.HasEnded)
                 {
-                    if (Ended != null)
-                    {
-                        Ended();
-                    }
+                    Ended?.Invoke();
                 }
             };
 
@@ -32,10 +30,7 @@ namespace PacMan.GameComponents.Tweening
             {
                 if (_tweenerX.HasEnded)
                 {
-                    if (Ended != null)
-                    {
-                        Ended();
-                    }
+                    Ended?.Invoke();
                 }
             };
         }
@@ -44,7 +39,7 @@ namespace PacMan.GameComponents.Tweening
         {
             get
             {
-                return new Vector2(_tweenerX.Position, _tweenerY.Position);
+                return new(_tweenerX.Position, _tweenerY.Position);
             }
         }
 
@@ -61,7 +56,7 @@ namespace PacMan.GameComponents.Tweening
 
         public static Vector2Tweener Create(Vector2 start, Vector2 end, Type type, Easing easing, TimeSpan duration)
         {
-            return new Vector2Tweener(start, end, type, easing, duration);
+            return new(start, end, type, easing, duration);
         }
 
         public static Vector2Tweener Create(Vector2 start, Vector2 end, TweenCreationSettings tweenCreationSettings)

@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using System.Numerics;
+﻿using System.Numerics;
 using System.Threading.Tasks;
 using PacMan.GameComponents.Canvas;
 using PacMan.GameComponents.Tweening;
@@ -13,15 +12,16 @@ namespace PacMan.GameComponents.GameActs
 
         public BlazorLogo()
         {
-            _blazorLogo = new GeneralSprite(
-                new Vector2(90, 85),
-                new Size(64, 60),
+            _blazorLogo = new(
+                new(90, 85),
+                new(64, 60),
                 Vector2.Zero,
-                new Vector2(547, 160));
+                new(547, 160));
 
             var colorTweeningFunction = Tweener.CreateTweeningFunction<Linear>(Easing.EaseNone);
 
-            _colorTweener = new Tweener(.12f, .8f, 3.Seconds(), colorTweeningFunction);
+            _colorTweener = new(.12f, .8f, 3.Seconds(), colorTweeningFunction);
+            
             _colorTweener.Ended += () =>
             {
                 _colorTweener.Reverse();

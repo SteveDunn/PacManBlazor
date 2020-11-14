@@ -79,12 +79,9 @@ namespace PacMan.GameComponents.Audio
 
             PlayerStats playerStats = _gameStats.CurrentPlayerStats;
 
-            if (playerStats != null)
-            {
-                await handleFright(playerStats, thereAreEyes);
-                await handleSiren(playerStats.LevelStats.PillsEaten, thereAreEyes);
-                await handleEyes(thereAreEyes);
-            }
+            await handleFright(playerStats, thereAreEyes);
+            await handleSiren(playerStats.LevelStats.PillsEaten, thereAreEyes);
+            await handleEyes(thereAreEyes);
         }
 
         async ValueTask handleFright(PlayerStats currentPlayerStats, bool thereAreEyes)

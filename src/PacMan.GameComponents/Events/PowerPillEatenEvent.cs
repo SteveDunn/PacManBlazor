@@ -41,16 +41,16 @@ namespace PacMan.GameComponents.Events
                 await _gameSoundPlayer.PowerPillEaten();
 
                 await _gameStats.PowerPillEaten(notification.CellIndex);
+                
+                GhostFrightSession? frightSession = _gameStats.CurrentPlayerStats.FrightSession;
+
+                if (frightSession == null)
+                {
+                    throw new InvalidOperationException("no fright session");
+                }
 
                 foreach (IGhost eachGhost in _ghostCollection.Ghosts)
                 {
-                    GhostFrightSession? frightSession = _gameStats.CurrentPlayerStats.FrightSession;
-
-                    if (frightSession == null)
-                    {
-                        throw new InvalidOperationException("no fright session");
-                    }
-
                     eachGhost.PowerPillEaten(frightSession);
                 }
 

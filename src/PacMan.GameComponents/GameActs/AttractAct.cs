@@ -60,8 +60,7 @@ namespace PacMan.GameComponents.GameActs
         {
             MarqueeText[] texts =
             {
-                new MarqueeText
-                {
+                new() {
                     Text = "tap or space for 1 player",
                     YPosition = 195,
                     TimeIdle = 1.Seconds(),
@@ -69,8 +68,7 @@ namespace PacMan.GameComponents.GameActs
                     TimeStationary = 2.Seconds(),
                     TimeOut = 1.Seconds()
                 },
-                new MarqueeText
-                {
+                new() {
                     Text = "press or 2 for 2 players",
                     YPosition = 195,
                     TimeIdle = 0.Seconds(),
@@ -80,28 +78,28 @@ namespace PacMan.GameComponents.GameActs
                 }
             };
 
-            _marquee = new Marquee(texts);
+            _marquee = new(texts);
             _coinBox = coinBox;
             _mediator = mediator;
             _input = input;
             _gameSoundPlayer = gameSoundPlayer;
             _pacmanLogo =
-                new GeneralSprite(new Vector2(192, 25), new Size(36, 152), Vector2.Zero, new Vector2(456, 173));
-            _blazorLogo = new BlazorLogo();
+                new(new(192, 25), new(36, 152), Vector2.Zero, new(456, 173));
+            _blazorLogo = new();
 
-            _instructions = new List<Instruction>();
+            _instructions = new();
 
             _startTime = TimeSpan.MinValue;
 
-            _blinky = new SimpleGhost(GhostNickname.Blinky, Directions.Right);
-            _pinky = new SimpleGhost(GhostNickname.Pinky, Directions.Right);
-            _inky = new SimpleGhost(GhostNickname.Inky, Directions.Right);
-            _clyde = new SimpleGhost(GhostNickname.Clyde, Directions.Right);
+            _blinky = new(GhostNickname.Blinky, Directions.Right);
+            _pinky = new(GhostNickname.Pinky, Directions.Right);
+            _inky = new(GhostNickname.Inky, Directions.Right);
+            _clyde = new(GhostNickname.Clyde, Directions.Right);
             _startTime = TimeSpan.MinValue;
             _chaseSubActReadyAt = 9.Seconds();
 
-            _chaseSubAct = new ChaseSubAct();
-            _lock = new object();
+            _chaseSubAct = new();
+            _lock = new();
         }
 
         public string Name { get; } = "AttractAct";
@@ -111,7 +109,7 @@ namespace PacMan.GameComponents.GameActs
             _startTime = TimeSpan.MinValue;
             _finished = false;
             _instructions.Clear();
-            _chaseSubAct = new ChaseSubAct();
+            _chaseSubAct = new();
             populateDelayedInstructions();
 
             return default;
@@ -231,10 +229,9 @@ namespace PacMan.GameComponents.GameActs
             {
                 TimeSpan clock = 1500.Milliseconds();
 
-                _instructions.Add(new Instruction
-                {
+                _instructions.Add(new() {
                     When = clock,
-                    Where = new Vector2(32, 12),
+                    Where = new(32, 12),
                     Text = "CHARACTER / NICKNAME",
                     Color = Color.White
                 });
@@ -274,8 +271,7 @@ namespace PacMan.GameComponents.GameActs
             string nickname,
             Vector2 point)
         {
-            _instructions.Add(new Instruction
-            {
+            _instructions.Add(new() {
                 Ghost = ghost,
                 When = clock,
                 Where = point
@@ -285,8 +281,7 @@ namespace PacMan.GameComponents.GameActs
 
             clock += 1.Seconds();
 
-            _instructions.Add(new Instruction
-            {
+            _instructions.Add(new() {
                 Where = point,
                 Text = $@" - {name}",
                 When = clock,
@@ -297,8 +292,7 @@ namespace PacMan.GameComponents.GameActs
 
             clock += 500.Milliseconds();
 
-            _instructions.Add(new Instruction
-            {
+            _instructions.Add(new() {
                 Where = point,
                 Text = $@"""{nickname}""",
                 When = clock,

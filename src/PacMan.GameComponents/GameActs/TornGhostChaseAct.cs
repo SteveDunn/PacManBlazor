@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
 using System.Numerics;
 using System.Threading.Tasks;
 using MediatR;
@@ -35,37 +34,36 @@ namespace PacMan.GameComponents.GameActs
 
             var justOffScreen = new Vector2(250, 140);
 
-            _ghostTimer = new EggTimer(4500.Milliseconds(), reverseChase);
+            _ghostTimer = new(4500.Milliseconds(), reverseChase);
 
-            _pacTimer = new EggTimer(4800.Milliseconds(), () => { });
+            _pacTimer = new(4800.Milliseconds(), () => { });
 
-            _pacMan = new AttractScenePacMan
-            {
+            _pacMan = new() {
                 Direction = Directions.Left
             };
 
-            _worm = new GeneralSprite(
+            _worm = new(
                 Vector2.Zero,
-                new Size(22, 11),
-                new Vector2(11, 5.5f),
-                new Vector2(594, 132),
-                new Vector2(626, 132),
+                new(22, 11),
+                new(11, 5.5f),
+                new(594, 132),
+                new(626, 132),
                 110.Milliseconds())
             {
                 Visible = false
             };
 
-            _blinky = new GeneralSprite(
+            _blinky = new(
                 Vector2.Zero,
-                new Size(14, 14),
-                new Vector2(7.5f, 7.5f),
-                new Vector2(618, 113),
-                new Vector2(634, 113),
+                new(14, 14),
+                new(7.5f, 7.5f),
+                new(618, 113),
+                new(634, 113),
                 110.Milliseconds());
 
-            _pacPositions = new StartAndEndPos(justOffScreen, new Vector2(-70, justOffScreen.Y));
+            _pacPositions = new(justOffScreen, new(-70, justOffScreen.Y));
 
-            _ghostStartAndEndPos = new StartAndEndPos(justOffScreen + new Vector2(50, 0), new Vector2(-40, justOffScreen.Y));
+            _ghostStartAndEndPos = new(justOffScreen + new Vector2(50, 0), new(-40, justOffScreen.Y));
         }
 
         public string Name { get; } = "TornGhostChaseAct";
@@ -118,7 +116,7 @@ namespace PacMan.GameComponents.GameActs
 
         void reverseChase()
         {
-            _ghostTimer = new EggTimer(4600.Milliseconds(), async () =>
+            _ghostTimer = new(4600.Milliseconds(), async () =>
             {
                 _finished = true;
                 await _mediator.Publish(new CutSceneFinishedEvent());

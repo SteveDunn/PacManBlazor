@@ -42,7 +42,7 @@ namespace PacMan.GameComponents.Tweening
 
         public static TweenCreationSettings Create<T>(Easing easing)
         {
-            return new TweenCreationSettings(typeof(T), easing);
+            return new(typeof(T), easing);
         }
     }
 }

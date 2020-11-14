@@ -15,6 +15,6 @@ namespace PacMan.GameComponents
             _reference = reference;
         }
 
-        public static Size Size => new Size(225, 248);
+        public static Size Size => new(225, 248);
     }
 }

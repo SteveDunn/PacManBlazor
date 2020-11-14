@@ -20,26 +20,25 @@ namespace PacMan.GameComponents
         public AttractScenePacMan()
         {
             Visible = true;
-            _animDirection = new TwoFrameAnimation(65.Milliseconds());
+            _animDirection = new(65.Milliseconds());
 
             Direction = Directions.Left;
 
             const float left = 456;
             const float left2 = 472;
 
-            _velocitiesLookup = new Dictionary<Directions, FramePair>
-            {
-                [Directions.Up] = new FramePair(
-                    new Vector2(left, 32), new Vector2(left2, 32)),
-                [Directions.Down] = new FramePair(
-                    new Vector2(left, 48), new Vector2(left2, 48)),
-                [Directions.Left] = new FramePair(
-                    new Vector2(left, 16), new Vector2(left2, 16)),
-                [Directions.Right] = new FramePair(
-                    new Vector2(left, 0), new Vector2(left2, 0))
+            _velocitiesLookup = new() {
+                [Directions.Up] = new(
+                    new(left, 32), new(left2, 32)),
+                [Directions.Down] = new(
+                    new(left, 48), new(left2, 48)),
+                [Directions.Left] = new(
+                    new(left, 16), new(left2, 16)),
+                [Directions.Right] = new(
+                    new(left, 0), new(left2, 0))
             };
 
-            Position = Tile.ToCenterCanvas(new Vector2(13.5f, 23));
+            Position = Tile.ToCenterCanvas(new(13.5f, 23));
 
             setSpriteSheetPointers();
         }
@@ -55,7 +54,7 @@ namespace PacMan.GameComponents
             return session.DrawSprite(this, Spritesheet.Reference);
         }
 
-        public Size Size { get; } = new Size(16, 16);
+        public Size Size { get; } = new(16, 16);
 
         public Vector2 Origin => Vector2s.Eight;
 

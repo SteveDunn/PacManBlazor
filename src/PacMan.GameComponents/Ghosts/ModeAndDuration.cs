@@ -14,6 +14,8 @@ namespace PacMan.GameComponents.Ghosts
 
         public GhostMovementMode Mode { get; }
 
-        public TimeSpan Duration { get; set; }
+        public TimeSpan Duration { get; private set; }
+
+        public void DecreaseDurationBy(in TimeSpan elapsedTime) => Duration -= elapsedTime;
     }
 }

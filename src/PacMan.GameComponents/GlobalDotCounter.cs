@@ -5,6 +5,8 @@ namespace PacMan.GameComponents
     public class GlobalDotCounter : DotCounter
     {
         bool _finished;
+        GhostNickname? _nextOneToForceOut;
+        GhostNickname? _lastOneForcedOut;
 
         public GlobalDotCounter(int limit = 0) : base(limit, "GLOBAL")
         {
@@ -21,24 +23,15 @@ namespace PacMan.GameComponents
         // 32 - this mimics the bug in the arcade game
         public override bool IsFinished => _finished;
 
-        GhostNickname? _nextOneToForceOut;
-        GhostNickname? _lastOneForcedOut;
-
-        public override void SetTimedOut()
-        {
-            if (_lastOneForcedOut == null || _lastOneForcedOut == GhostNickname.Clyde)
+        public override void SetTimedOut() =>
+            _nextOneToForceOut = _lastOneForcedOut switch 
             {
-                _nextOneToForceOut = GhostNickname.Pinky;
-            }
-            else if (_lastOneForcedOut == GhostNickname.Pinky)
-            {
-                _nextOneToForceOut = GhostNickname.Inky;
-            }
-            else if (_lastOneForcedOut == GhostNickname.Inky)
-            {
-                _nextOneToForceOut = GhostNickname.Clyde;
-            }
-        }
+                null => GhostNickname.Pinky,
+                GhostNickname.Clyde => GhostNickname.Pinky,
+                GhostNickname.Pinky => GhostNickname.Inky,
+                GhostNickname.Inky => GhostNickname.Clyde,
+                _ => _nextOneToForceOut
+            };
 
         public bool CanGhostLeave(GhostNickname nickName)
         {

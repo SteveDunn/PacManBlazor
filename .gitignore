@@ -3,6 +3,5 @@
 obj
 bin
 *.user
-/PacManUwp/AppPackages
-/PacManUwp/BundleArtifacts
 /PacManWa/Properties/PublishProfiles/pacmanblazor - Web Deploy.pubxml
+_NCrunch_PacMan

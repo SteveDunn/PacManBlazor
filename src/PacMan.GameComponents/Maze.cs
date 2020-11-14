@@ -12,30 +12,30 @@ namespace PacMan.GameComponents
         // the point where the ghost goes to just before going into chase/scatter mode
         public readonly static Vector2 TileHouseEntrance = Tile.FromCell(13.5f, 11);
 
-        public readonly static Vector2 PixelHouseEntrancePoint = Tile.ToCenterCanvas(new Vector2(13.5f, 11));
+        public readonly static Vector2 PixelHouseEntrancePoint = Tile.ToCenterCanvas(new(13.5f, 11));
 
         // the point where the ghost goes to before going up and out of the house
-        public readonly static Vector2 PixelCenterOfHouse = Tile.ToCenterCanvas(new Vector2(13.5f, 14));
+        public readonly static Vector2 PixelCenterOfHouse = Tile.ToCenterCanvas(new(13.5f, 14));
 
         readonly static CellIndex[] _specialIntersections =
         {
-            new CellIndex(12, 11),
-            new CellIndex(15, 11),
-            new CellIndex(12, 26),
-            new CellIndex(15, 26)
+            new(12, 11),
+            new(15, 11),
+            new(12, 26),
+            new(15, 26)
         };
 
         readonly static CellIndex[] _powerPillPositions =
         {
-            new CellIndex(1, 3),
-            new CellIndex(26, 3),
-            new CellIndex(1, 23),
-            new CellIndex(26, 23)
+            new(1, 3),
+            new(26, 3),
+            new(1, 23),
+            new(26, 23)
         };
 
         readonly LoopingTimer _timer;
 
-        readonly DirectionChoices _directionChoices = new DirectionChoices();
+        readonly DirectionChoices _directionChoices = new();
         readonly PowerPill _powerPill;
         readonly GeneralSprite _whiteMazeCanvas;
 
@@ -43,8 +43,8 @@ namespace PacMan.GameComponents
 
         bool _flashing;
 
-        readonly static Size _spritesheetSize = new Size(225, 248);
-        readonly static Rectangle _mazeRect = new Rectangle(0, 0, 225, 248);
+        readonly static Size _spritesheetSize = new(225, 248);
+        readonly static Rectangle _mazeRect = new(0, 0, 225, 248);
 
         readonly static Directions[] _directions =
         {
@@ -62,13 +62,13 @@ namespace PacMan.GameComponents
         {
             Visible = true;
             Origin = Vector2.Zero;
-            _powerPill = new PowerPill();
-            _timer = new LoopingTimer(250.Milliseconds(), () => _tickTock = !_tickTock);
+            _powerPill = new();
+            _timer = new(250.Milliseconds(), () => _tickTock = !_tickTock);
 
-            _whiteMazeCanvas = new GeneralSprite(
+            _whiteMazeCanvas = new(
                 Vector2.Zero,
                 _spritesheetSize,
-                Vector2.Zero, new Vector2(228, 0));
+                Vector2.Zero, new(228, 0));
         }
 
         public Vector2 SpriteSheetPos => Vector2.Zero;
@@ -105,13 +105,13 @@ namespace PacMan.GameComponents
                 }
                 else
                 {
-                    await session.DrawFromOther(_currentPlayerCanvas!, new Point(0, 0), _mazeRect);
+                    await session.DrawFromOther(_currentPlayerCanvas!, new(0, 0), _mazeRect);
                 }
 
                 return;
             }
 
-            await session.DrawFromOther(_currentPlayerCanvas!, new Point(0, 0), _mazeRect);
+            await session.DrawFromOther(_currentPlayerCanvas!, new(0, 0), _mazeRect);
 
             await drawPowerPills(session);
 
@@ -255,7 +255,7 @@ namespace PacMan.GameComponents
             y = y < 0 ? 0 : y;
             y = y > MazeBounds.Dimensions.Height ? MazeBounds.Dimensions.Height : y;
 
-            return new CellIndex(x, y);
+            return new(x, y);
         }
 
         public ValueTask HandlePlayerStarted(PlayerStats playerStats, MazeCanvas playerCanvas)

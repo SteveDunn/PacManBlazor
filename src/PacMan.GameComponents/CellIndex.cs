@@ -4,22 +4,18 @@ using JetBrains.Annotations;
 
 namespace PacMan.GameComponents
 {
-    public struct CellIndex : IEquatable<CellIndex>
+    public readonly struct CellIndex : IEquatable<CellIndex>
     {
-        public CellIndex(int x, int y)
-        {
-            X = x;
-            Y = y;
-        }
+        public CellIndex(int x, int y) => (X, Y) = (x, y);
 
         public bool IsInBounds =>
             X >= 0 && X < MazeBounds.Dimensions.Width && Y >= 0 && Y < MazeBounds.Dimensions.Height;
 
-        public static bool operator ==(CellIndex left, CellIndex right) => left.Equals(right);
+        public static bool operator ==(in CellIndex left, in CellIndex right) => left.Equals(right);
 
-        public static bool operator !=(CellIndex left, CellIndex right) => !left.Equals(right);
+        public static bool operator !=(in CellIndex left, in CellIndex right) => !left.Equals(right);
 
-        public static CellIndex Zero = new CellIndex(0, 0);
+        public static readonly CellIndex Zero = new(0, 0);
 
         public int X { get; }
 
@@ -27,14 +23,14 @@ namespace PacMan.GameComponents
 
         public bool Equals(CellIndex other) => X == other.X && Y == other.Y;
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj))
             {
                 return false;
             }
 
-            return obj is CellIndex && Equals((CellIndex)obj);
+            return obj is CellIndex index && Equals(index);
         }
 
         public override int GetHashCode()
@@ -45,16 +41,16 @@ namespace PacMan.GameComponents
             }
         }
 
-        public static CellIndex operator +(CellIndex left, CellIndex right) => new CellIndex(left.X + right.X, left.Y + right.Y);
+        public static CellIndex operator +(in CellIndex left, in CellIndex right) => new(left.X + right.X, left.Y + right.Y);
 
-        public static CellIndex operator -(CellIndex left, CellIndex right) => new CellIndex(left.X - right.X, left.Y - right.Y);
+        public static CellIndex operator -(in CellIndex left, in CellIndex right) => new(left.X - right.X, left.Y - right.Y);
 
         [Pure]
         public static CellIndex FromSpritePos(Vector2 spritePos)
         {
-            Vector2 vector2 = spritePos / Vector2s.Eight;
+            (int x, int y) = spritePos / Vector2s.Eight;
 
-            return new CellIndex((int)vector2.X, (int)vector2.Y);
+            return new(x,y);
         }
 
         // #if DEBUG

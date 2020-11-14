@@ -41,30 +41,29 @@ namespace PacMan.GameComponents.GameActs
         public ChaseSubAct()
         {
             _finished = false;
-            _tempTimers = new TimerList();
+            _tempTimers = new();
 
             _ghostScore = 200;
 
-            _tempSprites = new TimedSpriteList();
-            _ghosts = new List<AttractGhost>();
+            _tempSprites = new();
+            _ghosts = new();
 
             var justOffScreen = new Vector2(250, 140);
 
-            _ghostEatenTimer = new EggTimer(0.Milliseconds(), () => { });
-            _ghostTimer = new EggTimer(5.Seconds(), async () => await reverseChase());
-            _pacTimer = new EggTimer(5.1f.Seconds(), () => { });
+            _ghostEatenTimer = new(0.Milliseconds(), static () => { });
+            _ghostTimer = new(5.Seconds(), async () => await reverseChase());
+            _pacTimer = new(5.1f.Seconds(), static () => { });
 
-            _powerPillToEat = new PowerPill
-            {
+            _powerPillToEat = new() {
                 Visible = false,
-                Position = new Vector2(30, justOffScreen.Y - 4)
+                Position = new(30, justOffScreen.Y - 4)
             };
 
-            _pillLegend = new Pill { Position = new Vector2(70, 178) };
+            _pillLegend = new() { Position = new(70, 178) };
 
-            _powerPillLegend = new PowerPill { Position = new Vector2(66, 182) };
+            _powerPillLegend = new() { Position = new(66, 182) };
 
-            _pacMan = new AttractScenePacMan { Direction = Directions.Left };
+            _pacMan = new() { Direction = Directions.Left };
 
             var blinky = new AttractGhost(GhostNickname.Blinky, Directions.Left);
             var pinky = new AttractGhost(GhostNickname.Pinky, Directions.Left);
@@ -78,40 +77,40 @@ namespace PacMan.GameComponents.GameActs
 
             var gap = new Vector2(16, 0);
 
-            _pacPositions = new StartAndEndPos(justOffScreen, new Vector2(30, justOffScreen.Y));
+            _pacPositions = new(justOffScreen, new(30, justOffScreen.Y));
             _pacMan.Position = _pacPositions.Start;
 
-            _ghostPositions = new Dictionary<GhostNickname, StartAndEndPos>();
+            _ghostPositions = new();
 
             var startPos = justOffScreen + new Vector2(50, 0);
             var endPos = new Vector2(50, justOffScreen.Y);
 
             blinky.Position = startPos;
-            _ghostPositions[blinky.NickName] = new StartAndEndPos(startPos, endPos);
+            _ghostPositions[blinky.NickName] = new(startPos, endPos);
 
             startPos = startPos + gap;
             endPos = endPos + gap;
             pinky.Position = startPos;
-            _ghostPositions[pinky.NickName] = new StartAndEndPos(startPos, endPos);
+            _ghostPositions[pinky.NickName] = new(startPos, endPos);
 
             startPos = startPos + gap;
             endPos = endPos + gap;
             inky.Position = startPos;
-            _ghostPositions[inky.NickName] = new StartAndEndPos(startPos, endPos);
+            _ghostPositions[inky.NickName] = new(startPos, endPos);
 
             startPos = startPos + gap;
             endPos = endPos + gap;
             clyde.Position = startPos;
-            _ghostPositions[clyde.NickName] = new StartAndEndPos(startPos, endPos);
+            _ghostPositions[clyde.NickName] = new(startPos, endPos);
 
-            _tempTimers.Add(new EggTimer(1.Seconds(), () => _legendVisible = true));
-            _tempTimers.Add(new EggTimer(3.Seconds(), () =>
+            _tempTimers.Add(new(1.Seconds(), () => _legendVisible = true));
+            _tempTimers.Add(new(3.Seconds(), () =>
             {
                 _powerPillToEat.Visible = true;
                 _copyrightVisible = true;
             }));
 
-            _tempTimers.Add(new EggTimer(4500.Milliseconds(), () =>
+            _tempTimers.Add(new(4500.Milliseconds(), () =>
             {
                 _ghostsChasing = true;
             }));
@@ -158,7 +157,7 @@ namespace PacMan.GameComponents.GameActs
 
                     if (g.NickName == GhostNickname.Clyde)
                     {
-                        _tempTimers.Add(new EggTimer(1.Seconds(), () =>
+                        _tempTimers.Add(new(1.Seconds(), () =>
                         {
                             _finished = true;
                         }));
@@ -180,13 +179,13 @@ namespace PacMan.GameComponents.GameActs
                 await _powerPillLegend.Draw(session);
                 await _pillLegend.Draw(session);
 
-                await session.DrawMyText("10 pts", new Vector2(80, 170), Colors.White);
-                await session.DrawMyText("50 pts", new Vector2(80, 180), Colors.White);
+                await session.DrawMyText("10 pts", new(80, 170), Colors.White);
+                await session.DrawMyText("50 pts", new(80, 180), Colors.White);
             }
 
             if (_copyrightVisible)
             {
-                await session.DrawMyText("© 1980 midway mfg. co.", new Vector2(10, 220), Colors.White);
+                await session.DrawMyText("© 1980 midway mfg. co.", new(10, 220), Colors.White);
             }
 
             await _tempSprites.Draw(session);
@@ -203,8 +202,8 @@ namespace PacMan.GameComponents.GameActs
 
             var gp = _ghosts[0].Position;
 
-            await session.DrawText("STEVE DUNN 2020", new Point((int)gp.X + 2, (int)(gp.Y + 22)), Color.Black);
-            await session.DrawText("STEVE DUNN 2020", new Point((int)gp.X, (int)(gp.Y + 20)), Color.Yellow);
+            await session.DrawText("STEVE DUNN 2020", new((int)gp.X + 2, (int)(gp.Y + 22)), Color.Black);
+            await session.DrawText("STEVE DUNN 2020", new((int)gp.X, (int)(gp.Y + 20)), Color.Yellow);
         }
 
         void ghostEaten(AttractGhost ghost)
@@ -221,7 +220,7 @@ namespace PacMan.GameComponents.GameActs
             _ghostScore *= 2;
 
             // ReSharper disable once HeapView.ObjectAllocation.Evident
-            _ghostEatenTimer = new EggTimer(1.Seconds(), () =>
+            _ghostEatenTimer = new(1.Seconds(), () =>
             {
                 _ghostTimer.Resume();
                 _pacTimer.Resume();
@@ -230,7 +229,7 @@ namespace PacMan.GameComponents.GameActs
         }
 
         void showScore(Vector2 pos, int amount) =>
-            _tempSprites.Add(new TimedSprite(900, new ScoreSprite(pos, amount)));
+            _tempSprites.Add(new(900, new ScoreSprite(pos, amount)));
 
         void lerpGhost(AttractGhost ghost)
         {
@@ -248,8 +247,8 @@ namespace PacMan.GameComponents.GameActs
         ValueTask reverseChase()
         {
             _powerPillToEat.Visible = false;
-            _ghostTimer = new EggTimer(12.Seconds(), () => { });
-            _pacTimer = new EggTimer(6.Seconds(), () => { });
+            _ghostTimer = new(12.Seconds(), () => { });
+            _pacTimer = new(6.Seconds(), () => { });
 
             var levelStats = new LevelStats(0);
             var frightSessions = new GhostFrightSession(levelStats.GetLevelProps());

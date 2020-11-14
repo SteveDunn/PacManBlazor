@@ -11,7 +11,7 @@ namespace PacMan.GameComponents.Ghosts
 
         public EyesSpritesheetInfo(Vector2 position)
         {
-            _positions = new Dictionary<Directions, Vector2>();
+            _positions = new();
 
             var toMove = new Vector2(_width, 0);
 

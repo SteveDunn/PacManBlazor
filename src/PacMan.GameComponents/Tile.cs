@@ -10,7 +10,7 @@ namespace PacMan.GameComponents
         bool _isInCenter;
 
         // ReSharper disable once HeapView.ObjectAllocation.Evident
-        readonly Dictionary<Directions, Tile> _nextTiles = new Dictionary<Directions, Tile>();
+        readonly Dictionary<Directions, Tile> _nextTiles = new();
 
         public Tile()
         {
@@ -24,7 +24,7 @@ namespace PacMan.GameComponents
             SpritePos = spritePos;
             Index = CellIndex.FromSpritePos(spritePos);
 
-            TopLeft = new Vector2(Index.X * 8, Index.Y * 8);
+            TopLeft = new(Index.X * 8, Index.Y * 8);
             CenterPos = TopLeft + Vector2s.Four;
 
             _isInCenter = CenterPos == spritePos.Round();
@@ -47,10 +47,10 @@ namespace PacMan.GameComponents
         {
             var offset = direction switch
             {
-                Directions.Right => new Vector2(1, 0),
-                Directions.Left => new Vector2(-1, 0),
-                Directions.Up => new Vector2(0, -1),
-                Directions.Down => new Vector2(0, 1),
+                Directions.Right => new(1, 0),
+                Directions.Left => new(-1, 0),
+                Directions.Up => new(0, -1),
+                Directions.Down => new(0, 1),
                 _ => Vector2.Zero
             };
 
@@ -62,7 +62,7 @@ namespace PacMan.GameComponents
             }
             else
             {
-                tile = new Tile();
+                tile = new();
                 _nextTiles.Add(direction, tile);
             }
 
@@ -103,7 +103,7 @@ namespace PacMan.GameComponents
         /// x & y might not be a round number
         public static Vector2 FromCell(float x, float y)
         {
-            Vector2 centerCanvasPosition = Vector2.Multiply(new Vector2(x, y), 8);
+            Vector2 centerCanvasPosition = Vector2.Multiply(new(x, y), 8);
 
             return centerCanvasPosition / Vector2s.Eight;
         }
@@ -112,7 +112,7 @@ namespace PacMan.GameComponents
         {
             var tile = new Tile();
 
-            tile.UpdateWithSpritePos(new Vector2(index.X * 8, index.Y * 8));
+            tile.UpdateWithSpritePos(new(index.X * 8, index.Y * 8));
 
             return tile;
         }

@@ -111,6 +111,6 @@ namespace PacMan.GameComponents.Tweening
 
         [SuppressMessage("ReSharper", "HeapView.BoxingAllocation")]
         public override string ToString() =>
-            $@"{_tweeningFunction.Method.DeclaringType.Name}.{_tweeningFunction.Method.Name}. Tween {_from} -> {_from + _change} in {_duration}s. Elapsed {_elapsed:##0.##}s";
+            $@"{_tweeningFunction.Method.DeclaringType?.Name}.{_tweeningFunction.Method.Name}. Tween {_from} -> {_from + _change} in {_duration}s. Elapsed {_elapsed:##0.##}s";
     }
 }

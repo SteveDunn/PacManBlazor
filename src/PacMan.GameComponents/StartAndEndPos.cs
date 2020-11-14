@@ -16,6 +16,6 @@ namespace PacMan.GameComponents
         public Vector2 End { get; }
 
         [Pure]
-        public StartAndEndPos Reverse() => new StartAndEndPos(End, Start);
+        public StartAndEndPos Reverse() => new(End, Start);
     }
 }

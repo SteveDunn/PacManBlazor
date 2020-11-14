@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using System.Numerics;
 using System.Threading.Tasks;
 using MediatR;
 
@@ -17,12 +16,12 @@ namespace PacMan.GameComponents.Ghosts
                 pacman,
                 GhostNickname.Blinky,
                 maze,
-                new Vector2(13.5f, 11),
-                GameComponents.Directions.Left)
+                new(13.5f, 11),
+                Directions.Left)
         {
             _pacman = pacman;
             HouseOffset = 0;
-            _scatterTarget = new ValueTask<CellIndex>(new CellIndex(25, 0));
+            _scatterTarget = new(new CellIndex(25, 0));
         }
 
         public override Color GetColor() => Color.Red;
@@ -51,7 +50,7 @@ namespace PacMan.GameComponents.Ghosts
         {
             CellIndex pacCellPos = _pacman.Tile.Index;
 
-            return new ValueTask<CellIndex>(pacCellPos);
+            return new(pacCellPos);
         }
 
         // we are reading these properties:

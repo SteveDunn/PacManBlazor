@@ -40,13 +40,13 @@ namespace PacMan.GameComponents.GameActs
         readonly StartAndEndPos _blinkyPositions;
         readonly EggTimer _blinkyTimer;
 
-        readonly Vector2 _centerPoint = new Vector2(120, 140);
+        readonly Vector2 _centerPoint = new(120, 140);
 
         readonly Vector2[] _tearFrames;
         readonly Vector2[] _blinkyLookFrames;
 
-        readonly Size _tearSize = new Size(13, 13);
-        readonly Vector2 _tearOffset = new Vector2(7, 6.5f);
+        readonly Size _tearSize = new(13, 13);
+        readonly Vector2 _tearOffset = new(7, 6.5f);
 
         public GhostTearAct(IGameSoundPlayer gameSoundPlayer, IMediator mediator)
         {
@@ -75,9 +75,9 @@ namespace PacMan.GameComponents.GameActs
                 new Vector2(600, 113)
             };
 
-            _blinkyTimer = new EggTimer(4500.Milliseconds(), blinkyCaught);
+            _blinkyTimer = new(4500.Milliseconds(), blinkyCaught);
 
-            _tearTimer = new LoopingTimer(
+            _tearTimer = new(
                 500.Milliseconds(),
                 () => {
                     if (_stage == Stage.TearingBlinky)
@@ -86,28 +86,27 @@ namespace PacMan.GameComponents.GameActs
                     }
                 });
 
-            _lookTimer = new LoopingTimer(TimeSpan.MaxValue, () => { });
+            _lookTimer = new(TimeSpan.MaxValue, () => { });
 
-            _pacTimer = new EggTimer(4750.Milliseconds(), () => { });
+            _pacTimer = new(4750.Milliseconds(), () => { });
 
-            _pacMan = new AttractScenePacMan
-            {
+            _pacMan = new() {
                 Direction = Directions.Left
             };
 
-            _snagSprite = new GeneralSprite(_centerPoint, _tearSize, _tearOffset, _tearFrames[0])
+            _snagSprite = new(_centerPoint, _tearSize, _tearOffset, _tearFrames[0])
             {
                 Visible = true
             };
 
-            _blinky = new AttractGhost(GhostNickname.Blinky, Directions.Left);
+            _blinky = new(GhostNickname.Blinky, Directions.Left);
             _lookingBlinky = new NullSprite();
 
             var justOffScreen = new Vector2(250, 140);
 
-            _pacPositions = new StartAndEndPos(justOffScreen, new Vector2(-70, justOffScreen.Y));
+            _pacPositions = new(justOffScreen, new(-70, justOffScreen.Y));
 
-            _blinkyPositions = new StartAndEndPos(justOffScreen + new Vector2(120, 0), _centerPoint - new Vector2(10, 0));
+            _blinkyPositions = new(justOffScreen + new Vector2(120, 0), _centerPoint - new Vector2(10, 0));
         }
 
         public async ValueTask Reset()
@@ -169,7 +168,7 @@ namespace PacMan.GameComponents.GameActs
             ++_animFrame;
             if (_animFrame < _tearFrames.Length)
             {
-                _snagSprite = new GeneralSprite(
+                _snagSprite = new(
                     _centerPoint,
                     _tearSize,
                     _tearOffset,
@@ -186,14 +185,14 @@ namespace PacMan.GameComponents.GameActs
             _blinky.Visible = false;
             setLookingBlinky(0);
 
-            _lookTimer = new LoopingTimer(1500.Milliseconds(), async () => await updateBlinkyLookAnimation());
+            _lookTimer = new(1500.Milliseconds(), async () => await updateBlinkyLookAnimation());
 
             _lookingBlinky.Visible = true;
             _stage = Stage.BlinkyLooking;
         }
 
         void setLookingBlinky(int frame) =>
-            _lookingBlinky = new GeneralSprite(
+            _lookingBlinky = new(
                 _blinky.Position,
                 _blinky.Size,
                 _blinky.Origin,

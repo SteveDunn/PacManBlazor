@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Numerics;
 using System.Threading.Tasks;
 using MediatR;
 using PacMan.GameComponents.Canvas;
@@ -27,9 +26,9 @@ namespace PacMan.GameComponents
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
         void reset()
         {
-            _showTimer = new EggTimer(10.Seconds(), () => { Visible = false; });
+            _showTimer = new(10.Seconds(), () => { Visible = false; });
 
-            Position = Tile.ToCenterCanvas(new Vector2(14, 17.2f));
+            Position = Tile.ToCenterCanvas(new(14, 17.2f));
 
             Visible = false;
         }
@@ -43,8 +42,6 @@ namespace PacMan.GameComponents
                 if (Vector2s.AreNear(_pacman.Position, Position, 4))
                 {
                     await _mediator.Publish(new FruitEatenEvent(this));
-
-                    // _ = _game.FruitEaten();
 
                     Visible = false;
                 }

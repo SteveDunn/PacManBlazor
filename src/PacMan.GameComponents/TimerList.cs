@@ -9,7 +9,7 @@ namespace PacMan.GameComponents
         readonly List<EggTimer> _timers;
 
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
-        public TimerList() => _timers = new List<EggTimer>();
+        public TimerList() => _timers = new();
 
         public void Add(EggTimer timer) => _timers.Add(timer);
 

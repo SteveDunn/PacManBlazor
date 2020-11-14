@@ -30,7 +30,7 @@ namespace PacMan.GameComponents.GameActs
 
         public Marquee(MarqueeText[] texts)
         {
-            _timer = new EggTimer(1000.Seconds());
+            _timer = new(1000.Seconds());
             _texts = texts;
             _index = -1;
             selectNext();
@@ -39,7 +39,7 @@ namespace PacMan.GameComponents.GameActs
 
             var colorTweeningFunction = Tweener.CreateTweeningFunction<Linear>(Easing.EaseNone);
 
-            _colorTweener = new Tweener(.33f, 1, .33f.Seconds(), colorTweeningFunction);
+            _colorTweener = new(.33f, 1, .33f.Seconds(), colorTweeningFunction);
             _colorTweener.Ended += () =>
             {
                 _colorTweener.Reverse();
@@ -56,8 +56,8 @@ namespace PacMan.GameComponents.GameActs
 
             _current = _texts[_index];
             _state = State.Idle;
-            _timer = new EggTimer(_current.TimeIdle);
-            _pos = new Vector2(300, _current.YPosition);
+            _timer = new(_current.TimeIdle);
+            _pos = new(300, _current.YPosition);
         }
 
         public async ValueTask Update(CanvasTimingInformation timing)
@@ -96,12 +96,12 @@ namespace PacMan.GameComponents.GameActs
         {
             Debug.Assert(_tweener != null, nameof(_tweener) + " != null");
 
-            _pos = new Vector2(_tweener.Position, _current.YPosition);
+            _pos = new(_tweener.Position, _current.YPosition);
 
             if (_tweener.HasEnded)
             {
                 _state = State.Stationary;
-                _timer = new EggTimer(_current.TimeStationary);
+                _timer = new(_current.TimeStationary);
             }
 
             return default;
@@ -111,12 +111,12 @@ namespace PacMan.GameComponents.GameActs
         {
             Debug.Assert(_tweener != null, nameof(_tweener) + " != null");
 
-            _pos = new Vector2(_tweener.Position, _current.YPosition);
+            _pos = new(_tweener.Position, _current.YPosition);
 
             if (_tweener.HasEnded)
             {
                 _state = State.Idle;
-                _timer = new EggTimer(_current.TimeIdle);
+                _timer = new(_current.TimeIdle);
                 selectNext();
             }
 
@@ -128,8 +128,8 @@ namespace PacMan.GameComponents.GameActs
             if (_timer.Finished)
             {
                 _state = State.ScrollingIn;
-                _tweener = new Tweener(300, 0, _current.TimeIn, _tweeningFunction);
-                _timer = new EggTimer(_current.TimeOut);
+                _tweener = new(300, 0, _current.TimeIn, _tweeningFunction);
+                _timer = new(_current.TimeOut);
             }
 
             return default;
@@ -140,7 +140,7 @@ namespace PacMan.GameComponents.GameActs
             if (_timer.Finished)
             {
                 _state = State.ScrollingOut;
-                _tweener = new Tweener(0, -300, _current.TimeOut, _tweeningFunction);
+                _tweener = new(0, -300, _current.TimeOut, _tweeningFunction);
             }
 
             return default;

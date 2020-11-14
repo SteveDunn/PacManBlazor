@@ -41,8 +41,11 @@ namespace PacMan.GameComponents.Events
                 await _gameSoundPlayer.Reset();
 
                 _pacman.StartDigesting();
-
-                _ghostCollection.Ghosts.ForEach(g => g.StopMoving());
+                
+                foreach (var eachGhost in _ghostCollection.Ghosts)
+                {
+                     eachGhost.StopMoving();
+                }
 
                 // ReSharper disable once HeapView.BoxingAllocation
                 var act = await _mediator.Send(new GetActRequest("LevelFinishedAct"), cancellationToken);

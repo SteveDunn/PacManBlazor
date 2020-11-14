@@ -7,15 +7,15 @@ namespace PacMan.GameComponents
     public class ScorePanel : IScorePanel
     {
         readonly IGameStats _gameStats;
-        readonly Vector2 _scorePos2Up = new Vector2(206, 8);
-        readonly Vector2 _scorePos1Up = new Vector2(62, 8);
-        readonly Vector2 _highScorePos = new Vector2(140, 8);
-        readonly Vector2 _highScoreTextPos = new Vector2(72, 0);
+        readonly Vector2 _scorePos2Up = new(206, 8);
+        readonly Vector2 _scorePos1Up = new(62, 8);
+        readonly Vector2 _highScorePos = new(140, 8);
+        readonly Vector2 _highScoreTextPos = new(72, 0);
 
         readonly LoopingTimer _timer;
         readonly LoopingTimer _trialTimer;
-        readonly Vector2 _playerOneTextPos = new Vector2(30, 0);
-        readonly Vector2 _playerTwoTextPos = new Vector2(180, 0);
+        readonly Vector2 _playerOneTextPos = new(30, 0);
+        readonly Vector2 _playerTwoTextPos = new(180, 0);
 
         bool _tickTock = true;
         bool _trialTickTock;
@@ -26,8 +26,8 @@ namespace PacMan.GameComponents
 
             // ReSharper disable HeapView.ObjectAllocation.Evident
             // ReSharper disable HeapView.DelegateAllocation
-            _timer = new LoopingTimer(250.Milliseconds(), () => _tickTock = !_tickTock);
-            _trialTimer = new LoopingTimer(2.Seconds(), () => _trialTickTock = !_trialTickTock);
+            _timer = new(250.Milliseconds(), () => _tickTock = !_tickTock);
+            _trialTimer = new(2.Seconds(), () => _trialTickTock = !_trialTickTock);
 
             // ReSharper restore HeapView.DelegateAllocation
             // ReSharper restore HeapView.ObjectAllocation.Evident

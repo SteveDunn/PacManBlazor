@@ -25,7 +25,7 @@ namespace PacMan.GameComponents
 
         public Vector2 Origin => Vector2s.Eight;
 
-        public Size Size => new Size(14, 14);
+        public Size Size => new(14, 14);
 
         public Vector2 SpriteSheetPos { get; private set; }
 
@@ -35,7 +35,7 @@ namespace PacMan.GameComponents
         {
             int x = 16 * (int)item;
 
-            SpriteSheetPos = new Vector2(490 + x, 50);
+            SpriteSheetPos = new(490 + x, 50);
         }
     }
 }

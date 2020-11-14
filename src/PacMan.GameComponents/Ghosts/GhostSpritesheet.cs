@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Numerics;
 
 namespace PacMan.GameComponents.Ghosts
 {
@@ -14,19 +13,18 @@ namespace PacMan.GameComponents.Ghosts
 
             int x = left + (8 * 16);
 
-            _frightened = new FrightenedSpritesheet(
-                new FramePair(new Vector2(x, 64), new Vector2(x += 16, 64)),
-                new FramePair(new Vector2(x += 16, 64), new Vector2(x + 16, 64)));
+            _frightened = new(
+                new(new(x, 64), new(x += 16, 64)),
+                new(new(x += 16, 64), new(x + 16, 64)));
 
             x = left + (8 * 16);
-            Eyes = new EyesSpritesheetInfo(new Vector2(x, 64 + 16));
+            Eyes = new(new(x, 64 + 16));
 
-            _entries = new Dictionary<GhostNickname, GhostSpritesheetInfo>
-            {
-                [GhostNickname.Blinky] = new GhostSpritesheetInfo(new Vector2(left, 64)),
-                [GhostNickname.Pinky] = new GhostSpritesheetInfo(new Vector2(left, 64 + 16)),
-                [GhostNickname.Inky] = new GhostSpritesheetInfo(new Vector2(left, 64 + 32)),
-                [GhostNickname.Clyde] = new GhostSpritesheetInfo(new Vector2(left, 64 + 48))
+            _entries = new() {
+                [GhostNickname.Blinky] = new(new(left, 64)),
+                [GhostNickname.Pinky] = new(new(left, 64 + 16)),
+                [GhostNickname.Inky] = new(new(left, 64 + 32)),
+                [GhostNickname.Clyde] = new(new(left, 64 + 48))
             };
         }
 

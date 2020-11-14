@@ -10,7 +10,7 @@ namespace PacMan.GameComponents
 
         public TimedSpriteList()
         {
-            _sprites = new List<TimedSprite>();
+            _sprites = new();
         }
 
         public void Add(TimedSprite sprite) => _sprites.Add(sprite);

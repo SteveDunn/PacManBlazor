@@ -15,7 +15,7 @@ namespace PacMan.GameComponents.Ghosts
 
         public override Color GetColor() => Color.Aqua;
 
-        public override ValueTask<CellIndex> GetScatterTarget() => new ValueTask<CellIndex>(new CellIndex(27, 29));
+        public override ValueTask<CellIndex> GetScatterTarget() => new(new CellIndex(27, 29));
 
         public override ValueTask<CellIndex> GetChaseTarget() => getChaseTargetCell();
 
@@ -24,14 +24,14 @@ namespace PacMan.GameComponents.Ghosts
                 mediator,
                 input,
                 pacman,
-                GhostNickname.Inky, maze, Tile.FromCell(15.5f, 11), GameComponents.Directions.Up)
+                GhostNickname.Inky, maze, Tile.FromCell(15.5f, 11), Directions.Up)
         {
             _mediator = mediator;
             _maze = maze;
             _pacman = pacman;
             HouseOffset = -1;
 
-            _getBlinkyRequest = new GetBlinkyRequest();
+            _getBlinkyRequest = new();
         }
 
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
@@ -39,11 +39,11 @@ namespace PacMan.GameComponents.Ghosts
         {
             base.Reset();
 
-            Direction = new DirectionInfo(GameComponents.Directions.Up, GameComponents.Directions.Up);
+            Direction = new(Directions.Up, Directions.Up);
 
             State = GhostState.Normal;
             MovementMode = GhostMovementMode.InHouse;
-            SetMover(new GhostInsideHouseMover(this, _maze, CurrentPlayerStats.ghostHouseDoor));
+            SetMover(new(this, _maze, CurrentPlayerStats.ghostHouseDoor));
         }
 
         // To locate Inky’s target, we first start by selecting the position two tiles in front of Pac-Man

@@ -39,7 +39,7 @@ namespace PacMan.GameComponents
             TimeSpan animationSpeed) : this(pos, size, offsetForOrigin, frame1)
         {
             // ReSharper disable once HeapView.ObjectAllocation.Evident
-            _animator = new TwoFrameAnimation(animationSpeed);
+            _animator = new(animationSpeed);
             _frame2 = frame2;
         }
 

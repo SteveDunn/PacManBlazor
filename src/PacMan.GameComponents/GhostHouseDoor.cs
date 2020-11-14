@@ -25,33 +25,33 @@ namespace PacMan.GameComponents
         {
             _mediator = mediator;
 
-            _ghostCounters = new Dictionary<GhostNickname, DotCounter>();
+            _ghostCounters = new();
 
-            _nullCounter = new DotCounter(int.MaxValue, "NULL");
+            _nullCounter = new(int.MaxValue, "NULL");
 
-            _globalCounter = new GlobalDotCounter();
+            _globalCounter = new();
 
             var pinkyCounter = new DotCounter(0, "PINKY");
 
             if (level == 0)
             {
                 _ghostCounters[GhostNickname.Pinky] = pinkyCounter;
-                _ghostCounters[GhostNickname.Inky] = new DotCounter(30, "INKY");
-                _ghostCounters[GhostNickname.Clyde] = new DotCounter(60, "CLYDE");
+                _ghostCounters[GhostNickname.Inky] = new(30, "INKY");
+                _ghostCounters[GhostNickname.Clyde] = new(60, "CLYDE");
             }
 
             if (level == 1)
             {
                 _ghostCounters[GhostNickname.Pinky] = pinkyCounter;
-                _ghostCounters[GhostNickname.Inky] = new DotCounter(0, "INKY");
-                _ghostCounters[GhostNickname.Clyde] = new DotCounter(50, "CLYDE");
+                _ghostCounters[GhostNickname.Inky] = new(0, "INKY");
+                _ghostCounters[GhostNickname.Clyde] = new(50, "CLYDE");
             }
 
             if (level >= 2)
             {
                 _ghostCounters[GhostNickname.Pinky] = pinkyCounter;
-                _ghostCounters[GhostNickname.Inky] = new DotCounter(0, "INKY");
-                _ghostCounters[GhostNickname.Clyde] = new DotCounter(0, "CLYDE");
+                _ghostCounters[GhostNickname.Inky] = new(0, "INKY");
+                _ghostCounters[GhostNickname.Clyde] = new(0, "CLYDE");
             }
 
             _pillConsumptionTimeIdle = TimeSpan.Zero;

@@ -16,16 +16,15 @@ namespace PacMan.GameComponents.Ghosts
         {
             _index = -1;
 
-            _items = new List<ModeAndDuration>
-            {
-                new ModeAndDuration(GhostMovementMode.Scatter, properties.Scatter1.Seconds()),
-                new ModeAndDuration(GhostMovementMode.Chase, properties.Chase1.Seconds()),
-                new ModeAndDuration(GhostMovementMode.Scatter, properties.Scatter2.Seconds()),
-                new ModeAndDuration(GhostMovementMode.Chase, properties.Chase2.Seconds()),
-                new ModeAndDuration(GhostMovementMode.Scatter, properties.Scatter3.Seconds()),
-                new ModeAndDuration(GhostMovementMode.Chase, properties.Chase3.Seconds()),
-                new ModeAndDuration(GhostMovementMode.Scatter, properties.Scatter4.Seconds()),
-                new ModeAndDuration(GhostMovementMode.Chase, properties.Chase4.Seconds())
+            _items = new() {
+                new(GhostMovementMode.Scatter, properties.Scatter1.Seconds()),
+                new(GhostMovementMode.Chase, properties.Chase1.Seconds()),
+                new(GhostMovementMode.Scatter, properties.Scatter2.Seconds()),
+                new(GhostMovementMode.Chase, properties.Chase2.Seconds()),
+                new(GhostMovementMode.Scatter, properties.Scatter3.Seconds()),
+                new(GhostMovementMode.Chase, properties.Chase3.Seconds()),
+                new(GhostMovementMode.Scatter, properties.Scatter4.Seconds()),
+                new(GhostMovementMode.Chase, properties.Chase4.Seconds())
             };
 
             incrementIndex();
@@ -35,7 +34,7 @@ namespace PacMan.GameComponents.Ghosts
         {
             ModeAndDuration item = _items[_index];
 
-            item.Duration -= context.ElapsedTime;
+            item.DecreaseDurationBy(context.ElapsedTime);
 
             if (item.Duration < TimeSpan.Zero)
             {

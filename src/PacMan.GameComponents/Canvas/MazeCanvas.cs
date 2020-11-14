@@ -27,7 +27,7 @@ namespace PacMan.GameComponents.Canvas
             await DrawImage(
                 Spritesheet.Reference,
                 new Point(0, 0),
-                new Rectangle(0, 0, width, height));
+                new(0, 0, width, height));
         }
     }
 }

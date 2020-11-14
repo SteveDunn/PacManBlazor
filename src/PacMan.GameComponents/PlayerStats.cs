@@ -32,13 +32,13 @@ namespace PacMan.GameComponents
             LivesRemaining = Constants.PacManLives;
             _levelNumber = -1;
 
-            _extraLives = new List<int> { 10000 };
-            _levelStats = new LevelStats(0);
-            _ghostHouseDoor = new GhostHouseDoor(0, _mediator);
+            _extraLives = new() { 10000 };
+            _levelStats = new(0);
+            _ghostHouseDoor = new(0, _mediator);
 
             var props = LevelStats.GetGhostPatternProperties();
 
-            _ghostMovementConductor = new GhostMovementConductor(props);
+            _ghostMovementConductor = new(props);
         }
 
         public void Update(CanvasTimingInformation timing)
@@ -62,12 +62,12 @@ namespace PacMan.GameComponents
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
         public void NewLevel()
         {
-            _levelStats = new LevelStats(++_levelNumber);
-            _ghostHouseDoor = new GhostHouseDoor(0, _mediator);
+            _levelStats = new(++_levelNumber);
+            _ghostHouseDoor = new(0, _mediator);
 
             var props = LevelStats.GetGhostPatternProperties();
 
-            _ghostMovementConductor = new GhostMovementConductor(props);
+            _ghostMovementConductor = new(props);
         }
 
         public int PlayerIndex { get; }
@@ -114,7 +114,7 @@ namespace PacMan.GameComponents
 
         public async ValueTask PowerPillEaten(CellIndex point)
         {
-            FrightSession = new GhostFrightSession(_levelStats.GetLevelProps());
+            FrightSession = new(_levelStats.GetLevelProps());
 
             await _ghostHouseDoor.PillEaten();
             await IncreaseScoreBy(50);
@@ -127,7 +127,7 @@ namespace PacMan.GameComponents
 
             var props = LevelStats.GetGhostPatternProperties();
 
-            _ghostMovementConductor = new GhostMovementConductor(props);
+            _ghostMovementConductor = new(props);
         }
 
         public void DecreaseLives()

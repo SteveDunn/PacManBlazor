@@ -6,10 +6,10 @@ namespace PacMan.GameComponents.Ghosts
 {
     public class GhostLogic
     {
-        readonly DistanceAndDirectionComparer _distanceAndDirectionComparer = new DistanceAndDirectionComparer();
+        readonly DistanceAndDirectionComparer _distanceAndDirectionComparer = new();
 
-        readonly List<Directions> _availableDirections = new List<Directions>(4);
-        readonly List<DistanceAndDirection> _distanceAndDirections = new List<DistanceAndDirection>(4);
+        readonly List<Directions> _availableDirections = new(4);
+        readonly List<DistanceAndDirection> _distanceAndDirections = new(4);
 
         readonly IMaze _maze;
         readonly Ghost _ghost;
@@ -139,7 +139,7 @@ namespace PacMan.GameComponents.Ghosts
                     nextTileInThatDirection.CenterPos,
                     centerOfTarget);
 
-                _distanceAndDirections.Add(new DistanceAndDirection(distance, direction));
+                _distanceAndDirections.Add(new(distance, direction));
             }
 
             _distanceAndDirections.Sort(_distanceAndDirectionComparer);

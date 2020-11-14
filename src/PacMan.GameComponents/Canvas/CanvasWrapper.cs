@@ -10,11 +10,11 @@ namespace PacMan.GameComponents.Canvas
 {
     public class CanvasWrapper
     {
-        public static readonly CanvasTextFormat _10point = new CanvasTextFormat("Assets/Joystix.ttf#Joystix", 10);
-        public static readonly CanvasTextFormat _8point = new CanvasTextFormat("Assets/Joystix.ttf#Joystix", 8);
+        public static readonly CanvasTextFormat _10point = new("Assets/Joystix.ttf#Joystix", 10);
+        public static readonly CanvasTextFormat _8point = new("Assets/Joystix.ttf#Joystix", 8);
 
         readonly Canvas2DContext _canvas2DContext;
-        readonly Point _origin = new Point(0, 0);
+        readonly Point _origin = new(0, 0);
 
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
         protected CanvasWrapper(Canvas2DContext canvas2DContext) =>
@@ -133,9 +133,7 @@ namespace PacMan.GameComponents.Canvas
             await _canvas2DContext.StrokeAsync();
         }
 
-        public async ValueTask DrawMyText(string text, Vector2 pos, Color color)
-        {
-            await DrawText(text, pos.ToPoint(), color, _10point);
-        }
+        public ValueTask DrawMyText(string text, Vector2 pos, Color color) => 
+            DrawText(text, pos.ToPoint(), color, _10point);
     }
 }

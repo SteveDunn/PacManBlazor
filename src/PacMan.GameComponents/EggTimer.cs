@@ -41,7 +41,7 @@ namespace PacMan.GameComponents
 
         public bool Finished => _isFinished;
 
-        public static EggTimer Unset => new EggTimer(TimeSpan.MaxValue);
+        public static EggTimer Unset => new(TimeSpan.MaxValue);
 
         public void Run(CanvasTimingInformation timing)
         {

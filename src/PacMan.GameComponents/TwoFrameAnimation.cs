@@ -9,7 +9,7 @@ namespace PacMan.GameComponents
 
         public TwoFrameAnimation(TimeSpan switchEvery)
         {
-            _timer = new LoopingTimer(switchEvery, () => Flag = !Flag);
+            _timer = new(switchEvery, () => Flag = !Flag);
         }
 
         public bool Flag { get; private set; }

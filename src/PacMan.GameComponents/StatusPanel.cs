@@ -13,9 +13,9 @@ namespace PacMan.GameComponents
         readonly ICoinBox _coinBox;
 
         // ReSharper disable once HeapView.ObjectAllocation.Evident
-        readonly StringBuilder _sb = new StringBuilder();
+        readonly StringBuilder _sb = new();
 
-        readonly Vector2 _creditTextPoint = new Vector2(10, 00);
+        readonly Vector2 _creditTextPoint = new(10, 00);
 
         readonly LoopingTimer _timer;
 
@@ -29,10 +29,10 @@ namespace PacMan.GameComponents
             _coinBox = coinBox;
 
             // ReSharper disable once HeapView.ObjectAllocation.Evident
-            _timer = new LoopingTimer(250.Milliseconds(), () => _tickTock = !_tickTock);
+            _timer = new(250.Milliseconds(), () => _tickTock = !_tickTock);
 
             // ReSharper disable once HeapView.ObjectAllocation.Evident
-            _fruit = new SimpleFruit();
+            _fruit = new();
         }
 
         public void Update(CanvasTimingInformation timing)
@@ -62,7 +62,7 @@ namespace PacMan.GameComponents
                 await ds.DrawImage(
                     Spritesheet.Reference,
                     new Rectangle(x, 0, 16, 16),
-                    new Rectangle(
+                    new(
                         (int)PacMan.FacingLeftSpritesheetPos.X,
                         (int)PacMan.FacingLeftSpritesheetPos.Y,
                         16,
@@ -100,7 +100,7 @@ namespace PacMan.GameComponents
                 var item = LevelStats.GetLevelProps(i).Fruit1;
 
                 _fruit.SetFruitItem(item);
-                _fruit.Position = new Vector2(x, 10);
+                _fruit.Position = new(x, 10);
 
                 await ds.DrawSprite(_fruit, Spritesheet.Reference);
             }

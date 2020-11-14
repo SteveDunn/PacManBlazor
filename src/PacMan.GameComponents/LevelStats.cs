@@ -1,6 +1,7 @@
 ﻿// ReSharper disable HeapView.ObjectAllocation.Evident
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using PacMan.GameComponents.Ghosts;
 
 namespace PacMan.GameComponents
@@ -15,53 +16,372 @@ namespace PacMan.GameComponents
     {
         const int _startingAmountOfPills = 244;
 
-        const int _maxlevel = 20;
+        const int _maxLevel = 20;
 
         readonly char[] _currentMap;
 
-        static readonly LevelProps[] _levelProps =
-        {
-            // pn   pd  gn  gt                      pf  pfd gf
-            new LevelProps(IntroCutScene.None, FruitItem.Cherry, 300, 80, 71, 80, 40, 30, 90, 15, 95, 90, 79, 50, 6, 5),
-            new LevelProps(IntroCutScene.None, FruitItem.Strawberry, 300, 90, 79, 85, 45, 30, 90, 15, 95, 95, 83, 55, 5,
-                5),
-            new LevelProps(IntroCutScene.BigPac, FruitItem.Peach, 500, 90, 79, 85, 45, 40, 90, 20, 95, 95, 83, 55, 4,
-                5),
-            new LevelProps(IntroCutScene.None, FruitItem.Peach, 500, 90, 79, 85, 45, 40, 90, 20, 95, 95, 83, 55, 3, 5),
-            new LevelProps(IntroCutScene.None, FruitItem.Apple, 700, 100, 87, 95, 50, 40, 100, 20, 105, 100, 87, 60, 2,
-                5),
-            new LevelProps(IntroCutScene.GhostSnagged, FruitItem.Apple, 700, 100, 87, 95, 50, 50, 100, 25, 105, 100, 87,
-                60, 2, 5),
-            new LevelProps(IntroCutScene.None, FruitItem.Grape, 1000, 100, 87, 95, 50, 50, 100, 25, 105, 100, 87, 60, 2,
-                5),
-            new LevelProps(IntroCutScene.None, FruitItem.Grape, 1000, 100, 87, 95, 50, 50, 100, 25, 105, 100, 87, 60, 1,
-                5),
-            new LevelProps(IntroCutScene.None, FruitItem.Galaxian, 2000, 100, 87, 95, 50, 60, 100, 30, 105, 100, 87, 60,
-                5, 3),
-            new LevelProps(IntroCutScene.TornGhostAndWorm, FruitItem.Galaxian, 2000, 100, 87, 95, 50, 60, 100, 30, 105,
-                100, 87, 60, 2, 5),
-            new LevelProps(IntroCutScene.None, FruitItem.Bell, 3000, 100, 87, 95, 50, 60, 100, 30, 105, 100, 87, 60, 1,
-                5),
-            new LevelProps(IntroCutScene.None, FruitItem.Bell, 3000, 100, 87, 95, 50, 80, 100, 40, 105, 100, 87, 60, 1,
-                3),
-            new LevelProps(IntroCutScene.None, FruitItem.Key, 5000, 100, 87, 95, 50, 80, 100, 40, 105, 100, 87, 60, 1,
-                3),
-            new LevelProps(IntroCutScene.TornGhostAndWorm, FruitItem.Key, 5000, 100, 87, 95, 50, 80, 100, 40, 105, 100,
-                87, 60, 3, 5),
-            new LevelProps(IntroCutScene.None, FruitItem.Key, 5000, 100, 87, 95, 50, 100, 100, 50, 105, 100, 87, 60, 1,
-                3),
-            new LevelProps(IntroCutScene.None, FruitItem.Key, 5000, 100, 87, 95, 50, 100, 100, 50, 105, 100, 87, 60, 1,
-                3),
-            new LevelProps(IntroCutScene.None, FruitItem.Key, 5000, 100, 87, 95, 50, 100, 100, 50, 105, 0, 0, 0, 0, 0),
-            new LevelProps(IntroCutScene.TornGhostAndWorm, FruitItem.Key, 5000, 100, 87, 95, 50, 100, 100, 50, 105, 100,
-                87, 60, 1, 3),
-            new LevelProps(IntroCutScene.None, FruitItem.Key, 5000, 100, 87, 95, 50, 120, 100, 60, 105, 0, 0, 0, 0, 0),
-            new LevelProps(IntroCutScene.None, FruitItem.Key, 5000, 100, 87, 95, 50, 120, 100, 60, 105, 0, 0, 0, 0, 0),
-            new LevelProps(IntroCutScene.None, FruitItem.Key, 5000, 90, 79, 95, 50, 120, 100, 60, 105, 0, 0, 0, 0, 0)
+        static readonly LevelProps[] _levelProps = {
+            new(
+                CutScene: IntroCutScene.None,
+                Fruit1: FruitItem.Cherry,
+                FruitPoints: 300,
+                PacManSpeedPc: 80,
+                PacManDotsSpeedPc: 71,
+                GhostSpeedPc: 80,
+                GhostTunnelSpeedPc: 40,
+                Elroy1DotsLeft: 30,
+                Elroy1SpeedPc: 90,
+                Elroy2DotsLeft: 15,
+                Elroy2SpeedPc: 95,
+                FrightPacManSpeedPc: 90,
+                FrightPacManDotSpeedPc: 79,
+                FrightGhostSpeedPc: 50,
+                FrightGhostTime: 6,
+                FrightGhostFlashes: 5),
+            new(
+                CutScene: IntroCutScene.None,
+                Fruit1: FruitItem.Strawberry,
+                FruitPoints: 300,
+                PacManSpeedPc: 90,
+                PacManDotsSpeedPc: 79,
+                GhostSpeedPc: 85,
+                GhostTunnelSpeedPc: 45,
+                Elroy1DotsLeft: 30,
+                Elroy1SpeedPc: 90,
+                Elroy2DotsLeft: 15,
+                Elroy2SpeedPc: 95,
+                FrightPacManSpeedPc: 95,
+                FrightPacManDotSpeedPc: 83,
+                FrightGhostSpeedPc: 55,
+                FrightGhostTime: 5,
+                FrightGhostFlashes: 5),
+            new(
+                CutScene: IntroCutScene.BigPac,
+                Fruit1: FruitItem.Peach,
+                FruitPoints: 500,
+                PacManSpeedPc: 90,
+                PacManDotsSpeedPc: 79,
+                GhostSpeedPc: 85,
+                GhostTunnelSpeedPc: 45,
+                Elroy1DotsLeft: 40,
+                Elroy1SpeedPc: 90,
+                Elroy2DotsLeft: 20,
+                Elroy2SpeedPc: 95,
+                FrightPacManSpeedPc: 95,
+                FrightPacManDotSpeedPc: 83,
+                FrightGhostSpeedPc: 55,
+                FrightGhostTime: 4,
+                FrightGhostFlashes: 5),
+            new(
+                CutScene: IntroCutScene.None,
+                Fruit1: FruitItem.Peach,
+                FruitPoints: 500,
+                PacManSpeedPc: 90,
+                PacManDotsSpeedPc: 79,
+                GhostSpeedPc: 85,
+                GhostTunnelSpeedPc: 45,
+                Elroy1DotsLeft: 40,
+                Elroy1SpeedPc: 90,
+                Elroy2DotsLeft: 20,
+                Elroy2SpeedPc: 95,
+                FrightPacManSpeedPc: 95,
+                FrightPacManDotSpeedPc: 83,
+                FrightGhostSpeedPc: 55,
+                FrightGhostTime: 3,
+                FrightGhostFlashes: 5),
+            new(
+                CutScene: IntroCutScene.None,
+                Fruit1: FruitItem.Apple,
+                FruitPoints: 700,
+                PacManSpeedPc: 100,
+                PacManDotsSpeedPc: 87,
+                GhostSpeedPc: 95,
+                GhostTunnelSpeedPc: 50,
+                Elroy1DotsLeft: 40,
+                Elroy1SpeedPc: 100,
+                Elroy2DotsLeft: 20,
+                Elroy2SpeedPc: 105,
+                FrightPacManSpeedPc: 100,
+                FrightPacManDotSpeedPc: 87,
+                FrightGhostSpeedPc: 60,
+                FrightGhostTime: 2,
+                FrightGhostFlashes: 5),
+            new(
+                CutScene: IntroCutScene.GhostSnagged,
+                Fruit1: FruitItem.Apple,
+                FruitPoints: 700,
+                PacManSpeedPc: 100,
+                PacManDotsSpeedPc: 87,
+                GhostSpeedPc: 95,
+                GhostTunnelSpeedPc: 50,
+                Elroy1DotsLeft: 50,
+                Elroy1SpeedPc: 100,
+                Elroy2DotsLeft: 25,
+                Elroy2SpeedPc: 105,
+                FrightPacManSpeedPc: 100,
+                FrightPacManDotSpeedPc: 87,
+                FrightGhostSpeedPc: 60,
+                FrightGhostTime: 2,
+                FrightGhostFlashes: 5),
+            new(
+                CutScene: IntroCutScene.None,
+                Fruit1: FruitItem.Grape,
+                FruitPoints: 1000,
+                PacManSpeedPc: 100,
+                PacManDotsSpeedPc: 87,
+                GhostSpeedPc: 95,
+                GhostTunnelSpeedPc: 50,
+                Elroy1DotsLeft: 50,
+                Elroy1SpeedPc: 100,
+                Elroy2DotsLeft: 25,
+                Elroy2SpeedPc: 105,
+                FrightPacManSpeedPc: 100,
+                FrightPacManDotSpeedPc: 87,
+                FrightGhostSpeedPc: 60,
+                FrightGhostTime: 2,
+                FrightGhostFlashes: 5),
+            new(
+                CutScene: IntroCutScene.None,
+                Fruit1: FruitItem.Grape,
+                FruitPoints: 1000,
+                PacManSpeedPc: 100,
+                PacManDotsSpeedPc: 87,
+                GhostSpeedPc: 95,
+                GhostTunnelSpeedPc: 50,
+                Elroy1DotsLeft: 50,
+                Elroy1SpeedPc: 100,
+                Elroy2DotsLeft: 25,
+                Elroy2SpeedPc: 105,
+                FrightPacManSpeedPc: 100,
+                FrightPacManDotSpeedPc: 87,
+                FrightGhostSpeedPc: 60,
+                FrightGhostTime: 1,
+                FrightGhostFlashes: 5),
+            new(
+                CutScene: IntroCutScene.None,
+                Fruit1: FruitItem.Galaxian,
+                FruitPoints: 2000,
+                PacManSpeedPc: 100,
+                PacManDotsSpeedPc: 87,
+                GhostSpeedPc: 95,
+                GhostTunnelSpeedPc: 50,
+                Elroy1DotsLeft: 60,
+                Elroy1SpeedPc: 100,
+                Elroy2DotsLeft: 30,
+                Elroy2SpeedPc: 105,
+                FrightPacManSpeedPc: 100,
+                FrightPacManDotSpeedPc: 87,
+                FrightGhostSpeedPc: 60,
+                FrightGhostTime: 5,
+                FrightGhostFlashes: 3),
+            new(
+                CutScene: IntroCutScene.TornGhostAndWorm,
+                Fruit1: FruitItem.Galaxian,
+                FruitPoints: 2000,
+                PacManSpeedPc: 100,
+                PacManDotsSpeedPc: 87,
+                GhostSpeedPc: 95,
+                GhostTunnelSpeedPc: 50,
+                Elroy1DotsLeft: 60,
+                Elroy1SpeedPc: 100,
+                Elroy2DotsLeft: 30,
+                Elroy2SpeedPc: 105,
+                FrightPacManSpeedPc: 100,
+                FrightPacManDotSpeedPc: 87,
+                FrightGhostSpeedPc: 60,
+                FrightGhostTime: 2,
+                FrightGhostFlashes: 5),
+            new(
+                CutScene: IntroCutScene.None,
+                Fruit1: FruitItem.Bell,
+                FruitPoints: 3000,
+                PacManSpeedPc: 100,
+                PacManDotsSpeedPc: 87,
+                GhostSpeedPc: 95,
+                GhostTunnelSpeedPc: 50,
+                Elroy1DotsLeft: 60,
+                Elroy1SpeedPc: 100,
+                Elroy2DotsLeft: 30,
+                Elroy2SpeedPc: 105,
+                FrightPacManSpeedPc: 100,
+                FrightPacManDotSpeedPc: 87,
+                FrightGhostSpeedPc: 60,
+                FrightGhostTime: 1,
+                FrightGhostFlashes: 5),
+            new(
+                CutScene: IntroCutScene.None,
+                Fruit1: FruitItem.Bell,
+                FruitPoints: 3000,
+                PacManSpeedPc: 100,
+                PacManDotsSpeedPc: 87,
+                GhostSpeedPc: 95,
+                GhostTunnelSpeedPc: 50,
+                Elroy1DotsLeft: 80,
+                Elroy1SpeedPc: 100,
+                Elroy2DotsLeft: 40,
+                Elroy2SpeedPc: 105,
+                FrightPacManSpeedPc: 100,
+                FrightPacManDotSpeedPc: 87,
+                FrightGhostSpeedPc: 60,
+                FrightGhostTime: 1,
+                FrightGhostFlashes: 3),
+            new(
+                CutScene: IntroCutScene.None,
+                Fruit1: FruitItem.Key,
+                FruitPoints: 5000,
+                PacManSpeedPc: 100,
+                PacManDotsSpeedPc: 87,
+                GhostSpeedPc: 95,
+                GhostTunnelSpeedPc: 50,
+                Elroy1DotsLeft: 80,
+                Elroy1SpeedPc: 100,
+                Elroy2DotsLeft: 40,
+                Elroy2SpeedPc: 105,
+                FrightPacManSpeedPc: 100,
+                FrightPacManDotSpeedPc: 87,
+                FrightGhostSpeedPc: 60,
+                FrightGhostTime: 1,
+                FrightGhostFlashes: 3),
+            new(
+                CutScene: IntroCutScene.TornGhostAndWorm,
+                Fruit1: FruitItem.Key,
+                FruitPoints: 5000,
+                PacManSpeedPc: 100,
+                PacManDotsSpeedPc: 87,
+                GhostSpeedPc: 95,
+                GhostTunnelSpeedPc: 50,
+                Elroy1DotsLeft: 80,
+                Elroy1SpeedPc: 100,
+                Elroy2DotsLeft: 40,
+                Elroy2SpeedPc: 105,
+                FrightPacManSpeedPc: 100,
+                FrightPacManDotSpeedPc: 87,
+                FrightGhostSpeedPc: 60,
+                FrightGhostTime: 3,
+                FrightGhostFlashes: 5),
+            new(
+                CutScene: IntroCutScene.None,
+                Fruit1: FruitItem.Key,
+                FruitPoints: 5000,
+                PacManSpeedPc: 100,
+                PacManDotsSpeedPc: 87,
+                GhostSpeedPc: 95,
+                GhostTunnelSpeedPc: 50,
+                Elroy1DotsLeft: 100,
+                Elroy1SpeedPc: 100,
+                Elroy2DotsLeft: 50,
+                Elroy2SpeedPc: 105,
+                FrightPacManSpeedPc: 100,
+                FrightPacManDotSpeedPc: 87,
+                FrightGhostSpeedPc: 60,
+                FrightGhostTime: 1,
+                FrightGhostFlashes: 3),
+            new(
+                CutScene: IntroCutScene.None,
+                Fruit1: FruitItem.Key,
+                FruitPoints: 5000,
+                PacManSpeedPc: 100,
+                PacManDotsSpeedPc: 87,
+                GhostSpeedPc: 95,
+                GhostTunnelSpeedPc: 50,
+                Elroy1DotsLeft: 100,
+                Elroy1SpeedPc: 100,
+                Elroy2DotsLeft: 50,
+                Elroy2SpeedPc: 105,
+                FrightPacManSpeedPc: 100,
+                FrightPacManDotSpeedPc: 87,
+                FrightGhostSpeedPc: 60,
+                FrightGhostTime: 1,
+                FrightGhostFlashes: 3),
+            new(
+                CutScene: IntroCutScene.None,
+                Fruit1: FruitItem.Key,
+                FruitPoints: 5000,
+                PacManSpeedPc: 100,
+                PacManDotsSpeedPc: 87,
+                GhostSpeedPc: 95,
+                GhostTunnelSpeedPc: 50,
+                Elroy1DotsLeft: 100,
+                Elroy1SpeedPc: 100,
+                Elroy2DotsLeft: 50,
+                Elroy2SpeedPc: 105,
+                FrightPacManSpeedPc: 0,
+                FrightPacManDotSpeedPc: 0,
+                FrightGhostSpeedPc: 0,
+                FrightGhostTime: 0,
+                FrightGhostFlashes: 0),
+            new(
+                CutScene: IntroCutScene.TornGhostAndWorm,
+                Fruit1: FruitItem.Key,
+                FruitPoints: 5000,
+                PacManSpeedPc: 100,
+                PacManDotsSpeedPc: 87,
+                GhostSpeedPc: 95,
+                GhostTunnelSpeedPc: 50,
+                Elroy1DotsLeft: 100,
+                Elroy1SpeedPc: 100,
+                Elroy2DotsLeft: 50,
+                Elroy2SpeedPc: 105,
+                FrightPacManSpeedPc: 100,
+                FrightPacManDotSpeedPc: 87,
+                FrightGhostSpeedPc: 60,
+                FrightGhostTime: 1,
+                FrightGhostFlashes: 3),
+            new(
+                CutScene: IntroCutScene.None,
+                Fruit1: FruitItem.Key,
+                FruitPoints: 5000,
+                PacManSpeedPc: 100,
+                PacManDotsSpeedPc: 87,
+                GhostSpeedPc: 95,
+                GhostTunnelSpeedPc: 50,
+                Elroy1DotsLeft: 120,
+                Elroy1SpeedPc: 100,
+                Elroy2DotsLeft: 60,
+                Elroy2SpeedPc: 105,
+                FrightPacManSpeedPc: 0,
+                FrightPacManDotSpeedPc: 0,
+                FrightGhostSpeedPc: 0,
+                FrightGhostTime: 0,
+                FrightGhostFlashes: 0),
+            new(
+                CutScene: IntroCutScene.None,
+                Fruit1: FruitItem.Key,
+                FruitPoints: 5000,
+                PacManSpeedPc: 100,
+                PacManDotsSpeedPc: 87,
+                GhostSpeedPc: 95,
+                GhostTunnelSpeedPc: 50,
+                Elroy1DotsLeft: 120,
+                Elroy1SpeedPc: 100,
+                Elroy2DotsLeft: 60,
+                Elroy2SpeedPc: 105,
+                FrightPacManSpeedPc: 0,
+                FrightPacManDotSpeedPc: 0,
+                FrightGhostSpeedPc: 0,
+                FrightGhostTime: 0,
+                FrightGhostFlashes: 0),
+            new(
+                CutScene: IntroCutScene.None,
+                Fruit1: FruitItem.Key,
+                FruitPoints: 5000,
+                PacManSpeedPc: 90,
+                PacManDotsSpeedPc: 79,
+                GhostSpeedPc: 95,
+                GhostTunnelSpeedPc: 50,
+                Elroy1DotsLeft: 120,
+                Elroy1SpeedPc: 100,
+                Elroy2DotsLeft: 60,
+                Elroy2SpeedPc: 105,
+                FrightPacManSpeedPc: 0,
+                FrightPacManDotSpeedPc: 0,
+                FrightGhostSpeedPc: 0,
+                FrightGhostTime: 0,
+                FrightGhostFlashes: 0)
         };
 
         // todo: move to another class (and related properties)
-        static readonly char[] _map = (
+        [SuppressMessage(category: "ReSharper", checkId: "StringLiteralTypo")] static readonly char[] _map = (
 
             // 0,0                     29,0
 
@@ -105,7 +425,7 @@ namespace PacMan.GameComponents
             PillsRemaining = _startingAmountOfPills;
             _currentMap = (char[]) _map.Clone();
 
-            FruitSession = new FruitSession();
+            FruitSession = new();
         }
 
         public FruitSession FruitSession { get; }
@@ -118,7 +438,7 @@ namespace PacMan.GameComponents
 
         public LevelProps GetLevelProps()
         {
-            var index = Math.Min(LevelNumber, _maxlevel);
+            var index = Math.Min(val1: LevelNumber, val2: _maxLevel);
             return _levelProps[index];
         }
 
@@ -142,8 +462,7 @@ namespace PacMan.GameComponents
 
             if (LevelNumber == 0)
             {
-                return new GhostsLevelPatternProperties
-                {
+                return new() {
                     Scatter1 = 7,
                     Chase1 = 20,
                     Scatter2 = 7,
@@ -157,8 +476,7 @@ namespace PacMan.GameComponents
 
             if (LevelNumber >= 1 && LevelNumber <= 3)
             {
-                return new GhostsLevelPatternProperties
-                {
+                return new() {
                     Scatter1 = 7,
                     Chase1 = 20,
                     Scatter2 = 7,
@@ -170,8 +488,7 @@ namespace PacMan.GameComponents
                 };
             }
 
-            return new GhostsLevelPatternProperties
-            {
+            return new() {
                 Scatter1 = 5,
                 Chase1 = 20,
                 Scatter2 = 7,
@@ -183,7 +500,7 @@ namespace PacMan.GameComponents
             };
         }
 
-        public void PillEaten(CellIndex cellPosition)
+        public void PillEaten(in CellIndex cellPosition)
         {
             FruitSession.PillEaten();
 
@@ -196,6 +513,6 @@ namespace PacMan.GameComponents
 
         static int getArrayIndex(CellIndex point) => (point.Y * 29) + point.X;
 
-        public char GetCellContent(CellIndex point) => _currentMap[getArrayIndex(point)];
+        public char GetCellContent(CellIndex point) => _currentMap[getArrayIndex(point: point)];
     }
 }

@@ -9,6 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PacMan.GameComponents", "sr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Folder", "Solution Folder", "{414DB53C-207E-4ED7-B813-A3D66510C1F4}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
 		Directory.Build.props = Directory.Build.props
 		readme.md = readme.md
 		todo.md = todo.md
@@ -18,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmallTests", "test\SmallTests\SmallTests.csproj", "{9A837C89-3F63-4D9B-9DC1-3853D8A82BDA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +66,22 @@ Global
 		{E2E793DD-0D44-427F-A199-FC5BA7266F8B}.Release|x64.Build.0 = Release|Any CPU
 		{E2E793DD-0D44-427F-A199-FC5BA7266F8B}.Release|x86.ActiveCfg = Release|Any CPU
 		{E2E793DD-0D44-427F-A199-FC5BA7266F8B}.Release|x86.Build.0 = Release|Any CPU
+		{9A837C89-3F63-4D9B-9DC1-3853D8A82BDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A837C89-3F63-4D9B-9DC1-3853D8A82BDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A837C89-3F63-4D9B-9DC1-3853D8A82BDA}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{9A837C89-3F63-4D9B-9DC1-3853D8A82BDA}.Debug|ARM.Build.0 = Debug|Any CPU
+		{9A837C89-3F63-4D9B-9DC1-3853D8A82BDA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9A837C89-3F63-4D9B-9DC1-3853D8A82BDA}.Debug|x64.Build.0 = Debug|Any CPU
+		{9A837C89-3F63-4D9B-9DC1-3853D8A82BDA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9A837C89-3F63-4D9B-9DC1-3853D8A82BDA}.Debug|x86.Build.0 = Debug|Any CPU
+		{9A837C89-3F63-4D9B-9DC1-3853D8A82BDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A837C89-3F63-4D9B-9DC1-3853D8A82BDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A837C89-3F63-4D9B-9DC1-3853D8A82BDA}.Release|ARM.ActiveCfg = Release|Any CPU
+		{9A837C89-3F63-4D9B-9DC1-3853D8A82BDA}.Release|ARM.Build.0 = Release|Any CPU
+		{9A837C89-3F63-4D9B-9DC1-3853D8A82BDA}.Release|x64.ActiveCfg = Release|Any CPU
+		{9A837C89-3F63-4D9B-9DC1-3853D8A82BDA}.Release|x64.Build.0 = Release|Any CPU
+		{9A837C89-3F63-4D9B-9DC1-3853D8A82BDA}.Release|x86.ActiveCfg = Release|Any CPU
+		{9A837C89-3F63-4D9B-9DC1-3853D8A82BDA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

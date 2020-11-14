@@ -18,9 +18,9 @@ namespace PacMan.GameComponents.GameActs
         {
             _finished = false;
 
-            _currentTimer = new LoopingTimer(2.Seconds(), () =>
+            _currentTimer = new(2.Seconds(), () =>
             {
-                _currentTimer = new LoopingTimer(2.Seconds(), () =>
+                _currentTimer = new(2.Seconds(), () =>
                 {
                     _finished = true;
                 });
@@ -33,7 +33,7 @@ namespace PacMan.GameComponents.GameActs
         {
             _currentTimer.Run(timing);
 
-            return new ValueTask<ActUpdateResult>(_finished ? ActUpdateResult.Finished : ActUpdateResult.Running);
+            return new(_finished ? ActUpdateResult.Finished : ActUpdateResult.Running);
         }
 
         public async ValueTask Draw(CanvasWrapper session)

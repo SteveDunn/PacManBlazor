@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace PacMan.GameComponents
+﻿namespace PacMan.GameComponents
 {
     public class PowerPill : GeneralSprite
     {
@@ -8,8 +6,8 @@ namespace PacMan.GameComponents
             Vector2s.Zero,
             Sizes.Eight,
             Vector2s.Zero,
-            new Vector2(457, 156),
-            new Vector2(467, 156),
+            new(457, 156),
+            new(467, 156),
             130.Milliseconds())
         {
         }

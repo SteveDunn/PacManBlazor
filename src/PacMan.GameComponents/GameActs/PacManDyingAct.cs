@@ -41,14 +41,14 @@ namespace PacMan.GameComponents.GameActs
             _pacman.StartDigesting();
             _ghostCollection.Ghosts.ForEach(g => g.StopMoving());
 
-            _timer = new LoopingTimer(2.Seconds(), () =>
+            _timer = new(2.Seconds(), () =>
             {
                 _step += 1;
                 _ = _gameSoundPlayer.PacManDying();
 
                 _pacman.StartDying();
 
-                _timer = new LoopingTimer(2.Seconds(), async () =>
+                _timer = new(2.Seconds(), async () =>
                 {
                     _step += 1;
                     _finished = true;

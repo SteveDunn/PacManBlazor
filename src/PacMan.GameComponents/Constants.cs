@@ -6,7 +6,7 @@ namespace PacMan.GameComponents
     {
         public static int FramesPerSecond { get; set; } = 60;
 
-        public static readonly Vector2 UnscaledCanvasSize = new Vector2(224, 314);
+        public static readonly Vector2 UnscaledCanvasSize = new(224, 314);
 
         public static readonly float PacManBaseSpeed = 1.2f;
         public static readonly float GhostBaseSpeed = 1.2f;
