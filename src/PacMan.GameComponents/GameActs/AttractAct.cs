@@ -61,7 +61,7 @@ namespace PacMan.GameComponents.GameActs
             MarqueeText[] texts =
             {
                 new() {
-                    Text = "tap or space for 1 player",
+                    Text = "tap/space - 1 player",
                     YPosition = 195,
                     TimeIdle = 1.Seconds(),
                     TimeIn = 2.Seconds(),
@@ -69,7 +69,7 @@ namespace PacMan.GameComponents.GameActs
                     TimeOut = 1.Seconds()
                 },
                 new() {
-                    Text = "press or 2 for 2 players",
+                    Text = "long press/2 - 2 players",
                     YPosition = 195,
                     TimeIdle = 0.Seconds(),
                     TimeIn = 2.Seconds(),
