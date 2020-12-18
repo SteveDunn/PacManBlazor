@@ -13,7 +13,7 @@ namespace PacMan.GameComponents
 
         public void Reset() => _index = 0;
 
-        public Directions Next()
+        public Direction Next()
         {
             if (_index >= _presses.Length)
             {
@@ -23,10 +23,10 @@ namespace PacMan.GameComponents
 
             return _presses[_index++] switch
             {
-                'u' => Directions.Up,
-                'd' => Directions.Down,
-                'l' => Directions.Left,
-                'r' => Directions.Right,
+                'u' => Direction.Up,
+                'd' => Direction.Down,
+                'l' => Direction.Left,
+                'r' => Direction.Right,
                 // ReSharper disable once HeapView.BoxingAllocation
                 _ => throw new InvalidOperationException($"Don't know what direction ${_presses[_index]} is!")
             };

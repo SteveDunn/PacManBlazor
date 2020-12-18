@@ -16,7 +16,7 @@ namespace PacMan.GameComponents
 
         ValueTask ClearCell(CellIndex cell);
 
-        bool CanContinueInDirection(Directions direction, Tile tile);
+        bool CanContinueInDirection(Direction direction, Tile tile);
 
         DirectionChoices GetChoicesAtCellPosition(CellIndex cellPos);
 

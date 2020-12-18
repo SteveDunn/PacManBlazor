@@ -24,7 +24,7 @@ namespace PacMan.GameComponents.Ghosts
                 mediator,
                 input,
                 pacman,
-                GhostNickname.Inky, maze, Tile.FromCell(15.5f, 11), Directions.Up)
+                GhostNickname.Inky, maze, Tile.FromCell(15.5f, 11), GameComponents.Direction.Up)
         {
             _mediator = mediator;
             _maze = maze;
@@ -39,7 +39,7 @@ namespace PacMan.GameComponents.Ghosts
         {
             base.Reset();
 
-            Direction = new(Directions.Up, Directions.Up);
+            Direction = new(GameComponents.Direction.Up, GameComponents.Direction.Up);
 
             State = GhostState.Normal;
             MovementMode = GhostMovementMode.InHouse;

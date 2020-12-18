@@ -8,7 +8,7 @@ namespace PacMan.GameComponents.Ghosts
     {
         readonly DistanceAndDirectionComparer _distanceAndDirectionComparer = new();
 
-        readonly List<Directions> _availableDirections = new(4);
+        readonly List<Direction> _availableDirections = new(4);
         readonly List<DistanceAndDirection> _distanceAndDirections = new(4);
 
         readonly IMaze _maze;
@@ -25,7 +25,7 @@ namespace PacMan.GameComponents.Ghosts
 
         /// Find which way to go from the ghost's next cell (in the direction of travel)
         /// to the target cell.
-        public Directions GetWhichWayToGo(CellIndex targetCell)
+        public Direction GetWhichWayToGo(CellIndex targetCell)
         {
             Tile currentTile = _ghost.Tile;
 
@@ -33,7 +33,7 @@ namespace PacMan.GameComponents.Ghosts
 
             if (cellPosition == _lastDecisionMadeAt)
             {
-                return Directions.None;
+                return Direction.None;
             }
 
             Tile nextTile = currentTile.NextTileWrapped(_ghost.Direction.Next);
@@ -46,41 +46,41 @@ namespace PacMan.GameComponents.Ghosts
                 return _ghost.Direction.Current;
             }
 
-            Directions decision = calculateWhichWayToGo(nextTile, targetCell);
+            Direction decision = calculateWhichWayToGo(nextTile, targetCell);
 
             _lastDecisionMadeAt = cellPosition;
 
             return decision;
         }
 
-        Directions calculateWhichWayToGo(Tile tile, CellIndex targetCell)
+        Direction calculateWhichWayToGo(Tile tile, CellIndex targetCell)
         {
             CellIndex cellPosition = tile.Index;
 
             DirectionChoices choices = _maze.GetChoicesAtCellPosition(cellPosition);
 
-            Directions dir = _ghost.Direction.Next;
+            Direction dir = _ghost.Direction.Next;
 
             _availableDirections.Clear();
 
-            if (choices.IsSet(Directions.Up) && dir != Directions.Down)
+            if (choices.IsSet(Direction.Up) && dir != Direction.Down)
             {
-                _availableDirections.Add(Directions.Up);
+                _availableDirections.Add(Direction.Up);
             }
 
-            if (choices.IsSet(Directions.Left) && dir != Directions.Right)
+            if (choices.IsSet(Direction.Left) && dir != Direction.Right)
             {
-                _availableDirections.Add(Directions.Left);
+                _availableDirections.Add(Direction.Left);
             }
 
-            if (choices.IsSet(Directions.Down) && dir != Directions.Up)
+            if (choices.IsSet(Direction.Down) && dir != Direction.Up)
             {
-                _availableDirections.Add(Directions.Down);
+                _availableDirections.Add(Direction.Down);
             }
 
-            if (choices.IsSet(Directions.Right) && dir != Directions.Left)
+            if (choices.IsSet(Direction.Right) && dir != Direction.Left)
             {
-                _availableDirections.Add(Directions.Right);
+                _availableDirections.Add(Direction.Right);
             }
 
             if (_availableDirections.Count == 1)
@@ -90,7 +90,7 @@ namespace PacMan.GameComponents.Ghosts
 
             if (Maze.IsSpecialIntersection(cellPosition) && _ghost.State == GhostState.Normal)
             {
-                var index = _availableDirections.IndexOf(Directions.Up);
+                var index = _availableDirections.IndexOf(Direction.Up);
 
                 // special intersection - remove Up from choices
                 if (index != -1)
@@ -118,7 +118,7 @@ namespace PacMan.GameComponents.Ghosts
             return dir;
         }
 
-        Directions pickShortest(Tile ghostTile, CellIndex targetCell, List<Directions> choices)
+        Direction pickShortest(Tile ghostTile, CellIndex targetCell, List<Direction> choices)
         {
             if (choices.Count == 0)
             {
@@ -165,12 +165,12 @@ namespace PacMan.GameComponents.Ghosts
         }
 
         // From the spec: To break the tie, the ghost prefers directions in this order: up, left, down, right
-        static int weightDir(Directions direction) =>
+        static int weightDir(Direction direction) =>
             direction switch
             {
-                Directions.Up => 0,
-                Directions.Left => 1,
-                Directions.Down => 2,
+                Direction.Up => 0,
+                Direction.Left => 1,
+                Direction.Down => 2,
                 _ => 3
             };
     }

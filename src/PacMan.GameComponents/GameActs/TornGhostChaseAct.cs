@@ -39,7 +39,7 @@ namespace PacMan.GameComponents.GameActs
             _pacTimer = new(4800.Milliseconds(), () => { });
 
             _pacMan = new() {
-                Direction = Directions.Left
+                Direction = Direction.Left
             };
 
             _worm = new(

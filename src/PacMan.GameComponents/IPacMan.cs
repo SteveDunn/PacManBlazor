@@ -10,7 +10,7 @@ namespace PacMan.GameComponents
 
         Tile Tile { get; }
 
-        Directions Direction { get; }
+        Direction Direction { get; }
 
         Vector2 Position { get; }
 

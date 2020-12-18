@@ -91,10 +91,10 @@ namespace PacMan.GameComponents.GameActs
 
             _startTime = TimeSpan.MinValue;
 
-            _blinky = new(GhostNickname.Blinky, Directions.Right);
-            _pinky = new(GhostNickname.Pinky, Directions.Right);
-            _inky = new(GhostNickname.Inky, Directions.Right);
-            _clyde = new(GhostNickname.Clyde, Directions.Right);
+            _blinky = new(GhostNickname.Blinky, Direction.Right);
+            _pinky = new(GhostNickname.Pinky, Direction.Right);
+            _inky = new(GhostNickname.Inky, Direction.Right);
+            _clyde = new(GhostNickname.Clyde, Direction.Right);
             _startTime = TimeSpan.MinValue;
             _chaseSubActReadyAt = 9.Seconds();
 

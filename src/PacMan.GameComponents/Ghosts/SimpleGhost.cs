@@ -19,7 +19,7 @@ namespace PacMan.GameComponents.Ghosts
         GhostFrightSession? _frightSession;
 
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
-        public SimpleGhost(GhostNickname nickName, Directions direction)
+        public SimpleGhost(GhostNickname nickName, Direction direction)
         {
             NickName = nickName;
             Direction = new(direction, direction);

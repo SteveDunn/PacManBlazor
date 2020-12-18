@@ -10,7 +10,7 @@ namespace PacMan.GameComponents
 {
     public class AttractScenePacMan : ISprite
     {
-        readonly Dictionary<Directions, FramePair> _velocitiesLookup;
+        readonly Dictionary<Direction, FramePair> _velocitiesLookup;
         readonly TwoFrameAnimation _animDirection;
 
         Vector2 _frame1InSpriteMap;
@@ -22,19 +22,19 @@ namespace PacMan.GameComponents
             Visible = true;
             _animDirection = new(65.Milliseconds());
 
-            Direction = Directions.Left;
+            Direction = GameComponents.Direction.Left;
 
             const float left = 456;
             const float left2 = 472;
 
             _velocitiesLookup = new() {
-                [Directions.Up] = new(
+                [GameComponents.Direction.Up] = new(
                     new(left, 32), new(left2, 32)),
-                [Directions.Down] = new(
+                [GameComponents.Direction.Down] = new(
                     new(left, 48), new(left2, 48)),
-                [Directions.Left] = new(
+                [GameComponents.Direction.Left] = new(
                     new(left, 16), new(left2, 16)),
-                [Directions.Right] = new(
+                [GameComponents.Direction.Right] = new(
                     new(left, 0), new(left2, 0))
             };
 
@@ -58,7 +58,7 @@ namespace PacMan.GameComponents
 
         public Vector2 Origin => Vector2s.Eight;
 
-        public Directions Direction { private get; set; }
+        public Direction Direction { private get; set; }
 
         ValueTask updateAnimation(CanvasTimingInformation context)
         {

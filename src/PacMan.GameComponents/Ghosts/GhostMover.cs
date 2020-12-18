@@ -47,9 +47,9 @@ namespace PacMan.GameComponents.Ghosts
                 CellIndex targetCell = await _getTargetCellPoint();
                 TargetCell = targetCell;
 
-                Directions direction = _intersectionLogic.GetWhichWayToGo(targetCell);
+                Direction direction = _intersectionLogic.GetWhichWayToGo(targetCell);
 
-                if (direction != Directions.None)
+                if (direction != Direction.None)
                 {
                     setDirection(direction);
                 }
@@ -60,7 +60,7 @@ namespace PacMan.GameComponents.Ghosts
             return MovementResult.NotFinished;
         }
 
-        void setDirection(Directions direction)
+        void setDirection(Direction direction)
         {
             Ghost.Direction.Update(direction);
         }

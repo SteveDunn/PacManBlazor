@@ -4,7 +4,7 @@ namespace PacMan.GameComponents
 {
     public class DirectionChoices
     {
-        readonly Dictionary<Directions, bool> _lookup;
+        readonly Dictionary<Direction, bool> _lookup;
 
         public DirectionChoices()
         {
@@ -13,50 +13,50 @@ namespace PacMan.GameComponents
 
         public int Possibilities { get; private set; }
 
-        public void Set(Directions direction)
+        public void Set(Direction direction)
         {
             _lookup[direction] = true;
 
             Possibilities = calcPossibilities();
         }
 
-        public void Unset(Directions direction)
+        public void Unset(Direction direction)
         {
             _lookup[direction] = false;
 
             Possibilities = calcPossibilities();
         }
 
-        public bool IsSet(Directions direction) => _lookup[direction];
+        public bool IsSet(Direction direction) => _lookup[direction];
 
         public void ClearAll()
         {
-            _lookup[Directions.Up] = false;
-            _lookup[Directions.Down] = false;
-            _lookup[Directions.Left] = false;
-            _lookup[Directions.Right] = false;
+            _lookup[Direction.Up] = false;
+            _lookup[Direction.Down] = false;
+            _lookup[Direction.Left] = false;
+            _lookup[Direction.Right] = false;
         }
 
         int calcPossibilities()
         {
             int count = 0;
 
-            if (_lookup[Directions.Up])
+            if (_lookup[Direction.Up])
             {
                 ++count;
             }
 
-            if (_lookup[Directions.Down])
+            if (_lookup[Direction.Down])
             {
                 ++count;
             }
 
-            if (_lookup[Directions.Left])
+            if (_lookup[Direction.Left])
             {
                 ++count;
             }
 
-            if (_lookup[Directions.Right])
+            if (_lookup[Direction.Right])
             {
                 ++count;
             }

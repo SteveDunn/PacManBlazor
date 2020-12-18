@@ -4,7 +4,7 @@ namespace PacMan.GameComponents
 {
     public class AttractGhost : SimpleGhost
     {
-        public AttractGhost(GhostNickname nickName, Directions direction) : base(nickName, direction)
+        public AttractGhost(GhostNickname nickName, Direction direction) : base(nickName, direction)
         {
             Alive = true;
         }

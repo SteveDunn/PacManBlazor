@@ -7,7 +7,7 @@ namespace PacMan.GameComponents.Ghosts
     {
         const int _width = 16;
 
-        readonly Dictionary<Directions, FramePair> _frames;
+        readonly Dictionary<Direction, FramePair> _frames;
 
         public GhostSpritesheetInfo(Vector2 position)
         {
@@ -17,22 +17,22 @@ namespace PacMan.GameComponents.Ghosts
 
             Vector2 marker = position;
 
-            _frames[Directions.Right] = new(position, position + toMove);
+            _frames[Direction.Right] = new(position, position + toMove);
             marker = marker + toMove;
             marker = marker + toMove;
 
-            _frames[Directions.Left] = new(marker, marker + toMove);
+            _frames[Direction.Left] = new(marker, marker + toMove);
             marker = marker + toMove;
             marker = marker + toMove;
 
-            _frames[Directions.Up] = new(marker, marker + toMove);
+            _frames[Direction.Up] = new(marker, marker + toMove);
             marker = marker + toMove;
             marker = marker + toMove;
 
-            _frames[Directions.Down] = new(marker, marker + toMove);
+            _frames[Direction.Down] = new(marker, marker + toMove);
         }
 
-        public Vector2 GetSourcePosition(Directions direction, bool useFirstFrame)
+        public Vector2 GetSourcePosition(Direction direction, bool useFirstFrame)
         {
             FramePair frame = _frames[direction];
 

@@ -91,7 +91,7 @@ namespace PacMan.GameComponents.GameActs
             _pacTimer = new(4750.Milliseconds(), () => { });
 
             _pacMan = new() {
-                Direction = Directions.Left
+                Direction = Direction.Left
             };
 
             _snagSprite = new(_centerPoint, _tearSize, _tearOffset, _tearFrames[0])
@@ -99,7 +99,7 @@ namespace PacMan.GameComponents.GameActs
                 Visible = true
             };
 
-            _blinky = new(GhostNickname.Blinky, Directions.Left);
+            _blinky = new(GhostNickname.Blinky, Direction.Left);
             _lookingBlinky = new NullSprite();
 
             var justOffScreen = new Vector2(250, 140);

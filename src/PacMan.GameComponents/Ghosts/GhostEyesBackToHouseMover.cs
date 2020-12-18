@@ -67,7 +67,7 @@ namespace PacMan.GameComponents.Ghosts
 
             if (Ghost.Position.Round() == _ghostPosInHouse)
             {
-                Ghost.Direction = new(Directions.Down, Directions.Down);
+                Ghost.Direction = new(Direction.Down, Direction.Down);
                 Ghost.SetMovementMode(GhostMovementMode.InHouse);
                 return new(MovementResult.Finished);
             }

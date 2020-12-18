@@ -17,7 +17,7 @@ namespace PacMan.GameComponents.Ghosts
                 GhostNickname.Blinky,
                 maze,
                 new(13.5f, 11),
-                Directions.Left)
+                GameComponents.Direction.Left)
         {
             _pacman = pacman;
             HouseOffset = 0;

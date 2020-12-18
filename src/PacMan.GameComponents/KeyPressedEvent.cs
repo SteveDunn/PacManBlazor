@@ -2,7 +2,7 @@
 {
     public class KeyPressedEvent
     {
-        public Directions Direction = Directions.None;
+        public Direction Direction = Direction.None;
 
         public double When = 0;
     }

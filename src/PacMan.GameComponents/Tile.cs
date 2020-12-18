@@ -10,7 +10,7 @@ namespace PacMan.GameComponents
         bool _isInCenter;
 
         // ReSharper disable once HeapView.ObjectAllocation.Evident
-        readonly Dictionary<Directions, Tile> _nextTiles = new();
+        readonly Dictionary<Direction, Tile> _nextTiles = new();
 
         public Tile()
         {
@@ -43,14 +43,14 @@ namespace PacMan.GameComponents
 
         public bool IsNearCenter(double precision) => Vector2s.AreNear(SpritePos, CenterPos, precision);
 
-        public Tile NextTile(Directions direction)
+        public Tile NextTile(Direction direction)
         {
             var offset = direction switch
             {
-                Directions.Right => new(1, 0),
-                Directions.Left => new(-1, 0),
-                Directions.Up => new(0, -1),
-                Directions.Down => new(0, 1),
+                Direction.Right => new(1, 0),
+                Direction.Left => new(-1, 0),
+                Direction.Up => new(0, -1),
+                Direction.Down => new(0, 1),
                 _ => Vector2.Zero
             };
 
@@ -71,7 +71,7 @@ namespace PacMan.GameComponents
             return tile;
         }
 
-        public Tile NextTileWrapped(Directions direction)
+        public Tile NextTileWrapped(Direction direction)
         {
             var nextTile = NextTile(direction);
             nextTile.handleWrapping();

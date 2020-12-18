@@ -63,12 +63,12 @@ namespace PacMan.GameComponents.GameActs
 
             _powerPillLegend = new() { Position = new(66, 182) };
 
-            _pacMan = new() { Direction = Directions.Left };
+            _pacMan = new() { Direction = Direction.Left };
 
-            var blinky = new AttractGhost(GhostNickname.Blinky, Directions.Left);
-            var pinky = new AttractGhost(GhostNickname.Pinky, Directions.Left);
-            var inky = new AttractGhost(GhostNickname.Inky, Directions.Left);
-            var clyde = new AttractGhost(GhostNickname.Clyde, Directions.Left);
+            var blinky = new AttractGhost(GhostNickname.Blinky, Direction.Left);
+            var pinky = new AttractGhost(GhostNickname.Pinky, Direction.Left);
+            var inky = new AttractGhost(GhostNickname.Inky, Direction.Left);
+            var clyde = new AttractGhost(GhostNickname.Clyde, Direction.Left);
 
             _ghosts.Add(blinky);
             _ghosts.Add(pinky);
@@ -255,7 +255,7 @@ namespace PacMan.GameComponents.GameActs
 
             foreach (var eachGhost in _ghosts)
             {
-                eachGhost.Direction.Update(Directions.Right);
+                eachGhost.Direction.Update(Direction.Right);
                 eachGhost.SetFrightSession(frightSessions);
                 eachGhost.SetFrightened();
 
@@ -264,7 +264,7 @@ namespace PacMan.GameComponents.GameActs
 
             _pacPositions = _pacPositions.Reverse();
 
-            _pacMan.Direction = Directions.Right;
+            _pacMan.Direction = Direction.Right;
 
             return default;
         }

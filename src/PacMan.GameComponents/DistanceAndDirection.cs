@@ -7,7 +7,7 @@ namespace PacMan.GameComponents
     {
         public DistanceAndDirection(
             float distance,
-            Directions direction)
+            Direction direction)
         {
             Distance = distance;
             Direction = direction;
@@ -15,6 +15,6 @@ namespace PacMan.GameComponents
 
         public float Distance { get; }
 
-        public Directions Direction { get; }
+        public Direction Direction { get; }
     }
 }

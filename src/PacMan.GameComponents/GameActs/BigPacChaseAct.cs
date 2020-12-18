@@ -42,7 +42,7 @@ namespace PacMan.GameComponents.GameActs
 
             _pacTimer = new(4750.Milliseconds(), static () => { });
 
-            _pacMan = new() { Direction = Directions.Left };
+            _pacMan = new() { Direction = Direction.Left };
 
             _bigPacMan = new(
                 Vector2.Zero,
@@ -55,7 +55,7 @@ namespace PacMan.GameComponents.GameActs
                 Visible = false
             };
 
-            _blinky = new(GhostNickname.Blinky, Directions.Left);
+            _blinky = new(GhostNickname.Blinky, Direction.Left);
 
             _pacPositions = new(justOffScreen, new(-70, justOffScreen.Y));
 
@@ -126,7 +126,7 @@ namespace PacMan.GameComponents.GameActs
             var s = new LevelStats(0);
             var sess = new GhostFrightSession(s.GetLevelProps());
 
-            _blinky.Direction = new(Directions.Right, Directions.Right);
+            _blinky.Direction = new(Direction.Right, Direction.Right);
             _blinky.SetFrightSession(sess);
             _blinky.SetFrightened();
             _blinkyPositions = _blinkyPositions.Reverse();

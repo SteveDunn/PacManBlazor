@@ -46,12 +46,12 @@ namespace PacMan.GameComponents
         readonly static Size _spritesheetSize = new(225, 248);
         readonly static Rectangle _mazeRect = new(0, 0, 225, 248);
 
-        readonly static Directions[] _directions =
+        readonly static Direction[] _directions =
         {
-            Directions.Left,
-            Directions.Right,
-            Directions.Up,
-            Directions.Down
+            Direction.Left,
+            Direction.Right,
+            Direction.Up,
+            Direction.Down
         };
 
         MazeCanvas? _currentPlayerCanvas;
@@ -185,7 +185,7 @@ namespace PacMan.GameComponents
             return false;
         }
 
-        public bool CanContinueInDirection(Directions direction, Tile tile)
+        public bool CanContinueInDirection(Direction direction, Tile tile)
         {
             var nextTile = tile.NextTile(direction);
 

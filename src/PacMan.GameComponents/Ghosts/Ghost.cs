@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using MediatR;
 using PacMan.GameComponents.Canvas;
 using PacMan.GameComponents.Events;
-using static PacMan.GameComponents.Directions;
+using static PacMan.GameComponents.Direction;
 
 namespace PacMan.GameComponents.Ghosts
 {
@@ -21,7 +21,7 @@ namespace PacMan.GameComponents.Ghosts
         readonly IMaze _maze;
         readonly IPacMan _pacman;
         readonly Vector2 _startingPoint;
-        readonly Directions _startingDirection;
+        readonly Direction _startingDirection;
 
         Action? _whenInCenterOfNextTile;
 
@@ -41,7 +41,7 @@ namespace PacMan.GameComponents.Ghosts
             GhostNickname nickName,
             IMaze maze,
             Vector2 startingPoint,
-            Directions startingDirection) : base(nickName, startingDirection)
+            Direction startingDirection) : base(nickName, startingDirection)
         {
             _gameStats = gameStats;
             _mediator = mediator;
@@ -69,11 +69,12 @@ namespace PacMan.GameComponents.Ghosts
                 _whenInCenterOfNextTile = () =>
                 {
                     DirectionInfo current = Direction;
-                    var c = switchDirectionForChaseOrScatter(current.Current);
                     
-                    if (c != None)
+                    Direction direction = switchDirectionForChaseOrScatter(current.Current);
+                    
+                    if (direction is not None)
                     {
-                        Direction.Update(Down);
+                        Direction.Update(direction);
                     }
 
                     _mover = new GhostFrightenedMover(this, _maze);
@@ -81,7 +82,7 @@ namespace PacMan.GameComponents.Ghosts
             }
         }
 
-        static Directions switchDirectionForChaseOrScatter(Directions current) =>
+        static Direction switchDirectionForChaseOrScatter(Direction current) =>
             current switch
             {
                 Up => Down,

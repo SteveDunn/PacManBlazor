@@ -15,7 +15,7 @@ namespace PacMan.GameComponents.Ghosts
                 mediator,
                 input,
                 pacman,
-                GhostNickname.Pinky, maze, Tile.FromCell(15.5f, 11f), Directions.Down)
+                GhostNickname.Pinky, maze, Tile.FromCell(15.5f, 11f), GameComponents.Direction.Down)
         {
             _maze = maze;
             _pacman = pacman;
@@ -32,7 +32,7 @@ namespace PacMan.GameComponents.Ghosts
         {
             base.Reset();
 
-            Direction = new(Directions.Down, Directions.Down);
+            Direction = new(GameComponents.Direction.Down, GameComponents.Direction.Down);
 
             State = GhostState.Normal;
             MovementMode = GhostMovementMode.InHouse;
@@ -52,7 +52,7 @@ namespace PacMan.GameComponents.Ghosts
                 pacTile + (DirectionToIndexLookup.IndexVectorFor(pacDir) * Vector2s.Four).ToCellIndex());
 
             // for the bug in the original pacman
-            if (pacDir == Directions.Up)
+            if (pacDir == GameComponents.Direction.Up)
             {
                 offset = (offset.ToVector2() + new Vector2(-4, 0)).ToCellIndex();
             }

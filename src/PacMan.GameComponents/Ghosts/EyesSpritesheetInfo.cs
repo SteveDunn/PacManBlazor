@@ -5,7 +5,7 @@ namespace PacMan.GameComponents.Ghosts
 {
     public class EyesSpritesheetInfo
     {
-        readonly Dictionary<Directions, Vector2> _positions;
+        readonly Dictionary<Direction, Vector2> _positions;
 
         const int _width = 16;
 
@@ -15,20 +15,20 @@ namespace PacMan.GameComponents.Ghosts
 
             var toMove = new Vector2(_width, 0);
 
-            _positions[Directions.Right] = position;
+            _positions[Direction.Right] = position;
 
             var marker = position;
             marker = marker + toMove;
 
-            _positions[Directions.Left] = marker;
+            _positions[Direction.Left] = marker;
             marker = marker + toMove;
 
-            _positions[Directions.Up] = marker;
+            _positions[Direction.Up] = marker;
             marker = marker + toMove;
 
-            _positions[Directions.Down] = marker;
+            _positions[Direction.Down] = marker;
         }
 
-        public Vector2 GetSourcePosition(Directions direction) => _positions[direction];
+        public Vector2 GetSourcePosition(Direction direction) => _positions[direction];
     }
 }

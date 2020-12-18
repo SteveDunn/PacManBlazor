@@ -40,11 +40,11 @@ namespace PacMan.GameComponents.Ghosts
 
             _cellToMoveFrom = ghost.Position;
 
-            if (ghost.Direction.Current == Directions.Down)
+            if (ghost.Direction.Current == Direction.Down)
             {
                 _cellToMoveTo = _bottomPos;
             }
-            else if (ghost.Direction.Current == Directions.Up)
+            else if (ghost.Direction.Current == Direction.Up)
             {
                 _cellToMoveTo = _topPos;
             }
@@ -94,7 +94,7 @@ namespace PacMan.GameComponents.Ghosts
 
             if (_finished)
             {
-                Ghost.Direction = new(Directions.Left, Directions.Left);
+                Ghost.Direction = new(Direction.Left, Direction.Left);
                 Ghost.SetMovementMode(GhostMovementMode.Undecided);
                 return new(MovementResult.Finished);
             }

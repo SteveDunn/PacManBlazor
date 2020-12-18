@@ -24,7 +24,7 @@ namespace PacMan.GameComponents
 
         Vector2 _spriteSheetPos;
 
-        Directions _direction;
+        Direction _direction;
         float _dyingFramePointer;
 
         Vector2 _frame1InSpriteMap;
@@ -35,7 +35,7 @@ namespace PacMan.GameComponents
 
         bool _isDemoMode;
 
-        readonly Dictionary<Directions, FramePointers> _framePointers;
+        readonly Dictionary<Direction, FramePointers> _framePointers;
         readonly List<Vector2> _dyingFrames;
         readonly DemoKeyPresses _demoKeyPresses;
         readonly Tile _tile;
@@ -59,16 +59,16 @@ namespace PacMan.GameComponents
             const int left = 456;
             const int left2 = 472;
 
-            _framePointers[Directions.Up] = new(
+            _framePointers[GameComponents.Direction.Up] = new(
                 new(left, 32), new(left2, 32));
 
-            _framePointers[Directions.Down] = new(
+            _framePointers[GameComponents.Direction.Down] = new(
                 new(left, 48), new(left2, 48));
 
-            _framePointers[Directions.Left] = new(
+            _framePointers[GameComponents.Direction.Left] = new(
                 new(left, 16), new(left2, 16));
 
-            _framePointers[Directions.Right] = new(
+            _framePointers[GameComponents.Direction.Right] = new(
                 new(left, 0), new(left2, 0));
 
             _dyingFrames = new();
@@ -89,7 +89,7 @@ namespace PacMan.GameComponents
             Visible = true;
             _demoKeyPresses.Reset();
             _isDemoMode = isDemoMode;
-            _direction = Directions.Left;
+            _direction = GameComponents.Direction.Left;
             _speed = Constants.PacManBaseSpeed;
             _dyingFramePointer = 0;
             Position = Tile.ToCenterCanvas(new(13.5f, 23));
@@ -119,7 +119,7 @@ namespace PacMan.GameComponents
             resetAll();
         }
 
-        public Directions Direction => _direction;
+        public Direction Direction => _direction;
 
         void updateAnimation(CanvasTimingInformation args)
         {
@@ -265,7 +265,7 @@ namespace PacMan.GameComponents
 
         void recordInput(CanvasTimingInformation context)
         {
-            Directions requestedDirection = _direction;
+            Direction requestedDirection = _direction;
 
             if (_isDemoMode)
             {
@@ -277,17 +277,17 @@ namespace PacMan.GameComponents
 
                     switch (_direction)
                     {
-                        case Directions.Left:
-                            choices.Unset(Directions.Right);
+                        case Direction.Left:
+                            choices.Unset(Direction.Right);
                             break;
-                        case Directions.Right:
-                            choices.Unset(Directions.Left);
+                        case Direction.Right:
+                            choices.Unset(Direction.Left);
                             break;
-                        case Directions.Up:
-                            choices.Unset(Directions.Down);
+                        case Direction.Up:
+                            choices.Unset(Direction.Down);
                             break;
-                        case Directions.Down:
-                            choices.Unset(Directions.Up);
+                        case Direction.Down:
+                            choices.Unset(Direction.Up);
                             break;
                     }
 
@@ -307,19 +307,19 @@ namespace PacMan.GameComponents
             {
                 if (_input.IsRightKeyDown || _input.IsPanning(Keys.Right))
                 {
-                    requestedDirection = Directions.Right;
+                    requestedDirection = Direction.Right;
                 }
                 else if (_input.IsLeftKeyDown || _input.IsPanning(Keys.Left))
                 {
-                    requestedDirection = Directions.Left;
+                    requestedDirection = Direction.Left;
                 }
                 else if (_input.IsDownKeyDown || _input.IsPanning(Keys.Down))
                 {
-                    requestedDirection = Directions.Down;
+                    requestedDirection = Direction.Down;
                 }
                 else if (_input.IsUpKeyDown || _input.IsPanning(Keys.Up))
                 {
-                    requestedDirection = Directions.Up;
+                    requestedDirection = Direction.Up;
                 }
             }
 
@@ -334,7 +334,7 @@ namespace PacMan.GameComponents
 
             var speed = _speed;
 
-            if (_direction == Directions.Down || _direction == Directions.Up)
+            if (_direction == Direction.Down || _direction == Direction.Up)
             {
                 var wayToMove = new Vector2(speed, 0);
 
@@ -350,7 +350,7 @@ namespace PacMan.GameComponents
                 }
             }
 
-            if (_direction == Directions.Left || _direction == Directions.Right)
+            if (_direction == Direction.Left || _direction == Direction.Right)
             {
                 var wayToMove = new Vector2(0, speed);
 
