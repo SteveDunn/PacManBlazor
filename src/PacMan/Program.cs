@@ -1,6 +1,5 @@
 ﻿// ReSharper disable HeapView.ObjectAllocation.Evident
 
-using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -12,9 +11,8 @@ using PacMan.GameComponents.Audio;
 using PacMan.GameComponents.GameActs;
 using PacMan.GameComponents.Ghosts;
 using PacMan.GameComponents.Requests;
-using PacMan;
 
-namespace Whatever
+namespace PacMan
 {
     class Program
     {
