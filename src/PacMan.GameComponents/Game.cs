@@ -239,9 +239,10 @@ namespace PacMan.GameComponents
                 await update();
 
                 _delta -= timestep;
+
                 if (Debugger.IsAttached)
                 {
-                    _delta = timestep;
+                    _delta = 0;
                 }
             }
 
