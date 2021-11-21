@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
@@ -11,9 +11,9 @@
 
   <ItemGroup>
     <PackageReference Include="Blazor.Extensions.Canvas" Version="1.1.1" />
-    <PackageReference Include="jetbrains.annotations" Version="2021.2.0" />
+    <PackageReference Include="jetbrains.annotations" Version="2021.3.0" />
     <PackageReference Include="MediatR" Version="9.0.0" />
-    <PackageReference Include="Microsoft.JSInterop" Version="5.0.9" />
+    <PackageReference Include="Microsoft.JSInterop" Version="6.0.0" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
   </ItemGroup>
 
