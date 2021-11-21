@@ -2,67 +2,66 @@
 using System.Threading.Tasks;
 using PacMan.GameComponents.Canvas;
 
-namespace PacMan.GameComponents.Ghosts
+namespace PacMan.GameComponents.Ghosts;
+
+/// <summary>
+///  Represents the different ghost movers.  Ghost movements are either:
+/// * Chase (chase after Pacman),
+/// * Scatter (they scatter back to their 'home corners')
+/// * Frightened (run away from Pacman)
+/// * 'Eyes back to house' (they've been eaten by Pacman and are making their way back to the 'house')
+/// * 'Inside house' (they're inside the house waiting to come out).
+/// </summary>
+public abstract class GhostMover
 {
-    /// <summary>
-    ///  Represents the different ghost movers.  Ghost movements are either:
-    /// * Chase (chase after Pacman),
-    /// * Scatter (they scatter back to their 'home corners')
-    /// * Frightened (run away from Pacman)
-    /// * 'Eyes back to house' (they've been eaten by Pacman and are making their way back to the 'house')
-    /// * 'Inside house' (they're inside the house waiting to come out).
-    /// </summary>
-    public abstract class GhostMover
+    public CellIndex TargetCell { get; private set; }
+
+    public GhostMovementMode MovementMode { get; }
+
+    protected Ghost Ghost { get; }
+
+    readonly Func<ValueTask<CellIndex>> _getTargetCellPoint;
+    readonly GhostLogic _intersectionLogic;
+
+    protected GhostMover(
+        Ghost ghost,
+        GhostMovementMode movementMode,
+        IMaze maze,
+        Func<ValueTask<CellIndex>> getTargetCellPoint)
     {
-        public CellIndex TargetCell { get; private set; }
+        _getTargetCellPoint = getTargetCellPoint;
+        Ghost = ghost;
+        MovementMode = movementMode;
+        _intersectionLogic = new(maze, ghost);
+    }
 
-        public GhostMovementMode MovementMode { get; }
+    public async virtual ValueTask<MovementResult> Update(CanvasTimingInformation context)
+    {
+        var tile = Ghost.Tile;
 
-        protected Ghost Ghost { get; }
+        // if a ghost is near the center of a cell, then get the 'next cell' and
+        // store where to go from there
 
-        readonly Func<ValueTask<CellIndex>> _getTargetCellPoint;
-        readonly GhostLogic _intersectionLogic;
-
-        protected GhostMover(
-            Ghost ghost,
-            GhostMovementMode movementMode,
-            IMaze maze,
-            Func<ValueTask<CellIndex>> getTargetCellPoint)
+        if (tile.IsInCenter)
         {
-            _getTargetCellPoint = getTargetCellPoint;
-            Ghost = ghost;
-            MovementMode = movementMode;
-            _intersectionLogic = new(maze, ghost);
-        }
+            CellIndex targetCell = await _getTargetCellPoint();
+            TargetCell = targetCell;
 
-        public async virtual ValueTask<MovementResult> Update(CanvasTimingInformation context)
-        {
-            var tile = Ghost.Tile;
+            Direction direction = _intersectionLogic.GetWhichWayToGo(targetCell);
 
-            // if a ghost is near the center of a cell, then get the 'next cell' and
-            // store where to go from there
-
-            if (tile.IsInCenter)
+            if (direction != Direction.None)
             {
-                CellIndex targetCell = await _getTargetCellPoint();
-                TargetCell = targetCell;
-
-                Direction direction = _intersectionLogic.GetWhichWayToGo(targetCell);
-
-                if (direction != Direction.None)
-                {
-                    setDirection(direction);
-                }
+                setDirection(direction);
             }
-
-            Ghost.MoveForwards();
-
-            return MovementResult.NotFinished;
         }
 
-        void setDirection(Direction direction)
-        {
-            Ghost.Direction.Update(direction);
-        }
+        Ghost.MoveForwards();
+
+        return MovementResult.NotFinished;
+    }
+
+    void setDirection(Direction direction)
+    {
+        Ghost.Direction.Update(direction);
     }
 }

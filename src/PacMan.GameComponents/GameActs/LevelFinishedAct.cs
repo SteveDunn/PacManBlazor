@@ -4,81 +4,80 @@ using MediatR;
 using PacMan.GameComponents.Canvas;
 using PacMan.GameComponents.Events;
 
-namespace PacMan.GameComponents.GameActs
+namespace PacMan.GameComponents.GameActs;
+
+/// When the level is finished, the screen flashes white and blue.
+/// Transitions into either the cut-scene act if a 'cut-scene' is due, or the 'player intro' act.
+public class LevelFinishedAct : IAct
 {
-    /// When the level is finished, the screen flashes white and blue.
-    /// Transitions into either the cut-scene act if a 'cut-scene' is due, or the 'player intro' act.
-    public class LevelFinishedAct : IAct
+    readonly IMediator _mediator;
+    readonly IGhostCollection _ghostCollection;
+    readonly IPacMan _pacman;
+    readonly IMaze _maze;
+    int _step;
+    LoopingTimer _timer = LoopingTimer.DoNothing;
+    bool _finished;
+
+    public LevelFinishedAct(IMediator mediator, IGhostCollection ghostCollection, IPacMan pacman, IMaze maze)
     {
-        readonly IMediator _mediator;
-        readonly IGhostCollection _ghostCollection;
-        readonly IPacMan _pacman;
-        readonly IMaze _maze;
-        int _step;
-        LoopingTimer _timer = LoopingTimer.DoNothing;
-        bool _finished;
+        _mediator = mediator;
+        _ghostCollection = ghostCollection;
+        _pacman = pacman;
+        _maze = maze;
+        _step = 0;
+    }
 
-        public LevelFinishedAct(IMediator mediator, IGhostCollection ghostCollection, IPacMan pacman, IMaze maze)
+    public string Name => "LevelFinishedAct";
+
+    [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
+    public ValueTask Reset()
+    {
+        _finished = false;
+
+        _timer = new(2.Seconds(), () =>
         {
-            _mediator = mediator;
-            _ghostCollection = ghostCollection;
-            _pacman = pacman;
-            _maze = maze;
-            _step = 0;
-        }
+            _step += 1;
+            _maze.StartFlashing();
 
-        public string Name => "LevelFinishedAct";
+            _ghostCollection.Ghosts.ForEach(g => g.Visible = false);
 
-        [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
-        public ValueTask Reset()
-        {
-            _finished = false;
-
-            _timer = new(2.Seconds(), () =>
+            _timer = new(2.Seconds(), async () =>
             {
                 _step += 1;
-                _maze.StartFlashing();
+                _maze.StopFlashing();
 
-                _ghostCollection.Ghosts.ForEach(g => g.Visible = false);
+                await _mediator.Publish(new LevelFinishedEvent());
 
-                _timer = new(2.Seconds(), async () =>
-                {
-                    _step += 1;
-                    _maze.StopFlashing();
-
-                    await _mediator.Publish(new LevelFinishedEvent());
-
-                    _finished = true;
-                });
+                _finished = true;
             });
+        });
 
-            return default;
+        return default;
+    }
+
+    public async ValueTask<ActUpdateResult> Update(CanvasTimingInformation timing)
+    {
+        if (_finished)
+        {
+            return ActUpdateResult.Finished;
         }
 
-        public async ValueTask<ActUpdateResult> Update(CanvasTimingInformation timing)
+        _timer.Run(timing);
+
+        await _maze.Update(timing);
+        await _pacman.Update(timing);
+
+        return ActUpdateResult.Running;
+    }
+
+    public async ValueTask Draw(CanvasWrapper session)
+    {
+        await _maze.Draw(session);
+        await _pacman.Draw(session);
+
+        if (_step == 0)
         {
-            if (_finished)
-            {
-                return ActUpdateResult.Finished;
-            }
-
-            _timer.Run(timing);
-
-            await _maze.Update(timing);
-            await _pacman.Update(timing);
-
-            return ActUpdateResult.Running;
-        }
-
-        public async ValueTask Draw(CanvasWrapper session)
-        {
-            await _maze.Draw(session);
-            await _pacman.Draw(session);
-
-            if (_step == 0)
-            {
-                await _ghostCollection.DrawAll(session);
-            }
+            await _ghostCollection.DrawAll(session);
         }
     }
 }

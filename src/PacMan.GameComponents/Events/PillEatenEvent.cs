@@ -3,58 +3,57 @@ using System.Threading.Tasks;
 using MediatR;
 using PacMan.GameComponents.Audio;
 
-namespace PacMan.GameComponents.Events
+namespace PacMan.GameComponents.Events;
+
+public readonly struct PillEatenEvent : INotification
 {
-    public readonly struct PillEatenEvent : INotification
+    public PillEatenEvent(CellIndex cellIndex)
     {
-        public PillEatenEvent(CellIndex cellIndex)
+        CellIndex = cellIndex;
+    }
+
+    public CellIndex CellIndex { get; }
+
+    public class Handler : INotificationHandler<PillEatenEvent>
+    {
+        readonly IGameStats _gameStats;
+        readonly IGameSoundPlayer _gameSoundPlayer;
+        readonly IPacMan _pacman;
+        readonly IMediator _mediator;
+
+        public Handler(IGameStats gameStats, IGameSoundPlayer gameSoundPlayer, IPacMan pacman, IMediator mediator)
         {
-            CellIndex = cellIndex;
+            _gameStats = gameStats;
+            _gameSoundPlayer = gameSoundPlayer;
+            _pacman = pacman;
+            _mediator = mediator;
         }
 
-        public CellIndex CellIndex { get; }
-
-        public class Handler : INotificationHandler<PillEatenEvent>
+        public async Task Handle(PillEatenEvent notification, CancellationToken cancellationToken)
         {
-            readonly IGameStats _gameStats;
-            readonly IGameSoundPlayer _gameSoundPlayer;
-            readonly IPacMan _pacman;
-            readonly IMediator _mediator;
-
-            public Handler(IGameStats gameStats, IGameSoundPlayer gameSoundPlayer, IPacMan pacman, IMediator mediator)
+            if (_gameStats.CurrentPlayerStats.LevelStats.PillsEaten % 2 == 0)
             {
-                _gameStats = gameStats;
-                _gameSoundPlayer = gameSoundPlayer;
-                _pacman = pacman;
-                _mediator = mediator;
+                await _gameSoundPlayer.Munch1();
+            }
+            else
+            {
+                await _gameSoundPlayer.Munch2();
             }
 
-            public async Task Handle(PillEatenEvent notification, CancellationToken cancellationToken)
+            await _gameStats.PillEaten(notification.CellIndex);
+
+            _pacman.PillEaten();
+            await checkForNoMorePills();
+        }
+
+        async Task checkForNoMorePills()
+        {
+            if (_gameStats.CurrentPlayerStats.LevelStats.PillsRemaining == 0)
             {
-                if (_gameStats.CurrentPlayerStats.LevelStats.PillsEaten % 2 == 0)
-                {
-                    await _gameSoundPlayer.Munch1();
-                }
-                else
-                {
-                    await _gameSoundPlayer.Munch2();
-                }
+                // _gameStats.levelFinished();
+                // don't call levelFinished - the act does that when it's finished
 
-                await _gameStats.PillEaten(notification.CellIndex);
-
-                _pacman.PillEaten();
-                await checkForNoMorePills();
-            }
-
-            async Task checkForNoMorePills()
-            {
-                if (_gameStats.CurrentPlayerStats.LevelStats.PillsRemaining == 0)
-                {
-                    // _gameStats.levelFinished();
-                    // don't call levelFinished - the act does that when it's finished
-
-                    await _mediator.Publish(new AllPillsEatenEvent());
-                }
+                await _mediator.Publish(new AllPillsEatenEvent());
             }
         }
     }

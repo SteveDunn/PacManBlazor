@@ -1,8 +1,7 @@
-﻿namespace PacMan.GameComponents.Ghosts
+﻿namespace PacMan.GameComponents.Ghosts;
+
+public enum MovementResult
 {
-    public enum MovementResult
-    {
-        Finished,
-        NotFinished
-    }
+    Finished,
+    NotFinished
 }

@@ -1,21 +1,20 @@
 ﻿using System;
 
-namespace PacMan.GameComponents
-{
-    public class CoinBox : ICoinBox
-    {
-        public void UseCredits(int amount)
-        {
-            if (Credits - amount < 0)
-            {
-                throw new InvalidOperationException("Not enough credits!");
-            }
+namespace PacMan.GameComponents;
 
-            Credits -= amount;
+public class CoinBox : ICoinBox
+{
+    public void UseCredits(int amount)
+    {
+        if (Credits - amount < 0)
+        {
+            throw new InvalidOperationException("Not enough credits!");
         }
 
-        public int Credits { get; private set; }
-
-        public void CoinInserted() => ++Credits;
+        Credits -= amount;
     }
+
+    public int Credits { get; private set; }
+
+    public void CoinInserted() => ++Credits;
 }

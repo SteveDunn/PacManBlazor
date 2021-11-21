@@ -1,10 +1,9 @@
-﻿namespace PacMan.GameComponents.Tweening
+﻿namespace PacMan.GameComponents.Tweening;
+
+public enum Easing
 {
-    public enum Easing
-    {
-        EaseNone,
-        EaseIn,
-        EaseOut,
-        EaseInOut
-    }
+    EaseNone,
+    EaseIn,
+    EaseOut,
+    EaseInOut
 }

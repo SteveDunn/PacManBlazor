@@ -1,7 +1,6 @@
-﻿namespace PacMan.GameComponents.Requests
+﻿namespace PacMan.GameComponents.Requests;
+
+public struct GameState
 {
-    public struct GameState
-    {
-        public bool IsClydeInHouse { get; set; }
-    }
+    public bool IsClydeInHouse { get; set; }
 }

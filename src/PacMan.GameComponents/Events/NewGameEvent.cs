@@ -2,50 +2,49 @@
 using System.Threading.Tasks;
 using MediatR;
 
-namespace PacMan.GameComponents.Events
-{
-    public readonly struct NewGameEvent : INotification
-    {
-        public int AmountOfPlayers { get; }
+namespace PacMan.GameComponents.Events;
 
-        public NewGameEvent(in int amountOfPlayers)
+public readonly struct NewGameEvent : INotification
+{
+    public int AmountOfPlayers { get; }
+
+    public NewGameEvent(in int amountOfPlayers)
+    {
+        AmountOfPlayers = amountOfPlayers;
+    }
+
+    public class Handler : INotificationHandler<NewGameEvent>
+    {
+        readonly IMediator _mediator;
+        readonly ICoinBox _coinBox;
+        readonly IHaveTheMazeCanvases _mazeCanvases;
+        readonly IGameStats _gameStats;
+
+        public Handler(
+            IGameStats gameStats,
+            IMediator mediator,
+            ICoinBox coinBox,
+            IHaveTheMazeCanvases mazeCanvases)
         {
-            AmountOfPlayers = amountOfPlayers;
+            _gameStats = gameStats;
+            _mediator = mediator;
+            _coinBox = coinBox;
+            _mazeCanvases = mazeCanvases;
         }
 
-        public class Handler : INotificationHandler<NewGameEvent>
+        public async Task Handle(NewGameEvent notification, CancellationToken cancellationToken)
         {
-            readonly IMediator _mediator;
-            readonly ICoinBox _coinBox;
-            readonly IHaveTheMazeCanvases _mazeCanvases;
-            readonly IGameStats _gameStats;
+            await _mazeCanvases.GetForPlayer(0).Reset();
+            await _mazeCanvases.GetForPlayer(1).Reset();
 
-            public Handler(
-                IGameStats gameStats,
-                IMediator mediator,
-                ICoinBox coinBox,
-                IHaveTheMazeCanvases mazeCanvases)
-            {
-                _gameStats = gameStats;
-                _mediator = mediator;
-                _coinBox = coinBox;
-                _mazeCanvases = mazeCanvases;
-            }
+            _coinBox.UseCredits(notification.AmountOfPlayers);
 
-            public async Task Handle(NewGameEvent notification, CancellationToken cancellationToken)
-            {
-                await _mazeCanvases.GetForPlayer(0).Reset();
-                await _mazeCanvases.GetForPlayer(1).Reset();
+            await _gameStats.Reset(notification.AmountOfPlayers);
+            _gameStats.ChoseNextPlayer();
 
-                _coinBox.UseCredits(notification.AmountOfPlayers);
+            var playerStartingEvent = new PlayerStartingEvent();
 
-                await _gameStats.Reset(notification.AmountOfPlayers);
-                _gameStats.ChoseNextPlayer();
-
-                var playerStartingEvent = new PlayerStartingEvent();
-
-                await _mediator.Publish(playerStartingEvent, cancellationToken);
-            }
+            await _mediator.Publish(playerStartingEvent, cancellationToken);
         }
     }
 }

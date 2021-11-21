@@ -1,14 +1,13 @@
-﻿namespace PacMan.GameComponents.Ghosts
+﻿namespace PacMan.GameComponents.Ghosts;
+
+public enum FruitItem
 {
-    public enum FruitItem
-    {
-        Cherry,
-        Strawberry,
-        Peach,
-        Apple,
-        Grape,
-        Galaxian,
-        Bell,
-        Key
-    }
+    Cherry,
+    Strawberry,
+    Peach,
+    Apple,
+    Grape,
+    Galaxian,
+    Bell,
+    Key
 }

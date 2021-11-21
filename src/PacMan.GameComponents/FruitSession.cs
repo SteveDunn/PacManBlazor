@@ -1,42 +1,41 @@
-﻿namespace PacMan.GameComponents
+﻿namespace PacMan.GameComponents;
+
+public class FruitSession
 {
-    public class FruitSession
+    int _toShowAt;
+    int _counter;
+
+    public FruitSession()
     {
-        int _toShowAt;
-        int _counter;
+        _toShowAt = 70;
+        _counter = 0;
+    }
 
-        public FruitSession()
+    public bool ShouldShow { get; private set; }
+
+    public void PillEaten()
+    {
+        if (++_counter == _toShowAt)
         {
-            _toShowAt = 70;
-            _counter = 0;
-        }
+            ShouldShow = true;
 
-        public bool ShouldShow { get; private set; }
-
-        public void PillEaten()
-        {
-            if (++_counter == _toShowAt)
+            if (_toShowAt == 70)
             {
-                ShouldShow = true;
-
-                if (_toShowAt == 70)
-                {
-                    _toShowAt = 170;
-                }
-                else
-                {
-                    _toShowAt = -1;
-                }
+                _toShowAt = 170;
             }
             else
             {
-                ShouldShow = false;
+                _toShowAt = -1;
             }
         }
-
-        public void FruitEaten()
+        else
         {
             ShouldShow = false;
         }
+    }
+
+    public void FruitEaten()
+    {
+        ShouldShow = false;
     }
 }

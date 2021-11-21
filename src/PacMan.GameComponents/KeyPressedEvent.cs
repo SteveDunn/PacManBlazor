@@ -1,9 +1,8 @@
-﻿namespace PacMan.GameComponents
-{
-    public class KeyPressedEvent
-    {
-        public Direction Direction = Direction.None;
+﻿namespace PacMan.GameComponents;
 
-        public double When = 0;
-    }
+public class KeyPressedEvent
+{
+    public Direction Direction = Direction.None;
+
+    public double When = 0;
 }

@@ -3,44 +3,43 @@ using System.Threading.Tasks;
 using PacMan.GameComponents.Canvas;
 using PacMan.GameComponents.Tweening;
 
-namespace PacMan.GameComponents.GameActs
+namespace PacMan.GameComponents.GameActs;
+
+public class BlazorLogo
 {
-    public class BlazorLogo
+    readonly GeneralSprite _blazorLogo;
+    readonly Tweener _colorTweener;
+
+    public BlazorLogo()
     {
-        readonly GeneralSprite _blazorLogo;
-        readonly Tweener _colorTweener;
+        _blazorLogo = new(
+            new(90, 85),
+            new(64, 60),
+            Vector2.Zero,
+            new(547, 160));
 
-        public BlazorLogo()
-        {
-            _blazorLogo = new(
-                new(90, 85),
-                new(64, 60),
-                Vector2.Zero,
-                new(547, 160));
+        var colorTweeningFunction = Tweener.CreateTweeningFunction<Linear>(Easing.EaseNone);
 
-            var colorTweeningFunction = Tweener.CreateTweeningFunction<Linear>(Easing.EaseNone);
-
-            _colorTweener = new(.12f, .8f, 3.Seconds(), colorTweeningFunction);
+        _colorTweener = new(.12f, .8f, 3.Seconds(), colorTweeningFunction);
             
-            _colorTweener.Ended += () =>
-            {
-                _colorTweener.Reverse();
-                _colorTweener.Reset();
-            };
-        }
-
-        public ValueTask<ActUpdateResult> Update(CanvasTimingInformation timing)
+        _colorTweener.Ended += () =>
         {
-            _colorTweener.Update(timing);
+            _colorTweener.Reverse();
+            _colorTweener.Reset();
+        };
+    }
 
-            return default;
-        }
+    public ValueTask<ActUpdateResult> Update(CanvasTimingInformation timing)
+    {
+        _colorTweener.Update(timing);
 
-        public async ValueTask Draw(CanvasWrapper session)
-        {
-            await session.SetGlobalAlphaAsync(_colorTweener.Position);
-            await session.DrawSprite(_blazorLogo, Spritesheet.Reference);
-            await session.SetGlobalAlphaAsync(1f);
-        }
+        return default;
+    }
+
+    public async ValueTask Draw(CanvasWrapper session)
+    {
+        await session.SetGlobalAlphaAsync(_colorTweener.Position);
+        await session.DrawSprite(_blazorLogo, Spritesheet.Reference);
+        await session.SetGlobalAlphaAsync(1f);
     }
 }

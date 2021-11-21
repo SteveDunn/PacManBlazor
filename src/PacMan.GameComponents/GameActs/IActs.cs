@@ -1,7 +1,6 @@
-﻿namespace PacMan.GameComponents.GameActs
+﻿namespace PacMan.GameComponents.GameActs;
+
+public interface IActs
 {
-    public interface IActs
-    {
-        IAct GetActNamed(string name);
-    }
+    IAct GetActNamed(string name);
 }

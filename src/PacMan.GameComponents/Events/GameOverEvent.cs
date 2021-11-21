@@ -5,49 +5,48 @@ using MediatR;
 using PacMan.GameComponents.GameActs;
 using PacMan.GameComponents.Requests;
 
-namespace PacMan.GameComponents.Events
+namespace PacMan.GameComponents.Events;
+
+/// <summary>
+/// When pacman has been caught, eaten, and the player game over screen has
+/// been shown and finished.
+/// </summary>
+public readonly struct GameOverEvent : INotification
 {
-    /// <summary>
-    /// When pacman has been caught, eaten, and the player game over screen has
-    /// been shown and finished.
-    /// </summary>
-    public readonly struct GameOverEvent : INotification
+    [UsedImplicitly]
+    public class Handler : INotificationHandler<GameOverEvent>
     {
-        [UsedImplicitly]
-        public class Handler : INotificationHandler<GameOverEvent>
+        readonly IMediator _mediator;
+        readonly IGameStorage _storage;
+        readonly IGame _game;
+        readonly IGameStats _gameStats;
+
+        public Handler(IGame game, IGameStats gameStats, IMediator mediator, IGameStorage storage)
         {
-            readonly IMediator _mediator;
-            readonly IGameStorage _storage;
-            readonly IGame _game;
-            readonly IGameStats _gameStats;
+            _game = game;
+            _gameStats = gameStats;
+            _mediator = mediator;
+            _storage = storage;
+        }
 
-            public Handler(IGame game, IGameStats gameStats, IMediator mediator, IGameStorage storage)
+        public async Task Handle(GameOverEvent notification, CancellationToken cancellationToken)
+        {
+            await _storage.SetHighScore(_gameStats.HighScore);
+
+            if (_gameStats.IsGameOver)
             {
-                _game = game;
-                _gameStats = gameStats;
-                _mediator = mediator;
-                _storage = storage;
+                // ReSharper disable once HeapView.BoxingAllocation
+                IAct act = await _mediator.Send(new GetActRequest("AttractAct"), cancellationToken);
+                await act.Reset();
+
+                _game.SetAct(act);
+
+                return;
             }
 
-            public async Task Handle(GameOverEvent notification, CancellationToken cancellationToken)
-            {
-                await _storage.SetHighScore(_gameStats.HighScore);
+            _gameStats.ChoseNextPlayer();
 
-                if (_gameStats.IsGameOver)
-                {
-                    // ReSharper disable once HeapView.BoxingAllocation
-                    IAct act = await _mediator.Send(new GetActRequest("AttractAct"), cancellationToken);
-                    await act.Reset();
-
-                    _game.SetAct(act);
-
-                    return;
-                }
-
-                _gameStats.ChoseNextPlayer();
-
-                await _mediator.Publish(new PlayerStartingEvent(), cancellationToken);
-            }
+            await _mediator.Publish(new PlayerStartingEvent(), cancellationToken);
         }
     }
 }

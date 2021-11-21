@@ -3,26 +3,25 @@ using System.Threading.Tasks;
 using MediatR;
 using PacMan.GameComponents.Ghosts;
 
-namespace PacMan.GameComponents.Requests
+namespace PacMan.GameComponents.Requests;
+
+public readonly struct GetGameStateRequest : IRequest<GameState>
 {
-    public readonly struct GetGameStateRequest : IRequest<GameState>
+    public class Handler : IRequestHandler<GetGameStateRequest, GameState>
     {
-        public class Handler : IRequestHandler<GetGameStateRequest, GameState>
+        readonly IGhostCollection _ghostCollection;
+
+        public Handler(IGhostCollection ghostCollection)
         {
-            readonly IGhostCollection _ghostCollection;
+            _ghostCollection = ghostCollection;
+        }
 
-            public Handler(IGhostCollection ghostCollection)
+        public Task<GameState> Handle(GetGameStateRequest request, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(new GameState
             {
-                _ghostCollection = ghostCollection;
-            }
-
-            public Task<GameState> Handle(GetGameStateRequest request, CancellationToken cancellationToken)
-            {
-                return Task.FromResult(new GameState
-                {
-                    IsClydeInHouse = _ghostCollection.GetGhost(GhostNickname.Clyde).IsInHouse
-                });
-            }
+                IsClydeInHouse = _ghostCollection.GetGhost(GhostNickname.Clyde).IsInHouse
+            });
         }
     }
 }

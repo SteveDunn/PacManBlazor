@@ -3,14 +3,13 @@ using System.Threading.Tasks;
 using Microsoft.JSInterop;
 using PacMan.GameComponents.Audio;
 
-namespace PacMan.GameComponents
+namespace PacMan.GameComponents;
+
+public interface ISoundLoader
 {
-    public interface ISoundLoader
-    {
-        SoundEffect GetSoundEffect(SoundName name);
+    SoundEffect GetSoundEffect(SoundName name);
 
-        IEnumerable<SoundEffect> AllSounds { get; }
+    IEnumerable<SoundEffect> AllSounds { get; }
 
-        ValueTask LoadAll(IJSRuntime runtime);
-    }
+    ValueTask LoadAll(IJSRuntime runtime);
 }

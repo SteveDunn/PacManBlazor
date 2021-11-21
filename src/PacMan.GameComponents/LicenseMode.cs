@@ -1,9 +1,8 @@
-﻿namespace PacMan.GameComponents
+﻿namespace PacMan.GameComponents;
+
+public enum LicenseMode
 {
-    public enum LicenseMode
-    {
-        Trial,
-        Full,
-        Inactive
-    }
+    Trial,
+    Full,
+    Inactive
 }

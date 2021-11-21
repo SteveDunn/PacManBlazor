@@ -1,18 +1,17 @@
 ﻿using System.Threading.Tasks;
 using MediatR;
 
-namespace PacMan.GameComponents
-{
-    public class DemoPlayerStats : PlayerStats
-    {
-        public DemoPlayerStats(IMediator mediator) : base(0, mediator)
-        {
-            LivesRemaining = 1;
-        }
+namespace PacMan.GameComponents;
 
-        protected override ValueTask IncreaseScoreBy(int amount)
-        {
-            return default;
-        }
+public class DemoPlayerStats : PlayerStats
+{
+    public DemoPlayerStats(IMediator mediator) : base(0, mediator)
+    {
+        LivesRemaining = 1;
+    }
+
+    protected override ValueTask IncreaseScoreBy(int amount)
+    {
+        return default;
     }
 }

@@ -4,26 +4,25 @@ using System.Threading.Tasks;
 using PacMan.GameComponents.Canvas;
 using PacMan.GameComponents.Ghosts;
 
-namespace PacMan.GameComponents
+namespace PacMan.GameComponents;
+
+public interface IFruit
 {
-    public interface IFruit
-    {
-        Vector2 Position { get; set; }
+    Vector2 Position { get; set; }
 
-        Vector2 Origin { get; }
+    Vector2 Origin { get; }
 
-        Size Size { get; }
+    Size Size { get; }
 
-        Vector2 SpriteSheetPos { get; }
+    Vector2 SpriteSheetPos { get; }
 
-        bool Visible { get; }
+    bool Visible { get; }
 
-        ValueTask Update(CanvasTimingInformation timing);
+    ValueTask Update(CanvasTimingInformation timing);
 
-        ValueTask Draw(CanvasWrapper session);
+    ValueTask Draw(CanvasWrapper session);
 
-        void SetFruitItem(FruitItem item);
+    void SetFruitItem(FruitItem item);
 
-        void HandlePlayerStarted(PlayerStats playerStats, bool isDemo);
-    }
+    void HandlePlayerStarted(PlayerStats playerStats, bool isDemo);
 }

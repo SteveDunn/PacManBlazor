@@ -1,10 +1,9 @@
-﻿namespace PacMan.GameComponents
+﻿namespace PacMan.GameComponents;
+
+public enum TileContent
 {
-    public enum TileContent
-    {
-        Nothing,
-        Pill,
-        PowerPill,
-        Wall
-    }
+    Nothing,
+    Pill,
+    PowerPill,
+    Wall
 }

@@ -1,21 +1,20 @@
 ﻿using System;
 using JetBrains.Annotations;
 
-namespace PacMan.GameComponents.Ghosts
+namespace PacMan.GameComponents.Ghosts;
+
+[CannotApplyEqualityOperator]
+public class ModeAndDuration
 {
-    [CannotApplyEqualityOperator]
-    public class ModeAndDuration
+    public ModeAndDuration(GhostMovementMode mode, TimeSpan duration)
     {
-        public ModeAndDuration(GhostMovementMode mode, TimeSpan duration)
-        {
-            Mode = mode;
-            Duration = duration;
-        }
-
-        public GhostMovementMode Mode { get; }
-
-        public TimeSpan Duration { get; private set; }
-
-        public void DecreaseDurationBy(in TimeSpan elapsedTime) => Duration -= elapsedTime;
+        Mode = mode;
+        Duration = duration;
     }
+
+    public GhostMovementMode Mode { get; }
+
+    public TimeSpan Duration { get; private set; }
+
+    public void DecreaseDurationBy(in TimeSpan elapsedTime) => Duration -= elapsedTime;
 }

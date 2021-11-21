@@ -1,28 +1,27 @@
 ﻿using System;
 using PacMan.GameComponents.Canvas;
 
-namespace PacMan.GameComponents
+namespace PacMan.GameComponents;
+
+public class MazeCanvases : IHaveTheMazeCanvases
 {
-    public class MazeCanvases : IHaveTheMazeCanvases
+    static readonly MazeCanvas[] _mazeCanvases = new MazeCanvas[2];
+    static bool _populated;
+
+    public MazeCanvas GetForPlayer(int index)
     {
-        static readonly MazeCanvas[] _mazeCanvases = new MazeCanvas[2];
-        static bool _populated;
-
-        public MazeCanvas GetForPlayer(int index)
+        if (!_populated)
         {
-            if (!_populated)
-            {
-                throw new InvalidOperationException("Cannot get maze canvas for player as they've not been set.");
-            }
-
-            return _mazeCanvases[index];
+            throw new InvalidOperationException("Cannot get maze canvas for player as they've not been set.");
         }
 
-        public static void Populate(MazeCanvas player1Maze, MazeCanvas player2Maze)
-        {
-            _mazeCanvases[0] = player1Maze ?? throw new InvalidOperationException("no canvas!");
-            _mazeCanvases[1] = player2Maze ?? throw new InvalidOperationException("no canvas!");
-            _populated = true;
-        }
+        return _mazeCanvases[index];
+    }
+
+    public static void Populate(MazeCanvas player1Maze, MazeCanvas player2Maze)
+    {
+        _mazeCanvases[0] = player1Maze ?? throw new InvalidOperationException("no canvas!");
+        _mazeCanvases[1] = player2Maze ?? throw new InvalidOperationException("no canvas!");
+        _populated = true;
     }
 }

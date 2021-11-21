@@ -1,27 +1,26 @@
 ﻿using System.ComponentModel;
 
-namespace PacMan.GameComponents
+namespace PacMan.GameComponents;
+
+public interface IGameModel
 {
-    public interface IGameModel
-    {
-        bool OnePlayerGamePossible { get; }
+    bool OnePlayerGamePossible { get; }
 
-        bool TwoPlayerGamePossible { get; }
+    bool TwoPlayerGamePossible { get; }
 
-        bool ShouldShowCoinGrid { get; }
+    bool ShouldShowCoinGrid { get; }
 
-        string CanContinueIn { get; }
+    string CanContinueIn { get; }
 
-        string PauseResumeImage { get; }
+    string PauseResumeImage { get; }
 
-        bool ShouldShowDirectionGrid { get; }
+    bool ShouldShowDirectionGrid { get; }
 
-        bool Paused { get; set; }
+    bool Paused { get; set; }
 
-        string PurchaseLicenseResult { get; set; }
+    string PurchaseLicenseResult { get; set; }
 
-        bool CanContinueFromLicenseScreen { get; }
+    bool CanContinueFromLicenseScreen { get; }
 
-        event PropertyChangedEventHandler PropertyChanged;
-    }
+    event PropertyChangedEventHandler PropertyChanged;
 }

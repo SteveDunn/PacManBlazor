@@ -3,23 +3,22 @@
 using System.Threading.Tasks;
 using PacMan.GameComponents.Canvas;
 
-namespace PacMan.GameComponents.GameActs
+namespace PacMan.GameComponents.GameActs;
+
+// ReSharper disable once FunctionRecursiveOnAllPaths
+// ReSharper disable once UnusedType.Global
+public class NullAct : IAct
 {
-    // ReSharper disable once FunctionRecursiveOnAllPaths
-    // ReSharper disable once UnusedType.Global
-    public class NullAct : IAct
+
+    public string Name => "NullAct";
+
+    public ValueTask Reset()
     {
-
-        public string Name => "NullAct";
-
-        public ValueTask Reset()
-        {
-            return default;
-        }
-
-        public ValueTask<ActUpdateResult> Update(CanvasTimingInformation timing) =>
-            new(ActUpdateResult.Running);
-
-        public ValueTask Draw(CanvasWrapper session) => default;
+        return default;
     }
+
+    public ValueTask<ActUpdateResult> Update(CanvasTimingInformation timing) =>
+        new(ActUpdateResult.Running);
+
+    public ValueTask Draw(CanvasWrapper session) => default;
 }
