@@ -1,5 +1,3 @@
-using System;
-
 namespace PacMan.GameComponents.Tweening;
 
 public class Sinusoidal

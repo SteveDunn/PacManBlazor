@@ -1,10 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using MediatR;
-using PacMan.GameComponents.Audio;
-using PacMan.GameComponents.GameActs;
-
-namespace PacMan.GameComponents.Events;
+﻿namespace PacMan.GameComponents.Events;
 
 /// <summary>
 /// A Player is starting.  We're told their index (0 or 1), their stats, whether it's the demo player,

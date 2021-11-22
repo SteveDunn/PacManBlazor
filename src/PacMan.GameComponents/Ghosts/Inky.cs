@@ -1,8 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
-using System.Threading.Tasks;
-using MediatR;
-using PacMan.GameComponents.Requests;
+﻿using System.Drawing;
 
 namespace PacMan.GameComponents.Ghosts;
 

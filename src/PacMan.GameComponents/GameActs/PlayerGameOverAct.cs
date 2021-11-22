@@ -1,8 +1,4 @@
-﻿using System.Threading.Tasks;
-using MediatR;
-using PacMan.GameComponents.Canvas;
-using PacMan.GameComponents.Events;
-using PacMan.GameComponents.Requests;
+﻿using PacMan.GameComponents.Canvas;
 
 namespace PacMan.GameComponents.GameActs;
 

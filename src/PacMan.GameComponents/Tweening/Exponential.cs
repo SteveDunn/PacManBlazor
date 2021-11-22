@@ -1,7 +1,5 @@
 // ReSharper disable CompareOfFloatsByEqualityOperator
 
-using System;
-
 namespace PacMan.GameComponents.Tweening;
 
 public static class Exponential

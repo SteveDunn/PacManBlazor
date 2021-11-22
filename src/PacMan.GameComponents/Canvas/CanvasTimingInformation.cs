@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PacMan.GameComponents.Canvas;
+﻿namespace PacMan.GameComponents.Canvas;
 
 public class CanvasTimingInformation
 {

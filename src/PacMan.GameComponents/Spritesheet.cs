@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using Microsoft.AspNetCore.Components;
 
 namespace PacMan.GameComponents;

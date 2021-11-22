@@ -1,6 +1,4 @@
-﻿using JetBrains.Annotations;
-
-namespace PacMan.GameComponents;
+﻿namespace PacMan.GameComponents;
 
 [CannotApplyEqualityOperator]
 public struct DistanceAndDirection

@@ -1,7 +1,5 @@
 ﻿// ReSharper disable HeapView.ObjectAllocation.Evident
 
-using System;
-using System.Diagnostics.CodeAnalysis;
 using PacMan.GameComponents.Ghosts;
 
 namespace PacMan.GameComponents;

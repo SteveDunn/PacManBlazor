@@ -1,10 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using MediatR;
-using PacMan.GameComponents.Audio;
-using PacMan.GameComponents.GameActs;
-
-namespace PacMan.GameComponents.Events;
+﻿namespace PacMan.GameComponents.Events;
 
 public readonly struct CoinInsertedEvent : INotification
 {

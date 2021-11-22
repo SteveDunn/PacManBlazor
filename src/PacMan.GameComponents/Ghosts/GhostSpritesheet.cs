@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace PacMan.GameComponents.Ghosts;
+﻿namespace PacMan.GameComponents.Ghosts;
 
 public class GhostSpritesheet
 {

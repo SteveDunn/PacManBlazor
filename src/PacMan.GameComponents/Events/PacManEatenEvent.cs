@@ -1,10 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using JetBrains.Annotations;
-using MediatR;
-using PacMan.GameComponents.Requests;
-
-namespace PacMan.GameComponents.Events;
+﻿namespace PacMan.GameComponents.Events;
 
 /// <summary>
 /// When PacMan is touched by a Ghost.  Shows the 'dying sequence', which then fires another

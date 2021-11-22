@@ -1,5 +1,4 @@
-﻿using System;
-using PacMan.GameComponents.Canvas;
+﻿using PacMan.GameComponents.Canvas;
 
 namespace PacMan.GameComponents.Ghosts;
 

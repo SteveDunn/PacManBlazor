@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PacMan.GameComponents.Tweening;
+﻿namespace PacMan.GameComponents.Tweening;
 
 public class TweenCreationSettings
 {

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using PacMan.GameComponents.Canvas;
+﻿using PacMan.GameComponents.Canvas;
 
 namespace PacMan.GameComponents;
 

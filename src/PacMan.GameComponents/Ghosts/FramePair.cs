@@ -1,5 +1,4 @@
 ﻿using System.Numerics;
-using JetBrains.Annotations;
 
 namespace PacMan.GameComponents.Ghosts;
 

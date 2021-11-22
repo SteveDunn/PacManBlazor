@@ -1,5 +1,4 @@
 ﻿using System.Numerics;
-using System.Threading.Tasks;
 using PacMan.GameComponents.Canvas;
 using PacMan.GameComponents.Tweening;
 

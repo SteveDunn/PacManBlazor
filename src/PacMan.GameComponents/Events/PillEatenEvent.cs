@@ -1,9 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using MediatR;
-using PacMan.GameComponents.Audio;
-
-namespace PacMan.GameComponents.Events;
+﻿namespace PacMan.GameComponents.Events;
 
 public readonly struct PillEatenEvent : INotification
 {

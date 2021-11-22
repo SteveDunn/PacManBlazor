@@ -1,7 +1,4 @@
-﻿using System.Threading.Tasks;
-using MediatR;
-
-namespace PacMan.GameComponents;
+﻿namespace PacMan.GameComponents;
 
 public class DemoPlayerStats : PlayerStats
 {

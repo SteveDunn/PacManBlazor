@@ -1,7 +1,4 @@
-﻿using System;
-using JetBrains.Annotations;
-
-namespace PacMan.GameComponents.Ghosts;
+﻿namespace PacMan.GameComponents.Ghosts;
 
 [CannotApplyEqualityOperator]
 public class ModeAndDuration

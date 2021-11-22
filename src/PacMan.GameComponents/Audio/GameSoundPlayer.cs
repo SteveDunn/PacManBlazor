@@ -1,8 +1,6 @@
 ﻿// ReSharper disable HeapView.ObjectAllocation.Evident
 #pragma warning disable 8618
 
-using System;
-using System.Threading.Tasks;
 using Microsoft.JSInterop;
 using PacMan.GameComponents.Ghosts;
 

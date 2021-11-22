@@ -1,17 +1,9 @@
-﻿using System;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Blazor.Extensions.Canvas.Canvas2D;
-using MediatR;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using PacMan.GameComponents.Audio;
 using PacMan.GameComponents.Canvas;
-using PacMan.GameComponents.Events;
-using PacMan.GameComponents.GameActs;
 using PacMan.GameComponents.Ghosts;
-using PacMan.GameComponents.Requests;
 
 namespace PacMan.GameComponents;
 

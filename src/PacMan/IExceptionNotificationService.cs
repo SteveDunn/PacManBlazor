@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PacMan;
+﻿namespace PacMan;
 
 public interface IExceptionNotificationService
 {

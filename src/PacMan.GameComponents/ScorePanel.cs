@@ -1,5 +1,4 @@
 ﻿using System.Numerics;
-using System.Threading.Tasks;
 using PacMan.GameComponents.Canvas;
 
 namespace PacMan.GameComponents;

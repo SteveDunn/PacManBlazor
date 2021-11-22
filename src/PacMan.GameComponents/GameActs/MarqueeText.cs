@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PacMan.GameComponents.GameActs;
+﻿namespace PacMan.GameComponents.GameActs;
 
 public struct MarqueeText
 {

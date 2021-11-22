@@ -1,7 +1,5 @@
 ﻿using System.Drawing;
 using System.Numerics;
-using System.Threading.Tasks;
-using MediatR;
 
 namespace PacMan.GameComponents.Ghosts;
 

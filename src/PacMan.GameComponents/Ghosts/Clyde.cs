@@ -1,7 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Threading.Tasks;
-using MediatR;
+﻿using System.Drawing;
 
 namespace PacMan.GameComponents.Ghosts;
 

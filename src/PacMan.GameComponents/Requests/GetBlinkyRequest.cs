@@ -1,7 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using MediatR;
-using PacMan.GameComponents.Ghosts;
+﻿using PacMan.GameComponents.Ghosts;
 
 namespace PacMan.GameComponents.Requests;
 

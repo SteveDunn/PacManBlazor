@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.JSInterop;
-using PacMan.GameComponents.Audio;
+﻿using Microsoft.JSInterop;
 
 namespace PacMan.GameComponents;
 

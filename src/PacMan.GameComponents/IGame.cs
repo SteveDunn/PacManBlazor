@@ -1,8 +1,6 @@
-﻿using System.Threading.Tasks;
-using Blazor.Extensions.Canvas.Canvas2D;
+﻿using Blazor.Extensions.Canvas.Canvas2D;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using PacMan.GameComponents.GameActs;
 using PacMan.GameComponents.Ghosts;
 
 namespace PacMan.GameComponents;

@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
-using MediatR;
-using PacMan.GameComponents.Canvas;
+﻿using PacMan.GameComponents.Canvas;
 using PacMan.GameComponents.Ghosts;
-using PacMan.GameComponents.Requests;
 
 namespace PacMan.GameComponents;
 

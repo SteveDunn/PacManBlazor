@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace PacMan.GameComponents;
+﻿namespace PacMan.GameComponents;
 
 public interface IGameStorage
 {

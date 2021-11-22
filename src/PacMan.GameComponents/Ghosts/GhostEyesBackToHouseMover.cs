@@ -1,9 +1,5 @@
-﻿using System;
-using System.Numerics;
-using System.Threading.Tasks;
-using MediatR;
+﻿using System.Numerics;
 using PacMan.GameComponents.Canvas;
-using PacMan.GameComponents.Events;
 
 namespace PacMan.GameComponents.Ghosts;
 

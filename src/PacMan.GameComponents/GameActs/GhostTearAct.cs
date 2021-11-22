@@ -1,11 +1,6 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Numerics;
-using System.Threading.Tasks;
-using MediatR;
-using PacMan.GameComponents.Audio;
 using PacMan.GameComponents.Canvas;
-using PacMan.GameComponents.Events;
 using PacMan.GameComponents.Ghosts;
 
 namespace PacMan.GameComponents.GameActs;

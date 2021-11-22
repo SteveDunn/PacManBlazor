@@ -1,12 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Threading;
-using System.Threading.Tasks;
-using JetBrains.Annotations;
-using MediatR;
-using PacMan.GameComponents.GameActs;
-using PacMan.GameComponents.Requests;
-
-namespace PacMan.GameComponents.Events;
+﻿namespace PacMan.GameComponents.Events;
 
 /// <summary>
 /// When PacMan is dead (he's been caught by a ghost and eaten)...

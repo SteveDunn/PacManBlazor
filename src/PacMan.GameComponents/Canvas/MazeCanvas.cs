@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using System.Threading.Tasks;
 using Blazor.Extensions.Canvas.Canvas2D;
 
 namespace PacMan.GameComponents.Canvas;

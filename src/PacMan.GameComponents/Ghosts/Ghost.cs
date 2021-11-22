@@ -1,11 +1,7 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+﻿global using System;
 using System.Drawing;
 using System.Numerics;
-using System.Threading.Tasks;
-using MediatR;
 using PacMan.GameComponents.Canvas;
-using PacMan.GameComponents.Events;
 using static PacMan.GameComponents.Direction;
 
 namespace PacMan.GameComponents.Ghosts;

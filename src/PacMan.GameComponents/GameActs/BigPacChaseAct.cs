@@ -1,10 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Numerics;
-using System.Threading.Tasks;
-using MediatR;
-using PacMan.GameComponents.Audio;
+﻿using System.Numerics;
 using PacMan.GameComponents.Canvas;
-using PacMan.GameComponents.Events;
 using PacMan.GameComponents.Ghosts;
 
 // ReSharper disable HeapView.ObjectAllocation.Evident

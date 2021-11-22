@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace PacMan.GameComponents.Ghosts;
+﻿namespace PacMan.GameComponents.Ghosts;
 
 /// Moves the ghost in a psuedo-random fashion while they are 'frightened' (i.e. blue)
 public class GhostFrightenedMover : GhostMover

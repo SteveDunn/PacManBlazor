@@ -1,9 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
-using MediatR;
-using PacMan.GameComponents.Audio;
-using PacMan.GameComponents.Canvas;
-using PacMan.GameComponents.Requests;
+﻿using PacMan.GameComponents.Canvas;
 
 namespace PacMan.GameComponents.GameActs;
 

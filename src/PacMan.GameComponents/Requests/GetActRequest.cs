@@ -1,9 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using MediatR;
-using PacMan.GameComponents.GameActs;
-
-namespace PacMan.GameComponents.Requests;
+﻿namespace PacMan.GameComponents.Requests;
 
 public readonly struct GetActRequest : IRequest<IAct>
 {

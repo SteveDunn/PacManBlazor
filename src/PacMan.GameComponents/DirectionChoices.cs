@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace PacMan.GameComponents;
+﻿namespace PacMan.GameComponents;
 
 public class DirectionChoices
 {

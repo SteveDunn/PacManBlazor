@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Numerics;
-using System.Threading.Tasks;
-using MediatR;
 using PacMan.GameComponents.Canvas;
-using PacMan.GameComponents.Events;
 
 namespace PacMan.GameComponents;
 

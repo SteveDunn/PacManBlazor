@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PacMan.GameComponents;
+﻿namespace PacMan.GameComponents;
 
 public class CoinBox : ICoinBox
 {
