@@ -51,7 +51,7 @@
         await base.OnInitializedAsync();
     }
 
-    void handleExceptions(object _, string s) => Console.WriteLine(s);
+    void handleExceptions(object? o, string s) => Console.WriteLine(s);
 
 
     async ValueTask<Canvas2DContext> createScaledCanvasContext(BECanvasComponent? canvas, bool scale)
