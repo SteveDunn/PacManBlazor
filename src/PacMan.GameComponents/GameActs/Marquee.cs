@@ -93,7 +93,7 @@ public class Marquee
 
     ValueTask scrollingIn()
     {
-        Debug.Assert(_tweener != null, nameof(_tweener) + " != null");
+        Debug.Assert(_tweener != null, $"{nameof(_tweener)} != null");
 
         _pos = new(_tweener.Position, _current.YPosition);
 
@@ -108,7 +108,7 @@ public class Marquee
 
     ValueTask scrollingOut()
     {
-        Debug.Assert(_tweener != null, nameof(_tweener) + " != null");
+        Debug.Assert(_tweener != null, $"{nameof(_tweener)} != null");
 
         _pos = new(_tweener.Position, _current.YPosition);
 
