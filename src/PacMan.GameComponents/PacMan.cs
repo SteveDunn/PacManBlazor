@@ -54,16 +54,16 @@ public class PacMan : ISprite, IPacMan
         const int left = 456;
         const int left2 = 472;
 
-        _framePointers[GameComponents.Direction.Up] = new(
+        _framePointers[Direction.Up] = new(
             new(left, 32), new(left2, 32));
 
-        _framePointers[GameComponents.Direction.Down] = new(
+        _framePointers[Direction.Down] = new(
             new(left, 48), new(left2, 48));
 
-        _framePointers[GameComponents.Direction.Left] = new(
+        _framePointers[Direction.Left] = new(
             new(left, 16), new(left2, 16));
 
-        _framePointers[GameComponents.Direction.Right] = new(
+        _framePointers[Direction.Right] = new(
             new(left, 0), new(left2, 0));
 
         _dyingFrames = new();
@@ -84,7 +84,7 @@ public class PacMan : ISprite, IPacMan
         Visible = true;
         _demoKeyPresses.Reset();
         _isDemoMode = isDemoMode;
-        _direction = GameComponents.Direction.Left;
+        _direction = Direction.Left;
         _speed = Constants.PacManBaseSpeed;
         _dyingFramePointer = 0;
         Position = Tile.ToCenterCanvas(new(13.5f, 23));

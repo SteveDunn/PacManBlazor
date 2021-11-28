@@ -19,19 +19,19 @@ public class AttractScenePacMan : ISprite
         Visible = true;
         _animDirection = new(65.Milliseconds());
 
-        Direction = GameComponents.Direction.Left;
+        Direction = Direction.Left;
 
         const float left = 456;
         const float left2 = 472;
 
         _velocitiesLookup = new() {
-            [GameComponents.Direction.Up] = new(
+            [Direction.Up] = new(
                 new(left, 32), new(left2, 32)),
-            [GameComponents.Direction.Down] = new(
+            [Direction.Down] = new(
                 new(left, 48), new(left2, 48)),
-            [GameComponents.Direction.Left] = new(
+            [Direction.Left] = new(
                 new(left, 16), new(left2, 16)),
-            [GameComponents.Direction.Right] = new(
+            [Direction.Right] = new(
                 new(left, 0), new(left2, 0))
         };
 

@@ -33,7 +33,7 @@ public static class Extensions
         return (float) Math.Sqrt((a * a) + (b * b));
     }
 
-    [JetBrains.Annotations.Pure]
+    [Pure]
     public static Vector2 Normalize(this Vector2 value)
     {
         float val = (float) (1.0 / Math.Sqrt((value.X * value.X) + (value.Y * value.Y)));
@@ -92,7 +92,7 @@ public static class Extensions
           r2.Top > r1.Bottom ||
           r2.Bottom < r1.Top);
 
-    [JetBrains.Annotations.Pure]
+    [Pure]
     public static Rectangle Expand(this Rectangle r, double amount) =>
         new(
             new((int) (r.Left - amount), (int) (r.Top - amount)),
