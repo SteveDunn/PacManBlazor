@@ -269,19 +269,15 @@ public class GameSoundPlayer : IGameSoundPlayer
         await _frightened.Stop();
     }
 
-    public async ValueTask Munch1()
-    {
-        await play(SoundName.Munch1);
-    }
+    public ValueTask Munch1() => play(SoundName.Munch1);
 
-    public async ValueTask Munch2()
-    {
-        await play(SoundName.Munch2);
-    }
+    public ValueTask Munch2() => play(SoundName.Munch2);
 
     async ValueTask play(SoundName soundName)
     {
-        throwIfNotLoaded(); SoundEffect audio = _loader.GetSoundEffect(soundName);
+        throwIfNotLoaded(); 
+        
+        SoundEffect audio = _loader.GetSoundEffect(soundName);
 
         await audio.Play();
     }
@@ -289,6 +285,7 @@ public class GameSoundPlayer : IGameSoundPlayer
     public void MarkAsFinished(string name)
     {
         throwIfNotLoaded();
+        
         bool parsed = Enum.TryParse(name, out SoundName val);
 
         if (!parsed)

@@ -11,7 +11,7 @@ public class ExceptionNotificationService : TextWriter, IExceptionNotificationSe
     /// <summary>
     /// Raised is an exception occurs. The exception message will be send to the listeners
     /// </summary>
-    public event EventHandler<string> OnException;
+    public event EventHandler<string>? OnException;
 
     public ExceptionNotificationService()
     {
@@ -20,8 +20,10 @@ public class ExceptionNotificationService : TextWriter, IExceptionNotificationSe
         Console.SetError(this);
     }
 
-    public override void WriteLine(string value)
+    public override void WriteLine(string? value)
     {
+        ArgumentNullException.ThrowIfNull(value);
+        
         // notify the listeners
         OnException?.Invoke(this, value);
 
