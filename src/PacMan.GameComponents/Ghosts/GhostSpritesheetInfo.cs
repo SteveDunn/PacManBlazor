@@ -17,16 +17,16 @@ public class GhostSpritesheetInfo
         Vector2 marker = position;
 
         _frames[Direction.Right] = new(position, position + toMove);
-        marker = marker + toMove;
-        marker = marker + toMove;
+        marker += toMove;
+        marker += toMove;
 
         _frames[Direction.Left] = new(marker, marker + toMove);
-        marker = marker + toMove;
-        marker = marker + toMove;
+        marker += toMove;
+        marker += toMove;
 
         _frames[Direction.Up] = new(marker, marker + toMove);
-        marker = marker + toMove;
-        marker = marker + toMove;
+        marker += toMove;
+        marker += toMove;
 
         _frames[Direction.Down] = new(marker, marker + toMove);
     }

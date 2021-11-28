@@ -134,12 +134,12 @@ public abstract class Ghost : SimpleGhost, IGhost
 
             if (Position.X > tileCenter.X)
             {
-                Position = Position - wayToMove;
+                Position -= wayToMove;
                 Position = new(Math.Max(Position.X, tileCenter.X), Position.Y);
             }
             else if (Position.X < tileCenter.X)
             {
-                Position = Position + wayToMove;
+                Position += wayToMove;
                 Position = new(Math.Min(Position.X, tileCenter.X), Position.Y);
             }
         }
@@ -150,12 +150,12 @@ public abstract class Ghost : SimpleGhost, IGhost
 
             if (Position.Y > tileCenter.Y)
             {
-                Position = Position - wayToMove;
+                Position -= wayToMove;
                 Position = new(Position.X, Math.Max(Position.Y, tileCenter.Y));
             }
             else if (Position.Y < tileCenter.Y)
             {
-                Position = Position + wayToMove;
+                Position += wayToMove;
                 Position = new(Position.X, Math.Min(Position.Y, tileCenter.Y));
             }
         }

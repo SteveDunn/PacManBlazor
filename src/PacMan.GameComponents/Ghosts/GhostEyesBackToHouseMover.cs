@@ -40,7 +40,7 @@ public class GhostEyesBackToHouseMover : GhostMover
         if (diff != Vector2.Zero)
         {
             diff = diff.Normalize();
-            Ghost.Position = Ghost.Position + diff;
+            Ghost.Position += diff;
         }
 
         if (Ghost.Position.Round() == Maze.PixelCenterOfHouse)
@@ -58,7 +58,7 @@ public class GhostEyesBackToHouseMover : GhostMover
         if (diff != Vector2.Zero)
         {
             diff = diff.Normalize();
-            Ghost.Position = Ghost.Position + diff;
+            Ghost.Position += diff;
         }
 
         if (Ghost.Position.Round() == _ghostPosInHouse)

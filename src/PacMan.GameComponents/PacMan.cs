@@ -209,11 +209,11 @@ public class PacMan : ISprite, IPacMan
             _pillEatenAt = CellIndex.Zero;
         }
 
-        speed = speed * (pcToUse / 100);
+        speed *= (pcToUse / 100);
 
         var offset = DirectionToIndexLookup.IndexVectorFor(_direction) * speed;
 
-        Position = Position + offset;
+        Position += offset;
     }
 
     public Vector2 Position
@@ -335,12 +335,12 @@ public class PacMan : ISprite, IPacMan
 
             if (Position.X > tileCenter.X)
             {
-                Position = Position - wayToMove;
+                Position -= wayToMove;
                 Position = new(Math.Max(Position.X, tileCenter.X), Position.Y);
             }
             else if (Position.X < tileCenter.X)
             {
-                Position = Position + wayToMove;
+                Position += wayToMove;
                 Position = new(Math.Min(Position.X, tileCenter.X), Position.Y);
             }
         }
@@ -351,12 +351,12 @@ public class PacMan : ISprite, IPacMan
 
             if (Position.Y > tileCenter.Y)
             {
-                Position = Position - wayToMove;
+                Position -= wayToMove;
                 Position = new(Position.X, Math.Max(Position.Y, tileCenter.Y));
             }
             else if (Position.Y < tileCenter.Y)
             {
-                Position = Position + wayToMove;
+                Position += wayToMove;
                 Position = new(Position.X, Math.Min(Position.Y, tileCenter.Y));
             }
         }

@@ -17,13 +17,13 @@ public class EyesSpritesheetInfo
         _positions[Direction.Right] = position;
 
         var marker = position;
-        marker = marker + toMove;
+        marker += toMove;
 
         _positions[Direction.Left] = marker;
-        marker = marker + toMove;
+        marker += toMove;
 
         _positions[Direction.Up] = marker;
-        marker = marker + toMove;
+        marker += toMove;
 
         _positions[Direction.Down] = marker;
     }

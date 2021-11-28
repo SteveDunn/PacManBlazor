@@ -103,7 +103,7 @@ public class GhostInsideHouseMover : GhostMover
         {
             diff = diff.Normalize();
 
-            Ghost.Position = Ghost.Position + (diff / Vector2s.Two);
+            Ghost.Position += (diff / Vector2s.Two);
 
             var dir = DirectionToIndexLookup.GetDirectionFromVector(diff);
 

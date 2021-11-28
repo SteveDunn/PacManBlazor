@@ -85,18 +85,18 @@ public class ChaseSubAct
         blinky.Position = startPos;
         _ghostPositions[blinky.NickName] = new(startPos, endPos);
 
-        startPos = startPos + gap;
-        endPos = endPos + gap;
+        startPos += gap;
+        endPos += gap;
         pinky.Position = startPos;
         _ghostPositions[pinky.NickName] = new(startPos, endPos);
 
-        startPos = startPos + gap;
-        endPos = endPos + gap;
+        startPos += gap;
+        endPos += gap;
         inky.Position = startPos;
         _ghostPositions[inky.NickName] = new(startPos, endPos);
 
-        startPos = startPos + gap;
-        endPos = endPos + gap;
+        startPos += gap;
+        endPos += gap;
         clyde.Position = startPos;
         _ghostPositions[clyde.NickName] = new(startPos, endPos);
 

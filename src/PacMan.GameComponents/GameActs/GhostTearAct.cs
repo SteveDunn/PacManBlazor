@@ -171,7 +171,7 @@ public class GhostTearAct : IAct
 
             // this.snagSprite.position = this.snagSprite.position.minus(new Point(1, 0));
 
-            _blinky.Position = _blinky.Position - new Vector2(1, 0);
+            _blinky.Position -= new Vector2(1, 0);
 
             return;
         }

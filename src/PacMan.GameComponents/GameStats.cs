@@ -75,7 +75,7 @@ public class GameStats : IGameStats
 
     public void Update(CanvasTimingInformation timing)
     {
-        CurrentPlayerStats?.Update(timing);
+        CurrentPlayerStats.Update(timing);
     }
 
     public PlayerStats GetPlayerStats(int index) => _playerStats[index];
