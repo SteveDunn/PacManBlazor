@@ -20,7 +20,7 @@ public class PlayerStats
         _mediator = mediator;
         PlayerIndex = playerIndex;
 
-        Score = 0;
+        Score = Score.Zero;
 
         // cheat
         LivesRemaining = Constants.PacManLives;
@@ -34,6 +34,10 @@ public class PlayerStats
 
         _ghostMovementConductor = new(props);
     }
+
+    Score _score = Score.Zero;
+
+    public ref Score Score => ref _score;
 
     public void Update(CanvasTimingInformation timing)
     {
@@ -70,16 +74,16 @@ public class PlayerStats
 
     public int LivesRemaining { get; protected set; }
 
-    protected async virtual ValueTask IncreaseScoreBy(int amount)
+    protected async virtual ValueTask IncreaseScoreBy(uint amount)
     {
-        Score += amount;
+        Score.IncreaseBy(amount);
 
         if (_extraLives.Count == 0)
         {
             return;
         }
 
-        if (Score > _extraLives[0])
+        if (Score >= _extraLives[0])
         {
             await _mediator.Publish(new ExtraLifeEvent());
 
@@ -98,7 +102,7 @@ public class PlayerStats
 
     public async ValueTask FruitEaten()
     {
-        await IncreaseScoreBy(_levelStats.GetLevelProps().FruitPoints);
+        await IncreaseScoreBy((uint)_levelStats.GetLevelProps().FruitPoints);
         LevelStats.FruitSession.FruitEaten();
     }
 
@@ -138,10 +142,8 @@ public class PlayerStats
 
         var points = FrightSession.GhostEaten();
 
-        await IncreaseScoreBy(points);
+        await IncreaseScoreBy((uint)points);
 
         return points;
     }
-
-    public int Score { get; private set; }
 }

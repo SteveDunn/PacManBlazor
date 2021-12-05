@@ -107,19 +107,23 @@ public class GameStats : IGameStats
 
     public void ChoseNextPlayer()
     {
-        PlayerStats[] players =
+        // see if any players with a higher index have lives.
+        PlayerStats[] otherPlayersThatHaveLives =
             _playerStats.Where(p => p.PlayerIndex > _currentPlayerIndex && p.LivesRemaining > 0)
                 .ToArray();
 
-        if (players.Length == 0)
+        // if no other players have lives, then see if any players with a lower index have lives.
+        if (otherPlayersThatHaveLives.Length == 0)
         {
-            players = _playerStats.Where(p => p.LivesRemaining > 0).ToArray();
+            otherPlayersThatHaveLives = _playerStats.Where(p => p.LivesRemaining > 0).ToArray();
         }
 
-        if (players.Length > 0)
+        // use the first one found, if any
+        if (otherPlayersThatHaveLives.Length > 0)
         {
-            _currentPlayerIndex = players[0].PlayerIndex;
+            _currentPlayerIndex = otherPlayersThatHaveLives[0].PlayerIndex;
         }
+        // otherwise signify that there is no 'next player'
         else
         {
             _currentPlayerIndex = -1;

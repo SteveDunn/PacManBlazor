@@ -9,7 +9,6 @@ namespace SmallTests
     public class CellIndexTests
     {
         [Fact]
-        [SuppressMessage("ReSharper", "SuspiciousTypeConversion.Global")]
         public void Equality()
         {
             CellIndex c10_10 = new(10, 10);
