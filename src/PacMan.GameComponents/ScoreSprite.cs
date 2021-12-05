@@ -21,11 +21,11 @@ public class ScoreSprite : GeneralSprite
             { 5000, (new(518, 196), 21) }
         };
 
-    public ScoreSprite(Vector2 position, int amount) : base(
+    public ScoreSprite(Vector2 position, Primitives.Points amount) : base(
         position,
-        new(_scorePositions[amount].Width, 7),
-        new(_scorePositions[amount].Width / 2f, 7 / 2f),
-        _scorePositions[amount].Pos)
+        new(_scorePositions[amount.Value].Width, 7),
+        new(_scorePositions[amount.Value].Width / 2f, 7 / 2f),
+        _scorePositions[amount.Value].Pos)
     {
     }
 }

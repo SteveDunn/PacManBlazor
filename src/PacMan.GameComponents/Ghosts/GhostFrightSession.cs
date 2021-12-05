@@ -22,7 +22,7 @@ public class GhostFrightSession
     public GhostFrightSession(LevelProps levelProps)
     {
         _amountOfGhostsEaten = 0;
-        _timeLeft = TimeSpan.FromMilliseconds(levelProps.FrightGhostTime * 1000);
+        _timeLeft = levelProps.FrightGhostTime;
 
         var flashesLeft = levelProps.FrightGhostFlashes;
 
@@ -47,10 +47,10 @@ public class GhostFrightSession
     public bool IsWhite => _timeLeftToStartFlashing <= TimeSpan.Zero && _tickTock;
 
     // todo: cqs
-    public int GhostEaten()
+    public Primitives.Points GhostEaten()
     {
         ++_amountOfGhostsEaten;
-        return (int) (Math.Pow(2, _amountOfGhostsEaten) * 100);
+        return Primitives.Points.From((int) (Math.Pow(2, _amountOfGhostsEaten) * 100));
     }
 
     public bool IsFinished => _timeLeft <= TimeSpan.Zero;

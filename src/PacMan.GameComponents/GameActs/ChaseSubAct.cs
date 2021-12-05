@@ -24,7 +24,7 @@ public class ChaseSubAct
     bool _copyrightVisible;
     bool _ghostsChasing;
 
-    int _ghostScore;
+    Primitives.Points _ghostPoints;
     StartAndEndPos _pacPositions;
 
     EggTimer _ghostTimer;
@@ -40,7 +40,7 @@ public class ChaseSubAct
         _finished = false;
         _tempTimers = new();
 
-        _ghostScore = 200;
+        _ghostPoints = Primitives.Points.From(200);
 
         _tempSprites = new();
         _ghosts = new();
@@ -212,9 +212,9 @@ public class ChaseSubAct
         _ghostTimer.Pause();
         _pacTimer.Pause();
 
-        showScore(ghost.Position, _ghostScore);
+        showScore(ghost.Position, _ghostPoints);
 
-        _ghostScore *= 2;
+        _ghostPoints = Primitives.Points.From(_ghostPoints.Value * 2);
 
         // ReSharper disable once HeapView.ObjectAllocation.Evident
         _ghostEatenTimer = new(1.Seconds(), () =>
@@ -225,7 +225,7 @@ public class ChaseSubAct
         });
     }
 
-    void showScore(Vector2 pos, int amount) =>
+    void showScore(Vector2 pos, Primitives.Points amount) =>
         _tempSprites.Add(new(900, new ScoreSprite(pos, amount)));
 
     void lerpGhost(AttractGhost ghost)

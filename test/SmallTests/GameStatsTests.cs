@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using MediatR;
 using PacMan.GameComponents;
+using PacMan.GameComponents.Primitives;
 using SmallTests.TestDoubles;
 using Xunit;
 
@@ -176,7 +177,7 @@ namespace SmallTests
         
 
         [Fact]
-        public async Task ResetForDemo()
+        public void ResetForDemo()
         {
             IMediator mediator = new StubbedMediator();
             GameStats sut = new(mediator, new StubbedGameStorage());

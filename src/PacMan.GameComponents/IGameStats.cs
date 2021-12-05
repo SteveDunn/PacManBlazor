@@ -38,7 +38,7 @@ public interface IGameStats
 
     void PacManEaten();
 
-    ValueTask<int> GhostEaten();
+    ValueTask<Primitives.Points> GhostEaten();
 
     void LevelFinished();
 

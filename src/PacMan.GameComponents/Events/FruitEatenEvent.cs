@@ -28,7 +28,7 @@ public readonly struct FruitEatenEvent : INotification
 
             await _gameStats.FruitEaten();
 
-            int points = _gameStats.CurrentPlayerStats.LevelStats.GetLevelProps().FruitPoints;
+            var points = _gameStats.CurrentPlayerStats.LevelStats.GetLevelProps().FruitPoints;
 
             await _game.FruitEaten(points);
         }

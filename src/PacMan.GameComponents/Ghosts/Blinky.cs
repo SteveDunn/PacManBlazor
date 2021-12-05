@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using PacMan.GameComponents.Primitives;
 
 namespace PacMan.GameComponents.Ghosts;
 
@@ -57,7 +58,7 @@ public class Blinky : Ghost
     // elroy2DotsLeft
     // elroy2SpeedPc
 
-    protected override float GetNormalGhostSpeedPercent()
+    protected override SpeedPercentage GetNormalGhostSpeedPercent()
     {
         LevelStats levelStats = CurrentPlayerStats.LevelStats;
 

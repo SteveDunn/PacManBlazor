@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Numerics;
 using PacMan.GameComponents.Canvas;
+using PacMan.GameComponents.Primitives;
 using static PacMan.GameComponents.Direction;
 
 namespace PacMan.GameComponents.Ghosts;
@@ -197,19 +198,21 @@ public abstract class Ghost : SimpleGhost, IGhost
 
         if (State == GhostState.Frightened)
         {
-            return baseSpeed * (levelProps.FrightGhostSpeedPc / 100);
+            return baseSpeed * (levelProps.FrightGhostSpeedPc.Value);
         }
 
         if (Maze.IsInTunnel(Tile.Index))
         {
-            return baseSpeed * (levelProps.GhostTunnelSpeedPc / 100);
+            return baseSpeed * (levelProps.GhostTunnelSpeedPc.Value);
         }
 
-        return baseSpeed * (GetNormalGhostSpeedPercent() / 100);
+        var value = GetNormalGhostSpeedPercent().Value;
+        
+        return baseSpeed * value;
     }
 
     // virtual (Blinky has different speeds depending on how many dots are left)
-    protected virtual float GetNormalGhostSpeedPercent() =>
+    protected virtual SpeedPercentage GetNormalGhostSpeedPercent() =>
         CurrentPlayerStats.LevelStats.GetLevelProps().GhostSpeedPc;
 
     public Tile Tile { get; }

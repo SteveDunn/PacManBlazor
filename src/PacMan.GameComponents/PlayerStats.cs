@@ -1,5 +1,6 @@
 ﻿using PacMan.GameComponents.Canvas;
 using PacMan.GameComponents.Ghosts;
+using PacMan.GameComponents.Primitives;
 
 namespace PacMan.GameComponents;
 
@@ -74,7 +75,7 @@ public class PlayerStats
 
     public int LivesRemaining { get; protected set; }
 
-    protected async virtual ValueTask IncreaseScoreBy(uint amount)
+    protected async virtual ValueTask IncreaseScoreBy(Primitives.Points amount)
     {
         Score.IncreaseBy(amount);
 
@@ -96,13 +97,13 @@ public class PlayerStats
     public async ValueTask PillEaten(CellIndex point)
     {
         await _ghostHouseDoor.PillEaten();
-        await IncreaseScoreBy(10);
+        await IncreaseScoreBy(Primitives.Points.From(10));
         _levelStats.PillEaten(point);
     }
 
     public async ValueTask FruitEaten()
     {
-        await IncreaseScoreBy((uint)_levelStats.GetLevelProps().FruitPoints);
+        await IncreaseScoreBy(_levelStats.GetLevelProps().FruitPoints);
         LevelStats.FruitSession.FruitEaten();
     }
 
@@ -115,7 +116,7 @@ public class PlayerStats
         FrightSession = new(_levelStats.GetLevelProps());
 
         await _ghostHouseDoor.PillEaten();
-        await IncreaseScoreBy(50);
+        await IncreaseScoreBy(Primitives.Points.From(50));
         _levelStats.PillEaten(point);
     }
 
@@ -133,7 +134,7 @@ public class PlayerStats
         LivesRemaining -= 1;
     }
 
-    public async ValueTask<int> GhostEaten()
+    public async ValueTask<Primitives.Points> GhostEaten()
     {
         if (FrightSession == null)
         {
@@ -142,7 +143,7 @@ public class PlayerStats
 
         var points = FrightSession.GhostEaten();
 
-        await IncreaseScoreBy((uint)points);
+        await IncreaseScoreBy(points);
 
         return points;
     }

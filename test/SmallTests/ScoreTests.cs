@@ -1,7 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using PacMan.GameComponents;
+using PacMan.GameComponents.Primitives;
 using Xunit;
+using Points = PacMan.GameComponents.Primitives.Points;
 
 namespace SmallTests
 {
@@ -33,13 +35,13 @@ namespace SmallTests
         public void Increase()
         {
             var s = Score.Zero;
-            s.IncreaseBy(10);
+            s.IncreaseBy(Points.From(10));
             
             s.Value.Should().Be(10);
             
             Score.Zero.Value.Should().Be(0);
             
-            s.IncreaseBy(10);
+            s.IncreaseBy(Points.From(10));
             s.Value.Should().Be(20);
         }
 
@@ -47,7 +49,7 @@ namespace SmallTests
         public void Implicit_int()
         {
             var s = Score.Zero;
-            s.IncreaseBy(10);
+            s.IncreaseBy(Points.From(10));
 
             int val = s;
             val.Should().Be(10);

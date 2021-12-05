@@ -9,7 +9,7 @@ public interface IGame
 {
     ValueTask Initialise(IJSRuntime jsRuntime);
 
-    ValueTask FruitEaten(int points);
+    ValueTask FruitEaten(Primitives.Points points);
 
     ValueTask RunGameLoop(float timestamp);
 
@@ -17,5 +17,5 @@ public interface IGame
 
     void SetAct(IAct act);
 
-    ValueTask GhostEaten(IGhost ghost, int points);
+    ValueTask GhostEaten(IGhost ghost, Primitives.Points points);
 }

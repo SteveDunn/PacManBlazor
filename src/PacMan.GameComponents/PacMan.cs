@@ -209,7 +209,7 @@ public class PacMan : ISprite, IPacMan
             _pillEatenAt = CellIndex.Zero;
         }
 
-        speed *= (pcToUse / 100);
+        speed *= (pcToUse.Value / 100);
 
         var offset = DirectionToIndexLookup.IndexVectorFor(_direction) * speed;
 

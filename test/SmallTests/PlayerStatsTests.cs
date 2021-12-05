@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using MediatR;
 using PacMan.GameComponents;
+using PacMan.GameComponents.Primitives;
 using SmallTests.TestDoubles;
 using Xunit;
 

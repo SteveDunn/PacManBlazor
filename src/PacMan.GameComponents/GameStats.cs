@@ -158,7 +158,7 @@ public class GameStats : IGameStats
         _ghostsThatAreEyes = 0;
     }
 
-    public async ValueTask<int> GhostEaten()
+    public async ValueTask<Primitives.Points> GhostEaten()
     {
         ++_ghostsThatAreEyes;
 

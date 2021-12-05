@@ -151,7 +151,7 @@ public class Game : IGame
         }
     }
 
-    public ValueTask FruitEaten(int points)
+    public ValueTask FruitEaten(Primitives.Points points)
     {
         ensureInitialised();
         _tempSprites!.Add(new(3000, new ScoreSprite(_fruit.Position, points)));
@@ -159,7 +159,7 @@ public class Game : IGame
         return default;
     }
 
-    public ValueTask GhostEaten(IGhost ghost, int points)
+    public ValueTask GhostEaten(IGhost ghost, Primitives.Points points)
     {
         ensureInitialised();
         _tempSprites!.Add(new(900, new ScoreSprite(_pacman.Position, points)));

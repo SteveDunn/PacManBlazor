@@ -7,7 +7,7 @@ public class DemoPlayerStats : PlayerStats
         LivesRemaining = 1;
     }
 
-    protected override ValueTask IncreaseScoreBy(uint amount)
+    protected override ValueTask IncreaseScoreBy(Primitives.Points amount)
     {
         return default;
     }
