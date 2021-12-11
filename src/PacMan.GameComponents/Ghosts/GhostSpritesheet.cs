@@ -12,8 +12,8 @@ public class GhostSpritesheet
         int x = left + (8 * 16);
 
         _frightened = new(
-            new(new(x, 64), new(x += 16, 64)),
-            new(new(x += 16, 64), new(x + 16, 64)));
+            new FramePair(new(x, 64), new(x += 16, 64)),
+            new FramePair(new(x += 16, 64), new(x + 16, 64)));
 
         x = left + (8 * 16);
         Eyes = new(new(x, 64 + 16));

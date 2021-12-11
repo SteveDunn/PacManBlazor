@@ -1,6 +1,4 @@
 ﻿using System.Drawing;
-using System.Numerics;
-using PacMan.GameComponents.Canvas;
 
 namespace PacMan.GameComponents;
 

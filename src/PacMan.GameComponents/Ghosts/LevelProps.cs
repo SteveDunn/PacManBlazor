@@ -1,6 +1,4 @@
-﻿using PacMan.GameComponents.Primitives;
-
-namespace PacMan.GameComponents.Ghosts;
+﻿namespace PacMan.GameComponents.Ghosts;
 
 public record LevelProps(
     IntroCutScene CutScene,

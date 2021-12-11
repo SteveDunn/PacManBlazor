@@ -1,6 +1,4 @@
 ﻿using System.Drawing;
-using System.Numerics;
-using PacMan.GameComponents.Canvas;
 using PacMan.GameComponents.Ghosts;
 
 namespace PacMan.GameComponents.GameActs;
@@ -24,7 +22,7 @@ public class ChaseSubAct
     bool _copyrightVisible;
     bool _ghostsChasing;
 
-    Primitives.Points _ghostPoints;
+    Points _ghostPoints;
     StartAndEndPos _pacPositions;
 
     EggTimer _ghostTimer;
@@ -40,7 +38,7 @@ public class ChaseSubAct
         _finished = false;
         _tempTimers = new();
 
-        _ghostPoints = Primitives.Points.From(200);
+        _ghostPoints = Points.From(200);
 
         _tempSprites = new();
         _ghosts = new();
@@ -214,7 +212,7 @@ public class ChaseSubAct
 
         showScore(ghost.Position, _ghostPoints);
 
-        _ghostPoints = Primitives.Points.From(_ghostPoints.Value * 2);
+        _ghostPoints = Points.From(_ghostPoints.Value * 2);
 
         // ReSharper disable once HeapView.ObjectAllocation.Evident
         _ghostEatenTimer = new(1.Seconds(), () =>
@@ -225,7 +223,7 @@ public class ChaseSubAct
         });
     }
 
-    void showScore(Vector2 pos, Primitives.Points amount) =>
+    void showScore(Vector2 pos, Points amount) =>
         _tempSprites.Add(new(900, new ScoreSprite(pos, amount)));
 
     void lerpGhost(AttractGhost ghost)

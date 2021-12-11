@@ -1,6 +1,4 @@
-﻿using PacMan.GameComponents.Canvas;
-
-namespace PacMan.GameComponents;
+﻿namespace PacMan.GameComponents;
 
 public interface IGameStats
 {
@@ -38,7 +36,7 @@ public interface IGameStats
 
     void PacManEaten();
 
-    ValueTask<Primitives.Points> GhostEaten();
+    ValueTask<Points> GhostEaten();
 
     void LevelFinished();
 

@@ -1,6 +1,4 @@
-﻿using PacMan.GameComponents.Canvas;
-
-namespace PacMan.GameComponents.GameActs;
+﻿namespace PacMan.GameComponents.GameActs;
 
 /// <summary>
 /// Introduces the current player, shows player X and ready for 3 seconds, then ghosts and ready for 3 seconds.

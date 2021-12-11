@@ -1,7 +1,5 @@
 ﻿using System.Diagnostics;
 using System.Drawing;
-using System.Numerics;
-using PacMan.GameComponents.Canvas;
 using PacMan.GameComponents.Tweening;
 
 namespace PacMan.GameComponents.GameActs;

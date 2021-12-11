@@ -1,6 +1,4 @@
-﻿using PacMan.GameComponents.Canvas;
-using PacMan.GameComponents.Ghosts;
-using PacMan.GameComponents.Primitives;
+﻿using PacMan.GameComponents.Ghosts;
 
 namespace PacMan.GameComponents;
 
@@ -75,7 +73,7 @@ public class PlayerStats
 
     public int LivesRemaining { get; protected set; }
 
-    protected async virtual ValueTask IncreaseScoreBy(Primitives.Points amount)
+    protected async virtual ValueTask IncreaseScoreBy(Points amount)
     {
         Score.IncreaseBy(amount);
 
@@ -97,7 +95,7 @@ public class PlayerStats
     public async ValueTask PillEaten(CellIndex point)
     {
         await _ghostHouseDoor.PillEaten();
-        await IncreaseScoreBy(Primitives.Points.From(10));
+        await IncreaseScoreBy(Points.From(10));
         _levelStats.PillEaten(point);
     }
 
@@ -116,7 +114,7 @@ public class PlayerStats
         FrightSession = new(_levelStats.GetLevelProps());
 
         await _ghostHouseDoor.PillEaten();
-        await IncreaseScoreBy(Primitives.Points.From(50));
+        await IncreaseScoreBy(Points.From(50));
         _levelStats.PillEaten(point);
     }
 
@@ -134,7 +132,7 @@ public class PlayerStats
         LivesRemaining -= 1;
     }
 
-    public async ValueTask<Primitives.Points> GhostEaten()
+    public async ValueTask<Points> GhostEaten()
     {
         if (FrightSession == null)
         {

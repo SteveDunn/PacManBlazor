@@ -1,6 +1,4 @@
 ﻿using System.Drawing;
-using System.Numerics;
-using PacMan.GameComponents.Canvas;
 
 namespace PacMan.GameComponents;
 
@@ -209,7 +207,7 @@ public class PacMan : ISprite, IPacMan
             _pillEatenAt = CellIndex.Zero;
         }
 
-        speed *= (pcToUse.Value / 100);
+        speed *= (pcToUse.Value);
 
         var offset = DirectionToIndexLookup.IndexVectorFor(_direction) * speed;
 

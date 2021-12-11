@@ -1,6 +1,4 @@
-﻿using PacMan.GameComponents.Canvas;
-
-namespace PacMan.GameComponents.GameActs;
+﻿namespace PacMan.GameComponents.GameActs;
 
 /// When the level is finished, the screen flashes white and blue.
 /// Transitions into either the cut-scene act if a 'cut-scene' is due, or the 'player intro' act.

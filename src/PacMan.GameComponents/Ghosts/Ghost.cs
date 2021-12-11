@@ -1,8 +1,5 @@
 ﻿global using System;
 using System.Drawing;
-using System.Numerics;
-using PacMan.GameComponents.Canvas;
-using PacMan.GameComponents.Primitives;
 using static PacMan.GameComponents.Direction;
 
 namespace PacMan.GameComponents.Ghosts;
@@ -198,12 +195,12 @@ public abstract class Ghost : SimpleGhost, IGhost
 
         if (State == GhostState.Frightened)
         {
-            return baseSpeed * (levelProps.FrightGhostSpeedPc.Value);
+            return baseSpeed * levelProps.FrightGhostSpeedPc.Value;
         }
 
         if (Maze.IsInTunnel(Tile.Index))
         {
-            return baseSpeed * (levelProps.GhostTunnelSpeedPc.Value);
+            return baseSpeed * levelProps.GhostTunnelSpeedPc.Value;
         }
 
         var value = GetNormalGhostSpeedPercent().Value;

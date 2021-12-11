@@ -1,7 +1,6 @@
 ﻿// ReSharper disable HeapView.BoxingAllocation
 
 using System.Drawing;
-using PacMan.GameComponents.Canvas;
 
 namespace PacMan.GameComponents;
 

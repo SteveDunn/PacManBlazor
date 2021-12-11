@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace PacMan.GameComponents;
+﻿namespace PacMan.GameComponents;
 
 public readonly struct CellIndex : IEquatable<CellIndex>
 {

@@ -1,6 +1,4 @@
-﻿using PacMan.GameComponents.Canvas;
-
-namespace PacMan.GameComponents.GameActs;
+﻿namespace PacMan.GameComponents.GameActs;
 
 /// An act that shows Pacman dying.  Transitions to either: the 'attract act' (if in demo mode), the 'game over act' if all players are dead,
 /// or the 'attract act' for the next player that's alive.

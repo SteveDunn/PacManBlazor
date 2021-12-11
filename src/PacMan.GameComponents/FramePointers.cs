@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace PacMan.GameComponents;
+﻿namespace PacMan.GameComponents;
 
 public class FramePointers
 {

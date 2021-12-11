@@ -1,6 +1,4 @@
-﻿using PacMan.GameComponents.Canvas;
-
-namespace PacMan.GameComponents;
+﻿namespace PacMan.GameComponents;
 
 public class GameStats : IGameStats
 {
@@ -158,7 +156,7 @@ public class GameStats : IGameStats
         _ghostsThatAreEyes = 0;
     }
 
-    public async ValueTask<Primitives.Points> GhostEaten()
+    public async ValueTask<Points> GhostEaten()
     {
         ++_ghostsThatAreEyes;
 

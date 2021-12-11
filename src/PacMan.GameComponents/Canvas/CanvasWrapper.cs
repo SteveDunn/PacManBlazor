@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using System.Numerics;
 using Blazor.Extensions.Canvas.Canvas2D;
 using Microsoft.AspNetCore.Components;
 

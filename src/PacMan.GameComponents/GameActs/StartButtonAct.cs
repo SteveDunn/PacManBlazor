@@ -1,6 +1,4 @@
-﻿using PacMan.GameComponents.Canvas;
-
-namespace PacMan.GameComponents.GameActs;
+﻿namespace PacMan.GameComponents.GameActs;
 
 /// <summary>
 /// The 'act' that shows the '1 or 2 players' screen.

@@ -1,6 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
-using PacMan.GameComponents;
 using PacMan.GameComponents.Primitives;
 using Xunit;
 using Points = PacMan.GameComponents.Primitives.Points;

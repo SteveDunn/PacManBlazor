@@ -1,6 +1,4 @@
-﻿using PacMan.GameComponents.Canvas;
-
-namespace PacMan.GameComponents.Ghosts;
+﻿namespace PacMan.GameComponents.Ghosts;
 
 public class GhostFrightSession
 {
@@ -47,10 +45,10 @@ public class GhostFrightSession
     public bool IsWhite => _timeLeftToStartFlashing <= TimeSpan.Zero && _tickTock;
 
     // todo: cqs
-    public Primitives.Points GhostEaten()
+    public Points GhostEaten()
     {
         ++_amountOfGhostsEaten;
-        return Primitives.Points.From((int) (Math.Pow(2, _amountOfGhostsEaten) * 100));
+        return Points.From((int) (Math.Pow(2, _amountOfGhostsEaten) * 100));
     }
 
     public bool IsFinished => _timeLeft <= TimeSpan.Zero;

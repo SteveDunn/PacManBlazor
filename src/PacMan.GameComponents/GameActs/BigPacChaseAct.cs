@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-using PacMan.GameComponents.Canvas;
-using PacMan.GameComponents.Ghosts;
+﻿using PacMan.GameComponents.Ghosts;
 
 // ReSharper disable HeapView.ObjectAllocation.Evident
 

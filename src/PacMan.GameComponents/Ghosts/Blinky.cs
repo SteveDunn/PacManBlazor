@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using PacMan.GameComponents.Primitives;
 
 namespace PacMan.GameComponents.Ghosts;
 

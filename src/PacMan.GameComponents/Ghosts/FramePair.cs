@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace PacMan.GameComponents.Ghosts;
+﻿namespace PacMan.GameComponents.Ghosts;
 
 [CannotApplyEqualityOperator]
 public struct FramePair

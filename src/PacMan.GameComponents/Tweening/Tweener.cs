@@ -1,4 +1,4 @@
-using PacMan.GameComponents.Canvas;
+
 // ReSharper disable CompareOfFloatsByEqualityOperator
 
 namespace PacMan.GameComponents.Tweening;

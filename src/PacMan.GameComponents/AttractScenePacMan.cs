@@ -1,6 +1,4 @@
 ﻿using System.Drawing;
-using System.Numerics;
-using PacMan.GameComponents.Canvas;
 using PacMan.GameComponents.Ghosts;
 
 namespace PacMan.GameComponents;

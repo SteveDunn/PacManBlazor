@@ -1,7 +1,4 @@
-﻿using System.Numerics;
-using PacMan.GameComponents.Canvas;
-
-namespace PacMan.GameComponents.Tweening;
+﻿namespace PacMan.GameComponents.Tweening;
 
 public class Vector2Tweener
 {

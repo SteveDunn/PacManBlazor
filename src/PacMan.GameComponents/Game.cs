@@ -2,7 +2,6 @@
 using Blazor.Extensions.Canvas.Canvas2D;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using PacMan.GameComponents.Canvas;
 using PacMan.GameComponents.Ghosts;
 
 namespace PacMan.GameComponents;
@@ -151,7 +150,7 @@ public class Game : IGame
         }
     }
 
-    public ValueTask FruitEaten(Primitives.Points points)
+    public ValueTask FruitEaten(Points points)
     {
         ensureInitialised();
         _tempSprites!.Add(new(3000, new ScoreSprite(_fruit.Position, points)));
@@ -159,7 +158,7 @@ public class Game : IGame
         return default;
     }
 
-    public ValueTask GhostEaten(IGhost ghost, Primitives.Points points)
+    public ValueTask GhostEaten(IGhost ghost, Points points)
     {
         ensureInitialised();
         _tempSprites!.Add(new(900, new ScoreSprite(_pacman.Position, points)));

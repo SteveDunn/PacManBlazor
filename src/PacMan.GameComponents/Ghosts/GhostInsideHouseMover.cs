@@ -1,7 +1,4 @@
-﻿using System.Numerics;
-using PacMan.GameComponents.Canvas;
-
-namespace PacMan.GameComponents.Ghosts;
+﻿namespace PacMan.GameComponents.Ghosts;
 
 /// Moves the ghosts while they are inside of the house
 public class GhostInsideHouseMover : GhostMover

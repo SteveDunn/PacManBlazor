@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace PacMan.GameComponents;
+﻿namespace PacMan.GameComponents;
 
 public class ScoreSprite : GeneralSprite
 {
@@ -21,7 +19,7 @@ public class ScoreSprite : GeneralSprite
             { 5000, (new(518, 196), 21) }
         };
 
-    public ScoreSprite(Vector2 position, Primitives.Points amount) : base(
+    public ScoreSprite(Vector2 position, Points amount) : base(
         position,
         new(_scorePositions[amount.Value].Width, 7),
         new(_scorePositions[amount.Value].Width / 2f, 7 / 2f),

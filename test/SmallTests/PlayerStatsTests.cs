@@ -1,5 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
 using FluentAssertions;
 using MediatR;
 using PacMan.GameComponents;

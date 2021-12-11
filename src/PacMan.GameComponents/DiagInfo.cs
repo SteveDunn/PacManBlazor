@@ -1,6 +1,4 @@
-﻿using PacMan.GameComponents.Canvas;
-
-namespace PacMan.GameComponents;
+﻿namespace PacMan.GameComponents;
 
 public static class DiagInfo
 {

@@ -1,7 +1,5 @@
 ﻿using System.Drawing;
-using System.Numerics;
 using System.Text;
-using PacMan.GameComponents.Canvas;
 
 namespace PacMan.GameComponents;
 

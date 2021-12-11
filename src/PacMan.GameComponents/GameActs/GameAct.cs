@@ -1,6 +1,4 @@
-﻿using PacMan.GameComponents.Canvas;
-
-namespace PacMan.GameComponents.GameActs;
+﻿namespace PacMan.GameComponents.GameActs;
 
 /// <summary>
 /// The main 'Game' act.  Draws everything (maze, ghosts, pacman), and updates everything (keyboard, sound etc.). Transitions to the 'player intro' act.
