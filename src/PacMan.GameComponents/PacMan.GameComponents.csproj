@@ -6,16 +6,6 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 
-	<ItemGroup>
-		<Using Include="MediatR" />
-		<Using Include="PacMan.GameComponents.Audio" />
-		<Using Include="PacMan.GameComponents.GameActs" />
-		<Using Include="PacMan.GameComponents.Events" />
-		<Using Include="System.Diagnostics.CodeAnalysis" />
-		<Using Include="JetBrains.Annotations" />
-		<Using Include="PacMan.GameComponents.Requests" />
-	</ItemGroup>
-
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 	</PropertyGroup>
