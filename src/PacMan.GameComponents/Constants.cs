@@ -12,6 +12,6 @@ public static class Constants
 #if DEBUG
     public static readonly int PacManLives = 4;
 #else
-        public static readonly int PacManLives = 3;
+        public static readonly int PacManLives = 4;
 #endif
 }
