@@ -28,7 +28,7 @@ public class PlayerStats
         Lives = Constants.PacManLives;
         _levelNumber = -1;
 
-        _extraLives = new() { 10000 };
+        _extraLives = new() { 10_000 };
         _levelStats = new(0);
         _ghostHouseDoor = new(0, _mediator);
 
@@ -99,6 +99,12 @@ public class PlayerStats
         }
     }
 
+    /// <summary>
+    /// Called by <see cref="GameStats"/>. Don't call it yourself
+    /// as the game coordinates other things.
+    /// </summary>
+    /// <param name="point"></param>
+    /// <returns></returns>
     public async ValueTask PillEaten(CellIndex point)
     {
         await _ghostHouseDoor.PillEaten();

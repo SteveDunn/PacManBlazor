@@ -10,6 +10,24 @@ namespace SmallTests
     public class GameStatsTests
     {
         [Fact]
+        public async Task High_score_defaults()
+        {
+            IMediator mediator = new StubbedMediator();
+            GameStats sut = new(mediator, new StubbedGameStorage());
+
+            sut.HighScore.Should().Be(10_000);
+
+            await sut.Reset(1);
+            
+            sut.HighScore.Should().Be(10_000);
+
+            sut.ResetForDemo();
+            
+            sut.HighScore.Should().Be(10_000);
+        }
+
+
+        [Fact]
         public void Defaulting()
         {
             IMediator mediator = new StubbedMediator();
@@ -19,6 +37,7 @@ namespace SmallTests
             sut.AnyonePlaying.Should().BeFalse();
             sut.IsDemo.Should().BeFalse();
             sut.IsGameOver.Should().BeTrue();
+            sut.HighScore.Should().Be(10_000);
         }
 
         [Fact]
@@ -95,6 +114,68 @@ namespace SmallTests
         }
 
         [Fact]
+        public async Task High_score_updates_as_player_1_gets_points()
+        {
+            IMediator mediator = new StubbedMediator();
+            GameStats sut = new(mediator, new StubbedGameStorage());
+            await sut.Reset(1);
+
+            sut.ChoseNextPlayer();
+            
+            var p1 = sut.CurrentPlayerStats;
+            p1.PlayerIndex.Should().Be(0);
+
+            // p1 starting
+            p1.TryDecreaseInitialLives();
+
+            // p1 eats enough pills to get an extra life
+            // that's 10,000 points, so 1,000 pills @ 10 points each.
+            for (int i = 0; i < 1_000; i++)
+            {
+                await sut.PillEaten(CellIndex.Zero);
+            }
+
+            p1.Score.Value.Should().Be(10_000);
+            sut.HighScore.Should().Be(10_000);
+
+            await sut.PillEaten(CellIndex.Zero);
+
+            p1.Score.Value.Should().Be(10_010);
+            sut.HighScore.Should().Be(10_010);
+        }
+
+        [Fact]
+        public async Task High_score_updates_as_player_1_in_two_player_gamegets_points()
+        {
+            IMediator mediator = new StubbedMediator();
+            GameStats sut = new(mediator, new StubbedGameStorage());
+            await sut.Reset(2);
+
+            sut.ChoseNextPlayer();
+            
+            var p1 = sut.CurrentPlayerStats;
+            p1.PlayerIndex.Should().Be(0);
+
+            // p1 starting
+            p1.TryDecreaseInitialLives();
+
+            // p1 eats enough pills to get an extra life
+            // that's 10,000 points, so 1,000 pills @ 10 points each.
+            for (int i = 0; i < 1_000; i++)
+            {
+                await sut.PillEaten(CellIndex.Zero);
+            }
+
+            p1.Score.Value.Should().Be(10_000);
+            sut.HighScore.Should().Be(10_000);
+
+            await sut.PillEaten(CellIndex.Zero);
+
+            p1.Score.Value.Should().Be(10_010);
+            sut.HighScore.Should().Be(10_010);
+        }
+
+        [Fact]
         public async Task Game_flow_2_players_p1_gets_an_extra_life()
         {
             IMediator mediator = new StubbedMediator();
@@ -141,7 +222,7 @@ namespace SmallTests
             // that's 10,000 points, so 1,000 pills @ 10 points each.
             for (int i = 0; i < 1_000; i++)
             {
-                await p1.PillEaten(CellIndex.Zero);
+                await sut.PillEaten(CellIndex.Zero);
             }
 
             p1.Score.Value.Should().Be(10_000);

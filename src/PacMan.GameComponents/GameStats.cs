@@ -80,7 +80,7 @@ public class GameStats : IGameStats
 
     public ValueTask FruitEaten() => CurrentPlayerStats.FruitEaten();
 
-    public int HighScore { get; private set; } = 10000;
+    public int HighScore { get; private set; } = 10_000;
 
     public bool HasPlayerStats(int playerNumber) => _playerStats.Count > playerNumber;
 
@@ -130,12 +130,10 @@ public class GameStats : IGameStats
 
     void updateHighScore()
     {
-        HighScore = _playerStats.Count switch
+        for (int i = 0; i < _playerStats.Count; i++)
         {
-            1 => Math.Max(_playerStats[0].Score, HighScore),
-            2 => Math.Max(_playerStats[1].Score, HighScore),
-            _ => HighScore
-        };
+            HighScore = Math.Max(HighScore, _playerStats[i].Score);
+        }
     }
 
     public async ValueTask PillEaten(CellIndex point)
