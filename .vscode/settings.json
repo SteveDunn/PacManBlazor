@@ -1,8 +1,13 @@
 {
-    "markdownlint.config": {
-        "MD028": false,
-        "MD025": {
-            "front_matter_title": ""
-        }
+  "markdownlint.config": {
+    "MD028": false,
+    "MD025": {
+      "front_matter_title": ""
     }
+  },
+  "cSpell.words": [
+    "Blazor",
+    "initialises"
+  ],
+  "cSpell.language": "en-GB"
 }
