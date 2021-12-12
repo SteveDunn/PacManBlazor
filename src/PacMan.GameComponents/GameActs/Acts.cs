@@ -1,24 +1,20 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿namespace PacMan.GameComponents.GameActs;
 
-namespace PacMan.GameComponents.GameActs
+public class Acts : IActs
 {
-    public class Acts : IActs
+    readonly Dictionary<string, IAct> _acts;
+
+    public Acts(IEnumerable<IAct> acts)
     {
-        readonly Dictionary<string, IAct> _acts;
+        _acts = acts.ToDictionary(k => k.Name, v => v);
+    }
 
-        public Acts(IEnumerable<IAct> acts)
-        {
-            _acts = acts.ToDictionary(k => k.Name, v => v);
-        }
+    public IAct GetActNamed(string name)
+    {
+        IAct act = _acts[name];
 
-        public IAct GetActNamed(string name)
-        {
-            IAct act = _acts[name];
+        act.Reset();
 
-            act.Reset();
-
-            return act;
-        }
+        return act;
     }
 }

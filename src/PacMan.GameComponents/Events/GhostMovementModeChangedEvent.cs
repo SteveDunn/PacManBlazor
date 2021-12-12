@@ -1,18 +1,16 @@
-﻿using MediatR;
-using PacMan.GameComponents.Ghosts;
+﻿using PacMan.GameComponents.Ghosts;
 
-namespace PacMan.GameComponents.Events
+namespace PacMan.GameComponents.Events;
+
+public readonly struct GhostMovementModeChangedEvent : INotification
 {
-    public readonly struct GhostMovementModeChangedEvent : INotification
+    public IGhost Ghost { get; }
+
+    public GhostMovementMode Mode { get; }
+
+    public GhostMovementModeChangedEvent(IGhost ghost, GhostMovementMode mode)
     {
-        public IGhost Ghost { get; }
-
-        public GhostMovementMode Mode { get; }
-
-        public GhostMovementModeChangedEvent(IGhost ghost, GhostMovementMode mode)
-        {
-            Ghost = ghost;
-            Mode = mode;
-        }
+        Ghost = ghost;
+        Mode = mode;
     }
 }

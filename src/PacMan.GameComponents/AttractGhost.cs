@@ -1,19 +1,18 @@
 ﻿using PacMan.GameComponents.Ghosts;
 
-namespace PacMan.GameComponents
+namespace PacMan.GameComponents;
+
+public class AttractGhost : SimpleGhost
 {
-    public class AttractGhost : SimpleGhost
+    public AttractGhost(GhostNickname nickName, Direction direction) : base(nickName, direction)
     {
-        public AttractGhost(GhostNickname nickName, Direction direction) : base(nickName, direction)
-        {
-            Alive = true;
-        }
-
-        public void SetFrightened()
-        {
-            State = GhostState.Frightened;
-        }
-
-        public bool Alive { get; set; }
+        Alive = true;
     }
+
+    public void SetFrightened()
+    {
+        State = GhostState.Frightened;
+    }
+
+    public bool Alive { get; set; }
 }

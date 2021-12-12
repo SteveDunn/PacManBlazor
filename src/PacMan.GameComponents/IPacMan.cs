@@ -1,29 +1,24 @@
-﻿using System.Numerics;
-using System.Threading.Tasks;
-using PacMan.GameComponents.Canvas;
+﻿namespace PacMan.GameComponents;
 
-namespace PacMan.GameComponents
+public interface IPacMan
 {
-    public interface IPacMan
-    {
-        bool Visible { get; set; }
+    bool Visible { get; set; }
 
-        Tile Tile { get; }
+    Tile Tile { get; }
 
-        Direction Direction { get; }
+    Direction Direction { get; }
 
-        Vector2 Position { get; }
+    Vector2 Position { get; }
 
-        ValueTask Draw(CanvasWrapper session);
+    ValueTask Draw(CanvasWrapper session);
 
-        void StartDying();
+    void StartDying();
 
-        void StartDigesting();
+    void StartDigesting();
 
-        ValueTask Update(CanvasTimingInformation timing);
+    ValueTask Update(CanvasTimingInformation timing);
 
-        void PillEaten();
+    void PillEaten();
 
-        ValueTask HandlePlayerStarting(PlayerStats playerStats, bool isDemo);
-    }
+    ValueTask HandlePlayerStarting(PlayerStats playerStats, bool isDemo);
 }

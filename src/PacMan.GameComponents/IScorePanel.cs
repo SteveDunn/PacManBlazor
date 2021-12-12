@@ -1,12 +1,8 @@
-﻿using System.Threading.Tasks;
-using PacMan.GameComponents.Canvas;
+﻿namespace PacMan.GameComponents;
 
-namespace PacMan.GameComponents
+public interface IScorePanel
 {
-    public interface IScorePanel
-    {
-        void Update(CanvasTimingInformation timingInformation);
+    void Update(CanvasTimingInformation timingInformation);
 
-        ValueTask Draw(CanvasWrapper ds);
-    }
+    ValueTask Draw(CanvasWrapper ds);
 }

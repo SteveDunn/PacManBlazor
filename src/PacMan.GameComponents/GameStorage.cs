@@ -1,33 +1,30 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.JSInterop;
+﻿using Microsoft.JSInterop;
 
-namespace PacMan.GameComponents
+namespace PacMan.GameComponents;
+
+public class GameStorage : IGameStorage
 {
-    public class GameStorage : IGameStorage
+    readonly IJSRuntime _jsRuntime;
+
+    public GameStorage(IJSRuntime jsRuntime)
     {
-        readonly IJSRuntime _jsRuntime;
+        _jsRuntime = jsRuntime;
+    }
 
-        public GameStorage(IJSRuntime jsRuntime)
+    public async ValueTask<int> GetHighScore()
+    {
+        var hs = await _jsRuntime.InvokeAsync<string>("localStorage.getItem", "highscore");
+
+        if (string.IsNullOrEmpty(hs))
         {
-            _jsRuntime = jsRuntime;
+            return 0;
         }
 
-        public async ValueTask<int> GetHighScore()
-        {
-            var hs = await _jsRuntime.InvokeAsync<string>("localStorage.getItem", "highscore");
+        return Convert.ToInt32(hs);
+    }
 
-            if (string.IsNullOrEmpty(hs))
-            {
-                return 0;
-            }
-
-            return Convert.ToInt32(hs);
-        }
-
-        public async ValueTask SetHighScore(int highScore)
-        {
-            await _jsRuntime.InvokeVoidAsync("localStorage.setItem", "highscore", highScore.ToString());
-        }
+    public async ValueTask SetHighScore(int highScore)
+    {
+        await _jsRuntime.InvokeVoidAsync("localStorage.setItem", "highscore", highScore.ToString());
     }
 }

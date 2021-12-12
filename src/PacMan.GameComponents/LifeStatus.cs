@@ -1,10 +1,9 @@
-﻿namespace PacMan.GameComponents
+﻿namespace PacMan.GameComponents;
+
+public enum LifeStatus
 {
-    public enum LifeStatus
-    {
-        Alive,
-        BeingDigested,
-        Dying,
-        Dead
-    }
+    Alive,
+    BeingDigested,
+    Dying,
+    Dead
 }

@@ -1,13 +1,12 @@
-﻿namespace PacMan.GameComponents.Audio
-{
-    public static class SoundUtilities
-    {
-        public static void Mute()
-        {
-        }
+﻿namespace PacMan.GameComponents.Audio;
 
-        public static void Unmute()
-        {
-        }
+public static class SoundUtilities
+{
+    public static void Mute()
+    {
+    }
+
+    public static void Unmute()
+    {
     }
 }

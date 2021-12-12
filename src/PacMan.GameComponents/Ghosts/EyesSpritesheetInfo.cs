@@ -1,34 +1,30 @@
-﻿using System.Collections.Generic;
-using System.Numerics;
+﻿namespace PacMan.GameComponents.Ghosts;
 
-namespace PacMan.GameComponents.Ghosts
+public class EyesSpritesheetInfo
 {
-    public class EyesSpritesheetInfo
+    readonly Dictionary<Direction, Vector2> _positions;
+
+    const int _width = 16;
+
+    public EyesSpritesheetInfo(Vector2 position)
     {
-        readonly Dictionary<Direction, Vector2> _positions;
+        _positions = new();
 
-        const int _width = 16;
+        var toMove = new Vector2(_width, 0);
 
-        public EyesSpritesheetInfo(Vector2 position)
-        {
-            _positions = new();
+        _positions[Direction.Right] = position;
 
-            var toMove = new Vector2(_width, 0);
+        var marker = position;
+        marker += toMove;
 
-            _positions[Direction.Right] = position;
+        _positions[Direction.Left] = marker;
+        marker += toMove;
 
-            var marker = position;
-            marker = marker + toMove;
+        _positions[Direction.Up] = marker;
+        marker += toMove;
 
-            _positions[Direction.Left] = marker;
-            marker = marker + toMove;
-
-            _positions[Direction.Up] = marker;
-            marker = marker + toMove;
-
-            _positions[Direction.Down] = marker;
-        }
-
-        public Vector2 GetSourcePosition(Direction direction) => _positions[direction];
+        _positions[Direction.Down] = marker;
     }
+
+    public Vector2 GetSourcePosition(Direction direction) => _positions[direction];
 }

@@ -1,30 +1,26 @@
-﻿using System.Threading.Tasks;
-using PacMan.GameComponents.Canvas;
+﻿namespace PacMan.GameComponents;
 
-namespace PacMan.GameComponents
+public class TimedSprite
 {
-    public class TimedSprite
+    double _timeToLive;
+
+    readonly ISprite _sprite;
+
+    public TimedSprite(int timeToLive, ISprite sprite)
     {
-        double _timeToLive;
+        _timeToLive = timeToLive;
+        _sprite = sprite;
+    }
 
-        readonly ISprite _sprite;
+    public void Update(CanvasTimingInformation timing)
+    {
+        _timeToLive -= timing.ElapsedTime.TotalMilliseconds;
+    }
 
-        public TimedSprite(int timeToLive, ISprite sprite)
-        {
-            _timeToLive = timeToLive;
-            _sprite = sprite;
-        }
+    public bool Expired => _timeToLive < 0;
 
-        public void Update(CanvasTimingInformation timing)
-        {
-            _timeToLive -= timing.ElapsedTime.TotalMilliseconds;
-        }
-
-        public bool Expired => _timeToLive < 0;
-
-        public async ValueTask Draw(CanvasWrapper session)
-        {
-            await _sprite.Draw(session);
-        }
+    public async ValueTask Draw(CanvasWrapper session)
+    {
+        await _sprite.Draw(session);
     }
 }

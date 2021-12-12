@@ -1,11 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿namespace PacMan.GameComponents;
 
-namespace PacMan.GameComponents
+public interface IGameStorage
 {
-    public interface IGameStorage
-    {
-        ValueTask<int> GetHighScore();
+    ValueTask<int> GetHighScore();
 
-        ValueTask SetHighScore(int highScore);
-    }
+    ValueTask SetHighScore(int highScore);
 }

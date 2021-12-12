@@ -1,37 +1,33 @@
-﻿using System;
-using PacMan.GameComponents.Canvas;
+﻿namespace PacMan.GameComponents;
 
-namespace PacMan.GameComponents
+public class LoopingTimer
 {
-    public class LoopingTimer
+    TimeSpan _currentTime;
+
+    readonly TimeSpan _firesEvery;
+    readonly Action _callback;
+
+    public static LoopingTimer DoNothing => new(
+        TimeSpan.MaxValue,
+        static() => {
+        });
+
+    public LoopingTimer(TimeSpan firesEvery, Action callback)
     {
-        TimeSpan _currentTime;
+        _firesEvery = firesEvery;
+        _currentTime = firesEvery;
+        _callback = callback;
+    }
 
-        readonly TimeSpan _firesEvery;
-        readonly Action _callback;
+    public void Run(CanvasTimingInformation timing)
+    {
+        _currentTime -= timing.ElapsedTime;
 
-        public static LoopingTimer DoNothing => new(
-            TimeSpan.MaxValue,
-            static() => {
-            });
-
-        public LoopingTimer(TimeSpan firesEvery, Action callback)
+        if (_currentTime < TimeSpan.Zero)
         {
-            _firesEvery = firesEvery;
-            _currentTime = firesEvery;
-            _callback = callback;
-        }
+            _currentTime += _firesEvery;
 
-        public void Run(CanvasTimingInformation timing)
-        {
-            _currentTime -= timing.ElapsedTime;
-
-            if (_currentTime < TimeSpan.Zero)
-            {
-                _currentTime += _firesEvery;
-
-                _callback();
-            }
+            _callback();
         }
     }
 }

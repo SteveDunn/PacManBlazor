@@ -1,0 +1,10 @@
+﻿global using PacMan.GameComponents.Primitives;
+global using PacMan.GameComponents.Canvas;
+global using System.Numerics;
+global using MediatR;
+global using PacMan.GameComponents.Audio;
+global using PacMan.GameComponents.GameActs;
+global using PacMan.GameComponents.Events;
+global using System.Diagnostics.CodeAnalysis;
+global using JetBrains.Annotations;
+global using PacMan.GameComponents.Requests;

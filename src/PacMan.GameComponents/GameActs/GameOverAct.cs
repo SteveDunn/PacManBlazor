@@ -1,46 +1,42 @@
-﻿using System.Threading.Tasks;
-using PacMan.GameComponents.Canvas;
+﻿namespace PacMan.GameComponents.GameActs;
 
-namespace PacMan.GameComponents.GameActs
+public class GameOverAct : IAct
 {
-    public class GameOverAct : IAct
+    readonly IMaze _maze;
+    bool _finished;
+
+    LoopingTimer _currentTimer = LoopingTimer.DoNothing;
+
+    public GameOverAct(IMaze maze) => _maze = maze;
+
+    public string Name => "GameOverAct";
+
+    public ValueTask Reset()
     {
-        readonly IMaze _maze;
-        bool _finished;
+        _finished = false;
 
-        LoopingTimer _currentTimer = LoopingTimer.DoNothing;
-
-        public GameOverAct(IMaze maze) => _maze = maze;
-
-        public string Name => "GameOverAct";
-
-        public ValueTask Reset()
+        _currentTimer = new(2.Seconds(), () =>
         {
-            _finished = false;
-
             _currentTimer = new(2.Seconds(), () =>
             {
-                _currentTimer = new(2.Seconds(), () =>
-                {
-                    _finished = true;
-                });
+                _finished = true;
             });
+        });
 
-            return default;
-        }
+        return default;
+    }
 
-        public ValueTask<ActUpdateResult> Update(CanvasTimingInformation timing)
-        {
-            _currentTimer.Run(timing);
+    public ValueTask<ActUpdateResult> Update(CanvasTimingInformation timing)
+    {
+        _currentTimer.Run(timing);
 
-            return new(_finished ? ActUpdateResult.Finished : ActUpdateResult.Running);
-        }
+        return new(_finished ? ActUpdateResult.Finished : ActUpdateResult.Running);
+    }
 
-        public async ValueTask Draw(CanvasWrapper session)
-        {
-            await _maze.Draw(session);
+    public async ValueTask Draw(CanvasWrapper session)
+    {
+        await _maze.Draw(session);
 
-            await session.DrawMyText("GAME OVER", TextPoints.GameOverPoint, Colors.Red);
-        }
+        await session.DrawMyText("GAME OVER", TextPoints.GameOverPoint, Colors.Red);
     }
 }

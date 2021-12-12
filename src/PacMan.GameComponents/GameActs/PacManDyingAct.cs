@@ -1,87 +1,80 @@
-﻿using System.Threading.Tasks;
-using MediatR;
-using PacMan.GameComponents.Audio;
-using PacMan.GameComponents.Canvas;
-using PacMan.GameComponents.Events;
+﻿namespace PacMan.GameComponents.GameActs;
 
-namespace PacMan.GameComponents.GameActs
+/// An act that shows Pacman dying.  Transitions to either: the 'attract act' (if in demo mode), the 'game over act' if all players are dead,
+/// or the 'attract act' for the next player that's alive.
+public class PacManDyingAct : IAct
 {
-    /// An act that shows Pacman dying.  Transitions to either: the 'attract act' (if in demo mode), the 'game over act' if all players are dead,
-    /// or the 'attract act' for the next player that's alive.
-    public class PacManDyingAct : IAct
+    readonly IMediator _mediator;
+    readonly IGhostCollection _ghostCollection;
+    readonly IGameSoundPlayer _gameSoundPlayer;
+    readonly IPacMan _pacman;
+    readonly IMaze _maze;
+
+    int _step;
+    LoopingTimer _timer = LoopingTimer.DoNothing;
+    bool _finished;
+
+    public PacManDyingAct(IMediator mediator, IGhostCollection ghostCollection, IGameSoundPlayer gameSoundPlayer, IPacMan pacman, IMaze maze)
     {
-        readonly IMediator _mediator;
-        readonly IGhostCollection _ghostCollection;
-        readonly IGameSoundPlayer _gameSoundPlayer;
-        readonly IPacMan _pacman;
-        readonly IMaze _maze;
+        _mediator = mediator;
+        _ghostCollection = ghostCollection;
+        _gameSoundPlayer = gameSoundPlayer;
+        _pacman = pacman;
+        _maze = maze;
+    }
 
-        int _step;
-        LoopingTimer _timer = LoopingTimer.DoNothing;
-        bool _finished;
+    public string Name => "PacManDyingAct";
 
-        public PacManDyingAct(IMediator mediator, IGhostCollection ghostCollection, IGameSoundPlayer gameSoundPlayer, IPacMan pacman, IMaze maze)
+    public async ValueTask Reset()
+    {
+        await _gameSoundPlayer.Reset();
+
+        _step = 0;
+        _finished = false;
+
+        _pacman.StartDigesting();
+        _ghostCollection.Ghosts.ForEach(g => g.StopMoving());
+
+        _timer = new(2.Seconds(), () =>
         {
-            _mediator = mediator;
-            _ghostCollection = ghostCollection;
-            _gameSoundPlayer = gameSoundPlayer;
-            _pacman = pacman;
-            _maze = maze;
-        }
+            _step += 1;
+            _ = _gameSoundPlayer.PacManDying();
 
-        public string Name => "PacManDyingAct";
+            _pacman.StartDying();
 
-        public async ValueTask Reset()
-        {
-            await _gameSoundPlayer.Reset();
-
-            _step = 0;
-            _finished = false;
-
-            _pacman.StartDigesting();
-            _ghostCollection.Ghosts.ForEach(g => g.StopMoving());
-
-            _timer = new(2.Seconds(), () =>
+            _timer = new(2.Seconds(), async () =>
             {
                 _step += 1;
-                _ = _gameSoundPlayer.PacManDying();
-
-                _pacman.StartDying();
-
-                _timer = new(2.Seconds(), async () =>
-                {
-                    _step += 1;
-                    _finished = true;
-                    await _mediator.Publish(new PacManDeadEvent());
-                });
+                _finished = true;
+                await _mediator.Publish(new PacManDeadEvent());
             });
+        });
+    }
+
+    public async ValueTask<ActUpdateResult> Update(CanvasTimingInformation timing)
+    {
+        if (_finished)
+        {
+            return ActUpdateResult.Finished;
         }
 
-        public async ValueTask<ActUpdateResult> Update(CanvasTimingInformation timing)
+        _timer.Run(timing);
+
+        await _pacman.Update(timing);
+
+        await _ghostCollection.Update(timing);
+
+        return _finished ? ActUpdateResult.Finished : ActUpdateResult.Running;
+    }
+
+    public async ValueTask Draw(CanvasWrapper session)
+    {
+        await _maze.Draw(session);
+        await _pacman.Draw(session);
+
+        if (_step == 0)
         {
-            if (_finished)
-            {
-                return ActUpdateResult.Finished;
-            }
-
-            _timer.Run(timing);
-
-            await _pacman.Update(timing);
-
-            await _ghostCollection.Update(timing);
-
-            return _finished ? ActUpdateResult.Finished : ActUpdateResult.Running;
-        }
-
-        public async ValueTask Draw(CanvasWrapper session)
-        {
-            await _maze.Draw(session);
-            await _pacman.Draw(session);
-
-            if (_step == 0)
-            {
-                await _ghostCollection.DrawAll(session);
-            }
+            await _ghostCollection.DrawAll(session);
         }
     }
 }

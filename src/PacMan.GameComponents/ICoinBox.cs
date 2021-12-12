@@ -1,11 +1,10 @@
-﻿namespace PacMan.GameComponents
+﻿namespace PacMan.GameComponents;
+
+public interface ICoinBox
 {
-    public interface ICoinBox
-    {
-        void UseCredits(int amount);
+    void UseCredits(int amount);
 
-        int Credits { get; }
+    int Credits { get; }
 
-        void CoinInserted();
-    }
+    void CoinInserted();
 }

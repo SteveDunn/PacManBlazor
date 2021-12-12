@@ -1,73 +1,66 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using MediatR;
-using PacMan.GameComponents.Audio;
-using PacMan.GameComponents.Ghosts;
-using PacMan.GameComponents.Requests;
+﻿using PacMan.GameComponents.Ghosts;
 
-namespace PacMan.GameComponents.Events
+namespace PacMan.GameComponents.Events;
+
+public readonly struct PowerPillEatenEvent : INotification
 {
-    public readonly struct PowerPillEatenEvent : INotification
+    public PowerPillEatenEvent(CellIndex cellIndex) => CellIndex = cellIndex;
+
+    public CellIndex CellIndex { get; }
+
+    public class Handler : INotificationHandler<PowerPillEatenEvent>
     {
-        public PowerPillEatenEvent(CellIndex cellIndex) => CellIndex = cellIndex;
+        readonly IGame _game;
+        readonly IGameStats _gameStats;
+        readonly IGameSoundPlayer _gameSoundPlayer;
+        readonly IMediator _mediator;
+        readonly IGhostCollection _ghostCollection;
 
-        public CellIndex CellIndex { get; }
-
-        public class Handler : INotificationHandler<PowerPillEatenEvent>
+        public Handler(
+            IGame game,
+            IGameStats gameStats,
+            IGameSoundPlayer gameSoundPlayer,
+            IMediator mediator,
+            IGhostCollection ghostCollection)
         {
-            readonly IGame _game;
-            readonly IGameStats _gameStats;
-            readonly IGameSoundPlayer _gameSoundPlayer;
-            readonly IMediator _mediator;
-            readonly IGhostCollection _ghostCollection;
+            _game = game;
+            _gameStats = gameStats;
+            _gameSoundPlayer = gameSoundPlayer;
+            _mediator = mediator;
+            _ghostCollection = ghostCollection;
+        }
 
-            public Handler(
-                IGame game,
-                IGameStats gameStats,
-                IGameSoundPlayer gameSoundPlayer,
-                IMediator mediator,
-                IGhostCollection ghostCollection)
-            {
-                _game = game;
-                _gameStats = gameStats;
-                _gameSoundPlayer = gameSoundPlayer;
-                _mediator = mediator;
-                _ghostCollection = ghostCollection;
-            }
+        public async Task Handle(PowerPillEatenEvent notification, CancellationToken cancellationToken)
+        {
+            await _gameSoundPlayer.PowerPillEaten();
 
-            public async Task Handle(PowerPillEatenEvent notification, CancellationToken cancellationToken)
-            {
-                await _gameSoundPlayer.PowerPillEaten();
-
-                await _gameStats.PowerPillEaten(notification.CellIndex);
+            await _gameStats.PowerPillEaten(notification.CellIndex);
                 
-                GhostFrightSession? frightSession = _gameStats.CurrentPlayerStats.FrightSession;
+            GhostFrightSession? frightSession = _gameStats.CurrentPlayerStats.FrightSession;
 
-                if (frightSession == null)
-                {
-                    throw new InvalidOperationException("no fright session");
-                }
-
-                foreach (IGhost eachGhost in _ghostCollection.Ghosts)
-                {
-                    eachGhost.PowerPillEaten(frightSession);
-                }
-
-                await checkForNoMorePills();
+            if (frightSession == null)
+            {
+                throw new InvalidOperationException("no fright session");
             }
 
-            async Task checkForNoMorePills()
+            foreach (IGhost eachGhost in _ghostCollection.Ghosts)
             {
-                if (_gameStats.CurrentPlayerStats.LevelStats.PillsRemaining == 0)
-                {
-                    // ReSharper disable once HeapView.BoxingAllocation
-                    var act = await _mediator.Send(new GetActRequest("LevelFinishedAct"));
+                eachGhost.PowerPillEaten(frightSession);
+            }
 
-                    await act.Reset();
+            await checkForNoMorePills();
+        }
 
-                    _game.SetAct(act);
-                }
+        async Task checkForNoMorePills()
+        {
+            if (_gameStats.CurrentPlayerStats.LevelStats.PillsRemaining == 0)
+            {
+                // ReSharper disable once HeapView.BoxingAllocation
+                var act = await _mediator.Send(new GetActRequest("LevelFinishedAct"));
+
+                await act.Reset();
+
+                _game.SetAct(act);
             }
         }
     }

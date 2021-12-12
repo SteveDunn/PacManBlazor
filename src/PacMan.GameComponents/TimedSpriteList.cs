@@ -1,43 +1,38 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using PacMan.GameComponents.Canvas;
+﻿namespace PacMan.GameComponents;
 
-namespace PacMan.GameComponents
+public class TimedSpriteList
 {
-    public class TimedSpriteList
+    readonly List<TimedSprite> _sprites;
+
+    public TimedSpriteList()
     {
-        readonly List<TimedSprite> _sprites;
+        _sprites = new();
+    }
 
-        public TimedSpriteList()
+    public void Add(TimedSprite sprite) => _sprites.Add(sprite);
+
+    public void Update(CanvasTimingInformation timing)
+    {
+        foreach (var s in _sprites)
         {
-            _sprites = new();
+            s.Update(timing);
         }
 
-        public void Add(TimedSprite sprite) => _sprites.Add(sprite);
-
-        public void Update(CanvasTimingInformation timing)
+        for (int i = _sprites.Count - 1; i >= 0; i--)
         {
-            foreach (var s in _sprites)
+            if (_sprites[i].Expired)
             {
-                s.Update(timing);
-            }
-
-            for (int i = _sprites.Count - 1; i >= 0; i--)
-            {
-                if (_sprites[i].Expired)
-                {
-                    _sprites.RemoveAt(i);
-                    break;
-                }
+                _sprites.RemoveAt(i);
+                break;
             }
         }
+    }
 
-        public async ValueTask Draw(CanvasWrapper session)
+    public async ValueTask Draw(CanvasWrapper session)
+    {
+        foreach (var s in _sprites)
         {
-            foreach (var s in _sprites)
-            {
-                await s.Draw(session);
-            }
+            await s.Draw(session);
         }
     }
 }

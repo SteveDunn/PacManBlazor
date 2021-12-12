@@ -1,11 +1,10 @@
-﻿namespace PacMan.GameComponents
+﻿namespace PacMan.GameComponents;
+
+public enum Direction
 {
-    public enum Direction
-    {
-        Up,
-        Down,
-        Left,
-        Right,
-        None
-    }
+    Up,
+    Down,
+    Left,
+    Right,
+    None
 }

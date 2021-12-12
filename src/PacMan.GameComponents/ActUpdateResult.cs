@@ -1,8 +1,7 @@
-﻿namespace PacMan.GameComponents
+﻿namespace PacMan.GameComponents;
+
+public enum ActUpdateResult
 {
-    public enum ActUpdateResult
-    {
-        Running,
-        Finished
-    }
+    Running,
+    Finished
 }

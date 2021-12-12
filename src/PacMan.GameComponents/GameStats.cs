@@ -1,184 +1,177 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading.Tasks;
-using MediatR;
-using PacMan.GameComponents.Canvas;
+﻿namespace PacMan.GameComponents;
 
-namespace PacMan.GameComponents
+public class GameStats : IGameStats
 {
-    public class GameStats : IGameStats
+    readonly IMediator _mediator;
+    readonly IGameStorage _storage;
+    int _currentPlayerIndex;
+
+    List<PlayerStats> _playerStats;
+    int _ghostsThatAreEyes;
+
+    public GameStats(IMediator mediator, IGameStorage storage)
     {
-        readonly IMediator _mediator;
-        readonly IGameStorage _storage;
-        int _currentPlayerIndex;
+        _mediator = mediator;
+        _storage = storage;
 
-        List<PlayerStats> _playerStats;
-        int _ghostsThatAreEyes;
-
-        public GameStats(IMediator mediator, IGameStorage storage)
-        {
-            _mediator = mediator;
-            _storage = storage;
-
-            _playerStats = new();
+        _playerStats = new();
 
 #pragma warning disable 4014
-            Reset(0);
+        Reset(0);
 #pragma warning restore 4014
+    }
+
+    public async ValueTask Reset(int players)
+    {
+        _ghostsThatAreEyes = 0;
+
+        HighScore =
+            Math.Max(await _storage.GetHighScore(), HighScore);
+
+        HasPlayedIntroTune = false;
+
+        IsDemo = false;
+
+        // ReSharper disable once HeapView.ObjectAllocation.Evident
+        _playerStats = new();
+
+        for (int i = 0; i < players; i++)
+        {
+            _playerStats.Add(new(i, _mediator));
         }
 
-        public async ValueTask Reset(int players)
+        _currentPlayerIndex = -1;
+    }
+
+    public bool IsDemo { get; private set; }
+
+    public bool HasPlayedIntroTune
+    {
+        get;
+        set;
+    }
+
+    public bool AreAnyGhostsInEyeState => _ghostsThatAreEyes > 0;
+
+    [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
+    public PlayerStats ResetForDemo()
+    {
+        IsDemo = true;
+
+        _playerStats = new();
+
+        var playerStats = new DemoPlayerStats(_mediator);
+
+        _playerStats.Add(playerStats);
+
+        _currentPlayerIndex = -1;
+
+        ChoseNextPlayer();
+
+        return playerStats;
+    }
+
+    public void Update(CanvasTimingInformation timing)
+    {
+        CurrentPlayerStats.Update(timing);
+    }
+
+    public PlayerStats GetPlayerStats(int index) => _playerStats[index];
+
+    public ValueTask FruitEaten() => CurrentPlayerStats.FruitEaten();
+
+    public int HighScore { get; private set; } = 10_000;
+
+    public bool HasPlayerStats(int playerNumber) => _playerStats.Count > playerNumber;
+
+    public int AmountOfPlayers => _playerStats.Count;
+
+    public bool AnyonePlaying => _currentPlayerIndex != -1;
+
+    public bool IsGameOver => _playerStats.All(p => p.Lives == 0);
+
+    public PlayerStats CurrentPlayerStats
+    {
+        get
         {
-            _ghostsThatAreEyes = 0;
-
-            HighScore =
-                Math.Max(await _storage.GetHighScore(), HighScore);
-
-            HasPlayedIntroTune = false;
-
-            IsDemo = false;
-
-            // ReSharper disable once HeapView.ObjectAllocation.Evident
-            _playerStats = new();
-
-            for (int i = 0; i < players; i++)
+            if (_currentPlayerIndex < 0)
             {
-                _playerStats.Add(new(i, _mediator));
+                throw new InvalidOperationException("Nobody playing!");
             }
 
+            return _playerStats[_currentPlayerIndex];
+        }
+    }
+
+    public void ChoseNextPlayer()
+    {
+        // see if any players with a higher index have lives.
+        PlayerStats[] otherPlayersThatHaveLives =
+            _playerStats.Where(p => p.PlayerIndex > _currentPlayerIndex && p.Lives > 0)
+                .ToArray();
+
+        // if no other players have lives, then see if any players with a lower index have lives.
+        if (otherPlayersThatHaveLives.Length == 0)
+        {
+            otherPlayersThatHaveLives = _playerStats.Where(p => p.Lives > 0).ToArray();
+        }
+
+        // use the first one found, if any
+        if (otherPlayersThatHaveLives.Length > 0)
+        {
+            _currentPlayerIndex = otherPlayersThatHaveLives[0].PlayerIndex;
+        }
+        // otherwise signify that there is no 'next player'
+        else
+        {
             _currentPlayerIndex = -1;
         }
+    }
 
-        public bool IsDemo { get; private set; }
-
-        public bool HasPlayedIntroTune
+    void updateHighScore()
+    {
+        for (int i = 0; i < _playerStats.Count; i++)
         {
-            get;
-            set;
+            HighScore = Math.Max(HighScore, _playerStats[i].Score);
         }
+    }
 
-        public bool AreAnyGhostsInEyeState => _ghostsThatAreEyes > 0;
+    public async ValueTask PillEaten(CellIndex point)
+    {
+        await _playerStats[_currentPlayerIndex].PillEaten(point);
+        updateHighScore();
+    }
 
-        [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
-        public PlayerStats ResetForDemo()
-        {
-            IsDemo = true;
+    public async ValueTask PowerPillEaten(CellIndex point)
+    {
+        await _playerStats[_currentPlayerIndex].PowerPillEaten(point);
+        updateHighScore();
+    }
 
-            _playerStats = new();
+    public void PacManEaten()
+    {
+        _playerStats[_currentPlayerIndex].PacManEaten();
+        _ghostsThatAreEyes = 0;
+    }
 
-            var playerStats = new DemoPlayerStats(_mediator);
+    public async ValueTask<Points> GhostEaten()
+    {
+        ++_ghostsThatAreEyes;
 
-            _playerStats.Add(playerStats);
+        var points = await _playerStats[_currentPlayerIndex].GhostEaten();
+        updateHighScore();
+        return points;
+    }
 
-            _currentPlayerIndex = -1;
+    public void LevelFinished()
+    {
+        CurrentPlayerStats.NewLevel();
+    }
 
-            ChoseNextPlayer();
+    public ValueTask HandleGhostBackInsideHouse()
+    {
+        --_ghostsThatAreEyes;
 
-            return playerStats;
-        }
-
-        public void Update(CanvasTimingInformation timing)
-        {
-            CurrentPlayerStats?.Update(timing);
-        }
-
-        public PlayerStats GetPlayerStats(int index) => _playerStats[index];
-
-        public ValueTask FruitEaten() => CurrentPlayerStats.FruitEaten();
-
-        public int HighScore { get; private set; } = 10000;
-
-        public bool HasPlayerStats(int playerNumber) => _playerStats.Count > playerNumber;
-
-        public int AmountOfPlayers => _playerStats.Count;
-
-        public bool AnyonePlaying => _currentPlayerIndex != -1;
-
-        public bool IsGameOver => _playerStats.All(p => p.LivesRemaining == 0);
-
-        public PlayerStats CurrentPlayerStats
-        {
-            get
-            {
-                if (_currentPlayerIndex < 0)
-                {
-                    throw new InvalidOperationException("Nobody playing!");
-                }
-
-                return _playerStats[_currentPlayerIndex];
-            }
-        }
-
-        public void ChoseNextPlayer()
-        {
-            PlayerStats[] players =
-                _playerStats.Where(p => p.PlayerIndex > _currentPlayerIndex && p.LivesRemaining > 0)
-                    .ToArray();
-
-            if (players.Length == 0)
-            {
-                players = _playerStats.Where(p => p.LivesRemaining > 0).ToArray();
-            }
-
-            if (players.Length > 0)
-            {
-                _currentPlayerIndex = players[0].PlayerIndex;
-            }
-            else
-            {
-                _currentPlayerIndex = -1;
-            }
-        }
-
-        void updateHighScore()
-        {
-            HighScore = _playerStats.Count switch
-            {
-                1 => Math.Max(_playerStats[0].Score, HighScore),
-                2 => Math.Max(_playerStats[1].Score, HighScore),
-                _ => HighScore
-            };
-        }
-
-        public async ValueTask PillEaten(CellIndex point)
-        {
-            await _playerStats[_currentPlayerIndex].PillEaten(point);
-            updateHighScore();
-        }
-
-        public async ValueTask PowerPillEaten(CellIndex point)
-        {
-            await _playerStats[_currentPlayerIndex].PowerPillEaten(point);
-            updateHighScore();
-        }
-
-        public void PacManEaten()
-        {
-            _playerStats[_currentPlayerIndex].PacManEaten();
-            _ghostsThatAreEyes = 0;
-        }
-
-        public async ValueTask<int> GhostEaten()
-        {
-            ++_ghostsThatAreEyes;
-
-            var points = await _playerStats[_currentPlayerIndex].GhostEaten();
-            updateHighScore();
-            return points;
-        }
-
-        public void LevelFinished()
-        {
-            CurrentPlayerStats.NewLevel();
-        }
-
-        public ValueTask HandleGhostBackInsideHouse()
-        {
-            --_ghostsThatAreEyes;
-
-            return default;
-        }
+        return default;
     }
 }

@@ -1,10 +1,9 @@
-﻿namespace PacMan.GameComponents.Ghosts
+﻿namespace PacMan.GameComponents.Ghosts;
+
+public enum IntroCutScene
 {
-    public enum IntroCutScene
-    {
-        None,
-        BigPac,
-        GhostSnagged,
-        TornGhostAndWorm
-    }
+    None,
+    BigPac,
+    GhostSnagged,
+    TornGhostAndWorm
 }

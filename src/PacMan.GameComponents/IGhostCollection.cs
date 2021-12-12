@@ -1,17 +1,14 @@
-﻿using System.Threading.Tasks;
-using PacMan.GameComponents.Canvas;
-using PacMan.GameComponents.Ghosts;
+﻿using PacMan.GameComponents.Ghosts;
 
-namespace PacMan.GameComponents
+namespace PacMan.GameComponents;
+
+public interface IGhostCollection
 {
-    public interface IGhostCollection
-    {
-        IGhost GetGhost(GhostNickname nickName);
+    IGhost GetGhost(GhostNickname nickName);
 
-        IGhost[] Ghosts { get; }
+    IGhost[] Ghosts { get; }
 
-        ValueTask DrawAll(CanvasWrapper canvas);
+    ValueTask DrawAll(CanvasWrapper canvas);
 
-        ValueTask Update(CanvasTimingInformation timing);
-    }
+    ValueTask Update(CanvasTimingInformation timing);
 }

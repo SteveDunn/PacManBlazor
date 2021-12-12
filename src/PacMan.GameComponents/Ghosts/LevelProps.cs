@@ -1,20 +1,19 @@
-﻿namespace PacMan.GameComponents.Ghosts
-{
-    public record LevelProps(
-        IntroCutScene CutScene,
-        FruitItem Fruit1,
-        int FruitPoints,
-        float PacManSpeedPc,
-        float PacManDotsSpeedPc,
-        float GhostSpeedPc,
-        float GhostTunnelSpeedPc,
-        int Elroy1DotsLeft,
-        float Elroy1SpeedPc,
-        int Elroy2DotsLeft,
-        float Elroy2SpeedPc,
-        float FrightPacManSpeedPc,
-        float FrightPacManDotSpeedPc,
-        float FrightGhostSpeedPc,
-        int FrightGhostTime,
-        int FrightGhostFlashes);
-}
+﻿namespace PacMan.GameComponents.Ghosts;
+
+public record LevelProps(
+    IntroCutScene CutScene,
+    FruitItem Fruit1,
+    Points FruitPoints,
+    SpeedPercentage PacManSpeedPc,
+    SpeedPercentage PacManDotsSpeedPc,
+    SpeedPercentage GhostSpeedPc,
+    SpeedPercentage GhostTunnelSpeedPc,
+    int Elroy1DotsLeft,
+    SpeedPercentage Elroy1SpeedPc,
+    int Elroy2DotsLeft,
+    SpeedPercentage Elroy2SpeedPc,
+    SpeedPercentage FrightPacManSpeedPc,
+    SpeedPercentage FrightPacManDotSpeedPc,
+    SpeedPercentage FrightGhostSpeedPc,
+    GhostFrightDuration FrightGhostTime,
+    int FrightGhostFlashes);

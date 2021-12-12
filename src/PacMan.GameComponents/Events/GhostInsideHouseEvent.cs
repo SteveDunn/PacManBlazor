@@ -1,34 +1,30 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using MediatR;
-using PacMan.GameComponents.Ghosts;
+﻿using PacMan.GameComponents.Ghosts;
 
-namespace PacMan.GameComponents.Events
+namespace PacMan.GameComponents.Events;
+
+public readonly struct GhostInsideHouseEvent : INotification
 {
-    public readonly struct GhostInsideHouseEvent : INotification
-    {
-        public IGhost Ghost { get; }
+    public IGhost Ghost { get; }
 
-        public GhostInsideHouseEvent(IGhost ghost)
+    public GhostInsideHouseEvent(IGhost ghost)
+    {
+        Ghost = ghost;
+    }
+
+    public class Handler : INotificationHandler<GhostInsideHouseEvent>
+    {
+        readonly IGameStats _gameStats;
+
+        public Handler(IGameStats gameStats)
         {
-            Ghost = ghost;
+            _gameStats = gameStats;
         }
 
-        public class Handler : INotificationHandler<GhostInsideHouseEvent>
+        public Task Handle(GhostInsideHouseEvent notification, CancellationToken cancellationToken)
         {
-            readonly IGameStats _gameStats;
+            _gameStats.HandleGhostBackInsideHouse();
 
-            public Handler(IGameStats gameStats)
-            {
-                _gameStats = gameStats;
-            }
-
-            public Task Handle(GhostInsideHouseEvent notification, CancellationToken cancellationToken)
-            {
-                _gameStats.HandleGhostBackInsideHouse();
-
-                return Task.CompletedTask;
-            }
+            return Task.CompletedTask;
         }
     }
 }

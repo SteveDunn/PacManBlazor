@@ -1,7 +1,6 @@
-﻿namespace PacMan.GameComponents.Requests
+﻿namespace PacMan.GameComponents.Requests;
+
+// ReSharper disable once UnusedType.Global
+public class ClassThatLivesInGameComponentsActsAsAMarkerForThisAssemblyForReflection
 {
-    // ReSharper disable once UnusedType.Global
-    public class ClassThatLivesInGameComponentsActsAsAMarkerForThisAssemblyForReflection
-    {
-    }
 }

@@ -1,15 +1,13 @@
-﻿using MediatR;
-using PacMan.GameComponents.Ghosts;
+﻿using PacMan.GameComponents.Ghosts;
 
-namespace PacMan.GameComponents.Events
+namespace PacMan.GameComponents.Events;
+
+public readonly struct GhostLeftHouseEvent : INotification
 {
-    public readonly struct GhostLeftHouseEvent : INotification
-    {
-        public IGhost Ghost { get; }
+    public IGhost Ghost { get; }
 
-        public GhostLeftHouseEvent(IGhost ghost)
-        {
-            Ghost = ghost;
-        }
+    public GhostLeftHouseEvent(IGhost ghost)
+    {
+        Ghost = ghost;
     }
 }

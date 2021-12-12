@@ -3,18 +3,17 @@ using PacMan.GameComponents;
 using PacMan.GameComponents.Ghosts;
 using Xunit;
 
-namespace SmallTests
+namespace SmallTests;
+
+public class GlobalDotCounterTests
 {
-    public class GlobalDotCounterTests
+    [Fact]
+    public void Default()
     {
-        [Fact]
-        public void Default()
-        {
-            var sut = new GlobalDotCounter(0);
-            sut.CanGhostLeave(GhostNickname.Blinky).Should().BeFalse();
-            sut.CanGhostLeave(GhostNickname.Pinky).Should().BeFalse();
-            sut.CanGhostLeave(GhostNickname.Clyde).Should().BeFalse();
-            sut.CanGhostLeave(GhostNickname.Inky).Should().BeFalse();
-        }
+        var sut = new GlobalDotCounter(0);
+        sut.CanGhostLeave(GhostNickname.Blinky).Should().BeFalse();
+        sut.CanGhostLeave(GhostNickname.Pinky).Should().BeFalse();
+        sut.CanGhostLeave(GhostNickname.Clyde).Should().BeFalse();
+        sut.CanGhostLeave(GhostNickname.Inky).Should().BeFalse();
     }
 }

@@ -1,10 +1,9 @@
-﻿namespace PacMan.GameComponents.Ghosts
+﻿namespace PacMan.GameComponents.Ghosts;
+
+public enum GhostNickname
 {
-    public enum GhostNickname
-    {
-        Blinky,
-        Pinky,
-        Inky,
-        Clyde
-    }
+    Blinky,
+    Pinky,
+    Inky,
+    Clyde
 }

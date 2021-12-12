@@ -1,67 +1,64 @@
-﻿using System.Collections.Generic;
+﻿namespace PacMan.GameComponents;
 
-namespace PacMan.GameComponents
+public class DirectionChoices
 {
-    public class DirectionChoices
+    readonly Dictionary<Direction, bool> _lookup;
+
+    public DirectionChoices()
     {
-        readonly Dictionary<Direction, bool> _lookup;
+        _lookup = new();
+    }
 
-        public DirectionChoices()
+    public int Possibilities { get; private set; }
+
+    public void Set(Direction direction)
+    {
+        _lookup[direction] = true;
+
+        Possibilities = calcPossibilities();
+    }
+
+    public void Unset(Direction direction)
+    {
+        _lookup[direction] = false;
+
+        Possibilities = calcPossibilities();
+    }
+
+    public bool IsSet(Direction direction) => _lookup[direction];
+
+    public void ClearAll()
+    {
+        _lookup[Direction.Up] = false;
+        _lookup[Direction.Down] = false;
+        _lookup[Direction.Left] = false;
+        _lookup[Direction.Right] = false;
+    }
+
+    int calcPossibilities()
+    {
+        int count = 0;
+
+        if (_lookup[Direction.Up])
         {
-            _lookup = new();
+            ++count;
         }
 
-        public int Possibilities { get; private set; }
-
-        public void Set(Direction direction)
+        if (_lookup[Direction.Down])
         {
-            _lookup[direction] = true;
-
-            Possibilities = calcPossibilities();
+            ++count;
         }
 
-        public void Unset(Direction direction)
+        if (_lookup[Direction.Left])
         {
-            _lookup[direction] = false;
-
-            Possibilities = calcPossibilities();
+            ++count;
         }
 
-        public bool IsSet(Direction direction) => _lookup[direction];
-
-        public void ClearAll()
+        if (_lookup[Direction.Right])
         {
-            _lookup[Direction.Up] = false;
-            _lookup[Direction.Down] = false;
-            _lookup[Direction.Left] = false;
-            _lookup[Direction.Right] = false;
+            ++count;
         }
 
-        int calcPossibilities()
-        {
-            int count = 0;
-
-            if (_lookup[Direction.Up])
-            {
-                ++count;
-            }
-
-            if (_lookup[Direction.Down])
-            {
-                ++count;
-            }
-
-            if (_lookup[Direction.Left])
-            {
-                ++count;
-            }
-
-            if (_lookup[Direction.Right])
-            {
-                ++count;
-            }
-
-            return count;
-        }
+        return count;
     }
 }

@@ -1,50 +1,46 @@
-﻿using System.Threading.Tasks;
-using PacMan.GameComponents.Canvas;
+﻿namespace PacMan.GameComponents;
 
-namespace PacMan.GameComponents
+public interface IGameStats
 {
-    public interface IGameStats
-    {
-        ValueTask Reset(int players);
+    ValueTask Reset(int players);
 
-        bool IsDemo { get; }
+    bool IsDemo { get; }
 
-        bool HasPlayedIntroTune { get; set; }
+    bool HasPlayedIntroTune { get; set; }
 
-        int HighScore { get; }
+    int HighScore { get; }
 
-        int AmountOfPlayers { get; }
+    int AmountOfPlayers { get; }
 
-        bool AnyonePlaying { get; }
+    bool AnyonePlaying { get; }
 
-        bool IsGameOver { get; }
+    bool IsGameOver { get; }
 
-        PlayerStats CurrentPlayerStats { get; }
+    PlayerStats CurrentPlayerStats { get; }
 
-        bool AreAnyGhostsInEyeState { get; }
+    bool AreAnyGhostsInEyeState { get; }
 
-        void Update(CanvasTimingInformation timing);
+    void Update(CanvasTimingInformation timing);
 
-        PlayerStats GetPlayerStats(int index);
+    PlayerStats GetPlayerStats(int index);
 
-        ValueTask FruitEaten();
+    ValueTask FruitEaten();
 
-        bool HasPlayerStats(int playerNumber);
+    bool HasPlayerStats(int playerNumber);
 
-        void ChoseNextPlayer();
+    void ChoseNextPlayer();
 
-        ValueTask PillEaten(CellIndex point);
+    ValueTask PillEaten(CellIndex point);
 
-        ValueTask PowerPillEaten(CellIndex point);
+    ValueTask PowerPillEaten(CellIndex point);
 
-        void PacManEaten();
+    void PacManEaten();
 
-        ValueTask<int> GhostEaten();
+    ValueTask<Points> GhostEaten();
 
-        void LevelFinished();
+    void LevelFinished();
 
-        PlayerStats ResetForDemo();
+    PlayerStats ResetForDemo();
 
-        ValueTask HandleGhostBackInsideHouse();
-    }
+    ValueTask HandleGhostBackInsideHouse();
 }

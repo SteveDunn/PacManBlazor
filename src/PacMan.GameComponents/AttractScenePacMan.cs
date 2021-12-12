@@ -1,85 +1,79 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
-using System.Numerics;
-using System.Threading.Tasks;
-using PacMan.GameComponents.Canvas;
+﻿using System.Drawing;
 using PacMan.GameComponents.Ghosts;
 
-namespace PacMan.GameComponents
+namespace PacMan.GameComponents;
+
+public class AttractScenePacMan : ISprite
 {
-    public class AttractScenePacMan : ISprite
+    readonly Dictionary<Direction, FramePair> _velocitiesLookup;
+    readonly TwoFrameAnimation _animDirection;
+
+    Vector2 _frame1InSpriteMap;
+    Vector2 _frame2InSpriteMap;
+
+    [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
+    public AttractScenePacMan()
     {
-        readonly Dictionary<Direction, FramePair> _velocitiesLookup;
-        readonly TwoFrameAnimation _animDirection;
+        Visible = true;
+        _animDirection = new(65.Milliseconds());
 
-        Vector2 _frame1InSpriteMap;
-        Vector2 _frame2InSpriteMap;
+        Direction = Direction.Left;
 
-        [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
-        public AttractScenePacMan()
-        {
-            Visible = true;
-            _animDirection = new(65.Milliseconds());
+        const float left = 456;
+        const float left2 = 472;
 
-            Direction = GameComponents.Direction.Left;
+        _velocitiesLookup = new() {
+            [Direction.Up] = new(
+                new(left, 32), new(left2, 32)),
+            [Direction.Down] = new(
+                new(left, 48), new(left2, 48)),
+            [Direction.Left] = new(
+                new(left, 16), new(left2, 16)),
+            [Direction.Right] = new(
+                new(left, 0), new(left2, 0))
+        };
 
-            const float left = 456;
-            const float left2 = 472;
+        Position = Tile.ToCenterCanvas(new(13.5f, 23));
 
-            _velocitiesLookup = new() {
-                [GameComponents.Direction.Up] = new(
-                    new(left, 32), new(left2, 32)),
-                [GameComponents.Direction.Down] = new(
-                    new(left, 48), new(left2, 48)),
-                [GameComponents.Direction.Left] = new(
-                    new(left, 16), new(left2, 16)),
-                [GameComponents.Direction.Right] = new(
-                    new(left, 0), new(left2, 0))
-            };
+        setSpriteSheetPointers();
+    }
 
-            Position = Tile.ToCenterCanvas(new(13.5f, 23));
+    public Vector2 SpriteSheetPos { get; private set; }
 
-            setSpriteSheetPointers();
-        }
+    public bool Visible { get; set; }
 
-        public Vector2 SpriteSheetPos { get; private set; }
+    public Vector2 Position { get; set; }
 
-        public bool Visible { get; set; }
+    public ValueTask Draw(CanvasWrapper session)
+    {
+        return session.DrawSprite(this, Spritesheet.Reference);
+    }
 
-        public Vector2 Position { get; set; }
+    public Size Size { get; } = new(16, 16);
 
-        public ValueTask Draw(CanvasWrapper session)
-        {
-            return session.DrawSprite(this, Spritesheet.Reference);
-        }
+    public Vector2 Origin => Vector2s.Eight;
 
-        public Size Size { get; } = new(16, 16);
+    public Direction Direction { private get; set; }
 
-        public Vector2 Origin => Vector2s.Eight;
+    ValueTask updateAnimation(CanvasTimingInformation context)
+    {
+        _animDirection.Run(context);
 
-        public Direction Direction { private get; set; }
+        setSpriteSheetPointers();
 
-        ValueTask updateAnimation(CanvasTimingInformation context)
-        {
-            _animDirection.Run(context);
+        return default;
+    }
 
-            setSpriteSheetPointers();
+    void setSpriteSheetPointers()
+    {
+        _frame1InSpriteMap = _velocitiesLookup[Direction].First;
+        _frame2InSpriteMap = _velocitiesLookup[Direction].Second;
 
-            return default;
-        }
+        SpriteSheetPos = _animDirection.Flag ? _frame1InSpriteMap : _frame2InSpriteMap;
+    }
 
-        void setSpriteSheetPointers()
-        {
-            _frame1InSpriteMap = _velocitiesLookup[Direction].First;
-            _frame2InSpriteMap = _velocitiesLookup[Direction].Second;
-
-            SpriteSheetPos = _animDirection.Flag ? _frame1InSpriteMap : _frame2InSpriteMap;
-        }
-
-        public async ValueTask Update(CanvasTimingInformation timing)
-        {
-            await updateAnimation(timing);
-        }
+    public async ValueTask Update(CanvasTimingInformation timing)
+    {
+        await updateAnimation(timing);
     }
 }

@@ -30,19 +30,19 @@
     ElementReference SpritesheetReference { get; [UsedImplicitly] set; }
 
     // ReSharper disable once FieldCanBeMadeReadOnly.Local
-    BECanvasComponent _canvasReference = null;
+    BECanvasComponent? _canvasReference = null;
 
     // ReSharper disable once FieldCanBeMadeReadOnly.Local
-    BECanvasComponent _player1MazeReference = null;
+    BECanvasComponent? _player1MazeReference = null;
 
     // ReSharper disable once FieldCanBeMadeReadOnly.Local
-    BECanvasComponent _player2MazeReference = null;
+    BECanvasComponent? _player2MazeReference = null;
 
-    Canvas2DContext _outputCanvasContext;
+    Canvas2DContext? _outputCanvasContext;
 
     protected override async Task OnInitializedAsync()
     {
-        this.ExceptionNotificationService.OnException += handleExceptions;
+        ExceptionNotificationService.OnException += handleExceptions;
 
         await Game.Initialise(JsRuntime);
 
@@ -51,11 +51,16 @@
         await base.OnInitializedAsync();
     }
 
-    void handleExceptions(object _, string s) => Console.WriteLine(s);
+    void handleExceptions(object? o, string s) => Console.WriteLine(s);
 
 
-    async ValueTask<Canvas2DContext> createScaledCanvasContext(BECanvasComponent canvas, bool scale)
+    async ValueTask<Canvas2DContext> createScaledCanvasContext(BECanvasComponent? canvas, bool scale)
     {
+        if (canvas == null)
+        {
+            throw new InvalidOperationException("Canvas was not set");
+        }
+
         var context = await canvas.CreateCanvas2DAsync();
 
         await context.SetTextBaselineAsync(TextBaseline.Top);

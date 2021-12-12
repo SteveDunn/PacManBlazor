@@ -1,25 +1,13 @@
-﻿// ReSharper disable RedundantUsingDirective
+﻿namespace PacMan.GameComponents.GameActs;
 
-using System.Threading.Tasks;
-using PacMan.GameComponents.Canvas;
-
-namespace PacMan.GameComponents.GameActs
+public class NullAct : IAct
 {
-    // ReSharper disable once FunctionRecursiveOnAllPaths
-    // ReSharper disable once UnusedType.Global
-    public class NullAct : IAct
-    {
+    public string Name => "NullAct";
 
-        public string Name => "NullAct";
+    public ValueTask Reset() => default;
 
-        public ValueTask Reset()
-        {
-            return default;
-        }
+    public ValueTask<ActUpdateResult> Update(CanvasTimingInformation timing) =>
+        new(ActUpdateResult.Running);
 
-        public ValueTask<ActUpdateResult> Update(CanvasTimingInformation timing) =>
-            new(ActUpdateResult.Running);
-
-        public ValueTask Draw(CanvasWrapper session) => default;
-    }
+    public ValueTask Draw(CanvasWrapper session) => default;
 }

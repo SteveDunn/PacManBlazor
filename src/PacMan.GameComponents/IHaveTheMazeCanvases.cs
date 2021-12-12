@@ -1,9 +1,6 @@
-﻿using PacMan.GameComponents.Canvas;
+﻿namespace PacMan.GameComponents;
 
-namespace PacMan.GameComponents
+public interface IHaveTheMazeCanvases
 {
-    public interface IHaveTheMazeCanvases
-    {
-        MazeCanvas GetForPlayer(int index);
-    }
+    MazeCanvas GetForPlayer(int index);
 }
