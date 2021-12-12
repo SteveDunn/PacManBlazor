@@ -15,5 +15,5 @@ public record LevelProps(
     SpeedPercentage FrightPacManSpeedPc,
     SpeedPercentage FrightPacManDotSpeedPc,
     SpeedPercentage FrightGhostSpeedPc,
-    TimeSpan FrightGhostTime,
+    GhostFrightDuration FrightGhostTime,
     int FrightGhostFlashes);

@@ -5,6 +5,9 @@ namespace PacMan.GameComponents;
 public class PlayerStats
 {
     readonly IMediator _mediator;
+
+    Score _score = Score.Zero;
+    bool _alreadyDecreasedInitialLives;
     GhostHouseDoor _ghostHouseDoor;
     LevelStats _levelStats;
     int _levelNumber;
@@ -22,7 +25,7 @@ public class PlayerStats
         Score = Score.Zero;
 
         // cheat
-        LivesRemaining = Constants.PacManLives;
+        Lives = Constants.PacManLives;
         _levelNumber = -1;
 
         _extraLives = new() { 10000 };
@@ -33,8 +36,6 @@ public class PlayerStats
 
         _ghostMovementConductor = new(props);
     }
-
-    Score _score = Score.Zero;
 
     public ref Score Score => ref _score;
 
@@ -71,9 +72,15 @@ public class PlayerStats
 
     public LevelStats LevelStats => _levelStats;
 
-    public int LivesRemaining { get; protected set; }
+    /// <summary>
+    /// We initially start with 4 lives but take 1 off when
+    /// Pac-Man is waiting at the very start of the game.
+    /// You can see this by 3 Pac-Man lives in the bottom left,
+    /// which then go to 2 when Pac-Man is displayed.
+    /// </summary>
+    public int Lives { get; protected set; }
 
-    protected async virtual ValueTask IncreaseScoreBy(Points amount)
+    protected virtual async ValueTask IncreaseScoreBy(Points amount)
     {
         Score.IncreaseBy(amount);
 
@@ -86,7 +93,7 @@ public class PlayerStats
         {
             await _mediator.Publish(new ExtraLifeEvent());
 
-            LivesRemaining += 1;
+            Lives += 1;
 
             _extraLives.RemoveAt(0);
         }
@@ -129,7 +136,21 @@ public class PlayerStats
 
     public void DecreaseLives()
     {
-        LivesRemaining -= 1;
+        Lives -= 1;
+    }
+
+    // If the current player has never played, they start of with 3 'remaining' lives
+    // and one of them is removed, so they have the current life and 2 remaining.
+    // We don't want to remove lives on every level though.
+    public void TryDecreaseInitialLives()
+    {
+        if (_alreadyDecreasedInitialLives)
+        {
+            return;
+        }
+
+        _alreadyDecreasedInitialLives = true;
+        Lives -= 1;
     }
 
     public async ValueTask<Points> GhostEaten()

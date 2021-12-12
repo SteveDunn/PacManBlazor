@@ -37,8 +37,10 @@ public readonly struct PacManDeadEvent : INotification
             }
 
             PlayerStats currentPlayerStats = _gameStats.CurrentPlayerStats;
+            
+            currentPlayerStats.DecreaseLives();
 
-            if (currentPlayerStats.LivesRemaining == 0 || _gameStats.IsGameOver)
+            if (currentPlayerStats.Lives == 0 || _gameStats.IsGameOver)
             {
                 await _mediator.Publish(new PlayerHasNoLivesEvent(), cancellationToken);
 

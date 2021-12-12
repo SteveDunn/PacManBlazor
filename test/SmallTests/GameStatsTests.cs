@@ -53,36 +53,35 @@ namespace SmallTests
             sut.ChoseNextPlayer();
             sut.AnyonePlaying.Should().BeTrue();
             
-
             var p1 = sut.CurrentPlayerStats;
             p1.PlayerIndex.Should().Be(0);
+
+            // p1 starting
+            p1.TryDecreaseInitialLives();
             
             // p1 eaten
             p1.DecreaseLives();
+
+            // p2 starting
             sut.ChoseNextPlayer();
-            
             var p2 = sut.CurrentPlayerStats;
-            
-            // p2 eaten
-            p2.DecreaseLives();
-            sut.ChoseNextPlayer();
-
-            // we should be back to player 1
-            sut.CurrentPlayerStats.Should().Be(p1);
-
-            // p1 eaten
-            p1.DecreaseLives();
-            sut.ChoseNextPlayer();
-            
-            // we should be back to player 2
-            sut.CurrentPlayerStats.Should().Be(p2);
+            p2.TryDecreaseInitialLives();
 
             // p2 eaten
             p2.DecreaseLives();
-            sut.ChoseNextPlayer();
 
             // p1 eaten
+            sut.ChoseNextPlayer();
             p1.DecreaseLives();
+
+            // p2 eaten
+            sut.ChoseNextPlayer();
+            p2.DecreaseLives();
+
+            // p1 eaten
+            sut.ChoseNextPlayer();
+            p1.DecreaseLives();
+
             sut.ChoseNextPlayer();
             
             sut.CurrentPlayerStats.Should().Be(p2);
@@ -109,20 +108,29 @@ namespace SmallTests
             
             var p1 = sut.CurrentPlayerStats;
             p1.PlayerIndex.Should().Be(0);
-            
+
+            // p1 starting - we initially take off 1 life when
+            // Pac-Man is waiting at the very start of the game.
+            // You can see this by 3 Pac-Man lives in the bottom left,
+            // which then go to 2 when Pac-Man is displayed.
+            p1.TryDecreaseInitialLives();
+
             // p1 eaten
             p1.DecreaseLives();
             sut.ChoseNextPlayer();
             
             var p2 = sut.CurrentPlayerStats;
-            
+
+            // p2 starting
+            p2.TryDecreaseInitialLives();
+
             // p2 eaten
             p2.DecreaseLives();
             sut.ChoseNextPlayer();
 
             // p1 eaten
             p1.DecreaseLives();
-            p1.LivesRemaining.Should().Be(1);
+            p1.Lives.Should().Be(1);
             sut.ChoseNextPlayer();
             
             // p2 eaten
@@ -138,7 +146,7 @@ namespace SmallTests
 
             p1.Score.Value.Should().Be(10_000);
 
-            p1.LivesRemaining.Should().Be(2);
+            p1.Lives.Should().Be(2);
             
             // p1 eaten
             p1.DecreaseLives();
@@ -191,20 +199,6 @@ namespace SmallTests
             sut.ChoseNextPlayer();
             sut.CurrentPlayerStats.PlayerIndex.Should().Be(0);
             sut.HasPlayerStats(0).Should().BeTrue();
-        }
-    }
-
-    public class StubbedGameStorage : IGameStorage
-    {
-        int _highScore = 10_000;
-
-        public ValueTask<int> GetHighScore() => ValueTask.FromResult(_highScore);
-
-        public ValueTask SetHighScore(int highScore)
-        {
-            _highScore = highScore;
-            
-            return ValueTask.CompletedTask;
         }
     }
 }

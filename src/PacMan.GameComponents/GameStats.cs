@@ -88,7 +88,7 @@ public class GameStats : IGameStats
 
     public bool AnyonePlaying => _currentPlayerIndex != -1;
 
-    public bool IsGameOver => _playerStats.All(p => p.LivesRemaining == 0);
+    public bool IsGameOver => _playerStats.All(p => p.Lives == 0);
 
     public PlayerStats CurrentPlayerStats
     {
@@ -107,13 +107,13 @@ public class GameStats : IGameStats
     {
         // see if any players with a higher index have lives.
         PlayerStats[] otherPlayersThatHaveLives =
-            _playerStats.Where(p => p.PlayerIndex > _currentPlayerIndex && p.LivesRemaining > 0)
+            _playerStats.Where(p => p.PlayerIndex > _currentPlayerIndex && p.Lives > 0)
                 .ToArray();
 
         // if no other players have lives, then see if any players with a lower index have lives.
         if (otherPlayersThatHaveLives.Length == 0)
         {
-            otherPlayersThatHaveLives = _playerStats.Where(p => p.LivesRemaining > 0).ToArray();
+            otherPlayersThatHaveLives = _playerStats.Where(p => p.Lives > 0).ToArray();
         }
 
         // use the first one found, if any

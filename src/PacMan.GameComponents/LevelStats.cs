@@ -33,7 +33,7 @@ public class LevelStats
             FrightPacManSpeedPc:  SpeedPercentage.From(.90f),
             FrightPacManDotSpeedPc:  SpeedPercentage.From(.79f),
             FrightGhostSpeedPc:  SpeedPercentage.From(.50f),
-            FrightGhostTime: 6.Seconds(),
+            FrightGhostTime: GhostFrightDuration.SixSeconds,
             FrightGhostFlashes: 5),
         new(
             CutScene: IntroCutScene.None,
@@ -50,7 +50,7 @@ public class LevelStats
             FrightPacManSpeedPc:  SpeedPercentage.From(.95f),
             FrightPacManDotSpeedPc:  SpeedPercentage.From(.83f),
             FrightGhostSpeedPc:  SpeedPercentage.From(.55f),
-            FrightGhostTime: 5.Seconds(),
+            FrightGhostTime: GhostFrightDuration.FiveSeconds,
             FrightGhostFlashes: 5),
         new(
             CutScene: IntroCutScene.BigPac,
@@ -67,7 +67,7 @@ public class LevelStats
             FrightPacManSpeedPc:  SpeedPercentage.From(.95f),
             FrightPacManDotSpeedPc:  SpeedPercentage.From(.83f),
             FrightGhostSpeedPc:  SpeedPercentage.From(.55f),
-            FrightGhostTime: 4.Seconds(),
+            FrightGhostTime: GhostFrightDuration.FourSeconds,
             FrightGhostFlashes: 5),
         new(
             CutScene: IntroCutScene.None,
@@ -84,7 +84,7 @@ public class LevelStats
             FrightPacManSpeedPc:  SpeedPercentage.From(.95f),
             FrightPacManDotSpeedPc:  SpeedPercentage.From(.83f),
             FrightGhostSpeedPc:  SpeedPercentage.From(.55f),
-            FrightGhostTime: 3.Seconds(),
+            FrightGhostTime: GhostFrightDuration.ThreeSeconds,
             FrightGhostFlashes: 5),
         new(
             CutScene: IntroCutScene.None,
@@ -101,7 +101,7 @@ public class LevelStats
             FrightPacManSpeedPc:  SpeedPercentage.From(.100f),
             FrightPacManDotSpeedPc:  SpeedPercentage.From(.87f),
             FrightGhostSpeedPc:  SpeedPercentage.From(.60f),
-            FrightGhostTime: 2.Seconds(),
+            FrightGhostTime: GhostFrightDuration.TwoSeconds,
             FrightGhostFlashes: 5),
         new(
             CutScene: IntroCutScene.GhostSnagged,
@@ -118,7 +118,7 @@ public class LevelStats
             FrightPacManSpeedPc:  SpeedPercentage.From(.100f),
             FrightPacManDotSpeedPc:  SpeedPercentage.From(.87f),
             FrightGhostSpeedPc:  SpeedPercentage.From(.60f),
-            FrightGhostTime: 2.Seconds(),
+            FrightGhostTime: GhostFrightDuration.TwoSeconds,
             FrightGhostFlashes: 5),
         new(
             CutScene: IntroCutScene.None,
@@ -135,7 +135,7 @@ public class LevelStats
             FrightPacManSpeedPc:  SpeedPercentage.From(.100f),
             FrightPacManDotSpeedPc:  SpeedPercentage.From(.87f),
             FrightGhostSpeedPc:  SpeedPercentage.From(.60f),
-            FrightGhostTime: 2.Seconds(),
+            FrightGhostTime: GhostFrightDuration.TwoSeconds,
             FrightGhostFlashes: 5),
         new(
             CutScene: IntroCutScene.None,
@@ -152,7 +152,7 @@ public class LevelStats
             FrightPacManSpeedPc:  SpeedPercentage.From(.100f),
             FrightPacManDotSpeedPc:  SpeedPercentage.From(.87f),
             FrightGhostSpeedPc:  SpeedPercentage.From(.60f),
-            FrightGhostTime: 1.Seconds(),
+            FrightGhostTime: GhostFrightDuration.OneSecond,
             FrightGhostFlashes: 5),
         new(
             CutScene: IntroCutScene.None,
@@ -169,7 +169,7 @@ public class LevelStats
             FrightPacManSpeedPc:  SpeedPercentage.From(.100f),
             FrightPacManDotSpeedPc:  SpeedPercentage.From(.87f),
             FrightGhostSpeedPc:  SpeedPercentage.From(.60f),
-            FrightGhostTime: 5.Seconds(),
+            FrightGhostTime: GhostFrightDuration.FiveSeconds,
             FrightGhostFlashes: 3),
         new(
             CutScene: IntroCutScene.TornGhostAndWorm,
@@ -186,7 +186,7 @@ public class LevelStats
             FrightPacManSpeedPc:  SpeedPercentage.From(.100f),
             FrightPacManDotSpeedPc:  SpeedPercentage.From(.87f),
             FrightGhostSpeedPc:  SpeedPercentage.From(.60f),
-            FrightGhostTime: 2.Seconds(),
+            FrightGhostTime: GhostFrightDuration.TwoSeconds,
             FrightGhostFlashes: 5),
         new(
             CutScene: IntroCutScene.None,
@@ -203,7 +203,7 @@ public class LevelStats
             FrightPacManSpeedPc:  SpeedPercentage.From(.100f),
             FrightPacManDotSpeedPc:  SpeedPercentage.From(.87f),
             FrightGhostSpeedPc:  SpeedPercentage.From(.60f),
-            FrightGhostTime: 1.Seconds(),
+            FrightGhostTime: GhostFrightDuration.OneSecond,
             FrightGhostFlashes: 5),
         new(
             CutScene: IntroCutScene.None,
@@ -220,7 +220,7 @@ public class LevelStats
             FrightPacManSpeedPc:  SpeedPercentage.From(.100f),
             FrightPacManDotSpeedPc:  SpeedPercentage.From(.87f),
             FrightGhostSpeedPc:  SpeedPercentage.From(.60f),
-            FrightGhostTime: 1.Seconds(),
+            FrightGhostTime: GhostFrightDuration.OneSecond,
             FrightGhostFlashes: 3),
         new(
             CutScene: IntroCutScene.None,
@@ -237,7 +237,7 @@ public class LevelStats
             FrightPacManSpeedPc:  SpeedPercentage.From(.100f),
             FrightPacManDotSpeedPc:  SpeedPercentage.From(.87f),
             FrightGhostSpeedPc:  SpeedPercentage.From(.60f),
-            FrightGhostTime: 1.Seconds(),
+            FrightGhostTime:  GhostFrightDuration.OneSecond,
             FrightGhostFlashes: 3),
         new(
             CutScene: IntroCutScene.TornGhostAndWorm,
@@ -254,7 +254,7 @@ public class LevelStats
             FrightPacManSpeedPc:  SpeedPercentage.From(.100f),
             FrightPacManDotSpeedPc:  SpeedPercentage.From(.87f),
             FrightGhostSpeedPc:  SpeedPercentage.From(.60f),
-            FrightGhostTime: 3.Seconds(),
+            FrightGhostTime:  GhostFrightDuration.ThreeSeconds,
             FrightGhostFlashes: 5),
         new(
             CutScene: IntroCutScene.None,
@@ -271,7 +271,7 @@ public class LevelStats
             FrightPacManSpeedPc:  SpeedPercentage.From(.100f),
             FrightPacManDotSpeedPc:  SpeedPercentage.From(.87f),
             FrightGhostSpeedPc:  SpeedPercentage.From(.60f),
-            FrightGhostTime: 1.Seconds(),
+            FrightGhostTime:  GhostFrightDuration.OneSecond,
             FrightGhostFlashes: 3),
         new(
             CutScene: IntroCutScene.None,
@@ -288,7 +288,7 @@ public class LevelStats
             FrightPacManSpeedPc:  SpeedPercentage.From(.100f),
             FrightPacManDotSpeedPc:  SpeedPercentage.From(.87f),
             FrightGhostSpeedPc:  SpeedPercentage.From(.60f),
-            FrightGhostTime: 1.Seconds(),
+            FrightGhostTime:  GhostFrightDuration.OneSecond,
             FrightGhostFlashes: 3),
         new(
             CutScene: IntroCutScene.None,
@@ -305,7 +305,7 @@ public class LevelStats
             FrightPacManSpeedPc:  SpeedPercentage.From(.0f),
             FrightPacManDotSpeedPc:  SpeedPercentage.From(.0f),
             FrightGhostSpeedPc:  SpeedPercentage.From(.0f),
-            FrightGhostTime: 0.Seconds(),
+            FrightGhostTime:  GhostFrightDuration.ZeroSeconds,
             FrightGhostFlashes: 0),
         new(
             CutScene: IntroCutScene.TornGhostAndWorm,
@@ -322,7 +322,7 @@ public class LevelStats
             FrightPacManSpeedPc:  SpeedPercentage.From(.100f),
             FrightPacManDotSpeedPc:  SpeedPercentage.From(.87f),
             FrightGhostSpeedPc:  SpeedPercentage.From(.60f),
-            FrightGhostTime: 1.Seconds(),
+            FrightGhostTime:  GhostFrightDuration.OneSecond,
             FrightGhostFlashes: 3),
         new(
             CutScene: IntroCutScene.None,
@@ -339,7 +339,7 @@ public class LevelStats
             FrightPacManSpeedPc:  SpeedPercentage.From(.0f),
             FrightPacManDotSpeedPc:  SpeedPercentage.From(.0f),
             FrightGhostSpeedPc:  SpeedPercentage.From(.0f),
-            FrightGhostTime: 0.Seconds(),
+            FrightGhostTime:  GhostFrightDuration.ZeroSeconds,
             FrightGhostFlashes: 0),
         new(
             CutScene: IntroCutScene.None,
@@ -356,13 +356,13 @@ public class LevelStats
             FrightPacManSpeedPc:  SpeedPercentage.From(.0f),
             FrightPacManDotSpeedPc:  SpeedPercentage.From(.0f),
             FrightGhostSpeedPc:  SpeedPercentage.From(.0f),
-            FrightGhostTime: 0.Seconds(),
+            FrightGhostTime:  GhostFrightDuration.ZeroSeconds,
             FrightGhostFlashes: 0),
         new(
             CutScene: IntroCutScene.None,
             Fruit1: FruitItem.Key,
             FruitPoints: Points.From(5000),
-            PacManSpeedPc:  SpeedPercentage.From(.90f),
+            PacManSpeedPc:  SpeedPercentage.From(.9f),
             PacManDotsSpeedPc:  SpeedPercentage.From(.79f),
             GhostSpeedPc:  SpeedPercentage.From(.95f),
             GhostTunnelSpeedPc:  SpeedPercentage.From(.50f),
@@ -373,7 +373,7 @@ public class LevelStats
             FrightPacManSpeedPc:  SpeedPercentage.From(.0f),
             FrightPacManDotSpeedPc:  SpeedPercentage.From(.0f),
             FrightGhostSpeedPc:  SpeedPercentage.From(.0f),
-            FrightGhostTime: 0.Seconds(),
+            FrightGhostTime:  GhostFrightDuration.ZeroSeconds,
             FrightGhostFlashes: 0)
     };
 

@@ -16,7 +16,7 @@
 		<PackageReference Include="MediatR" Version="9.0.0" />
 		<PackageReference Include="Microsoft.JSInterop" Version="6.0.0" />
 		<PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
-		<PackageReference Include="Vogen" Version="1.0.8-alpha.0.1" />
+		<PackageReference Include="Vogen" Version="1.0.9" />
 	</ItemGroup>
 
 	<ItemGroup>

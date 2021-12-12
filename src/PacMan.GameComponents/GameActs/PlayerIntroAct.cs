@@ -58,7 +58,10 @@ public class PlayerIntroAct : IAct
         {
             _progress += 1;
 
-            _gameStats.CurrentPlayerStats.DecreaseLives();
+            // If the current player has never played, they start of with 3 'remaining' lives
+            // and one of them is removed, so they have the current life and 2 remaining.
+            // We don't want to remove lives on every level though.
+            _gameStats.CurrentPlayerStats.TryDecreaseInitialLives();
 
             _currentTimer = new(2.Seconds(), async () =>
             {

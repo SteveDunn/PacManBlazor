@@ -20,7 +20,7 @@ public class GhostFrightSession
     public GhostFrightSession(LevelProps levelProps)
     {
         _amountOfGhostsEaten = 0;
-        _timeLeft = levelProps.FrightGhostTime;
+        _timeLeft = levelProps.FrightGhostTime.Value;
 
         var flashesLeft = levelProps.FrightGhostFlashes;
 
@@ -38,9 +38,6 @@ public class GhostFrightSession
         _timeLeft -= elapsed;
         _timeLeftToStartFlashing -= elapsed;
     }
-
-    // todo:
-    // public int GhostsEaten => _amountOfGhostsEaten;
 
     public bool IsWhite => _timeLeftToStartFlashing <= TimeSpan.Zero && _tickTock;
 

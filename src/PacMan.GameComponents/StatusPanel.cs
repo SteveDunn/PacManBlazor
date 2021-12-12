@@ -53,7 +53,7 @@ public class StatusPanel : IStatusPanel
     {
         int x = 0;
 
-        for (var i = 0; i < _gameStats.CurrentPlayerStats.LivesRemaining; i++, x += 16)
+        for (var i = 0; i < _gameStats.CurrentPlayerStats.Lives-1; i++, x += 16)
         {
             await ds.DrawImage(
                 Spritesheet.Reference,
