@@ -1,3 +1,11 @@
+![Build](https://github.com/stevedunn/pacmanblazor/actions/workflows/build-and-test.yml/badge.svg) [![GitHub release](https://img.shields.io/github/release/stevedunn/pacmanblazor.svg)](https://GitHub.com/stevedunn/pacmanblazor/releases/) [![GitHub license](https://img.shields.io/github/license/stevedunn/pacmanblazor.svg)](https://github.com/SteveDunn/pacmanblazor/blob/main/LICENSE) 
+[![GitHub issues](https://img.shields.io/github/issues/Naereen/StrapDown.js.svg)](https://GitHub.com/stevedunn/pacmanblazor/issues/) [![GitHub issues-closed](https://img.shields.io/github/issues-closed/Naereen/StrapDown.js.svg)](https://GitHub.com/stevedunn/pacmanblazor/issues?q=is%3Aissue+is%3Aclosed)
+
+<p align="center">
+  <img src="./assets/logo.png">
+</p>
+
+
 # Welcome to PACMAN written in C# and running on Blazor WebAssembly.
 
 PLAY IT NOW!  https://pacmanblazor2.azureedge.net/
