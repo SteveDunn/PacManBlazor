@@ -41,6 +41,7 @@ public class AttractAct : IAct
     bool _chaseSubActReady;
 
     bool _finished;
+    readonly string _version;
 
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
     public AttractAct(
@@ -49,8 +50,18 @@ public class AttractAct : IAct
         IHumanInterfaceParser input,
         IGameSoundPlayer gameSoundPlayer)
     {
+        _version = GetType().Assembly.GetName().Version?.ToString() ?? "??";
+
         MarqueeText[] texts =
         {
+            new() {
+                Text = $"v{_version}",
+                YPosition = 195,
+                TimeIdle = 1.Seconds(),
+                TimeIn = 1.Seconds(),
+                TimeStationary = 1.Seconds(),
+                TimeOut = .5f.Seconds()
+            },
             new() {
                 Text = "tap/space - 1 player",
                 YPosition = 195,
