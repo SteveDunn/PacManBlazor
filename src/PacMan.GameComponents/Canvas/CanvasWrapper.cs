@@ -7,7 +7,6 @@ namespace PacMan.GameComponents.Canvas;
 public class CanvasWrapper
 {
     public static readonly CanvasTextFormat _10point = new("Assets/Joystix.ttf#Joystix", 10);
-    public static readonly CanvasTextFormat _8point = new("Assets/Joystix.ttf#Joystix", 8);
 
     readonly Canvas2DContext _canvas2DContext;
     readonly Point _origin = new(0, 0);
