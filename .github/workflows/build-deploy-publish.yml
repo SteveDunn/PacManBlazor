@@ -1,8 +1,8 @@
-name: Build and deploy .NET Core app to Windows WebApp pacmanblazor
+name: Build, deploy, and publish
 on:
   push:
-    branches:
-    - master
+    tags:
+    - '**'
 env:
   AZURE_WEBAPP_NAME: pacmanblazor
   AZURE_WEBAPP_PACKAGE_PATH: src\PacMan/publish
