@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Reflection;
 using PacMan.GameComponents.Ghosts;
 
 namespace PacMan.GameComponents.GameActs;
@@ -50,7 +51,10 @@ public class AttractAct : IAct
         IHumanInterfaceParser input,
         IGameSoundPlayer gameSoundPlayer)
     {
-        _version = GetType().Assembly.GetName().Version?.ToString() ?? "??";
+        _version = Assembly
+            .GetEntryAssembly()
+            ?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+            ?.InformationalVersion ?? "??";
 
         MarqueeText[] texts =
         {
