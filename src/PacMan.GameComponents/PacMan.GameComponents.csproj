@@ -13,14 +13,14 @@
 	<ItemGroup>
 		<PackageReference Include="Blazor.Extensions.Canvas" Version="1.1.1" />
 		<PackageReference Include="jetbrains.annotations" Version="2021.3.0" />
-		<PackageReference Include="MediatR" Version="9.0.0" />
-		<PackageReference Include="Microsoft.JSInterop" Version="6.0.0" />
+		<PackageReference Include="MediatR" Version="10.0.0" />
+		<PackageReference Include="Microsoft.JSInterop" Version="6.0.1" />
 		<PackageReference Include="MinVer" Version="2.5.0">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
-		<PackageReference Include="Vogen" Version="1.0.12" />
+		<PackageReference Include="Vogen" Version="1.0.15" />
 	</ItemGroup>
 
 	<ItemGroup>
