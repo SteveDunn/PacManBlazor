@@ -6,3 +6,4 @@ bin
 /PacManWa/Properties/PublishProfiles/pacmanblazor - Web Deploy.pubxml
 _NCrunch_PacMan
 /msbuild.binlog
+/**/Generated
