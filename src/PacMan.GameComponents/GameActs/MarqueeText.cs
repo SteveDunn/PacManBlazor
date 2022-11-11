@@ -2,15 +2,15 @@
 
 public struct MarqueeText
 {
-    public int YPosition { get; set; }
+    public required int YPosition { get; init; }
 
-    public TimeSpan TimeIdle { get; set; }
+    public required TimeSpan TimeIdle { get; init; }
 
-    public TimeSpan TimeIn { get; set; }
+    public required TimeSpan TimeIn { get; init; }
 
-    public TimeSpan TimeStationary { get; set; }
+    public required TimeSpan TimeStationary { get; init; }
 
-    public TimeSpan TimeOut { get; set; }
+    public required TimeSpan TimeOut { get; init; }
 
-    public string Text { get; set; }
+    public required string Text { get; init; }
 }

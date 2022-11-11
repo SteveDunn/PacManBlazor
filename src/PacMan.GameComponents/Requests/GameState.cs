@@ -2,5 +2,5 @@
 
 public struct GameState
 {
-    public bool IsClydeInHouse { get; set; }
+    public bool IsClydeInHouse { get; init; }
 }
