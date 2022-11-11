@@ -10,7 +10,7 @@ public class GlobalDotCounterTests
     [Fact]
     public void Default()
     {
-        var sut = new GlobalDotCounter(0);
+        var sut = new GlobalDotCounter();
         sut.CanGhostLeave(GhostNickname.Blinky).Should().BeFalse();
         sut.CanGhostLeave(GhostNickname.Pinky).Should().BeFalse();
         sut.CanGhostLeave(GhostNickname.Clyde).Should().BeFalse();
