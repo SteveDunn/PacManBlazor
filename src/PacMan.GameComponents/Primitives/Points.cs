@@ -2,7 +2,7 @@
 
 namespace PacMan.GameComponents.Primitives;
 
-[ValueObject(typeof(int))]
+[ValueObject]
 public readonly partial struct Points
 {
     private static Validation Validate(int value) =>

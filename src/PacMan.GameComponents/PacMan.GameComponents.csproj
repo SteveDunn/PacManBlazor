@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFramework>net7.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
@@ -12,15 +12,15 @@
 
 	<ItemGroup>
 		<PackageReference Include="Blazor.Extensions.Canvas" Version="1.1.1" />
-		<PackageReference Include="jetbrains.annotations" Version="2022.1.0" />
-		<PackageReference Include="MediatR" Version="10.0.1" />
-		<PackageReference Include="Microsoft.JSInterop" Version="6.0.7" />
-		<PackageReference Include="MinVer" Version="4.1.0">
+		<PackageReference Include="jetbrains.annotations" Version="2022.3.1" />
+		<PackageReference Include="MediatR" Version="11.1.0" />
+		<PackageReference Include="Microsoft.JSInterop" Version="7.0.0" />
+		<PackageReference Include="MinVer" Version="4.2.0">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
-		<PackageReference Include="Vogen" Version="1.0.24" />
+		<PackageReference Include="Vogen" Version="3.0.6" />
 	</ItemGroup>
 
 	<ItemGroup>

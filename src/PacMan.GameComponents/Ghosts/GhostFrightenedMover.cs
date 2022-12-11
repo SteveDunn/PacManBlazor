@@ -3,11 +3,11 @@
 /// Moves the ghost in a psuedo-random fashion while they are 'frightened' (i.e. blue)
 public class GhostFrightenedMover : GhostMover
 {
-    public GhostFrightenedMover(Ghost ghost, IMaze maze) : base(ghost, GhostMovementMode.Frightened, maze, GetTargetCell)
+    public GhostFrightenedMover(Ghost ghost, IMaze maze) : base(ghost, GhostMovementMode.Frightened, maze, getTargetCell)
     {
     }
 
-    private static ValueTask<CellIndex> GetTargetCell()
+    private static ValueTask<CellIndex> getTargetCell()
     {
         var random = Pnrg.Value;
 

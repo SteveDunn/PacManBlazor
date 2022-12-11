@@ -1,6 +1,5 @@
 using FluentAssertions;
 using MediatR;
-using Microsoft.VisualBasic.CompilerServices;
 using PacMan.GameComponents;
 using PacMan.GameComponents.Primitives;
 using SmallTests.TestDoubles;
