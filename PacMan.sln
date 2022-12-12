@@ -17,6 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		readme.md = readme.md
 		todo.md = todo.md
 		.github\workflows\build-deploy-publish.yml = .github\workflows\build-deploy-publish.yml
+		.github\workflows\deploy-to-github-pages.yml = .github\workflows\deploy-to-github-pages.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmallTests", "test\SmallTests\SmallTests.csproj", "{9A837C89-3F63-4D9B-9DC1-3853D8A82BDA}"
