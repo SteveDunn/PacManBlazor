@@ -37,7 +37,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Update="wwwroot\Assets\spritesheet.png">
+		<Content Update="wwwroot\assets\spritesheet.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Update="wwwroot\css\joystix.ttf">
