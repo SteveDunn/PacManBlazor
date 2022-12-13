@@ -7,7 +7,7 @@
 
 # Welcome to Pac-Man written in C# and running on Blazor WebAssembly
 
-PLAY IT NOW!  <https://pacmanblazor2.azureedge.net/>
+PLAY IT NOW!  <https://stevedunn.github.io/PacManBlazor/>
 
 This is a project I started in order to experiment with Blazor/WebAssembly.  I wanted to see if it was feasible
 to use Blazor to write a game in C# that runs at 60FPS.
