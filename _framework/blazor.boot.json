@@ -28,8 +28,8 @@
       "Microsoft.JSInterop.dll": "sha256-KnwOZIbbEsohnvCGve4h1hg6Bbb0NBb93p6MFMDURXE=",
       "Microsoft.JSInterop.WebAssembly.dll": "sha256-gAM0U1w98ffRNyjMybCtgJeQFGgmxqc7CH1\/UxP2p2o=",
       "netstandard.dll": "sha256-bopFB\/yT+vWnbK0MB3XunQNMpIoBTI0SZ45MVTjaSk0=",
-      "PacMan.dll": "sha256-nkKrdxME1JBanqV30S5+fQFU\/cIXoPraLxObM4eY9G8=",
-      "PacMan.GameComponents.dll": "sha256-tyw4Ssd4WClYGMyVTE4tcgWI1q06w7BKHdzaftJsQhA=",
+      "PacMan.dll": "sha256-C0HpGLBZSgzCVA\/RyQl\/PF6Y0JctHHJBLMc1j\/tgqy4=",
+      "PacMan.GameComponents.dll": "sha256-AxBms+LE\/wX9of7A8bgA8Dl9rMTforBtZNtSnKrB7ug=",
       "System.Collections.Concurrent.dll": "sha256-92IU5rMiY8y5nWWer5k1KNq+tqATOZjnDKFX5g7LkfY=",
       "System.Collections.dll": "sha256-r35R5TNo045yEvw12s1qIvbNYfRe8vkpprAm3drVGEw=",
       "System.Collections.NonGeneric.dll": "sha256-Em28dQGLGRBogMwSNyz1ZG8UUHdIgx1pzbf+MSS6mHA=",
@@ -54,7 +54,7 @@
       "System.Text.Encodings.Web.dll": "sha256-cm0YJx3r\/ZuuTCQdWGQeo92Gx5uKFdH+7\/xBIIueiOQ=",
       "System.Text.Json.dll": "sha256-SW+20tlI08MT4uY+tRG4v+uM2sxYTT\/pXe1bOOghTH0=",
       "System.Threading.dll": "sha256-9370+dbsT+ejw1pT4tUuLA6LYilHeR54p76UOY0V5b0=",
-      "Vogen.SharedTypes.dll": "sha256-L2r7zkDorHF\/HcQYlt+mJEGGSJV8CX162ftOkLBf3tI="
+      "Vogen.SharedTypes.dll": "sha256-fWQAPBHjaZrAapRzGqDQ3hABfDkebzpFS1WhD8lPswU="
     },
     "extensions": null,
     "lazyAssembly": null,
