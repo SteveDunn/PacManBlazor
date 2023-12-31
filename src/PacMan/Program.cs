@@ -82,9 +82,11 @@ class Program
 
         services.AddMediatR(
             c =>
-                c.AsSingleton(),
-            thisAssembly,
-            componentsAssembly);
+            {
+                c.Lifetime = ServiceLifetime.Singleton;
+                c.RegisterServicesFromAssembly(thisAssembly);
+                c.RegisterServicesFromAssembly(componentsAssembly);
+            });
 
         services.AddSingleton(new HttpClient {BaseAddress = new(builder.HostEnvironment.BaseAddress)});
 
