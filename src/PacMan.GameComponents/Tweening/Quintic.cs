@@ -1,5 +1,6 @@
 namespace PacMan.GameComponents.Tweening;
 
+[PublicAPI]
 public class Quintic
 {
     public static float EaseIn(float t, float b, float c, float d)

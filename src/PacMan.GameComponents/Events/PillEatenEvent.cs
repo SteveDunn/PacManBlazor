@@ -9,6 +9,7 @@ public readonly struct PillEatenEvent : INotification
 
     public CellIndex CellIndex { get; }
 
+    [UsedImplicitly]
     public class Handler : INotificationHandler<PillEatenEvent>
     {
         readonly IGameStats _gameStats;

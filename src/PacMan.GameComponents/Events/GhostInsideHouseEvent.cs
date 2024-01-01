@@ -11,6 +11,7 @@ public readonly struct GhostInsideHouseEvent : INotification
         Ghost = ghost;
     }
 
+    [UsedImplicitly]
     public class Handler : INotificationHandler<GhostInsideHouseEvent>
     {
         readonly IGameStats _gameStats;

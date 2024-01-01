@@ -8,6 +8,7 @@ namespace PacMan.GameComponents.Events;
 /// </summary>
 public readonly struct PlayerStartingEvent : INotification
 {
+    [UsedImplicitly]
     public class Handler : INotificationHandler<PlayerStartingEvent>
     {
         readonly IHaveTheMazeCanvases _mazeCanvases;

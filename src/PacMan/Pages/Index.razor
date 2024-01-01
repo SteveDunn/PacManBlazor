@@ -42,7 +42,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        ExceptionNotificationService.OnException += handleExceptions;
+        ExceptionNotificationService.OnException += HandleExceptions;
 
         await Game.Initialise(JsRuntime);
 
@@ -51,9 +51,9 @@
         await base.OnInitializedAsync();
     }
 
-    static void handleExceptions(object? o, string s) => Console.WriteLine(s);
+    static void HandleExceptions(object? o, string s) => Console.WriteLine(s);
 
-    static async ValueTask<Canvas2DContext> createScaledCanvasContext(BECanvasComponent? canvas, bool scale)
+    static async ValueTask<Canvas2DContext> CreateScaledCanvasContext(BECanvasComponent? canvas, bool scale)
     {
         if (canvas == null)
         {
@@ -140,10 +140,10 @@
     {
         if (firstRender)
         {
-            _outputCanvasContext = await createScaledCanvasContext(_canvasReference, true);
+            _outputCanvasContext = await CreateScaledCanvasContext(_canvasReference, true);
 
-            var player1MazeCanvas = await createScaledCanvasContext(_player1MazeReference, false);
-            var player2MazeCanvas = await createScaledCanvasContext(_player2MazeReference, false);
+            var player1MazeCanvas = await CreateScaledCanvasContext(_player1MazeReference, false);
+            var player2MazeCanvas = await CreateScaledCanvasContext(_player2MazeReference, false);
 
             Game.PostRenderInitialize(_outputCanvasContext, player1MazeCanvas, player2MazeCanvas, SpritesheetReference);
         }

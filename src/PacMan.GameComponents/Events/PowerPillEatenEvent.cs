@@ -8,6 +8,7 @@ public readonly struct PowerPillEatenEvent : INotification
 
     public CellIndex CellIndex { get; }
 
+    [UsedImplicitly]
     public class Handler : INotificationHandler<PowerPillEatenEvent>
     {
         readonly IGame _game;

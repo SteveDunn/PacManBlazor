@@ -9,6 +9,7 @@ public readonly struct FruitEatenEvent : INotification
         Fruit = fruit;
     }
 
+    [UsedImplicitly]
     public class Handler : INotificationHandler<FruitEatenEvent>
     {
         readonly IGame _game;
@@ -37,6 +38,7 @@ public readonly struct FruitEatenEvent : INotification
 
 public readonly struct ExtraLifeEvent : INotification
 {
+    [UsedImplicitly]
     public class Handler : INotificationHandler<ExtraLifeEvent>
     {
         readonly IGameSoundPlayer _gameSoundPlayer;

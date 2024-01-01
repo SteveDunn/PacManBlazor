@@ -1,5 +1,6 @@
 ﻿namespace PacMan.GameComponents.Tweening;
 
+[PublicAPI]
 public class TweenCreationSettings
 {
     public TweenCreationSettings(Type type, Easing easing, TimeSpan duration)

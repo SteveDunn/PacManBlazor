@@ -2,6 +2,7 @@
 
 public readonly struct CoinInsertedEvent : INotification
 {
+    [UsedImplicitly]
     public class Handler : INotificationHandler<CoinInsertedEvent>
     {
         readonly IGameSoundPlayer _gameSoundPlayer;

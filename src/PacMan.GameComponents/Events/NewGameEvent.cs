@@ -9,6 +9,7 @@ public readonly struct NewGameEvent : INotification
         AmountOfPlayers = amountOfPlayers;
     }
 
+    [UsedImplicitly]
     public class Handler : INotificationHandler<NewGameEvent>
     {
         readonly IMediator _mediator;

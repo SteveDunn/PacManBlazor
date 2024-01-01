@@ -2,6 +2,7 @@
 
 public readonly struct DemoStartedEvent : INotification
 {
+    [UsedImplicitly]
     public class Handler : INotificationHandler<DemoStartedEvent>
     {
         readonly IGameSoundPlayer _gameSoundPlayer;

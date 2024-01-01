@@ -1,5 +1,6 @@
 namespace PacMan.GameComponents.Tweening;
 
+[PublicAPI]
 public static class Circular
 {
     public static float EaseIn(float t, float b, float c, float d)

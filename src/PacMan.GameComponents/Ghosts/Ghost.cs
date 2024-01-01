@@ -302,7 +302,7 @@ public abstract class Ghost : SimpleGhost, IGhost
 
     void setNextScatterOrChaseMoverAndMode()
     {
-        var nextMode = CurrentPlayerStats.ghostMoveConductor.CurrentMode;
+        GhostMovementMode nextMode = CurrentPlayerStats.GhostMovementMode;
 
         if (MovementMode == nextMode)
         {

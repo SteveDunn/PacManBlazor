@@ -7,6 +7,7 @@ namespace PacMan.GameComponents.Events;
 /// </summary>
 public readonly struct LevelFinishedEvent : INotification
 {
+    [UsedImplicitly]
     public class Handler : INotificationHandler<LevelFinishedEvent>
     {
         readonly IMediator _mediator;

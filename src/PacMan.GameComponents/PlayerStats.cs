@@ -53,7 +53,7 @@ public class PlayerStats
         _ghostHouseDoor.Update(timing);
     }
 
-    public GhostMovementConductor ghostMoveConductor => _ghostMovementConductor;
+    public GhostMovementMode GhostMovementMode => _ghostMovementConductor.CurrentMode;
 
     public GhostHouseDoor ghostHouseDoor => _ghostHouseDoor;
 
