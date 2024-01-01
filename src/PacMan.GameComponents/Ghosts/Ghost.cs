@@ -64,7 +64,7 @@ public abstract class Ghost : SimpleGhost, IGhost
             {
                 DirectionInfo current = Direction;
                     
-                Direction direction = switchDirectionForChaseOrScatter(current.Current);
+                Direction direction = SwitchDirectionForChaseOrScatter(current.Current);
                     
                 if (direction is not None)
                 {
@@ -76,7 +76,7 @@ public abstract class Ghost : SimpleGhost, IGhost
         }
     }
 
-    static Direction switchDirectionForChaseOrScatter(Direction current) =>
+    static Direction SwitchDirectionForChaseOrScatter(Direction current) =>
         current switch
         {
             Up => Down,
@@ -114,7 +114,7 @@ public abstract class Ghost : SimpleGhost, IGhost
 
     public int OffsetInHouse => HouseOffset;
 
-    void recenterInLane()
+    void RecenterInLane()
     {
         if (MovementMode is not (GhostMovementMode.Chase or GhostMovementMode.Scatter))
         {
@@ -123,7 +123,7 @@ public abstract class Ghost : SimpleGhost, IGhost
 
         var tileCenter = Tile.CenterPos;
 
-        var speed = getSpeed();
+        var speed = GetSpeed();
         var currentDirection = Direction.Current;
 
         if (currentDirection is Down or Up)
@@ -177,7 +177,7 @@ public abstract class Ghost : SimpleGhost, IGhost
         }
     }
 
-    float getSpeed()
+    float GetSpeed()
     {
         if (MovementMode == GhostMovementMode.InHouse)
         {
@@ -216,7 +216,7 @@ public abstract class Ghost : SimpleGhost, IGhost
 
     public void MoveForwards()
     {
-        var v = DirectionToIndexLookup.IndexVectorFor(Direction.Current) * getSpeed();
+        var v = DirectionToIndexLookup.IndexVectorFor(Direction.Current) * GetSpeed();
             
         Position += v;
     }
@@ -236,8 +236,8 @@ public abstract class Ghost : SimpleGhost, IGhost
             return;
         }
 
-        recenterInLane();
-        await collisionDetection();
+        RecenterInLane();
+        await CollisionDetection();
 
         if (Tile.IsInCenter)
         {
@@ -250,9 +250,9 @@ public abstract class Ghost : SimpleGhost, IGhost
             _whenInCenterOfNextTile = () => { };
         }
 
-        setMoverAndMode();
+        SetMoverAndMode();
 
-        await getMover().Update(timing);
+        await GetMover().Update(timing);
 
         if (State == GhostState.Frightened)
         {
@@ -284,7 +284,7 @@ public abstract class Ghost : SimpleGhost, IGhost
 
                 GeneralSprite s = new(targetPoint, Size, Origin, SpriteSheetPos);
 
-                await drawLine(Position , targetPoint, session);
+                await DrawLine(Position , targetPoint, session);
 
                 await session.DrawSprite(s,Spritesheet.Reference);
             }
@@ -295,12 +295,12 @@ public abstract class Ghost : SimpleGhost, IGhost
 // await session.DrawText("X", ((await GetChaseTarget()).ToVector2() * Vector2s.Eight).ToPoint(), Spritesheet.Reference);
     }
 
-    async Task drawLine(Vector2 cellIndex, Vector2 moverTargetCell, CanvasWrapper session)
+    async Task DrawLine(Vector2 cellIndex, Vector2 moverTargetCell, CanvasWrapper session)
     {
         await session.DrawLine(cellIndex, moverTargetCell, GetColor());
     }
 
-    void setNextScatterOrChaseMoverAndMode()
+    void SetNextScatterOrChaseMoverAndMode()
     {
         GhostMovementMode nextMode = CurrentPlayerStats.GhostMovementMode;
 
@@ -327,7 +327,7 @@ public abstract class Ghost : SimpleGhost, IGhost
     }
 
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
-    void setMoverAndMode()
+    void SetMoverAndMode()
     {
         var isScatterOrChase = MovementMode 
             is GhostMovementMode.Undecided
@@ -336,11 +336,11 @@ public abstract class Ghost : SimpleGhost, IGhost
 
         if (isScatterOrChase)
         {
-            setNextScatterOrChaseMoverAndMode();
+            SetNextScatterOrChaseMoverAndMode();
             return;
         }
 
-        if (MovementMode == getMover().MovementMode)
+        if (MovementMode == GetMover().MovementMode)
         {
             return;
         }
@@ -350,7 +350,7 @@ public abstract class Ghost : SimpleGhost, IGhost
         {
             State = GhostState.Normal;
 
-            _mover = new GhostInsideHouseMover(this, _maze, CurrentPlayerStats.ghostHouseDoor);
+            _mover = new GhostInsideHouseMover(this, _maze, CurrentPlayerStats.GhostHouseDoor);
 
             return;
         }
@@ -371,7 +371,7 @@ public abstract class Ghost : SimpleGhost, IGhost
         throw new InvalidOperationException("Don't know what mover to create and set!");
     }
 
-    async ValueTask collisionDetection()
+    async ValueTask CollisionDetection()
     {
         if (Tile.Index != _pacman.Tile.Index)
         {
@@ -401,5 +401,5 @@ public abstract class Ghost : SimpleGhost, IGhost
     protected void SetMover(GhostInsideHouseMover mover) => _mover = mover;
 
     // ReSharper disable once HeapView.ObjectAllocation.Evident
-    GhostMover getMover() => _mover ?? throw new InvalidOperationException("no mover");
+    GhostMover GetMover() => _mover ?? throw new InvalidOperationException("no mover");
 }

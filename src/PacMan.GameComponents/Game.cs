@@ -75,9 +75,9 @@ public class Game : IGame
     }
 
     [SuppressMessage("ReSharper", "NullableWarningSuppressionIsUsed")]
-    async ValueTask update()
+    async ValueTask Update()
     {
-        ensureInitialised();
+        EnsureInitialised();
         _input.Update(_canvasTimingInformation!);
 
         _scorePanel.Update(_canvasTimingInformation!);
@@ -87,7 +87,7 @@ public class Game : IGame
 
         _pauser.Run(_canvasTimingInformation!);
 
-        await checkCheatKeys();
+        await CheckCheatKeys();
 
         if (_pauser.Finished)
         {
@@ -95,7 +95,7 @@ public class Game : IGame
         }
     }
 
-    async ValueTask checkCheatKeys()
+    async ValueTask CheckCheatKeys()
     {
         if (Cheats.AllowDebugKeys && _input.IsKeyCurrentlyDown(Keys.Three))
         {
@@ -114,9 +114,9 @@ public class Game : IGame
         }
     }
 
-    async ValueTask draw()
+    async ValueTask Draw()
     {
-        ensureInitialised();
+        EnsureInitialised();
 
         var dim = Constants.UnscaledCanvasSize;
 
@@ -144,7 +144,7 @@ public class Game : IGame
         await _underlyingCanvasContext.EndBatchAsync();
     }
 
-    static void ensureInitialised()
+    static void EnsureInitialised()
     {
         if (!_initialised)
         {
@@ -154,7 +154,7 @@ public class Game : IGame
 
     public ValueTask FruitEaten(Points points)
     {
-        ensureInitialised();
+        EnsureInitialised();
         _tempSprites!.Add(new(3000, new ScoreSprite(_fruit.Position, points)));
 
         return default;
@@ -162,7 +162,7 @@ public class Game : IGame
 
     public ValueTask GhostEaten(IGhost ghost, Points points)
     {
-        ensureInitialised();
+        EnsureInitialised();
         _tempSprites!.Add(new(900, new ScoreSprite(_pacman.Position, points)));
 
         ghost.Visible = false;
@@ -196,7 +196,7 @@ public class Game : IGame
 
     static readonly Stopwatch _stopWatch = new();
 
-    static float getTimestep() => 1000 / (float) Constants.FramesPerSecond;
+    static float GetTimestep() => 1000 / (float) Constants.FramesPerSecond;
 
     static float _delta;
 
@@ -220,7 +220,7 @@ public class Game : IGame
 
         // timestep would normally be fixed (at 60FPS), but we have
         // the ability to slow down and speed up the game (via the A and S keys)
-        var timestep = getTimestep();
+        var timestep = GetTimestep();
 
         while (_delta >= timestep)
         {
@@ -229,7 +229,7 @@ public class Game : IGame
 
             DiagInfo.IncrementUpdateCount();
             await DiagInfo.Update(_canvasTimingInformation, _input);
-            await update();
+            await Update();
 
             _delta -= timestep;
 
@@ -239,7 +239,7 @@ public class Game : IGame
             // }
         }
 
-        await draw();
+        await Draw();
 
         DiagInfo.IncrementDrawCount(timestamp);
 

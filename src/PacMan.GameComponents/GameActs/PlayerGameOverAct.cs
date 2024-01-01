@@ -14,7 +14,7 @@ public class PlayerGameOverAct : IAct
         _gameStats = gameStats;
     }
 
-    async Task<IAct> resolveGameOverAct()
+    async Task<IAct> ResolveGameOverAct()
     {
         if (_gameOverAct != null)
         {
@@ -31,14 +31,14 @@ public class PlayerGameOverAct : IAct
 
     public async ValueTask Reset()
     {
-        var a = await resolveGameOverAct();
+        var a = await ResolveGameOverAct();
 
         await a.Reset();
     }
 
     public async ValueTask<ActUpdateResult> Update(CanvasTimingInformation timing)
     {
-        var gameOverAct = await resolveGameOverAct();
+        var gameOverAct = await ResolveGameOverAct();
 
         var result = await gameOverAct.Update(timing);
 
@@ -54,7 +54,7 @@ public class PlayerGameOverAct : IAct
     {
         PlayerStats currentPlayerStats = _gameStats.CurrentPlayerStats;
 
-        var gameOverAct = await resolveGameOverAct();
+        var gameOverAct = await ResolveGameOverAct();
 
         await gameOverAct.Draw(session);
 

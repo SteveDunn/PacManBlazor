@@ -55,7 +55,7 @@ public class PlayerStats
 
     public GhostMovementMode GhostMovementMode => _ghostMovementConductor.CurrentMode;
 
-    public GhostHouseDoor ghostHouseDoor => _ghostHouseDoor;
+    public GhostHouseDoor GhostHouseDoor => _ghostHouseDoor;
 
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
     public void NewLevel()

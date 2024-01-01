@@ -42,14 +42,14 @@ public class GhostLogic
             return _ghost.Direction.Current;
         }
 
-        Direction decision = calculateWhichWayToGo(nextTile, targetCell);
+        Direction decision = CalculateWhichWayToGo(nextTile, targetCell);
 
         _lastDecisionMadeAt = cellPosition;
 
         return decision;
     }
 
-    Direction calculateWhichWayToGo(Tile tile, CellIndex targetCell)
+    Direction CalculateWhichWayToGo(Tile tile, CellIndex targetCell)
     {
         CellIndex cellPosition = tile.Index;
 
@@ -109,12 +109,12 @@ public class GhostLogic
             throw new InvalidOperationException("No choices to pick from!");
         }
 
-        dir = pickShortest(tile, targetCell, _availableDirections);
+        dir = PickShortest(tile, targetCell, _availableDirections);
 
         return dir;
     }
 
-    Direction pickShortest(Tile ghostTile, CellIndex targetCell, List<Direction> choices)
+    Direction PickShortest(Tile ghostTile, CellIndex targetCell, List<Direction> choices)
     {
         if (choices.Count == 0)
         {
@@ -154,14 +154,14 @@ public class GhostLogic
                 return (int)dist;
             }
 
-            int ret = weightDir(l.Direction) - weightDir(r.Direction);
+            int ret = WeightDir(l.Direction) - WeightDir(r.Direction);
 
             return ret;
         }
     }
 
     // From the spec: To break the tie, the ghost prefers directions in this order: up, left, down, right
-    static int weightDir(Direction direction) =>
+    static int WeightDir(Direction direction) =>
         direction switch
         {
             Direction.Up => 0,

@@ -49,10 +49,10 @@ public readonly struct PowerPillEatenEvent : INotification
                 eachGhost.PowerPillEaten(frightSession);
             }
 
-            await checkForNoMorePills();
+            await CheckForNoMorePills();
         }
 
-        async Task checkForNoMorePills()
+        async Task CheckForNoMorePills()
         {
             if (_gameStats.CurrentPlayerStats.LevelStats.PillsRemaining == 0)
             {

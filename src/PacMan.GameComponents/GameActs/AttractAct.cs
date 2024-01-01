@@ -117,7 +117,7 @@ public class AttractAct : IAct
         _finished = false;
         _instructions.Clear();
         _chaseSubAct = new();
-        populateDelayedInstructions();
+        PopulateDelayedInstructions();
 
         return default;
     }
@@ -137,7 +137,7 @@ public class AttractAct : IAct
 
         if (_input.WasKeyPressedAndReleased(Keys.Left))
         {
-            await startDemoGame();
+            await StartDemoGame();
             return ActUpdateResult.Running;
         }
 
@@ -180,7 +180,7 @@ public class AttractAct : IAct
             {
                 if (!_finished)
                 {
-                    await startDemoGame();
+                    await StartDemoGame();
                     _finished = true;
                 }
 
@@ -214,7 +214,7 @@ public class AttractAct : IAct
             {
                 // if the ghost is null, it's a text instruction
 
-                await drawText(session, inst.ColouredText.Text, inst.Where, inst.ColouredText.Color);
+                await DrawText(session, inst.ColouredText.Text, inst.Where, inst.ColouredText.Color);
             }
         }
 
@@ -232,7 +232,7 @@ public class AttractAct : IAct
         await _blazorLogo.Draw(session);
     }
 
-    void populateDelayedInstructions()
+    void PopulateDelayedInstructions()
     {
         lock (_lock)
         {
@@ -250,28 +250,28 @@ public class AttractAct : IAct
 
             var timeForEachOne = 600.Milliseconds();
 
-            writeInstructionsForGhost(ref clock, _blinky, Colors.Red, "SHADOW", "BLINKY", pos);
+            WriteInstructionsForGhost(ref clock, _blinky, Colors.Red, "SHADOW", "BLINKY", pos);
 
             clock += timeForEachOne;
             pos += gap;
-            writeInstructionsForGhost(ref clock, _pinky, Colors.Pink, "SPEEDY", "PINKY", pos);
+            WriteInstructionsForGhost(ref clock, _pinky, Colors.Pink, "SPEEDY", "PINKY", pos);
 
             clock += timeForEachOne;
             pos += gap;
-            writeInstructionsForGhost(ref clock, _inky, Colors.Cyan, "BASHFUL", "INKY", pos);
+            WriteInstructionsForGhost(ref clock, _inky, Colors.Cyan, "BASHFUL", "INKY", pos);
 
             clock += timeForEachOne;
             pos += gap;
-            writeInstructionsForGhost(ref clock, _clyde, Colors.Yellow, "POKEY", "CLYDE", pos);
+            WriteInstructionsForGhost(ref clock, _clyde, Colors.Yellow, "POKEY", "CLYDE", pos);
         }
     }
 
-    static ValueTask drawText(CanvasWrapper canvasWrapper, string text, Vector2 point, Color color)
+    static ValueTask DrawText(CanvasWrapper canvasWrapper, string text, Vector2 point, Color color)
     {
         return canvasWrapper.DrawMyText(text, point, color);
     }
 
-    void writeInstructionsForGhost(
+    void WriteInstructionsForGhost(
         ref TimeSpan clock,
         SimpleGhost ghost,
         Color color,
@@ -306,5 +306,5 @@ public class AttractAct : IAct
         });
     }
 
-    async ValueTask startDemoGame() => await _mediator.Publish(new DemoStartedEvent());
+    async ValueTask StartDemoGame() => await _mediator.Publish(new DemoStartedEvent());
 }

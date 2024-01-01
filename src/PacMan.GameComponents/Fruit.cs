@@ -13,11 +13,11 @@ public class Fruit : SimpleFruit, IFruit
         _mediator = mediator;
         _pacman = pacman;
 
-        reset();
+        Reset();
     }
 
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
-    void reset()
+    void Reset()
     {
         _showTimer = new(10.Seconds(), () => { Visible = false; });
 
@@ -63,6 +63,6 @@ public class Fruit : SimpleFruit, IFruit
     {
         _playerStats = playerStats;
         _isDemo = isDemo;
-        reset();
+        Reset();
     }
 }

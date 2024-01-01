@@ -26,7 +26,7 @@ public class Blinky : Ghost
 
     public override ValueTask<CellIndex> GetScatterTarget() => _scatterTarget;
 
-    public override ValueTask<CellIndex> GetChaseTarget() => getChaseTargetCell();
+    public override ValueTask<CellIndex> GetChaseTarget() => GetChaseTargetCell();
 
     public override void Reset()
     {
@@ -44,7 +44,7 @@ public class Blinky : Ghost
     // Pac-Man’s current position and orientation, and selecting the location four tiles straight
     // ahead of him. Works when PacMan is facing left, down, or right, but when facing upwards,
     // it's also four tiles to the left
-    ValueTask<CellIndex> getChaseTargetCell()
+    ValueTask<CellIndex> GetChaseTargetCell()
     {
         CellIndex pacCellPos = _pacman.Tile.Index;
 

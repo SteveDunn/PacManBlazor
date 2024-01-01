@@ -46,7 +46,7 @@ public class ChaseSubAct
         var justOffScreen = new Vector2(250, 140);
 
         _ghostEatenTimer = new(0.Milliseconds(), static () => { });
-        _ghostTimer = new(5.Seconds(), async () => await reverseChase());
+        _ghostTimer = new(5.Seconds(), async () => await ReverseChase());
         _pacTimer = new(5.1f.Seconds(), static () => { });
 
         _powerPillToEat = new() {
@@ -133,7 +133,7 @@ public class ChaseSubAct
 
         _tempSprites.Update(timing);
 
-        lerpPacMan();
+        LerpPacMan();
 
         foreach (var g in _ghosts)
         {
@@ -142,13 +142,13 @@ public class ChaseSubAct
                 continue;
             }
 
-            lerpGhost(g);
+            LerpGhost(g);
 
             await g.Update(timing);
 
             if (Vector2s.AreNear(_pacMan.Position, g.Position, 2))
             {
-                ghostEaten(g);
+                GhostEaten(g);
 
                 if (g.NickName == GhostNickname.Clyde)
                 {
@@ -201,7 +201,7 @@ public class ChaseSubAct
         await session.DrawText("STEVE DUNN 2022", new((int)gp.X, (int)(gp.Y + 20)), Color.Yellow);
     }
 
-    void ghostEaten(AttractGhost ghost)
+    void GhostEaten(AttractGhost ghost)
     {
         ghost.Alive = false;
 
@@ -210,7 +210,7 @@ public class ChaseSubAct
         _ghostTimer.Pause();
         _pacTimer.Pause();
 
-        showScore(ghost.Position, _ghostPoints);
+        ShowScore(ghost.Position, _ghostPoints);
 
         _ghostPoints = Points.From(_ghostPoints.Value * 2);
 
@@ -223,23 +223,23 @@ public class ChaseSubAct
         });
     }
 
-    void showScore(Vector2 pos, Points amount) =>
+    void ShowScore(Vector2 pos, Points amount) =>
         _tempSprites.Add(new(900, new ScoreSprite(pos, amount)));
 
-    void lerpGhost(AttractGhost ghost)
+    void LerpGhost(AttractGhost ghost)
     {
         StartAndEndPos positions = _ghostPositions[ghost.NickName];
 
         ghost.Position = Vector2s.Lerp(positions.Start, positions.End, _ghostTimer.Progress);
     }
 
-    void lerpPacMan()
+    void LerpPacMan()
     {
         _pacMan.Position = Vector2s.Lerp(_pacPositions.Start, _pacPositions.End, _pacTimer.Progress);
     }
 
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
-    ValueTask reverseChase()
+    ValueTask ReverseChase()
     {
         _powerPillToEat.Visible = false;
         _ghostTimer = new(12.Seconds(), () => { });

@@ -13,24 +13,24 @@ public class GhostEyesBackToHouseMover : GhostMover
         _mediator = mediator;
         _ghostPosInHouse = Maze.PixelCenterOfHouse + new Vector2(ghost.OffsetInHouse * 16, 0);
 
-        _currentAction = navigateEyesBackToJustOutsideHouse;
+        _currentAction = NavigateEyesBackToJustOutsideHouse;
     }
 
-    async ValueTask<MovementResult> navigateEyesBackToJustOutsideHouse(CanvasTimingInformation context)
+    async ValueTask<MovementResult> NavigateEyesBackToJustOutsideHouse(CanvasTimingInformation context)
     {
         await base.Update(context);
 
-        if (isNearHouseEntrance())
+        if (IsNearHouseEntrance())
         {
             await _mediator.Publish(new GhostInsideHouseEvent());
             Ghost.Position = Maze.PixelHouseEntrancePoint;
-            _currentAction = navigateToCenterOfHouse;
+            _currentAction = NavigateToCenterOfHouse;
         }
 
         return MovementResult.NotFinished;
     }
 
-    ValueTask<MovementResult> navigateToCenterOfHouse(CanvasTimingInformation context)
+    ValueTask<MovementResult> NavigateToCenterOfHouse(CanvasTimingInformation context)
     {
         var diff = Maze.PixelCenterOfHouse - Maze.PixelHouseEntrancePoint;
 
@@ -42,13 +42,13 @@ public class GhostEyesBackToHouseMover : GhostMover
 
         if (Ghost.Position.Round() == Maze.PixelCenterOfHouse)
         {
-            _currentAction = navigateToGhostIndexInHouse;
+            _currentAction = NavigateToGhostIndexInHouse;
         }
 
         return new(MovementResult.NotFinished);
     }
 
-    ValueTask<MovementResult> navigateToGhostIndexInHouse(CanvasTimingInformation context)
+    ValueTask<MovementResult> NavigateToGhostIndexInHouse(CanvasTimingInformation context)
     {
         var diff = _ghostPosInHouse - Maze.PixelCenterOfHouse;
 
@@ -70,5 +70,5 @@ public class GhostEyesBackToHouseMover : GhostMover
 
     public async override ValueTask<MovementResult> Update(CanvasTimingInformation context) => await _currentAction(context);
 
-    bool isNearHouseEntrance() => Vector2s.AreNear(Ghost.Position, Maze.PixelHouseEntrancePoint, .75);
+    bool IsNearHouseEntrance() => Vector2s.AreNear(Ghost.Position, Maze.PixelHouseEntrancePoint, .75);
 }

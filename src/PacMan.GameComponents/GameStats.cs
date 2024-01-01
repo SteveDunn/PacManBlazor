@@ -128,7 +128,7 @@ public class GameStats : IGameStats
         }
     }
 
-    void updateHighScore()
+    void UpdateHighScore()
     {
         for (int i = 0; i < _playerStats.Count; i++)
         {
@@ -139,13 +139,13 @@ public class GameStats : IGameStats
     public async ValueTask PillEaten(CellIndex point)
     {
         await _playerStats[_currentPlayerIndex].PillEaten(point);
-        updateHighScore();
+        UpdateHighScore();
     }
 
     public async ValueTask PowerPillEaten(CellIndex point)
     {
         await _playerStats[_currentPlayerIndex].PowerPillEaten(point);
-        updateHighScore();
+        UpdateHighScore();
     }
 
     public void PacManEaten()
@@ -159,7 +159,7 @@ public class GameStats : IGameStats
         ++_ghostsThatAreEyes;
 
         var points = await _playerStats[_currentPlayerIndex].GhostEaten();
-        updateHighScore();
+        UpdateHighScore();
         return points;
     }
 

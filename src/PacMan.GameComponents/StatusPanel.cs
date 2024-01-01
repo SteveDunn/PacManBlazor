@@ -40,16 +40,16 @@ public class StatusPanel : IStatusPanel
     {
         if (_gameStats.AnyonePlaying)
         {
-            await drawPlayerLives(ds);
-            await drawFruit(ds);
+            await DrawPlayerLives(ds);
+            await DrawFruit(ds);
         }
         else
         {
-            await drawCredits(ds);
+            await DrawCredits(ds);
         }
     }
 
-    async ValueTask drawPlayerLives(CanvasWrapper ds)
+    async ValueTask DrawPlayerLives(CanvasWrapper ds)
     {
         int x = 0;
 
@@ -66,14 +66,14 @@ public class StatusPanel : IStatusPanel
         }
     }
 
-    ValueTask drawCredits(CanvasWrapper ds)
+    ValueTask DrawCredits(CanvasWrapper ds)
     {
         _sb.Clear();
         return ds.DrawMyText(_sb.Append("CREDIT ").Append(_coinBox.Credits).ToString(), _creditTextPoint, Colors.White);
     }
 
     // drawSprite max 7 fruit from max level 21
-    async ValueTask drawFruit(CanvasWrapper ds)
+    async ValueTask DrawFruit(CanvasWrapper ds)
     {
         if (_gameStats.IsDemo)
         {

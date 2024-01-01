@@ -92,7 +92,7 @@ public class PlayerIntroAct : IAct
     {
         await _maze.Draw(session);
 
-        await drawPlayerAndReadyText(session);
+        await DrawPlayerAndReadyText(session);
 
         if (_progress == 1)
         {
@@ -102,7 +102,7 @@ public class PlayerIntroAct : IAct
         }
     }
 
-    async ValueTask drawPlayerAndReadyText(CanvasWrapper canvas)
+    async ValueTask DrawPlayerAndReadyText(CanvasWrapper canvas)
     {
         if (_progress == 0)
         {

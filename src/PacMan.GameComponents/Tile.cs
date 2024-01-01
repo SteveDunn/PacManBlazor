@@ -26,7 +26,7 @@ public class Tile
 
         _isInCenter = CenterPos == spritePos.Round();
 
-        handleWrapping();
+        HandleWrapping();
     }
 
     public CellIndex Index { get; private set; }
@@ -71,11 +71,11 @@ public class Tile
     public Tile NextTileWrapped(Direction direction)
     {
         var nextTile = NextTile(direction);
-        nextTile.handleWrapping();
+        nextTile.HandleWrapping();
         return nextTile;
     }
 
-    void handleWrapping()
+    void HandleWrapping()
     {
         float pixelWidthOfMaze = MazeBounds.Dimensions.Width * 8;
 

@@ -77,7 +77,7 @@ public class PacMan : ISprite, IPacMan
         Reset();
     }
 
-    void resetAll(bool isDemoMode = false)
+    void ResetAll(bool isDemoMode = false)
     {
         Visible = true;
         _demoKeyPresses.Reset();
@@ -109,12 +109,12 @@ public class PacMan : ISprite, IPacMan
 
     public void Reset()
     {
-        resetAll();
+        ResetAll();
     }
 
     public Direction Direction => _direction;
 
-    void updateAnimation(CanvasTimingInformation args)
+    void UpdateAnimation(CanvasTimingInformation args)
     {
         if (Math.Abs(_speed) < .0001)
         {
@@ -128,7 +128,7 @@ public class PacMan : ISprite, IPacMan
         _spriteSheetPos = _animDirection.Flag ? _frame1InSpriteMap : _frame2InSpriteMap;
     }
 
-    void handleDying()
+    void HandleDying()
     {
         _dyingFramePointer += .15f;
 
@@ -166,24 +166,24 @@ public class PacMan : ISprite, IPacMan
 
         if (_lifeStatus is LifeStatus.Dying or LifeStatus.Dead)
         {
-            handleDying();
+            HandleDying();
             return;
         }
 
-        updateAnimation(timing);
+        UpdateAnimation(timing);
 
         if (_tile.IsNearCenter(2))
         {
-            recordInput(timing);
+            RecordInput(timing);
 
-            recenterInLane();
+            RecenterInLane();
 
-            handleDirection();
+            HandleDirection();
         }
 
         if (_tile.IsNearCenter(1.5))
         {
-            await handleWhatIsUnderCell();
+            await HandleWhatIsUnderCell();
 
             var can = _maze.CanContinueInDirection(_direction, _tile);
 
@@ -225,7 +225,7 @@ public class PacMan : ISprite, IPacMan
         _pillEatenAt = _tile.Index;
     }
 
-    void handleDirection()
+    void HandleDirection()
     {
         if (_maze.CanContinueInDirection(_keyPress.Direction, _tile))
         {
@@ -233,7 +233,7 @@ public class PacMan : ISprite, IPacMan
         }
     }
 
-    async ValueTask handleWhatIsUnderCell()
+    async ValueTask HandleWhatIsUnderCell()
     {
         TileContent contents = _maze.GetTileContent(_tile);
 
@@ -256,7 +256,7 @@ public class PacMan : ISprite, IPacMan
         }
     }
 
-    void recordInput(CanvasTimingInformation context)
+    void RecordInput(CanvasTimingInformation context)
     {
         Direction requestedDirection = _direction;
 
@@ -321,7 +321,7 @@ public class PacMan : ISprite, IPacMan
     }
 
     // debt: SD: refactor into something common as this is also used for the ghosts
-    void recenterInLane()
+    void RecenterInLane()
     {
         var tileCenter = _tile.CenterPos;
 
@@ -364,7 +364,7 @@ public class PacMan : ISprite, IPacMan
     {
         _currentPlayerStats = playerStats;
 
-        resetAll(isDemo);
+        ResetAll(isDemo);
 
         return default;
     }

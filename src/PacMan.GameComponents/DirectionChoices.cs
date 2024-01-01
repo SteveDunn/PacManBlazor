@@ -15,14 +15,14 @@ public class DirectionChoices
     {
         _lookup[direction] = true;
 
-        Possibilities = calcPossibilities();
+        Possibilities = CalcPossibilities();
     }
 
     public void Unset(Direction direction)
     {
         _lookup[direction] = false;
 
-        Possibilities = calcPossibilities();
+        Possibilities = CalcPossibilities();
     }
 
     public bool IsSet(Direction direction) => _lookup[direction];
@@ -35,7 +35,7 @@ public class DirectionChoices
         _lookup[Direction.Right] = false;
     }
 
-    int calcPossibilities()
+    int CalcPossibilities()
     {
         int count = 0;
 

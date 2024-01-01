@@ -91,7 +91,7 @@ public class Maze : ISprite, IMaze
 
     public async ValueTask Draw(CanvasWrapper session)
     {
-        ensureCanvas();
+        EnsureCanvas();
         if (_flashing)
         {
             if (_tickTock)
@@ -108,13 +108,13 @@ public class Maze : ISprite, IMaze
 
         await session.DrawFromOther(_currentPlayerCanvas, new(0, 0), _mazeRect);
 
-        await drawPowerPills(session);
+        await DrawPowerPills(session);
 
         // this.drawGrid(8, 8, canvas);
     }
 
     [MemberNotNull(nameof(_currentPlayerCanvas))]
-    void ensureCanvas()
+    void EnsureCanvas()
     {
         if (_currentPlayerCanvas == null)
         {
@@ -124,9 +124,9 @@ public class Maze : ISprite, IMaze
 
     public Vector2 Origin { get; }
 
-    async ValueTask drawPowerPills(CanvasWrapper session)
+    async ValueTask DrawPowerPills(CanvasWrapper session)
     {
-        ensureLevelStats();
+        EnsureLevelStats();
 
         foreach (var p in _powerPillPositions)
         {
@@ -140,7 +140,7 @@ public class Maze : ISprite, IMaze
     }
 
     [MemberNotNull(nameof(_levelStats))]
-    void ensureLevelStats()
+    void EnsureLevelStats()
     {
         if (_levelStats == null)
         {
@@ -150,7 +150,7 @@ public class Maze : ISprite, IMaze
 
     public async ValueTask ClearCell(CellIndex cell)
     {
-        ensureCanvas();
+        EnsureCanvas();
         var topLeft = Tile.FromIndex(cell).TopLeft;
 
         // CanvasBitmap bitmap = _bitmapsForPlayers[_gameStats.CurrentPlayerStats.PlayerIndex];
@@ -187,7 +187,7 @@ public class Maze : ISprite, IMaze
     {
         var nextTile = tile.NextTile(direction);
 
-        return !isAWall(nextTile);
+        return !IsAWall(nextTile);
     }
 
     public DirectionChoices GetChoicesAtCellPosition(CellIndex cellPos)
@@ -198,7 +198,7 @@ public class Maze : ISprite, IMaze
 
         foreach (var eachDirection in _directions)
         {
-            if (!isAWall(tile.NextTileWrapped(eachDirection)))
+            if (!IsAWall(tile.NextTileWrapped(eachDirection)))
             {
                 _directionChoices.Set(eachDirection);
             }
@@ -207,7 +207,7 @@ public class Maze : ISprite, IMaze
         return _directionChoices;
     }
 
-    bool isAWall(Tile tile) => GetTileContent(tile) == TileContent.Wall;
+    bool IsAWall(Tile tile) => GetTileContent(tile) == TileContent.Wall;
 
     public void StartFlashing() => _flashing = true;
 
@@ -215,7 +215,7 @@ public class Maze : ISprite, IMaze
 
     public TileContent GetTileContent(Tile cell)
     {
-        ensureLevelStats();
+        EnsureLevelStats();
         var a = _levelStats.GetCellContent(cell.Index);
 
         if (a == ' ')

@@ -68,14 +68,14 @@ public class GhostTearAct : IAct
             new Vector2(600, 113)
         ];
 
-        _blinkyTimer = new(4500.Milliseconds(), blinkyCaught);
+        _blinkyTimer = new(4500.Milliseconds(), BlinkyCaught);
 
         _tearTimer = new(
             500.Milliseconds(),
             () => {
                 if (_stage == Stage.TearingBlinky)
                 {
-                    updateTearAnimation();
+                    UpdateTearAnimation();
                 }
             });
 
@@ -120,10 +120,10 @@ public class GhostTearAct : IAct
 
         if (_stage == Stage.MovingBlinky)
         {
-            lerpBlinky();
+            LerpBlinky();
         }
 
-        lerpPacMan();
+        LerpPacMan();
 
         await _pacMan.Update(timing);
         await _blinky.Update(timing);
@@ -141,22 +141,22 @@ public class GhostTearAct : IAct
         await _snagSprite.Draw(canvas);
     }
 
-    void lerpBlinky()
+    void LerpBlinky()
     {
         var pc = _blinkyTimer.Progress;
         _blinky.Position = Vector2.Lerp(_blinkyPositions.Start, _blinkyPositions.End, pc);
     }
 
-    void lerpPacMan()
+    void LerpPacMan()
     {
         var pc = _pacTimer.Progress;
 
         _pacMan.Position = Vector2.Lerp(_pacPositions.Start, _pacPositions.End, pc);
     }
 
-    void blinkyCaught() => _stage = Stage.TearingBlinky;
+    void BlinkyCaught() => _stage = Stage.TearingBlinky;
 
-    void updateTearAnimation()
+    void UpdateTearAnimation()
     {
         ++_animFrame;
         if (_animFrame < _tearFrames.Length)
@@ -176,15 +176,15 @@ public class GhostTearAct : IAct
 
         _animFrame = 0;
         _blinky.Visible = false;
-        setLookingBlinky(0);
+        SetLookingBlinky(0);
 
-        _lookTimer = new(1500.Milliseconds(), async () => await updateBlinkyLookAnimation());
+        _lookTimer = new(1500.Milliseconds(), async () => await UpdateBlinkyLookAnimation());
 
         _lookingBlinky.Visible = true;
         _stage = Stage.BlinkyLooking;
     }
 
-    void setLookingBlinky(int frame) =>
+    void SetLookingBlinky(int frame) =>
         _lookingBlinky = new(
             _blinky.Position,
             _blinky.Size,
@@ -194,7 +194,7 @@ public class GhostTearAct : IAct
             Visible = true
         };
 
-    async ValueTask updateBlinkyLookAnimation()
+    async ValueTask UpdateBlinkyLookAnimation()
     {
         ++_animFrame;
 
@@ -207,6 +207,6 @@ public class GhostTearAct : IAct
             return;
         }
 
-        setLookingBlinky(_animFrame);
+        SetLookingBlinky(_animFrame);
     }
 }

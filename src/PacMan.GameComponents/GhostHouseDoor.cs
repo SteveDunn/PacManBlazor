@@ -53,7 +53,7 @@ public class GhostHouseDoor
 
         _activeCounter.Activate();
 
-        switchToUseCounterOfNextGhost();
+        SwitchToUseCounterOfNextGhost();
     }
 
     public void Update(CanvasTimingInformation context)
@@ -62,25 +62,25 @@ public class GhostHouseDoor
 
         if (_pillConsumptionTimeIdle.TotalMilliseconds > 4000)
         {
-            whenNoPillsEaten();
+            WhenNoPillsEaten();
         }
     }
 
-    void whenNoPillsEaten()
+    void WhenNoPillsEaten()
     {
         _pillConsumptionTimeIdle = TimeSpan.Zero;
         _activeCounter.SetTimedOut();
 
-        switchToUseCounterOfNextGhost();
+        SwitchToUseCounterOfNextGhost();
     }
 
-    void switchToUseCounterOfNextGhost()
+    void SwitchToUseCounterOfNextGhost()
     {
         if (_activeCounter == _globalCounter)
         {
             if (_activeCounter.IsFinished)
             {
-                switchActive(_nullCounter);
+                SwitchActive(_nullCounter);
             }
 
             return;
@@ -93,15 +93,15 @@ public class GhostHouseDoor
 
         if (_activeCounter == _ghostCounters[GhostNickname.Pinky])
         {
-            switchActive(_ghostCounters[GhostNickname.Inky]);
+            SwitchActive(_ghostCounters[GhostNickname.Inky]);
         }
         else if (_activeCounter == _ghostCounters[GhostNickname.Inky])
         {
-            switchActive(_ghostCounters[GhostNickname.Clyde]);
+            SwitchActive(_ghostCounters[GhostNickname.Clyde]);
         }
         else if (_activeCounter == _ghostCounters[GhostNickname.Clyde])
         {
-            switchActive(_nullCounter);
+            SwitchActive(_nullCounter);
         }
         else
         {
@@ -134,10 +134,10 @@ public class GhostHouseDoor
     {
         _globalCounter.Reset();
 
-        switchActive(_globalCounter);
+        SwitchActive(_globalCounter);
     }
 
-    void switchActive(DotCounter counter)
+    void SwitchActive(DotCounter counter)
     {
         _activeCounter.Deactivate();
 
@@ -171,7 +171,7 @@ public class GhostHouseDoor
                     Console.WriteLine(
                         "** Clyde is in the house and the global counter is 32 - honoring the original bug by deactivating the global counter");
 
-                    switchActive(_nullCounter);
+                    SwitchActive(_nullCounter);
                 }
             }
         }
@@ -180,7 +180,7 @@ public class GhostHouseDoor
 
         if (_activeCounter.LimitReached)
         {
-            switchToUseCounterOfNextGhost();
+            SwitchToUseCounterOfNextGhost();
         }
     }
 }

@@ -30,7 +30,7 @@ public class Marquee
         _timer = new(1000.Seconds());
         _texts = texts;
         _index = -1;
-        selectNext();
+        SelectNext();
 
         _tweeningFunction = Tweener.CreateTweeningFunction<Elastic>(Easing.EaseInOut);
 
@@ -44,7 +44,7 @@ public class Marquee
         };
     }
 
-    void selectNext()
+    void SelectNext()
     {
         if (++_index >= _texts.Length)
         {
@@ -70,26 +70,26 @@ public class Marquee
 
         if (_state == State.Idle)
         {
-            await idle();
+            await Idle();
         }
 
         if (_state == State.ScrollingIn)
         {
-            await scrollingIn();
+            await ScrollingIn();
         }
 
         if (_state == State.Stationary)
         {
-            await stationary();
+            await Stationary();
         }
 
         if (_state == State.ScrollingOut)
         {
-            await scrollingOut();
+            await ScrollingOut();
         }
     }
 
-    ValueTask scrollingIn()
+    ValueTask ScrollingIn()
     {
         Debug.Assert(_tweener != null, $"{nameof(_tweener)} != null");
 
@@ -104,7 +104,7 @@ public class Marquee
         return default;
     }
 
-    ValueTask scrollingOut()
+    ValueTask ScrollingOut()
     {
         Debug.Assert(_tweener != null, $"{nameof(_tweener)} != null");
 
@@ -114,13 +114,13 @@ public class Marquee
         {
             _state = State.Idle;
             _timer = new(_current.TimeIdle);
-            selectNext();
+            SelectNext();
         }
 
         return default;
     }
 
-    ValueTask idle()
+    ValueTask Idle()
     {
         if (_timer.Finished)
         {
@@ -132,7 +132,7 @@ public class Marquee
         return default;
     }
 
-    ValueTask stationary()
+    ValueTask Stationary()
     {
         if (_timer.Finished)
         {

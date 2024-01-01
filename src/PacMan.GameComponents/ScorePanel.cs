@@ -38,20 +38,20 @@ public class ScorePanel : IScorePanel
     public async ValueTask Draw(CanvasWrapper ds)
     {
         await drawPlayerOneScore(ds);
-        await drawPlayerTwoScore(ds);
-        await drawHighScore(ds);
+        await DrawPlayerTwoScore(ds);
+        await DrawHighScore(ds);
     }
 
-    async ValueTask drawHighScore(CanvasWrapper ds)
+    async ValueTask DrawHighScore(CanvasWrapper ds)
     {
         await ds.DrawMyText("HIGH SCORE", _highScoreTextPos, Colors.White);
 
-        await drawRightAlignedScoreText(ds, _gameStats.HighScore, _highScorePos);
+        await DrawRightAlignedScoreText(ds, _gameStats.HighScore, _highScorePos);
     }
 
     async ValueTask drawPlayerOneScore(CanvasWrapper ds)
     {
-        await drawPlayerText(ds, 0, "1UP", _playerOneTextPos);
+        await DrawPlayerText(ds, 0, "1UP", _playerOneTextPos);
 
         var score = 0;
 
@@ -60,10 +60,10 @@ public class ScorePanel : IScorePanel
             score = _gameStats.GetPlayerStats(0).Score;
         }
 
-        await drawRightAlignedScoreText(ds, score, _scorePos1Up);
+        await DrawRightAlignedScoreText(ds, score, _scorePos1Up);
     }
 
-    async static ValueTask drawRightAlignedScoreText(CanvasWrapper ds, int score, Vector2 pos)
+    async static ValueTask DrawRightAlignedScoreText(CanvasWrapper ds, int score, Vector2 pos)
     {
         var scoreText = score.ToString();
 
@@ -79,11 +79,11 @@ public class ScorePanel : IScorePanel
         await ds.DrawMyText(scoreText, left, Colors.White);
     }
 
-    async ValueTask drawPlayerTwoScore(CanvasWrapper ds)
+    async ValueTask DrawPlayerTwoScore(CanvasWrapper ds)
     {
         if (_gameStats.AmountOfPlayers > 1)
         {
-            await drawPlayerText(ds, 1, "2UP", _playerTwoTextPos);
+            await DrawPlayerText(ds, 1, "2UP", _playerTwoTextPos);
             var score = 0;
 
             if (_gameStats.HasPlayerStats(1))
@@ -91,11 +91,11 @@ public class ScorePanel : IScorePanel
                 score = _gameStats.GetPlayerStats(1).Score;
             }
 
-            await drawRightAlignedScoreText(ds, score, _scorePos2Up);
+            await DrawRightAlignedScoreText(ds, score, _scorePos2Up);
         }
     }
 
-    async ValueTask drawPlayerText(CanvasWrapper ds, int playerIndex, string text, Vector2 pos)
+    async ValueTask DrawPlayerText(CanvasWrapper ds, int playerIndex, string text, Vector2 pos)
     {
         var shouldFlash = _gameStats.AnyonePlaying && !_gameStats.IsGameOver && _gameStats.CurrentPlayerStats.PlayerIndex == playerIndex;
 

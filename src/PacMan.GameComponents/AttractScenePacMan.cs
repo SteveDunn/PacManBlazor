@@ -35,7 +35,7 @@ public class AttractScenePacMan : ISprite
 
         Position = Tile.ToCenterCanvas(new(13.5f, 23));
 
-        setSpriteSheetPointers();
+        SetSpriteSheetPointers();
     }
 
     public Vector2 SpriteSheetPos { get; private set; }
@@ -55,16 +55,16 @@ public class AttractScenePacMan : ISprite
 
     public Direction Direction { private get; set; }
 
-    ValueTask updateAnimation(CanvasTimingInformation context)
+    ValueTask UpdateAnimation(CanvasTimingInformation context)
     {
         _animDirection.Run(context);
 
-        setSpriteSheetPointers();
+        SetSpriteSheetPointers();
 
         return default;
     }
 
-    void setSpriteSheetPointers()
+    void SetSpriteSheetPointers()
     {
         _frame1InSpriteMap = _velocitiesLookup[Direction].First;
         _frame2InSpriteMap = _velocitiesLookup[Direction].Second;
@@ -74,6 +74,6 @@ public class AttractScenePacMan : ISprite
 
     public async ValueTask Update(CanvasTimingInformation timing)
     {
-        await updateAnimation(timing);
+        await UpdateAnimation(timing);
     }
 }

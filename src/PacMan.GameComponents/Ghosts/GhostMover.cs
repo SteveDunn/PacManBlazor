@@ -47,7 +47,7 @@ public abstract class GhostMover
 
             if (direction != Direction.None)
             {
-                setDirection(direction);
+                SetDirection(direction);
             }
         }
 
@@ -56,7 +56,7 @@ public abstract class GhostMover
         return MovementResult.NotFinished;
     }
 
-    void setDirection(Direction direction)
+    void SetDirection(Direction direction)
     {
         Ghost.Direction.Update(direction);
     }

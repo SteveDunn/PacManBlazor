@@ -9,7 +9,7 @@ public class EggTimer
     bool _isFinished;
     TimeSpan _currentTime;
 
-    static void doNothing()
+    static void DoNothing()
     {
     }
 
@@ -20,12 +20,12 @@ public class EggTimer
     {
         _duration = duration;
         _currentTime = duration;
-        _whenFinished = doNothing;
+        _whenFinished = DoNothing;
     }
 
     public void Reset() => _currentTime = _duration;
 
-    double getPercentProgress()
+    double GetPercentProgress()
     {
         TimeSpan msGone = _duration - _currentTime;
 
@@ -34,7 +34,7 @@ public class EggTimer
         return pc;
     }
 
-    public float Progress => (float)(getPercentProgress() / 100f);
+    public float Progress => (float)(GetPercentProgress() / 100f);
 
     public bool Finished => _isFinished;
 

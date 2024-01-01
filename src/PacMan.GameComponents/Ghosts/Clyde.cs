@@ -37,7 +37,7 @@ public class Clyde : Ghost
 
         MovementMode = GhostMovementMode.InHouse;
 
-        SetMover(new(this, _maze, CurrentPlayerStats.ghostHouseDoor));
+        SetMover(new(this, _maze, CurrentPlayerStats.GhostHouseDoor));
     }
 
     // Whenever Clyde needs to determine his target tile, he first calculates his distance from Pac-Man.

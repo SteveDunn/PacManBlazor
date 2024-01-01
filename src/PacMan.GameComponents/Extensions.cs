@@ -63,8 +63,8 @@ public static class Extensions
         {
             await session.DrawImage(
                 spriteSheet,
-                (sprite.Position - sprite.Origin).toPoint(),
-                new(sprite.SpriteSheetPos.toPoint(), sprite.Size));
+                (sprite.Position - sprite.Origin).ToPoint(),
+                new(sprite.SpriteSheetPos.ToPoint(), sprite.Size));
         }
     }
 
@@ -81,8 +81,6 @@ public static class Extensions
     public static TimeSpan Seconds(this int n) => TimeSpan.FromSeconds(n);
 
     public static TimeSpan Seconds(this float n) => TimeSpan.FromSeconds(n);
-
-    static Point toPoint(this Vector2 vector) => new((int) vector.X, (int) vector.Y);
 
     public static bool Intersects(this Rectangle r1, Rectangle r2) =>
         !(r2.Left > r1.Right ||

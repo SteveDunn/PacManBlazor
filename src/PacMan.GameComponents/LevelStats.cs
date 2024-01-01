@@ -509,7 +509,7 @@ public class LevelStats
         _currentMap[index] = '+';
     }
 
-    static int getArrayIndex(CellIndex point) => (point.Y * 29) + point.X;
+    static int GetArrayIndex(CellIndex point) => (point.Y * 29) + point.X;
 
-    public char GetCellContent(CellIndex point) => _currentMap[getArrayIndex(point: point)];
+    public char GetCellContent(CellIndex point) => _currentMap[GetArrayIndex(point: point)];
 }

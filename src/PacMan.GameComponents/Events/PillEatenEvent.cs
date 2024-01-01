@@ -39,10 +39,10 @@ public readonly struct PillEatenEvent : INotification
             await _gameStats.PillEaten(notification.CellIndex);
 
             _pacman.PillEaten();
-            await checkForNoMorePills();
+            await CheckForNoMorePills();
         }
 
-        async Task checkForNoMorePills()
+        async Task CheckForNoMorePills()
         {
             if (_gameStats.CurrentPlayerStats.LevelStats.PillsRemaining == 0)
             {

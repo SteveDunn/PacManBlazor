@@ -57,7 +57,7 @@ public class SimpleGhost : ISprite
 
     public virtual ValueTask Update(CanvasTimingInformation timing)
     {
-        updateAnimation(timing);
+        UpdateAnimation(timing);
         return default;
     }
 
@@ -71,13 +71,13 @@ public class SimpleGhost : ISprite
         return default;
     }
 
-    void updateAnimation(CanvasTimingInformation context)
+    void UpdateAnimation(CanvasTimingInformation context)
     {
         _toggle.Run(context);
 
         if (State == GhostState.Frightened)
         {
-            SpriteSheetPos = getGhostFrame();
+            SpriteSheetPos = GetGhostFrame();
         }
         else if (State == GhostState.Eyes)
         {
@@ -91,7 +91,7 @@ public class SimpleGhost : ISprite
 
     public virtual void PowerPillEaten(GhostFrightSession session) => SetFrightSession(session);
 
-    Vector2 getGhostFrame()
+    Vector2 GetGhostFrame()
     {
         if (_frightSession == null)
         {

@@ -77,14 +77,14 @@ public class GameSoundPlayer : IGameSoundPlayer
 
         PlayerStats playerStats = _gameStats.CurrentPlayerStats;
 
-        await handleFright(playerStats, thereAreEyes);
-        await handleSiren(playerStats.LevelStats.PillsEaten, thereAreEyes);
-        await handleEyes(thereAreEyes);
+        await HandleFright(playerStats, thereAreEyes);
+        await HandleSiren(playerStats.LevelStats.PillsEaten, thereAreEyes);
+        await HandleEyes(thereAreEyes);
     }
 
-    async ValueTask handleFright(PlayerStats currentPlayerStats, bool thereAreEyes)
+    async ValueTask HandleFright(PlayerStats currentPlayerStats, bool thereAreEyes)
     {
-        throwIfNotLoaded();
+        ThrowIfNotLoaded();
 
         if (thereAreEyes)
         {
@@ -106,9 +106,9 @@ public class GameSoundPlayer : IGameSoundPlayer
         }
     }
 
-    async ValueTask handleSiren(int pillsEaten, bool thereAreEyes)
+    async ValueTask HandleSiren(int pillsEaten, bool thereAreEyes)
     {
-        throwIfNotLoaded();
+        ThrowIfNotLoaded();
 
         if (thereAreEyes)
         {
@@ -143,12 +143,12 @@ public class GameSoundPlayer : IGameSoundPlayer
             level = 4;
         }
 
-        await playSiren(level);
+        await PlaySiren(level);
     }
 
-    async ValueTask playSiren(int level)
+    async ValueTask PlaySiren(int level)
     {
-        throwIfNotLoaded();
+        ThrowIfNotLoaded();
 
         for (int i = 0; i < _sirens.Length; i++)
         {
@@ -165,9 +165,9 @@ public class GameSoundPlayer : IGameSoundPlayer
         }
     }
 
-    async ValueTask handleEyes(bool thereAreEyes)
+    async ValueTask HandleEyes(bool thereAreEyes)
     {
-        throwIfNotLoaded();
+        ThrowIfNotLoaded();
 
         if (thereAreEyes == false)
         {
@@ -181,7 +181,7 @@ public class GameSoundPlayer : IGameSoundPlayer
 
     public async ValueTask Disable()
     {
-        throwIfNotLoaded();
+        ThrowIfNotLoaded();
 
         if (!_enabled)
         {
@@ -198,7 +198,7 @@ public class GameSoundPlayer : IGameSoundPlayer
 
     public async ValueTask Enable()
     {
-        throwIfNotLoaded();
+        ThrowIfNotLoaded();
 
         if (_enabled)
         {
@@ -215,67 +215,67 @@ public class GameSoundPlayer : IGameSoundPlayer
 
     public async ValueTask PowerPillEaten()
     {
-        throwIfNotLoaded();
+        ThrowIfNotLoaded();
 
-        await play(SoundName.Frightened);
+        await Play(SoundName.Frightened);
     }
 
     public async ValueTask FruitEaten()
     {
-        throwIfNotLoaded();
+        ThrowIfNotLoaded();
 
-        await play(SoundName.FruitEaten);
+        await Play(SoundName.FruitEaten);
     }
 
     public async ValueTask GhostEaten()
     {
-        throwIfNotLoaded();
+        ThrowIfNotLoaded();
 
-        await play(SoundName.GhostEaten);
-        await play(SoundName.GhostEyes);
+        await Play(SoundName.GhostEaten);
+        await Play(SoundName.GhostEyes);
     }
 
     public async ValueTask GotExtraLife()
     {
-        throwIfNotLoaded();
+        ThrowIfNotLoaded();
 
-        await play(SoundName.ExtraLife);
+        await Play(SoundName.ExtraLife);
     }
 
     public async ValueTask CutScene()
     {
-        throwIfNotLoaded();
-        await play(SoundName.CutScene);
+        ThrowIfNotLoaded();
+        await Play(SoundName.CutScene);
     }
 
     public async ValueTask PacManDying()
     {
-        throwIfNotLoaded();
-        await play(SoundName.PacManDying);
+        ThrowIfNotLoaded();
+        await Play(SoundName.PacManDying);
     }
 
     public async ValueTask PlayerStart()
     {
-        throwIfNotLoaded();
-        await play(SoundName.PlayerStart);
+        ThrowIfNotLoaded();
+        await Play(SoundName.PlayerStart);
     }
 
     public async ValueTask CoinInserted()
     {
-        throwIfNotLoaded();
-        await play(SoundName.CoinInserted);
+        ThrowIfNotLoaded();
+        await Play(SoundName.CoinInserted);
 
         // it might have been set in the demo mode
         await _frightened.Stop();
     }
 
-    public ValueTask Munch1() => play(SoundName.Munch1);
+    public ValueTask Munch1() => Play(SoundName.Munch1);
 
-    public ValueTask Munch2() => play(SoundName.Munch2);
+    public ValueTask Munch2() => Play(SoundName.Munch2);
 
-    async ValueTask play(SoundName soundName)
+    async ValueTask Play(SoundName soundName)
     {
-        throwIfNotLoaded(); 
+        ThrowIfNotLoaded(); 
         
         SoundEffect audio = _loader.GetSoundEffect(soundName);
 
@@ -284,7 +284,7 @@ public class GameSoundPlayer : IGameSoundPlayer
 
     public void MarkAsFinished(string name)
     {
-        throwIfNotLoaded();
+        ThrowIfNotLoaded();
         
         bool parsed = Enum.TryParse(name, out SoundName val);
 
@@ -296,7 +296,7 @@ public class GameSoundPlayer : IGameSoundPlayer
         _loader.GetSoundEffect(val).MarkAsFinished();
     }
 
-    void throwIfNotLoaded()
+    void ThrowIfNotLoaded()
     {
         if (!_loaded)
         {

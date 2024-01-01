@@ -26,7 +26,7 @@ public class TornGhostChaseAct : IAct
 
         var justOffScreen = new Vector2(250, 140);
 
-        _ghostTimer = new(4500.Milliseconds(), reverseChase);
+        _ghostTimer = new(4500.Milliseconds(), ReverseChase);
 
         _pacTimer = new(4800.Milliseconds(), () => { });
 
@@ -75,8 +75,8 @@ public class TornGhostChaseAct : IAct
         _pacTimer.Run(gameContext);
         await _worm.Update(gameContext);
 
-        lerpBlinky();
-        lerpPacMan();
+        LerpBlinky();
+        LerpPacMan();
 
         await _pacMan.Update(gameContext);
         await _blinky.Update(gameContext);
@@ -92,21 +92,21 @@ public class TornGhostChaseAct : IAct
         await _worm.Draw(canvas);
     }
 
-    void lerpBlinky()
+    void LerpBlinky()
     {
         var pc = _ghostTimer.Progress;
         _blinky.Position = Vector2.Lerp(_ghostStartAndEndPos.Start, _ghostStartAndEndPos.End, pc);
         _worm.Position = Vector2.Lerp(_ghostStartAndEndPos.Start, _ghostStartAndEndPos.End, pc);
     }
 
-    void lerpPacMan()
+    void LerpPacMan()
     {
         var pc = _pacTimer.Progress;
 
         _pacMan.Position = Vector2.Lerp(_pacPositions.Start, _pacPositions.End, pc);
     }
 
-    void reverseChase()
+    void ReverseChase()
     {
         _ghostTimer = new(4600.Milliseconds(), async () =>
         {

@@ -23,7 +23,7 @@ public class GhostMovementConductor
             new(GhostMovementMode.Chase, properties.Chase4.Seconds())
         ];
 
-        incrementIndex();
+        IncrementIndex();
     }
 
     public void Update(CanvasTimingInformation context)
@@ -34,11 +34,11 @@ public class GhostMovementConductor
 
         if (item.Duration < TimeSpan.Zero)
         {
-            incrementIndex();
+            IncrementIndex();
         }
     }
 
-    void incrementIndex()
+    void IncrementIndex()
     {
         _index += 1;
 

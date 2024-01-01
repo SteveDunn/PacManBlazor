@@ -76,11 +76,11 @@ public class Tweener
         {
             _elapsed = _duration;
             Position = _from + _change;
-            onEnd();
+            OnEnd();
         }
     }
 
-    void onEnd()
+    void OnEnd()
     {
         _hasEnded = true;
 

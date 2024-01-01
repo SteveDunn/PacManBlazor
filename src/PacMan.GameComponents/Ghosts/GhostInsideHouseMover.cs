@@ -51,7 +51,7 @@ public class GhostInsideHouseMover : GhostMover
         _routeOut = [centerOfUpDown, Maze.PixelCenterOfHouse, Maze.PixelHouseEntrancePoint];
     }
 
-    void whenAtTargetCell()
+    void WhenAtTargetCell()
     {
         _cellToMoveFrom = _cellToMoveTo;
 
@@ -110,7 +110,7 @@ public class GhostInsideHouseMover : GhostMover
         if (Ghost.Position.Floor() == _cellToMoveTo.Floor())
         {
             Ghost.Position = _cellToMoveTo;
-            whenAtTargetCell();
+            WhenAtTargetCell();
         }
 
         return new(MovementResult.NotFinished);

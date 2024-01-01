@@ -31,7 +31,7 @@ public class BigPacChaseAct : IAct
 
         var justOffScreen = new Vector2(250, 140);
 
-        _blinkyTimer = new(4500.Milliseconds(), reverseChase);
+        _blinkyTimer = new(4500.Milliseconds(), ReverseChase);
 
         _pacTimer = new(4750.Milliseconds(), static () => { });
 
@@ -71,8 +71,8 @@ public class BigPacChaseAct : IAct
         _pacTimer.Run(timing);
         await _bigPacMan.Update(timing);
 
-        lerpBlinky();
-        lerpPacMan();
+        LerpBlinky();
+        LerpPacMan();
 
         await _pacMan.Update(timing);
         await _blinky.Update(timing);
@@ -88,14 +88,14 @@ public class BigPacChaseAct : IAct
         await _bigPacMan.Draw(canvas);
     }
 
-    void lerpBlinky()
+    void LerpBlinky()
     {
         float pc = _blinkyTimer.Progress;
 
         _blinky.Position = Vector2.Lerp(_blinkyPositions.Start, _blinkyPositions.End, pc);
     }
 
-    void lerpPacMan()
+    void LerpPacMan()
     {
         float pc = _pacTimer.Progress;
 
@@ -103,7 +103,7 @@ public class BigPacChaseAct : IAct
         _bigPacMan.Position = Vector2.Lerp(_pacPositions.Start, _pacPositions.End, pc);
     }
 
-    void reverseChase()
+    void ReverseChase()
     {
         _blinkyTimer = new(4600.Milliseconds(), static () => { });
 
