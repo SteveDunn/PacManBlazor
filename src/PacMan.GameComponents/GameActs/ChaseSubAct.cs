@@ -197,8 +197,8 @@ public class ChaseSubAct
 
         var gp = _ghosts[0].Position;
 
-        await session.DrawText("STEVE DUNN 2022", new((int)gp.X + 2, (int)(gp.Y + 22)), Color.Black);
-        await session.DrawText("STEVE DUNN 2022", new((int)gp.X, (int)(gp.Y + 20)), Color.Yellow);
+        await session.DrawText("STEVE DUNN 2024", new((int)gp.X + 2, (int)(gp.Y + 22)), Color.Black);
+        await session.DrawText("STEVE DUNN 2024", new((int)gp.X, (int)(gp.Y + 20)), Color.Yellow);
     }
 
     private void GhostEaten(AttractGhost ghost)
