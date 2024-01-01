@@ -13,20 +13,20 @@ public class Maze : ISprite, IMaze
     public readonly static Vector2 PixelCenterOfHouse = Tile.ToCenterCanvas(new(13.5f, 14));
 
     readonly static CellIndex[] _specialIntersections =
-    {
+    [
         new(12, 11),
         new(15, 11),
         new(12, 26),
         new(15, 26)
-    };
+    ];
 
     readonly static CellIndex[] _powerPillPositions =
-    {
+    [
         new(1, 3),
         new(26, 3),
         new(1, 23),
         new(26, 23)
-    };
+    ];
 
     readonly LoopingTimer _timer;
 
@@ -42,12 +42,12 @@ public class Maze : ISprite, IMaze
     readonly static Rectangle _mazeRect = new(0, 0, 225, 248);
 
     readonly static Direction[] _directions =
-    {
+    [
         Direction.Left,
         Direction.Right,
         Direction.Up,
         Direction.Down
-    };
+    ];
 
     MazeCanvas? _currentPlayerCanvas;
     LevelStats? _levelStats;

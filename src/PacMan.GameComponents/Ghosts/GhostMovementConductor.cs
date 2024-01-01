@@ -11,7 +11,8 @@ public class GhostMovementConductor
     {
         _index = -1;
 
-        _items = new() {
+        _items =
+        [
             new(GhostMovementMode.Scatter, properties.Scatter1.Seconds()),
             new(GhostMovementMode.Chase, properties.Chase1.Seconds()),
             new(GhostMovementMode.Scatter, properties.Scatter2.Seconds()),
@@ -20,7 +21,7 @@ public class GhostMovementConductor
             new(GhostMovementMode.Chase, properties.Chase3.Seconds()),
             new(GhostMovementMode.Scatter, properties.Scatter4.Seconds()),
             new(GhostMovementMode.Chase, properties.Chase4.Seconds())
-        };
+        ];
 
         incrementIndex();
     }

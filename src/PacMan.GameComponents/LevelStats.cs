@@ -17,7 +17,8 @@ public class LevelStats
 
     readonly char[] _currentMap;
 
-    static readonly LevelProps[] _levelProps = {
+    static readonly LevelProps[] _levelProps =
+    [
         new(
             CutScene: IntroCutScene.None,
             Fruit1: FruitItem.Cherry,
@@ -375,7 +376,7 @@ public class LevelStats
             FrightGhostSpeedPc:  SpeedPercentage.From(.0f),
             FrightGhostTime:  GhostFrightDuration.ZeroSeconds,
             FrightGhostFlashes: 0)
-    };
+    ];
 
     // todo: move to another class (and related properties)
     [SuppressMessage(category: "ReSharper", checkId: "StringLiteralTypo")] static readonly char[] _map = (

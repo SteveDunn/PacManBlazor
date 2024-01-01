@@ -33,14 +33,14 @@ public class GameSoundPlayer : IGameSoundPlayer
         _frightened = _loader.GetSoundEffect(SoundName.Frightened);
         _ghostEyes = _loader.GetSoundEffect(SoundName.GhostEyes);
 
-        _sirens = new[]
-        {
+        _sirens =
+        [
             _loader.GetSoundEffect(SoundName.Siren1),
             _loader.GetSoundEffect(SoundName.Siren2),
             _loader.GetSoundEffect(SoundName.Siren3),
             _loader.GetSoundEffect(SoundName.Siren4),
             _loader.GetSoundEffect(SoundName.Siren5)
-        };
+        ];
 
         _frightened.Loop();
         _ghostEyes.Loop();

@@ -35,7 +35,7 @@ public class SoundEffect
 
     public async ValueTask Mute()
     {
-        _previousVolume = await _runtime.InvokeAsync<float>("soundPlayer.getVolume", new object[] { _name });
+        _previousVolume = await _runtime.InvokeAsync<float>("soundPlayer.getVolume", [_name]);
 
         await SetVolume(0f);
     }

@@ -4,6 +4,8 @@ using PacMan.GameComponents.Ghosts;
 
 namespace PacMan.GameComponents.GameActs;
 
+public record struct ColouredText(string Text = "", Color Color = default);
+
 /// Show's the attract screen (ghost names and pictures and the 'chase' sub act).  Transitions to either
 /// the 'player intro' act (to start the demo mode if nothing's was pressed/clicked/touched),
 /// or the 'start button' act if a coin was 'inserted'.
@@ -19,10 +21,10 @@ public class AttractAct : IAct
     struct Instruction
     {
         public required TimeSpan When { get; init; }
-        public SimpleGhost? Ghost { get; init; }
-        public required string Text { get; init; }
         public required Vector2 Where { get; init; }
-        public required Color Color { get; init; }
+        public SimpleGhost? Ghost { get; init; }
+
+        public ColouredText ColouredText { get; init; }
     }
 
     readonly SimpleGhost _blinky;
@@ -56,7 +58,7 @@ public class AttractAct : IAct
             ?.InformationalVersion ?? "??";
 
         MarqueeText[] texts =
-        {
+        [
             new() {
                 Text = $"v{version}",
                 YPosition = 195,
@@ -81,7 +83,7 @@ public class AttractAct : IAct
                 TimeStationary = 2.Seconds(),
                 TimeOut = 1.Seconds()
             }
-        };
+        ];
 
         _marquee = new(texts);
         _coinBox = coinBox;
@@ -92,7 +94,7 @@ public class AttractAct : IAct
             new(new(192, 25), new(36, 152), Vector2.Zero, new(456, 173));
         _blazorLogo = new();
 
-        _instructions = new();
+        _instructions = [];
 
         _startTime = TimeSpan.MinValue;
 
@@ -210,7 +212,9 @@ public class AttractAct : IAct
             }
             else
             {
-                await drawText(session, inst.Text, inst.Where, inst.Color);
+                // if the ghost is null, it's a text instruction
+
+                await drawText(session, inst.ColouredText.Text, inst.Where, inst.ColouredText.Color);
             }
         }
 
@@ -237,8 +241,7 @@ public class AttractAct : IAct
             _instructions.Add(new Instruction {
                 When = clock,
                 Where = new(32, 12),
-                Text = "CHARACTER / NICKNAME",
-                Color = Color.White
+                ColouredText = new("CHARACTER / NICKNAME", Color.White),
             });
 
             var gap = new Vector2(0, 24);
@@ -288,9 +291,8 @@ public class AttractAct : IAct
 
         _instructions.Add(new() {
             Where = point,
-            Text = $@" - {name}",
+            ColouredText = new($@" - {name}", color),
             When = clock,
-            Color = color
         });
 
         point += new Vector2(90, 0);
@@ -299,9 +301,8 @@ public class AttractAct : IAct
 
         _instructions.Add(new() {
             Where = point,
-            Text = $@"""{nickname}""",
+            ColouredText = new($@"""{nickname}""", color),
             When = clock,
-            Color = color
         });
     }
 

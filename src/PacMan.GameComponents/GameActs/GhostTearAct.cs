@@ -51,8 +51,8 @@ public class GhostTearAct : IAct
         _stage = Stage.MovingBlinky;
         _animFrame = 0;
 
-        _tearFrames = new[]
-        {
+        _tearFrames =
+        [
             new Vector2(589, 98),
             new Vector2(609, 98),
             new Vector2(622, 98),
@@ -60,13 +60,13 @@ public class GhostTearAct : IAct
             new Vector2(636, 98),
             new Vector2(636, 98),
             new Vector2(649, 98)
-        };
+        ];
 
-        _blinkyLookFrames = new[]
-        {
+        _blinkyLookFrames =
+        [
             new Vector2(584, 113),
             new Vector2(600, 113)
-        };
+        ];
 
         _blinkyTimer = new(4500.Milliseconds(), blinkyCaught);
 

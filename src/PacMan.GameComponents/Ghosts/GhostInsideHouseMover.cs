@@ -48,7 +48,7 @@ public class GhostInsideHouseMover : GhostMover
             throw new InvalidOperationException("Ghost must be pointing up or down at start.");
         }
 
-        _routeOut = new[] { centerOfUpDown, Maze.PixelCenterOfHouse, Maze.PixelHouseEntrancePoint };
+        _routeOut = [centerOfUpDown, Maze.PixelCenterOfHouse, Maze.PixelHouseEntrancePoint];
     }
 
     void whenAtTargetCell()

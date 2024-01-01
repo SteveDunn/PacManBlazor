@@ -28,7 +28,7 @@ public class PlayerStats
         Lives = Constants.PacManLives;
         _levelNumber = -1;
 
-        _extraLives = new() { 10_000 };
+        _extraLives = [10_000];
         _levelStats = new(0);
         _ghostHouseDoor = new(0, _mediator);
 

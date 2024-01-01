@@ -38,7 +38,7 @@ public class SoundLoader : ISoundLoader
             // ReSharper disable once HeapView.ObjectAllocation.Evident
             // ReSharper disable once HeapView.BoxingAllocation
             var s = name.ToString();
-            await runtime.InvokeAsync<object>("soundPlayer.loadSound", new object[] { s, path });
+            await runtime.InvokeAsync<object>("soundPlayer.loadSound", [s, path]);
 
             // ReSharper disable once HeapView.ObjectAllocation.Evident
             return new(runtime, s);
