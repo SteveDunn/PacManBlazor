@@ -260,64 +260,74 @@ public class PacMan : ISprite, IPacMan
     {
         Direction requestedDirection = _direction;
 
-        if (_isDemoMode)
-        {
-            if (_tile.IsNearCenter(4) && _tile.Index != _lastDemoKeyPressAt)
-            {
-                var choices = _maze.GetChoicesAtCellPosition(_tile.Index);
-
-                choices.Unset(_direction);
-
-                switch (_direction)
-                {
-                    case Direction.Left:
-                        choices.Unset(Direction.Right);
-                        break;
-                    case Direction.Right:
-                        choices.Unset(Direction.Left);
-                        break;
-                    case Direction.Up:
-                        choices.Unset(Direction.Down);
-                        break;
-                    case Direction.Down:
-                        choices.Unset(Direction.Up);
-                        break;
-                }
-
-                if (choices.Possibilities >= 1)
-                {
-                    requestedDirection = _demoKeyPresses.Next();
-
-                    _keyPress.When = context.TotalTime.TotalMilliseconds;
-
-                    _keyPress.Direction = requestedDirection;
-
-                    _lastDemoKeyPressAt = _tile.Index;
-                }
-            }
-        }
-        else
-        {
-            if (_input.IsRightKeyDown || _input.IsPanning(Keys.Right))
-            {
-                requestedDirection = Direction.Right;
-            }
-            else if (_input.IsLeftKeyDown || _input.IsPanning(Keys.Left))
-            {
-                requestedDirection = Direction.Left;
-            }
-            else if (_input.IsDownKeyDown || _input.IsPanning(Keys.Down))
-            {
-                requestedDirection = Direction.Down;
-            }
-            else if (_input.IsUpKeyDown || _input.IsPanning(Keys.Up))
-            {
-                requestedDirection = Direction.Up;
-            }
-        }
+        requestedDirection = _isDemoMode 
+            ? HandleDemoMode(context, requestedDirection) 
+            : HandleNonDemoMode(requestedDirection);
 
         _keyPress.Direction = requestedDirection;
         _keyPress.When = context.TotalTime.TotalMilliseconds;
+    }
+
+    private Direction HandleNonDemoMode(Direction requestedDirection)
+    {
+        if (_input.IsRightKeyDown || _input.IsPanning(Keys.Right))
+        {
+            requestedDirection = Direction.Right;
+        }
+        else if (_input.IsLeftKeyDown || _input.IsPanning(Keys.Left))
+        {
+            requestedDirection = Direction.Left;
+        }
+        else if (_input.IsDownKeyDown || _input.IsPanning(Keys.Down))
+        {
+            requestedDirection = Direction.Down;
+        }
+        else if (_input.IsUpKeyDown || _input.IsPanning(Keys.Up))
+        {
+            requestedDirection = Direction.Up;
+        }
+
+        return requestedDirection;
+    }
+
+    private Direction HandleDemoMode(CanvasTimingInformation context, Direction requestedDirection)
+    {
+        if (_tile.IsNearCenter(4) && _tile.Index != _lastDemoKeyPressAt)
+        {
+            var choices = _maze.GetChoicesAtCellPosition(_tile.Index);
+
+            choices.Unset(_direction);
+            
+            // ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
+            switch (_direction)
+            {
+                case Direction.Left:
+                    choices.Unset(Direction.Right);
+                    break;
+                case Direction.Right:
+                    choices.Unset(Direction.Left);
+                    break;
+                case Direction.Up:
+                    choices.Unset(Direction.Down);
+                    break;
+                case Direction.Down:
+                    choices.Unset(Direction.Up);
+                    break;
+            }
+
+            if (choices.AnyAvailable)
+            {
+                requestedDirection = _demoKeyPresses.Next();
+
+                _keyPress.When = context.TotalTime.TotalMilliseconds;
+
+                _keyPress.Direction = requestedDirection;
+
+                _lastDemoKeyPressAt = _tile.Index;
+            }
+        }
+
+        return requestedDirection;
     }
 
     // debt: SD: refactor into something common as this is also used for the ghosts

@@ -53,31 +53,7 @@ public class GhostLogic
     {
         CellIndex cellPosition = tile.Index;
 
-        DirectionChoices choices = _maze.GetChoicesAtCellPosition(cellPosition);
-
-        Direction dir = _ghost.Direction.Next;
-
-        _availableDirections.Clear();
-
-        if (choices.IsSet(Direction.Up) && dir != Direction.Down)
-        {
-            _availableDirections.Add(Direction.Up);
-        }
-
-        if (choices.IsSet(Direction.Left) && dir != Direction.Right)
-        {
-            _availableDirections.Add(Direction.Left);
-        }
-
-        if (choices.IsSet(Direction.Down) && dir != Direction.Up)
-        {
-            _availableDirections.Add(Direction.Down);
-        }
-
-        if (choices.IsSet(Direction.Right) && dir != Direction.Left)
-        {
-            _availableDirections.Add(Direction.Right);
-        }
+        RefreshAvailableDirections(tile);
 
         if (_availableDirections.Count == 1)
         {
@@ -109,9 +85,38 @@ public class GhostLogic
             throw new InvalidOperationException("No choices to pick from!");
         }
 
-        dir = PickShortest(tile, targetCell, _availableDirections);
+        return PickShortest(tile, targetCell, _availableDirections);
+    }
 
-        return dir;
+    private void RefreshAvailableDirections(Tile tile)
+    {
+        CellIndex cellPosition = tile.Index;
+
+        DirectionChoices choices = _maze.GetChoicesAtCellPosition(cellPosition);
+
+        Direction dir = _ghost.Direction.Next;
+
+        _availableDirections.Clear();
+
+        if (choices.CanGoUp && dir != Direction.Down)
+        {
+            _availableDirections.Add(Direction.Up);
+        }
+
+        if (choices.CanGoLeft && dir != Direction.Right)
+        {
+            _availableDirections.Add(Direction.Left);
+        }
+
+        if (choices.CanGoDown && dir != Direction.Up)
+        {
+            _availableDirections.Add(Direction.Down);
+        }
+
+        if (choices.CanGoRight && dir != Direction.Left)
+        {
+            _availableDirections.Add(Direction.Right);
+        }
     }
 
     private Direction PickShortest(Tile ghostTile, CellIndex targetCell, List<Direction> choices)

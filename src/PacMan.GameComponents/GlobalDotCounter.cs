@@ -44,6 +44,7 @@ public class GlobalDotCounter : DotCounter
 
         bool canLeave = false;
 
+        // ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
         switch (nickName)
         {
             case GhostNickname.Pinky when Counter == 7:

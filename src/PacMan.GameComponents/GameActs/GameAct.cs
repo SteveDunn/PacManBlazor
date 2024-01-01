@@ -1,7 +1,8 @@
 ﻿namespace PacMan.GameComponents.GameActs;
 
 /// <summary>
-/// The main 'Game' act.  Draws everything (maze, ghosts, pacman), and updates everything (keyboard, sound etc.). Transitions to the 'player intro' act.
+/// The main 'Game' act.  Draws everything (maze, ghosts, pacman), and updates everything (keyboard, sound etc.).
+/// Transitions to the 'player intro' act.
 /// </summary>
 public class GameAct : IAct
 {
@@ -39,7 +40,7 @@ public class GameAct : IAct
         _fruit = fruit;
     }
 
-    public string Name { get; } = "GameAct";
+    public string Name => "GameAct";
 
     public ValueTask Reset()
     {
@@ -52,50 +53,16 @@ public class GameAct : IAct
     {
         if (_gameStats.IsDemo)
         {
-            if (_input.WasKeyPressedAndReleased(Keys.Space) ||
-                _input.WasKeyPressedAndReleased(Keys.One) ||
-                _input.WasTapped)
+            var result = await TryHandleDemoInput();
+            if (result.HasValue)
             {
-                await _gameSoundPlayer.Enable();
-                _coinBox.CoinInserted();
-                await _mediator.Publish(new NewGameEvent(1));
-
-                return ActUpdateResult.Running;
-            }
-
-            if (_input.WasKeyPressedAndReleased(Keys.Two) || _input.WasLongPress)
-            {
-                await _gameSoundPlayer.Enable();
-
-                _coinBox.CoinInserted();
-                _coinBox.CoinInserted();
-
-                await _mediator.Publish(new NewGameEvent(2));
-
-                return ActUpdateResult.Running;
-            }
-
-            if (_input.WasKeyPressedAndReleased(Keys.Five))
-            {
-                await _mediator.Publish(new CoinInsertedEvent());
-
-                return ActUpdateResult.Finished;
+                return result.Value;
             }
         }
 
         if (_input.WasKeyPressedAndReleased(Keys.P))
         {
-            _paused = !_paused;
-
-            if (_paused)
-            {
-                await _gameSoundPlayer.Disable();
-            }
-
-            else
-            {
-                await _gameSoundPlayer.Enable();
-            }
+            await HandlePausePressed();
         }
 
         if (_paused)
@@ -118,6 +85,56 @@ public class GameAct : IAct
         await _ghostCollection.Update(timing);
 
         return ActUpdateResult.Running;
+    }
+
+    private async Task<ActUpdateResult?> TryHandleDemoInput()
+    {
+        if (_input.WasKeyPressedAndReleased(Keys.Space) ||
+            _input.WasKeyPressedAndReleased(Keys.One) ||
+            _input.WasTapped)
+        {
+            await _gameSoundPlayer.Enable();
+            _coinBox.CoinInserted();
+            await _mediator.Publish(new NewGameEvent(1));
+
+            return ActUpdateResult.Running;
+        }
+
+        if (_input.WasKeyPressedAndReleased(Keys.Two) || _input.WasLongPress)
+        {
+            await _gameSoundPlayer.Enable();
+
+            _coinBox.CoinInserted();
+            _coinBox.CoinInserted();
+
+            await _mediator.Publish(new NewGameEvent(2));
+
+            return ActUpdateResult.Running;
+        }
+
+        if (_input.WasKeyPressedAndReleased(Keys.Five))
+        {
+            await _mediator.Publish(new CoinInsertedEvent());
+
+            return ActUpdateResult.Finished;
+        }
+
+        return null;
+    }
+
+    private async Task HandlePausePressed()
+    {
+        _paused = !_paused;
+
+        if (_paused)
+        {
+            await _gameSoundPlayer.Disable();
+        }
+
+        else
+        {
+            await _gameSoundPlayer.Enable();
+        }
     }
 
     public async ValueTask Draw(CanvasWrapper session)

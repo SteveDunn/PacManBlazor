@@ -48,6 +48,7 @@ public readonly struct LevelFinishedEvent : INotification
                     return;
                 }
 
+                // ReSharper disable once SwitchExpressionHandlesSomeKnownEnumValuesWithExceptionInDefault
                 var act = cutScene switch
                 {
                     IntroCutScene.BigPac => await GetAct("BigPacChaseAct"),
