@@ -1,5 +1,6 @@
 namespace PacMan.GameComponents.Tweening;
 
+[PublicAPI]
 public class Linear
 {
     public static float EaseNone(float t, float b, float c, float d)

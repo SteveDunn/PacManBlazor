@@ -3,17 +3,17 @@
 /// Moves the ghosts while they are inside of the house
 public class GhostInsideHouseMover : GhostMover
 {
-    readonly GhostHouseDoor _door;
-    readonly Vector2[] _routeOut;
-    readonly Vector2 _topPos;
-    readonly Vector2 _bottomPos;
+    private readonly GhostHouseDoor _door;
+    private readonly Vector2[] _routeOut;
+    private readonly Vector2 _topPos;
+    private readonly Vector2 _bottomPos;
 
-    Vector2 _cellToMoveFrom;
-    Vector2 _cellToMoveTo;
+    private Vector2 _cellToMoveFrom;
+    private Vector2 _cellToMoveTo;
 
-    bool _readyToExit;
-    int _indexInRouteOut;
-    bool _finished;
+    private bool _readyToExit;
+    private int _indexInRouteOut;
+    private bool _finished;
 
     public GhostInsideHouseMover(
         Ghost ghost,
@@ -48,10 +48,10 @@ public class GhostInsideHouseMover : GhostMover
             throw new InvalidOperationException("Ghost must be pointing up or down at start.");
         }
 
-        _routeOut = new[] { centerOfUpDown, Maze.PixelCenterOfHouse, Maze.PixelHouseEntrancePoint };
+        _routeOut = [centerOfUpDown, Maze.PixelCenterOfHouse, Maze.PixelHouseEntrancePoint];
     }
 
-    void whenAtTargetCell()
+    private void WhenAtTargetCell()
     {
         _cellToMoveFrom = _cellToMoveTo;
 
@@ -110,7 +110,7 @@ public class GhostInsideHouseMover : GhostMover
         if (Ghost.Position.Floor() == _cellToMoveTo.Floor())
         {
             Ghost.Position = _cellToMoveTo;
-            whenAtTargetCell();
+            WhenAtTargetCell();
         }
 
         return new(MovementResult.NotFinished);

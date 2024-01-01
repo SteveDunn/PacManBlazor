@@ -8,13 +8,14 @@ public readonly struct PowerPillEatenEvent : INotification
 
     public CellIndex CellIndex { get; }
 
+    [UsedImplicitly]
     public class Handler : INotificationHandler<PowerPillEatenEvent>
     {
-        readonly IGame _game;
-        readonly IGameStats _gameStats;
-        readonly IGameSoundPlayer _gameSoundPlayer;
-        readonly IMediator _mediator;
-        readonly IGhostCollection _ghostCollection;
+        private readonly IGame _game;
+        private readonly IGameStats _gameStats;
+        private readonly IGameSoundPlayer _gameSoundPlayer;
+        private readonly IMediator _mediator;
+        private readonly IGhostCollection _ghostCollection;
 
         public Handler(
             IGame game,
@@ -48,10 +49,10 @@ public readonly struct PowerPillEatenEvent : INotification
                 eachGhost.PowerPillEaten(frightSession);
             }
 
-            await checkForNoMorePills();
+            await CheckForNoMorePills();
         }
 
-        async Task checkForNoMorePills()
+        private async Task CheckForNoMorePills()
         {
             if (_gameStats.CurrentPlayerStats.LevelStats.PillsRemaining == 0)
             {

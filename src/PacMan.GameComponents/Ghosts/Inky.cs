@@ -4,16 +4,16 @@ namespace PacMan.GameComponents.Ghosts;
 
 public class Inky : Ghost
 {
-    readonly IMediator _mediator;
-    readonly IMaze _maze;
-    readonly IPacMan _pacman;
-    readonly GetBlinkyRequest _getBlinkyRequest;
+    private readonly IMediator _mediator;
+    private readonly IMaze _maze;
+    private readonly IPacMan _pacman;
+    private readonly GetBlinkyRequest _getBlinkyRequest;
 
     public override Color GetColor() => Color.Aqua;
 
     public override ValueTask<CellIndex> GetScatterTarget() => new(new CellIndex(27, 29));
 
-    public override ValueTask<CellIndex> GetChaseTarget() => getChaseTargetCell();
+    public override ValueTask<CellIndex> GetChaseTarget() => GetChaseTargetCell();
 
     public Inky(IGameStats gameStats, IMediator mediator, IMaze maze, IPacMan pacman, IHumanInterfaceParser input) : base(
         gameStats,
@@ -39,14 +39,14 @@ public class Inky : Ghost
 
         State = GhostState.Normal;
         MovementMode = GhostMovementMode.InHouse;
-        SetMover(new(this, _maze, CurrentPlayerStats.ghostHouseDoor));
+        SetMover(new(this, _maze, CurrentPlayerStats.GhostHouseDoor));
     }
 
     // To locate Inky’s target, we first start by selecting the position two tiles in front of Pac-Man
     // in his current direction of travel.
     // From there, imagine drawing a vector from Blinky’s position to this tile, and then doubling
     // the length of the vector. The tile that this new, extended vector ends on will be Inky’s actual target
-    async ValueTask<CellIndex> getChaseTargetCell()
+    private async ValueTask<CellIndex> GetChaseTargetCell()
     {
         // ReSharper disable once HeapView.BoxingAllocation
         var blinky = await _mediator.Send(_getBlinkyRequest);

@@ -3,9 +3,9 @@
 public class DemoKeyPresses
 {
     // 01234567890123456789012345678901234567890123456789012345678901234567890123456789
-    const string _presses = "ldrdrruluruluuulllllddlllddldlul";
+    private const string _presses = "ldrdrruluruluuulllllddlllddldlul";
 
-    int _index;
+    private int _index;
 
     public DemoKeyPresses() => _index = 0;
 

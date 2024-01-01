@@ -5,7 +5,7 @@ namespace PacMan.GameComponents;
 
 public static class Spritesheet
 {
-    static ElementReference? _reference;
+    private static ElementReference? _reference;
 
     public static ElementReference Reference => _reference ?? throw new InvalidOperationException("Nothing set yet!");
 

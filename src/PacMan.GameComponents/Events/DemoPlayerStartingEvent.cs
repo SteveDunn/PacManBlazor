@@ -8,15 +8,15 @@ public readonly struct DemoPlayerStartingEvent : INotification
 {
     public class Handler : INotificationHandler<DemoPlayerStartingEvent>
     {
-        readonly IGameSoundPlayer _gameSoundPlayer;
-        readonly IGhostCollection _ghostCollection;
-        readonly IFruit _fruit;
-        readonly IMaze _maze;
-        readonly IPacMan _pacman;
-        readonly IGame _game;
-        readonly IActs _acts;
-        readonly IGameStats _gameStats;
-        readonly IHaveTheMazeCanvases _mazeCanvases;
+        private readonly IGameSoundPlayer _gameSoundPlayer;
+        private readonly IGhostCollection _ghostCollection;
+        private readonly IFruit _fruit;
+        private readonly IMaze _maze;
+        private readonly IPacMan _pacman;
+        private readonly IGame _game;
+        private readonly IActs _acts;
+        private readonly IGameStats _gameStats;
+        private readonly IHaveTheMazeCanvases _mazeCanvases;
 
         public Handler(
             IGameSoundPlayer gameSoundPlayer,

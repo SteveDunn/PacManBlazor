@@ -9,11 +9,12 @@ public readonly struct FruitEatenEvent : INotification
         Fruit = fruit;
     }
 
+    [UsedImplicitly]
     public class Handler : INotificationHandler<FruitEatenEvent>
     {
-        readonly IGame _game;
-        readonly IGameStats _gameStats;
-        readonly IGameSoundPlayer _gameSoundPlayer;
+        private readonly IGame _game;
+        private readonly IGameStats _gameStats;
+        private readonly IGameSoundPlayer _gameSoundPlayer;
 
         public Handler(IGame game, IGameStats gameStats, IGameSoundPlayer gameSoundPlayer)
         {
@@ -37,9 +38,10 @@ public readonly struct FruitEatenEvent : INotification
 
 public readonly struct ExtraLifeEvent : INotification
 {
+    [UsedImplicitly]
     public class Handler : INotificationHandler<ExtraLifeEvent>
     {
-        readonly IGameSoundPlayer _gameSoundPlayer;
+        private readonly IGameSoundPlayer _gameSoundPlayer;
 
         public Handler(IGameSoundPlayer gameSoundPlayer)
         {

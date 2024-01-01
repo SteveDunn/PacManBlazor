@@ -8,16 +8,17 @@ namespace PacMan.GameComponents.Events;
 /// </summary>
 public readonly struct PlayerStartingEvent : INotification
 {
+    [UsedImplicitly]
     public class Handler : INotificationHandler<PlayerStartingEvent>
     {
-        readonly IHaveTheMazeCanvases _mazeCanvases;
-        readonly IGhostCollection _ghostCollection;
-        readonly IFruit _fruit;
-        readonly IMaze _maze;
-        readonly IPacMan _pacman;
-        readonly IGame _game;
-        readonly IActs _acts;
-        readonly IGameStats _gameStats;
+        private readonly IHaveTheMazeCanvases _mazeCanvases;
+        private readonly IGhostCollection _ghostCollection;
+        private readonly IFruit _fruit;
+        private readonly IMaze _maze;
+        private readonly IPacMan _pacman;
+        private readonly IGame _game;
+        private readonly IActs _acts;
+        private readonly IGameStats _gameStats;
 
         public Handler(
             IGhostCollection ghostCollection,

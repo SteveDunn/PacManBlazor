@@ -16,8 +16,8 @@ public abstract class GhostMover
 
     protected Ghost Ghost { get; }
 
-    readonly Func<ValueTask<CellIndex>> _getTargetCellPoint;
-    readonly GhostLogic _intersectionLogic;
+    private readonly Func<ValueTask<CellIndex>> _getTargetCellPoint;
+    private readonly GhostLogic _intersectionLogic;
 
     protected GhostMover(
         Ghost ghost,
@@ -47,7 +47,7 @@ public abstract class GhostMover
 
             if (direction != Direction.None)
             {
-                setDirection(direction);
+                SetDirection(direction);
             }
         }
 
@@ -56,7 +56,7 @@ public abstract class GhostMover
         return MovementResult.NotFinished;
     }
 
-    void setDirection(Direction direction)
+    private void SetDirection(Direction direction)
     {
         Ghost.Direction.Update(direction);
     }

@@ -4,10 +4,10 @@ public class Tile
 {
     // just used for debugging
     // ReSharper disable once NotAccessedField.Local
-    bool _isInCenter;
+    private bool _isInCenter;
 
     // ReSharper disable once HeapView.ObjectAllocation.Evident
-    readonly Dictionary<Direction, Tile> _nextTiles = new();
+    private readonly Dictionary<Direction, Tile> _nextTiles = new();
 
     public Tile()
     {
@@ -26,7 +26,7 @@ public class Tile
 
         _isInCenter = CenterPos == spritePos.Round();
 
-        handleWrapping();
+        HandleWrapping();
     }
 
     public CellIndex Index { get; private set; }
@@ -71,11 +71,11 @@ public class Tile
     public Tile NextTileWrapped(Direction direction)
     {
         var nextTile = NextTile(direction);
-        nextTile.handleWrapping();
+        nextTile.HandleWrapping();
         return nextTile;
     }
 
-    void handleWrapping()
+    private void HandleWrapping()
     {
         float pixelWidthOfMaze = MazeBounds.Dimensions.Width * 8;
 

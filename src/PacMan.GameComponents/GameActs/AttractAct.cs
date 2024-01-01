@@ -4,44 +4,46 @@ using PacMan.GameComponents.Ghosts;
 
 namespace PacMan.GameComponents.GameActs;
 
+public record struct ColouredText(string Text = "", Color Color = default);
+
 /// Show's the attract screen (ghost names and pictures and the 'chase' sub act).  Transitions to either
 /// the 'player intro' act (to start the demo mode if nothing's was pressed/clicked/touched),
 /// or the 'start button' act if a coin was 'inserted'.
 public class AttractAct : IAct
 {
-    readonly ICoinBox _coinBox;
-    readonly IMediator _mediator;
-    readonly IHumanInterfaceParser _input;
-    readonly IGameSoundPlayer _gameSoundPlayer;
-    readonly Marquee _marquee;
-    readonly GeneralSprite _pacmanLogo;
+    private readonly ICoinBox _coinBox;
+    private readonly IMediator _mediator;
+    private readonly IHumanInterfaceParser _input;
+    private readonly IGameSoundPlayer _gameSoundPlayer;
+    private readonly Marquee _marquee;
+    private readonly GeneralSprite _pacmanLogo;
 
-    struct Instruction
+    private struct Instruction
     {
-        public TimeSpan When;
-        public SimpleGhost Ghost;
-        public string Text;
-        public Vector2 Where;
-        public Color Color;
+        public required TimeSpan When { get; init; }
+        public required Vector2 Where { get; init; }
+        public SimpleGhost? Ghost { get; init; }
+
+        public ColouredText ColouredText { get; init; }
     }
 
-    readonly SimpleGhost _blinky;
-    readonly SimpleGhost _pinky;
-    readonly SimpleGhost _inky;
-    readonly SimpleGhost _clyde;
+    private readonly SimpleGhost _blinky;
+    private readonly SimpleGhost _pinky;
+    private readonly SimpleGhost _inky;
+    private readonly SimpleGhost _clyde;
 
-    readonly List<Instruction> _instructions;
+    private readonly List<Instruction> _instructions;
 
-    readonly object _lock;
-    readonly BlazorLogo _blazorLogo;
-    readonly TimeSpan _chaseSubActReadyAt;
+    private readonly object _lock;
+    private readonly BlazorLogo _blazorLogo;
+    private readonly TimeSpan _chaseSubActReadyAt;
 
-    ChaseSubAct _chaseSubAct;
-    TimeSpan _startTime;
-    TimeSpan _drawUpTo;
-    bool _chaseSubActReady;
+    private ChaseSubAct _chaseSubAct;
+    private TimeSpan _startTime;
+    private TimeSpan _drawUpTo;
+    private bool _chaseSubActReady;
 
-    bool _finished;
+    private bool _finished;
 
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
     public AttractAct(
@@ -56,7 +58,7 @@ public class AttractAct : IAct
             ?.InformationalVersion ?? "??";
 
         MarqueeText[] texts =
-        {
+        [
             new() {
                 Text = $"v{version}",
                 YPosition = 195,
@@ -81,7 +83,7 @@ public class AttractAct : IAct
                 TimeStationary = 2.Seconds(),
                 TimeOut = 1.Seconds()
             }
-        };
+        ];
 
         _marquee = new(texts);
         _coinBox = coinBox;
@@ -92,7 +94,7 @@ public class AttractAct : IAct
             new(new(192, 25), new(36, 152), Vector2.Zero, new(456, 173));
         _blazorLogo = new();
 
-        _instructions = new();
+        _instructions = [];
 
         _startTime = TimeSpan.MinValue;
 
@@ -115,7 +117,7 @@ public class AttractAct : IAct
         _finished = false;
         _instructions.Clear();
         _chaseSubAct = new();
-        populateDelayedInstructions();
+        PopulateDelayedInstructions();
 
         return default;
     }
@@ -133,40 +135,8 @@ public class AttractAct : IAct
 
         _drawUpTo = timing.TotalTime - _startTime;
 
-        if (_input.WasKeyPressedAndReleased(Keys.Left))
+        if (await TryHandleInput())
         {
-            await startDemoGame();
-            return ActUpdateResult.Running;
-        }
-
-        if (_input.WasKeyPressedAndReleased(Keys.Five))
-        {
-            await _gameSoundPlayer.Enable();
-            await _mediator.Publish(new CoinInsertedEvent());
-
-            return ActUpdateResult.Running;
-        }
-
-        if (_input.WasKeyPressedAndReleased(Keys.Space) ||
-            _input.WasKeyPressedAndReleased(Keys.One) ||
-            _input.WasTapped)
-        {
-            await _gameSoundPlayer.Enable();
-            _coinBox.CoinInserted();
-            await _mediator.Publish(new NewGameEvent(1));
-
-            return ActUpdateResult.Running;
-        }
-
-        if (_input.WasKeyPressedAndReleased(Keys.Two) || _input.WasLongPress)
-        {
-            _coinBox.CoinInserted();
-
-            _coinBox.CoinInserted();
-            _coinBox.CoinInserted();
-
-            await _mediator.Publish(new NewGameEvent(2));
-
             return ActUpdateResult.Running;
         }
 
@@ -178,7 +148,7 @@ public class AttractAct : IAct
             {
                 if (!_finished)
                 {
-                    await startDemoGame();
+                    await StartDemoGame();
                     _finished = true;
                 }
 
@@ -187,6 +157,48 @@ public class AttractAct : IAct
         }
 
         return ActUpdateResult.Running;
+    }
+
+    private async Task<bool> TryHandleInput()
+    {
+        if (_input.WasKeyPressedAndReleased(Keys.Left))
+        {
+            await StartDemoGame();
+            return true;
+        }
+
+        if (_input.WasKeyPressedAndReleased(Keys.Five))
+        {
+            await _gameSoundPlayer.Enable();
+            await _mediator.Publish(new CoinInsertedEvent());
+
+            return true;
+        }
+
+        if (_input.WasKeyPressedAndReleased(Keys.Space) ||
+            _input.WasKeyPressedAndReleased(Keys.One) ||
+            _input.WasTapped)
+        {
+            await _gameSoundPlayer.Enable();
+            _coinBox.CoinInserted();
+            await _mediator.Publish(new NewGameEvent(1));
+
+            return true;
+        }
+
+        if (_input.WasKeyPressedAndReleased(Keys.Two) || _input.WasLongPress)
+        {
+            _coinBox.CoinInserted();
+
+            _coinBox.CoinInserted();
+            _coinBox.CoinInserted();
+
+            await _mediator.Publish(new NewGameEvent(2));
+
+            return true;
+        }
+            
+        return false;
     }
 
     public async ValueTask Draw(CanvasWrapper session)
@@ -200,7 +212,7 @@ public class AttractAct : IAct
                 break;
             }
 
-            var ghost = inst.Ghost;
+            SimpleGhost? ghost = inst.Ghost;
 
             if (ghost != null)
             {
@@ -210,7 +222,9 @@ public class AttractAct : IAct
             }
             else
             {
-                await drawText(session, inst.Text, inst.Where, inst.Color);
+                // if the ghost is null, it's a text instruction
+
+                await DrawText(session, inst.ColouredText.Text, inst.Where, inst.ColouredText.Color);
             }
         }
 
@@ -228,17 +242,16 @@ public class AttractAct : IAct
         await _blazorLogo.Draw(session);
     }
 
-    void populateDelayedInstructions()
+    private void PopulateDelayedInstructions()
     {
         lock (_lock)
         {
             TimeSpan clock = 1500.Milliseconds();
 
-            _instructions.Add(new() {
+            _instructions.Add(new Instruction {
                 When = clock,
                 Where = new(32, 12),
-                Text = "CHARACTER / NICKNAME",
-                Color = Color.White
+                ColouredText = new("CHARACTER / NICKNAME", Color.White),
             });
 
             var gap = new Vector2(0, 24);
@@ -247,28 +260,28 @@ public class AttractAct : IAct
 
             var timeForEachOne = 600.Milliseconds();
 
-            writeInstructionsForGhost(ref clock, _blinky, Colors.Red, "SHADOW", "BLINKY", pos);
+            WriteInstructionsForGhost(ref clock, _blinky, Colors.Red, "SHADOW", "BLINKY", pos);
 
             clock += timeForEachOne;
             pos += gap;
-            writeInstructionsForGhost(ref clock, _pinky, Colors.Pink, "SPEEDY", "PINKY", pos);
+            WriteInstructionsForGhost(ref clock, _pinky, Colors.Pink, "SPEEDY", "PINKY", pos);
 
             clock += timeForEachOne;
             pos += gap;
-            writeInstructionsForGhost(ref clock, _inky, Colors.Cyan, "BASHFUL", "INKY", pos);
+            WriteInstructionsForGhost(ref clock, _inky, Colors.Cyan, "BASHFUL", "INKY", pos);
 
             clock += timeForEachOne;
             pos += gap;
-            writeInstructionsForGhost(ref clock, _clyde, Colors.Yellow, "POKEY", "CLYDE", pos);
+            WriteInstructionsForGhost(ref clock, _clyde, Colors.Yellow, "POKEY", "CLYDE", pos);
         }
     }
 
-    static ValueTask drawText(CanvasWrapper canvasWrapper, string text, Vector2 point, Color color)
+    private static ValueTask DrawText(CanvasWrapper canvasWrapper, string text, Vector2 point, Color color)
     {
         return canvasWrapper.DrawMyText(text, point, color);
     }
 
-    void writeInstructionsForGhost(
+    private void WriteInstructionsForGhost(
         ref TimeSpan clock,
         SimpleGhost ghost,
         Color color,
@@ -288,9 +301,8 @@ public class AttractAct : IAct
 
         _instructions.Add(new() {
             Where = point,
-            Text = $@" - {name}",
+            ColouredText = new($@" - {name}", color),
             When = clock,
-            Color = color
         });
 
         point += new Vector2(90, 0);
@@ -299,11 +311,10 @@ public class AttractAct : IAct
 
         _instructions.Add(new() {
             Where = point,
-            Text = $@"""{nickname}""",
+            ColouredText = new($@"""{nickname}""", color),
             When = clock,
-            Color = color
         });
     }
 
-    async ValueTask startDemoGame() => await _mediator.Publish(new DemoStartedEvent());
+    private async ValueTask StartDemoGame() => await _mediator.Publish(new DemoStartedEvent());
 }

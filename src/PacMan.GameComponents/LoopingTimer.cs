@@ -2,10 +2,10 @@
 
 public class LoopingTimer
 {
-    TimeSpan _currentTime;
+    private TimeSpan _currentTime;
 
-    readonly TimeSpan _firesEvery;
-    readonly Action _callback;
+    private readonly TimeSpan _firesEvery;
+    private readonly Action _callback;
 
     public static LoopingTimer DoNothing => new(
         TimeSpan.MaxValue,

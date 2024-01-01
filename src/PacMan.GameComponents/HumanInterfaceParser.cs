@@ -22,13 +22,13 @@ public static class Keys
 public class HumanInterfaceParser : IHumanInterfaceParser
 {
     // ReSharper disable once HeapView.ObjectAllocation.Evident
-    readonly bool[] _keysCurrentlyDown = new bool[256];
+    private readonly bool[] _keysCurrentlyDown = new bool[256];
 
-    readonly TimeSpan[] _keyPresses;
-    readonly TimeSpan[] _swipes;
+    private readonly TimeSpan[] _keyPresses;
+    private readonly TimeSpan[] _swipes;
 
-    TimeSpan _timeTapped;
-    TimeSpan _timeLongPressed;
+    private TimeSpan _timeTapped;
+    private TimeSpan _timeLongPressed;
 
     public HumanInterfaceParser()
     {
@@ -41,16 +41,16 @@ public class HumanInterfaceParser : IHumanInterfaceParser
         _totalGameTime = 0.Seconds();
     }
 
-    TimeSpan _totalGameTime;
+    private TimeSpan _totalGameTime;
 
     // 20 milliseconds when 60 fps - should be 120 for 30 fps = e.g. fps * 2
-    TimeSpan getRetention() => (60 / Constants.FramesPerSecond * 20).Milliseconds();
+    private static TimeSpan GetRetention() => (60 / Constants.FramesPerSecond * 20).Milliseconds();
 
     public bool IsRightKeyDown => IsKeyCurrentlyDown(Keys.Right);
 
-    public bool WasTapped => _totalGameTime - _timeTapped <= getRetention();
+    public bool WasTapped => _totalGameTime - _timeTapped <= GetRetention();
 
-    public bool WasLongPress => _totalGameTime - _timeLongPressed <= getRetention();
+    public bool WasLongPress => _totalGameTime - _timeLongPressed <= GetRetention();
 
     public bool IsLeftKeyDown => IsKeyCurrentlyDown(Keys.Left);
 
@@ -75,7 +75,7 @@ public class HumanInterfaceParser : IHumanInterfaceParser
     {
         TimeSpan whenLastPressed = _keyPresses[key];
 
-        bool wasKeyPressed = _totalGameTime - whenLastPressed <= getRetention();
+        bool wasKeyPressed = _totalGameTime - whenLastPressed <= GetRetention();
 
         // Debug.WriteLine($"Total game time: {_totalGameTime}, keypress for {key}: {whenLastPressed} - key was pressed {_totalGameTime - whenLastPressed} ago.  Was key pressed? {wasKeyPressed}");
 
@@ -92,7 +92,7 @@ public class HumanInterfaceParser : IHumanInterfaceParser
     {
         TimeSpan whenLastPressed = _swipes[key];
 
-        bool wasKeyPressed = _totalGameTime - whenLastPressed <= getRetention();
+        bool wasKeyPressed = _totalGameTime - whenLastPressed <= GetRetention();
 
         // Debug.WriteLine($"Total game time: {_totalGameTime}, keypress for {key}: {whenLastPressed} - key was pressed {_totalGameTime - whenLastPressed} ago.  Was key pressed? {wasKeyPressed}");
 

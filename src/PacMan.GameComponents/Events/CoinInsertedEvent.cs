@@ -2,12 +2,13 @@
 
 public readonly struct CoinInsertedEvent : INotification
 {
+    [UsedImplicitly]
     public class Handler : INotificationHandler<CoinInsertedEvent>
     {
-        readonly IGameSoundPlayer _gameSoundPlayer;
-        readonly ICoinBox _coinBox;
-        readonly IGame _game;
-        readonly IActs _acts;
+        private readonly IGameSoundPlayer _gameSoundPlayer;
+        private readonly ICoinBox _coinBox;
+        private readonly IGame _game;
+        private readonly IActs _acts;
 
         public Handler(IGameSoundPlayer gameSoundPlayer, ICoinBox coinBox, IGame game, IActs acts)
         {

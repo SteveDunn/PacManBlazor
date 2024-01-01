@@ -4,9 +4,9 @@ namespace PacMan.GameComponents;
 
 public class GlobalDotCounter : DotCounter
 {
-    bool _finished;
-    GhostNickname? _nextOneToForceOut;
-    GhostNickname? _lastOneForcedOut;
+    private bool _finished;
+    private GhostNickname? _nextOneToForceOut;
+    private GhostNickname? _lastOneForcedOut;
 
     public GlobalDotCounter(int limit = 0) : base(limit, "GLOBAL")
     {
@@ -44,6 +44,7 @@ public class GlobalDotCounter : DotCounter
 
         bool canLeave = false;
 
+        // ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
         switch (nickName)
         {
             case GhostNickname.Pinky when Counter == 7:

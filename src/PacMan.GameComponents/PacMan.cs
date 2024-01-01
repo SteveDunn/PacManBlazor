@@ -4,36 +4,36 @@ namespace PacMan.GameComponents;
 
 public class PacMan : ISprite, IPacMan
 {
-    readonly IMaze _maze;
-    readonly IHumanInterfaceParser _input;
-    readonly IMediator _mediator;
+    private readonly IMaze _maze;
+    private readonly IHumanInterfaceParser _input;
+    private readonly IMediator _mediator;
     public static readonly Vector2 FacingLeftSpritesheetPos = new(455, 16);
 
-    CellIndex _lastDemoKeyPressAt = CellIndex.Zero;
+    private CellIndex _lastDemoKeyPressAt = CellIndex.Zero;
 
-    CellIndex _pillEatenAt = CellIndex.Zero;
+    private CellIndex _pillEatenAt = CellIndex.Zero;
 
-    LifeStatus _lifeStatus;
+    private LifeStatus _lifeStatus;
 
-    Vector2 _spriteSheetPos;
+    private Vector2 _spriteSheetPos;
 
-    Direction _direction;
-    float _dyingFramePointer;
+    private Direction _direction;
+    private float _dyingFramePointer;
 
-    Vector2 _frame1InSpriteMap;
-    Vector2 _frame2InSpriteMap;
-    TwoFrameAnimation _animDirection;
+    private Vector2 _frame1InSpriteMap;
+    private Vector2 _frame2InSpriteMap;
+    private TwoFrameAnimation _animDirection;
 
-    float _speed = Constants.PacManBaseSpeed;
+    private float _speed = Constants.PacManBaseSpeed;
 
-    bool _isDemoMode;
+    private bool _isDemoMode;
 
-    readonly Dictionary<Direction, FramePointers> _framePointers;
-    readonly List<Vector2> _dyingFrames;
-    readonly DemoKeyPresses _demoKeyPresses;
-    readonly Tile _tile;
-    readonly KeyPressedEvent _keyPress;
-    PlayerStats? _currentPlayerStats;
+    private readonly Dictionary<Direction, FramePointers> _framePointers;
+    private readonly List<Vector2> _dyingFrames;
+    private readonly DemoKeyPresses _demoKeyPresses;
+    private readonly Tile _tile;
+    private readonly KeyPressedEvent _keyPress;
+    private PlayerStats? _currentPlayerStats;
 
     public PacMan(IMaze maze, IHumanInterfaceParser input, IMediator mediator)
     {
@@ -77,7 +77,7 @@ public class PacMan : ISprite, IPacMan
         Reset();
     }
 
-    void resetAll(bool isDemoMode = false)
+    private void ResetAll(bool isDemoMode = false)
     {
         Visible = true;
         _demoKeyPresses.Reset();
@@ -109,12 +109,12 @@ public class PacMan : ISprite, IPacMan
 
     public void Reset()
     {
-        resetAll();
+        ResetAll();
     }
 
     public Direction Direction => _direction;
 
-    void updateAnimation(CanvasTimingInformation args)
+    private void UpdateAnimation(CanvasTimingInformation args)
     {
         if (Math.Abs(_speed) < .0001)
         {
@@ -128,7 +128,7 @@ public class PacMan : ISprite, IPacMan
         _spriteSheetPos = _animDirection.Flag ? _frame1InSpriteMap : _frame2InSpriteMap;
     }
 
-    void handleDying()
+    private void HandleDying()
     {
         _dyingFramePointer += .15f;
 
@@ -166,24 +166,24 @@ public class PacMan : ISprite, IPacMan
 
         if (_lifeStatus is LifeStatus.Dying or LifeStatus.Dead)
         {
-            handleDying();
+            HandleDying();
             return;
         }
 
-        updateAnimation(timing);
+        UpdateAnimation(timing);
 
         if (_tile.IsNearCenter(2))
         {
-            recordInput(timing);
+            RecordInput(timing);
 
-            recenterInLane();
+            RecenterInLane();
 
-            handleDirection();
+            HandleDirection();
         }
 
         if (_tile.IsNearCenter(1.5))
         {
-            await handleWhatIsUnderCell();
+            await HandleWhatIsUnderCell();
 
             var can = _maze.CanContinueInDirection(_direction, _tile);
 
@@ -225,7 +225,7 @@ public class PacMan : ISprite, IPacMan
         _pillEatenAt = _tile.Index;
     }
 
-    void handleDirection()
+    private void HandleDirection()
     {
         if (_maze.CanContinueInDirection(_keyPress.Direction, _tile))
         {
@@ -233,7 +233,7 @@ public class PacMan : ISprite, IPacMan
         }
     }
 
-    async ValueTask handleWhatIsUnderCell()
+    private async ValueTask HandleWhatIsUnderCell()
     {
         TileContent contents = _maze.GetTileContent(_tile);
 
@@ -256,72 +256,82 @@ public class PacMan : ISprite, IPacMan
         }
     }
 
-    void recordInput(CanvasTimingInformation context)
+    private void RecordInput(CanvasTimingInformation context)
     {
         Direction requestedDirection = _direction;
 
-        if (_isDemoMode)
-        {
-            if (_tile.IsNearCenter(4) && _tile.Index != _lastDemoKeyPressAt)
-            {
-                var choices = _maze.GetChoicesAtCellPosition(_tile.Index);
-
-                choices.Unset(_direction);
-
-                switch (_direction)
-                {
-                    case Direction.Left:
-                        choices.Unset(Direction.Right);
-                        break;
-                    case Direction.Right:
-                        choices.Unset(Direction.Left);
-                        break;
-                    case Direction.Up:
-                        choices.Unset(Direction.Down);
-                        break;
-                    case Direction.Down:
-                        choices.Unset(Direction.Up);
-                        break;
-                }
-
-                if (choices.Possibilities >= 1)
-                {
-                    requestedDirection = _demoKeyPresses.Next();
-
-                    _keyPress.When = context.TotalTime.TotalMilliseconds;
-
-                    _keyPress.Direction = requestedDirection;
-
-                    _lastDemoKeyPressAt = _tile.Index;
-                }
-            }
-        }
-        else
-        {
-            if (_input.IsRightKeyDown || _input.IsPanning(Keys.Right))
-            {
-                requestedDirection = Direction.Right;
-            }
-            else if (_input.IsLeftKeyDown || _input.IsPanning(Keys.Left))
-            {
-                requestedDirection = Direction.Left;
-            }
-            else if (_input.IsDownKeyDown || _input.IsPanning(Keys.Down))
-            {
-                requestedDirection = Direction.Down;
-            }
-            else if (_input.IsUpKeyDown || _input.IsPanning(Keys.Up))
-            {
-                requestedDirection = Direction.Up;
-            }
-        }
+        requestedDirection = _isDemoMode 
+            ? HandleDemoMode(context, requestedDirection) 
+            : HandleNonDemoMode(requestedDirection);
 
         _keyPress.Direction = requestedDirection;
         _keyPress.When = context.TotalTime.TotalMilliseconds;
     }
 
+    private Direction HandleNonDemoMode(Direction requestedDirection)
+    {
+        if (_input.IsRightKeyDown || _input.IsPanning(Keys.Right))
+        {
+            requestedDirection = Direction.Right;
+        }
+        else if (_input.IsLeftKeyDown || _input.IsPanning(Keys.Left))
+        {
+            requestedDirection = Direction.Left;
+        }
+        else if (_input.IsDownKeyDown || _input.IsPanning(Keys.Down))
+        {
+            requestedDirection = Direction.Down;
+        }
+        else if (_input.IsUpKeyDown || _input.IsPanning(Keys.Up))
+        {
+            requestedDirection = Direction.Up;
+        }
+
+        return requestedDirection;
+    }
+
+    private Direction HandleDemoMode(CanvasTimingInformation context, Direction requestedDirection)
+    {
+        if (_tile.IsNearCenter(4) && _tile.Index != _lastDemoKeyPressAt)
+        {
+            var choices = _maze.GetChoicesAtCellPosition(_tile.Index);
+
+            choices.Unset(_direction);
+            
+            // ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
+            switch (_direction)
+            {
+                case Direction.Left:
+                    choices.Unset(Direction.Right);
+                    break;
+                case Direction.Right:
+                    choices.Unset(Direction.Left);
+                    break;
+                case Direction.Up:
+                    choices.Unset(Direction.Down);
+                    break;
+                case Direction.Down:
+                    choices.Unset(Direction.Up);
+                    break;
+            }
+
+            if (choices.AnyAvailable)
+            {
+                requestedDirection = _demoKeyPresses.Next();
+
+                _keyPress.When = context.TotalTime.TotalMilliseconds;
+
+                _keyPress.Direction = requestedDirection;
+
+                _lastDemoKeyPressAt = _tile.Index;
+            }
+        }
+
+        return requestedDirection;
+    }
+
     // debt: SD: refactor into something common as this is also used for the ghosts
-    void recenterInLane()
+    private void RecenterInLane()
     {
         var tileCenter = _tile.CenterPos;
 
@@ -364,7 +374,7 @@ public class PacMan : ISprite, IPacMan
     {
         _currentPlayerStats = playerStats;
 
-        resetAll(isDemo);
+        ResetAll(isDemo);
 
         return default;
     }

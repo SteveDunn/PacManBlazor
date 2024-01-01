@@ -2,8 +2,8 @@
 
 public class FruitSession
 {
-    int _toShowAt;
-    int _counter;
+    private int _toShowAt;
+    private int _counter;
 
     public FruitSession()
     {

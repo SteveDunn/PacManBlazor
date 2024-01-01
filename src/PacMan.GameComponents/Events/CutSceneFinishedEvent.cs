@@ -5,9 +5,10 @@
 /// </summary>
 public readonly struct CutSceneFinishedEvent : INotification
 {
+    [UsedImplicitly]
     public class Handler : INotificationHandler<CutSceneFinishedEvent>
     {
-        readonly IMediator _mediator;
+        private readonly IMediator _mediator;
 
         public Handler(IMediator mediator) => _mediator = mediator;
 

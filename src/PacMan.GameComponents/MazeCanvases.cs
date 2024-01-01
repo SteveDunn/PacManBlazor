@@ -2,8 +2,8 @@
 
 public class MazeCanvases : IHaveTheMazeCanvases
 {
-    static readonly MazeCanvas[] _mazeCanvases = new MazeCanvas[2];
-    static bool _populated;
+    private static readonly MazeCanvas[] _mazeCanvases = new MazeCanvas[2];
+    private static bool _populated;
 
     public MazeCanvas GetForPlayer(int index)
     {

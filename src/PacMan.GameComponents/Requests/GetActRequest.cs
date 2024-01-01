@@ -11,7 +11,7 @@ public readonly struct GetActRequest : IRequest<IAct>
 
     public class Handler : IRequestHandler<GetActRequest, IAct>
     {
-        readonly IActs _acts;
+        private readonly IActs _acts;
 
         public Handler(IActs acts)
         {

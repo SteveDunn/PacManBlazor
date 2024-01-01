@@ -6,7 +6,7 @@ public readonly struct GetBlinkyRequest : IRequest<IGhost>
 {
     public class Handler : IRequestHandler<GetBlinkyRequest, IGhost>
     {
-        readonly IGhostCollection _ghostCollection;
+        private readonly IGhostCollection _ghostCollection;
 
         public Handler(IGhostCollection ghostCollection) => _ghostCollection = ghostCollection;
 

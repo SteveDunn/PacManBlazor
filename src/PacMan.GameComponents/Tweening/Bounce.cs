@@ -1,5 +1,6 @@
 namespace PacMan.GameComponents.Tweening;
 
+[PublicAPI]
 public class Bounce
 {
     public static float EaseOut(float t, float b, float c, float d)

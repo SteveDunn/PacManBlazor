@@ -5,32 +5,32 @@ namespace PacMan.GameComponents.GameActs;
 
 public class ChaseSubAct
 {
-    readonly TimerList _tempTimers;
+    private readonly TimerList _tempTimers;
 
-    readonly List<AttractGhost> _ghosts;
+    private readonly List<AttractGhost> _ghosts;
 
-    readonly AttractScenePacMan _pacMan;
+    private readonly AttractScenePacMan _pacMan;
 
-    readonly PowerPill _powerPillToEat;
-    readonly PowerPill _powerPillLegend;
-    readonly Pill _pillLegend;
+    private readonly PowerPill _powerPillToEat;
+    private readonly PowerPill _powerPillLegend;
+    private readonly Pill _pillLegend;
 
-    readonly Dictionary<GhostNickname, StartAndEndPos> _ghostPositions;
-    readonly TimedSpriteList _tempSprites;
+    private readonly Dictionary<GhostNickname, StartAndEndPos> _ghostPositions;
+    private readonly TimedSpriteList _tempSprites;
 
-    bool _legendVisible;
-    bool _copyrightVisible;
-    bool _ghostsChasing;
+    private bool _legendVisible;
+    private bool _copyrightVisible;
+    private bool _ghostsChasing;
 
-    Points _ghostPoints;
-    StartAndEndPos _pacPositions;
+    private Points _ghostPoints;
+    private StartAndEndPos _pacPositions;
 
-    EggTimer _ghostTimer;
-    EggTimer _pacTimer;
+    private EggTimer _ghostTimer;
+    private EggTimer _pacTimer;
 
-    EggTimer _ghostEatenTimer;
+    private EggTimer _ghostEatenTimer;
 
-    bool _finished;
+    private bool _finished;
 
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
     public ChaseSubAct()
@@ -46,7 +46,7 @@ public class ChaseSubAct
         var justOffScreen = new Vector2(250, 140);
 
         _ghostEatenTimer = new(0.Milliseconds(), static () => { });
-        _ghostTimer = new(5.Seconds(), async () => await reverseChase());
+        _ghostTimer = new(5.Seconds(), async () => await ReverseChase());
         _pacTimer = new(5.1f.Seconds(), static () => { });
 
         _powerPillToEat = new() {
@@ -133,7 +133,7 @@ public class ChaseSubAct
 
         _tempSprites.Update(timing);
 
-        lerpPacMan();
+        LerpPacMan();
 
         foreach (var g in _ghosts)
         {
@@ -142,13 +142,13 @@ public class ChaseSubAct
                 continue;
             }
 
-            lerpGhost(g);
+            LerpGhost(g);
 
             await g.Update(timing);
 
             if (Vector2s.AreNear(_pacMan.Position, g.Position, 2))
             {
-                ghostEaten(g);
+                GhostEaten(g);
 
                 if (g.NickName == GhostNickname.Clyde)
                 {
@@ -197,11 +197,11 @@ public class ChaseSubAct
 
         var gp = _ghosts[0].Position;
 
-        await session.DrawText("STEVE DUNN 2022", new((int)gp.X + 2, (int)(gp.Y + 22)), Color.Black);
-        await session.DrawText("STEVE DUNN 2022", new((int)gp.X, (int)(gp.Y + 20)), Color.Yellow);
+        await session.DrawText("STEVE DUNN 2024", new((int)gp.X + 2, (int)(gp.Y + 22)), Color.Black);
+        await session.DrawText("STEVE DUNN 2024", new((int)gp.X, (int)(gp.Y + 20)), Color.Yellow);
     }
 
-    void ghostEaten(AttractGhost ghost)
+    private void GhostEaten(AttractGhost ghost)
     {
         ghost.Alive = false;
 
@@ -210,7 +210,7 @@ public class ChaseSubAct
         _ghostTimer.Pause();
         _pacTimer.Pause();
 
-        showScore(ghost.Position, _ghostPoints);
+        ShowScore(ghost.Position, _ghostPoints);
 
         _ghostPoints = Points.From(_ghostPoints.Value * 2);
 
@@ -223,23 +223,23 @@ public class ChaseSubAct
         });
     }
 
-    void showScore(Vector2 pos, Points amount) =>
+    private void ShowScore(Vector2 pos, Points amount) =>
         _tempSprites.Add(new(900, new ScoreSprite(pos, amount)));
 
-    void lerpGhost(AttractGhost ghost)
+    private void LerpGhost(AttractGhost ghost)
     {
         StartAndEndPos positions = _ghostPositions[ghost.NickName];
 
         ghost.Position = Vector2s.Lerp(positions.Start, positions.End, _ghostTimer.Progress);
     }
 
-    void lerpPacMan()
+    private void LerpPacMan()
     {
         _pacMan.Position = Vector2s.Lerp(_pacPositions.Start, _pacPositions.End, _pacTimer.Progress);
     }
 
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
-    ValueTask reverseChase()
+    private ValueTask ReverseChase()
     {
         _powerPillToEat.Visible = false;
         _ghostTimer = new(12.Seconds(), () => { });

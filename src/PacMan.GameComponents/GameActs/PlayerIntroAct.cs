@@ -6,17 +6,17 @@
 /// </summary>
 public class PlayerIntroAct : IAct
 {
-    readonly IMediator _mediator;
-    readonly IGhostCollection _ghostCollection;
-    readonly IGameStats _gameStats;
-    readonly IGameSoundPlayer _gameSoundPlayer;
-    readonly IPacMan _pacman;
-    readonly IMaze _maze;
-    readonly IGame _game;
-    int _progress;
-    bool _finished;
+    private readonly IMediator _mediator;
+    private readonly IGhostCollection _ghostCollection;
+    private readonly IGameStats _gameStats;
+    private readonly IGameSoundPlayer _gameSoundPlayer;
+    private readonly IPacMan _pacman;
+    private readonly IMaze _maze;
+    private readonly IGame _game;
+    private int _progress;
+    private bool _finished;
 
-    LoopingTimer _currentTimer = LoopingTimer.DoNothing;
+    private LoopingTimer _currentTimer = LoopingTimer.DoNothing;
 
     public PlayerIntroAct(
         IMediator mediator,
@@ -92,7 +92,7 @@ public class PlayerIntroAct : IAct
     {
         await _maze.Draw(session);
 
-        await drawPlayerAndReadyText(session);
+        await DrawPlayerAndReadyText(session);
 
         if (_progress == 1)
         {
@@ -102,7 +102,7 @@ public class PlayerIntroAct : IAct
         }
     }
 
-    async ValueTask drawPlayerAndReadyText(CanvasWrapper canvas)
+    private async ValueTask DrawPlayerAndReadyText(CanvasWrapper canvas)
     {
         if (_progress == 0)
         {

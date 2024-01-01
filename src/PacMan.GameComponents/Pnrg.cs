@@ -2,7 +2,7 @@
 
 public static class Pnrg
 {
-    static int _pnrg;
+    private static int _pnrg;
 
     public static void ResetPnrg()
     {

@@ -4,7 +4,7 @@ namespace PacMan.GameComponents;
 
 public class GameStorage : IGameStorage
 {
-    readonly IJSRuntime _jsRuntime;
+    private readonly IJSRuntime _jsRuntime;
 
     public GameStorage(IJSRuntime jsRuntime)
     {

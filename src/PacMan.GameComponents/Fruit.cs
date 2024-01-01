@@ -2,22 +2,22 @@
 
 public class Fruit : SimpleFruit, IFruit
 {
-    readonly IMediator _mediator;
-    readonly IPacMan _pacman;
-    EggTimer _showTimer = EggTimer.Unset;
-    PlayerStats? _playerStats;
-    bool _isDemo;
+    private readonly IMediator _mediator;
+    private readonly IPacMan _pacman;
+    private EggTimer _showTimer = EggTimer.Unset;
+    private PlayerStats? _playerStats;
+    private bool _isDemo;
 
     public Fruit(IMediator mediator, IPacMan pacman)
     {
         _mediator = mediator;
         _pacman = pacman;
 
-        reset();
+        Reset();
     }
 
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
-    void reset()
+    private void Reset()
     {
         _showTimer = new(10.Seconds(), () => { Visible = false; });
 
@@ -63,6 +63,6 @@ public class Fruit : SimpleFruit, IFruit
     {
         _playerStats = playerStats;
         _isDemo = isDemo;
-        reset();
+        Reset();
     }
 }

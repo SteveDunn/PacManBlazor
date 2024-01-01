@@ -1,5 +1,6 @@
 namespace PacMan.GameComponents.Tweening;
 
+[PublicAPI]
 public class Quadratic
 {
     public static float EaseIn(float t, float b, float c, float d) => (c * (t /= d) * t) + b;

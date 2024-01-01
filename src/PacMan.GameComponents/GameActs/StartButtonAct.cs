@@ -5,9 +5,9 @@
 /// </summary>
 public class StartButtonAct : IAct
 {
-    readonly IMediator _mediator;
-    readonly IHumanInterfaceParser _input;
-    readonly ICoinBox _coinBox;
+    private readonly IMediator _mediator;
+    private readonly IHumanInterfaceParser _input;
+    private readonly ICoinBox _coinBox;
 
     public string Name => "StartButtonAct";
 

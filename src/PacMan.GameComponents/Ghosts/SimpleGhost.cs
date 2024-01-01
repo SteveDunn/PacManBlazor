@@ -6,12 +6,12 @@ public class SimpleGhost : ISprite
 {
     protected readonly GhostSpritesheetInfo SpritesheetInfoNormal;
 
-    readonly FrightenedSpritesheet _spritesheetInfoFrightened;
-    readonly EyesSpritesheetInfo _spriteSheetEyes;
+    private readonly FrightenedSpritesheet _spritesheetInfoFrightened;
+    private readonly EyesSpritesheetInfo _spriteSheetEyes;
 
-    readonly TwoFrameAnimation _toggle = new(65.Milliseconds());
+    private readonly TwoFrameAnimation _toggle = new(65.Milliseconds());
 
-    GhostFrightSession? _frightSession;
+    private GhostFrightSession? _frightSession;
 
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
     public SimpleGhost(GhostNickname nickName, Direction direction)
@@ -57,7 +57,7 @@ public class SimpleGhost : ISprite
 
     public virtual ValueTask Update(CanvasTimingInformation timing)
     {
-        updateAnimation(timing);
+        UpdateAnimation(timing);
         return default;
     }
 
@@ -71,13 +71,13 @@ public class SimpleGhost : ISprite
         return default;
     }
 
-    void updateAnimation(CanvasTimingInformation context)
+    private void UpdateAnimation(CanvasTimingInformation context)
     {
         _toggle.Run(context);
 
         if (State == GhostState.Frightened)
         {
-            SpriteSheetPos = getGhostFrame();
+            SpriteSheetPos = GetGhostFrame();
         }
         else if (State == GhostState.Eyes)
         {
@@ -91,7 +91,7 @@ public class SimpleGhost : ISprite
 
     public virtual void PowerPillEaten(GhostFrightSession session) => SetFrightSession(session);
 
-    Vector2 getGhostFrame()
+    private Vector2 GetGhostFrame()
     {
         if (_frightSession == null)
         {

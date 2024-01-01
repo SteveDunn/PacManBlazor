@@ -2,9 +2,9 @@
 
 public class EyesSpritesheetInfo
 {
-    readonly Dictionary<Direction, Vector2> _positions;
+    private readonly Dictionary<Direction, Vector2> _positions;
 
-    const int _width = 16;
+    private const int _width = 16;
 
     public EyesSpritesheetInfo(Vector2 position)
     {

@@ -9,12 +9,13 @@ public readonly struct NewGameEvent : INotification
         AmountOfPlayers = amountOfPlayers;
     }
 
+    [UsedImplicitly]
     public class Handler : INotificationHandler<NewGameEvent>
     {
-        readonly IMediator _mediator;
-        readonly ICoinBox _coinBox;
-        readonly IHaveTheMazeCanvases _mazeCanvases;
-        readonly IGameStats _gameStats;
+        private readonly IMediator _mediator;
+        private readonly ICoinBox _coinBox;
+        private readonly IHaveTheMazeCanvases _mazeCanvases;
+        private readonly IGameStats _gameStats;
 
         public Handler(
             IGameStats gameStats,

@@ -6,15 +6,15 @@
 /// </summary>
 public class DemoPlayerIntroAct : IAct
 {
-    readonly IMediator _mediator;
-    readonly IGame _game;
-    readonly IGhostCollection _ghostCollection;
-    readonly IPacMan _pacman;
-    readonly IMaze _maze;
-    int _progress;
-    bool _finished;
+    private readonly IMediator _mediator;
+    private readonly IGame _game;
+    private readonly IGhostCollection _ghostCollection;
+    private readonly IPacMan _pacman;
+    private readonly IMaze _maze;
+    private int _progress;
+    private bool _finished;
 
-    LoopingTimer _currentTimer = LoopingTimer.DoNothing;
+    private LoopingTimer _currentTimer = LoopingTimer.DoNothing;
 
     public DemoPlayerIntroAct(
         IMediator mediator,

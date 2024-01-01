@@ -3,37 +3,38 @@ using Blazor.Extensions.Canvas.Canvas2D;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using PacMan.GameComponents.Ghosts;
+// ReSharper disable NullableWarningSuppressionIsUsed
 
 namespace PacMan.GameComponents;
 
 public class Game : IGame
 {
     // ReSharper disable once UnusedMember.Local
-    readonly DiagPanel _diagPanel = new();
+    private readonly DiagPanel _diagPanel = new();
 
-    readonly IGameSoundPlayer _gameSoundPlayer;
-    readonly IHumanInterfaceParser _input;
-    readonly IPacMan _pacman;
+    private readonly IGameSoundPlayer _gameSoundPlayer;
+    private readonly IHumanInterfaceParser _input;
+    private readonly IPacMan _pacman;
 
-    readonly IScorePanel _scorePanel;
-    readonly IMediator _mediator;
-    readonly IFruit _fruit;
-    readonly IStatusPanel _statusPanel;
+    private readonly IScorePanel _scorePanel;
+    private readonly IMediator _mediator;
+    private readonly IFruit _fruit;
+    private readonly IStatusPanel _statusPanel;
 
-    CanvasTimingInformation? _canvasTimingInformation;
+    private CanvasTimingInformation? _canvasTimingInformation;
 
-    IAct? _currentAct;
-    TimedSpriteList? _tempSprites;
-    EggTimer _pauser = EggTimer.Unset;
+    private IAct? _currentAct;
+    private TimedSpriteList? _tempSprites;
+    private EggTimer _pauser = EggTimer.Unset;
 
-    CanvasWrapper? _scoreCanvas;
-    CanvasWrapper? _mazeCanvas;
-    CanvasWrapper? _statusCanvas;
+    private CanvasWrapper? _scoreCanvas;
+    private CanvasWrapper? _mazeCanvas;
+    private CanvasWrapper? _statusCanvas;
 
     // ReSharper disable once NotAccessedField.Local
-    CanvasWrapper? _diagCanvas;
+    private CanvasWrapper? _diagCanvas;
 
-    static bool _initialised;
+    private static bool _initialised;
 
     public Game(
         IMediator mediator,
@@ -73,9 +74,10 @@ public class Game : IGame
         _initialised = true;
     }
 
-    async ValueTask update()
+    [SuppressMessage("ReSharper", "NullableWarningSuppressionIsUsed")]
+    private async ValueTask Update()
     {
-        ensureInitialised();
+        EnsureInitialised();
         _input.Update(_canvasTimingInformation!);
 
         _scorePanel.Update(_canvasTimingInformation!);
@@ -85,7 +87,7 @@ public class Game : IGame
 
         _pauser.Run(_canvasTimingInformation!);
 
-        await checkCheatKeys();
+        await CheckCheatKeys();
 
         if (_pauser.Finished)
         {
@@ -93,7 +95,7 @@ public class Game : IGame
         }
     }
 
-    async ValueTask checkCheatKeys()
+    private async ValueTask CheckCheatKeys()
     {
         if (Cheats.AllowDebugKeys && _input.IsKeyCurrentlyDown(Keys.Three))
         {
@@ -112,9 +114,9 @@ public class Game : IGame
         }
     }
 
-    async ValueTask draw()
+    private async ValueTask Draw()
     {
-        ensureInitialised();
+        EnsureInitialised();
 
         var dim = Constants.UnscaledCanvasSize;
 
@@ -142,7 +144,7 @@ public class Game : IGame
         await _underlyingCanvasContext.EndBatchAsync();
     }
 
-    static void ensureInitialised()
+    private static void EnsureInitialised()
     {
         if (!_initialised)
         {
@@ -152,7 +154,7 @@ public class Game : IGame
 
     public ValueTask FruitEaten(Points points)
     {
-        ensureInitialised();
+        EnsureInitialised();
         _tempSprites!.Add(new(3000, new ScoreSprite(_fruit.Position, points)));
 
         return default;
@@ -160,7 +162,7 @@ public class Game : IGame
 
     public ValueTask GhostEaten(IGhost ghost, Points points)
     {
-        ensureInitialised();
+        EnsureInitialised();
         _tempSprites!.Add(new(900, new ScoreSprite(_pacman.Position, points)));
 
         ghost.Visible = false;
@@ -192,17 +194,17 @@ public class Game : IGame
         MazeCanvases.Populate(new(player1MazeCanvas), new(player2MazeCanvas));
     }
 
-    static readonly Stopwatch _stopWatch = new();
+    private static readonly Stopwatch _stopWatch = new();
 
-    static float getTimestep() => 1000 / (float) Constants.FramesPerSecond;
+    private static float GetTimestep() => 1000 / (float) Constants.FramesPerSecond;
 
-    static float _delta;
+    private static float _delta;
 
-    float _lastTimestamp;
-    Canvas2DContext? _underlyingCanvasContext;
+    private float _lastTimestamp;
+    private Canvas2DContext? _underlyingCanvasContext;
 
-    static int _frameCount;
-    bool _postRenderInitialised;
+    private static int _frameCount;
+    private bool _postRenderInitialised;
 
     public async ValueTask RunGameLoop(float timestamp)
     {
@@ -218,7 +220,7 @@ public class Game : IGame
 
         // timestep would normally be fixed (at 60FPS), but we have
         // the ability to slow down and speed up the game (via the A and S keys)
-        var timestep = getTimestep();
+        var timestep = GetTimestep();
 
         while (_delta >= timestep)
         {
@@ -227,7 +229,7 @@ public class Game : IGame
 
             DiagInfo.IncrementUpdateCount();
             await DiagInfo.Update(_canvasTimingInformation, _input);
-            await update();
+            await Update();
 
             _delta -= timestep;
 
@@ -237,7 +239,7 @@ public class Game : IGame
             // }
         }
 
-        await draw();
+        await Draw();
 
         DiagInfo.IncrementDrawCount(timestamp);
 

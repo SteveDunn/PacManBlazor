@@ -6,7 +6,7 @@ namespace PacMan.GameComponents.GameActs;
 
 public class Marquee
 {
-    enum State
+    private enum State
     {
         Idle,
         ScrollingIn,
@@ -14,23 +14,23 @@ public class Marquee
         ScrollingOut
     }
 
-    readonly MarqueeText[] _texts;
-    MarqueeText _current;
-    int _index;
-    State _state;
-    EggTimer _timer;
-    Vector2 _pos;
-    readonly TweeningFunction _tweeningFunction;
-    Tweener? _tweener;
-    readonly Tweener _colorTweener;
-    Color _color;
+    private readonly MarqueeText[] _texts;
+    private MarqueeText _current;
+    private int _index;
+    private State _state;
+    private EggTimer _timer;
+    private Vector2 _pos;
+    private readonly TweeningFunction _tweeningFunction;
+    private Tweener? _tweener;
+    private readonly Tweener _colorTweener;
+    private Color _color;
 
     public Marquee(MarqueeText[] texts)
     {
         _timer = new(1000.Seconds());
         _texts = texts;
         _index = -1;
-        selectNext();
+        SelectNext();
 
         _tweeningFunction = Tweener.CreateTweeningFunction<Elastic>(Easing.EaseInOut);
 
@@ -44,7 +44,7 @@ public class Marquee
         };
     }
 
-    void selectNext()
+    private void SelectNext()
     {
         if (++_index >= _texts.Length)
         {
@@ -70,26 +70,26 @@ public class Marquee
 
         if (_state == State.Idle)
         {
-            await idle();
+            await Idle();
         }
 
         if (_state == State.ScrollingIn)
         {
-            await scrollingIn();
+            await ScrollingIn();
         }
 
         if (_state == State.Stationary)
         {
-            await stationary();
+            await Stationary();
         }
 
         if (_state == State.ScrollingOut)
         {
-            await scrollingOut();
+            await ScrollingOut();
         }
     }
 
-    ValueTask scrollingIn()
+    private ValueTask ScrollingIn()
     {
         Debug.Assert(_tweener != null, $"{nameof(_tweener)} != null");
 
@@ -104,7 +104,7 @@ public class Marquee
         return default;
     }
 
-    ValueTask scrollingOut()
+    private ValueTask ScrollingOut()
     {
         Debug.Assert(_tweener != null, $"{nameof(_tweener)} != null");
 
@@ -114,13 +114,13 @@ public class Marquee
         {
             _state = State.Idle;
             _timer = new(_current.TimeIdle);
-            selectNext();
+            SelectNext();
         }
 
         return default;
     }
 
-    ValueTask idle()
+    private ValueTask Idle()
     {
         if (_timer.Finished)
         {
@@ -132,7 +132,7 @@ public class Marquee
         return default;
     }
 
-    ValueTask stationary()
+    private ValueTask Stationary()
     {
         if (_timer.Finished)
         {

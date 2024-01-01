@@ -2,10 +2,10 @@
 
 public class GameOverAct : IAct
 {
-    readonly IMaze _maze;
-    bool _finished;
+    private readonly IMaze _maze;
+    private bool _finished;
 
-    LoopingTimer _currentTimer = LoopingTimer.DoNothing;
+    private LoopingTimer _currentTimer = LoopingTimer.DoNothing;
 
     public GameOverAct(IMaze maze) => _maze = maze;
 

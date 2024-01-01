@@ -5,41 +5,41 @@ namespace PacMan.GameComponents.GameActs;
 
 public class GhostTearAct : IAct
 {
-    readonly IGameSoundPlayer _gameSoundPlayer;
-    readonly IMediator _mediator;
+    private readonly IGameSoundPlayer _gameSoundPlayer;
+    private readonly IMediator _mediator;
 
-    enum Stage
+    private enum Stage
     {
         MovingBlinky,
         TearingBlinky,
         BlinkyLooking
     }
 
-    GeneralSprite _snagSprite;
-    Stage _stage;
-    bool _finished;
-    int _animFrame;
-    GeneralSprite _lookingBlinky;
-    LoopingTimer _lookTimer;
+    private GeneralSprite _snagSprite;
+    private Stage _stage;
+    private bool _finished;
+    private int _animFrame;
+    private GeneralSprite _lookingBlinky;
+    private LoopingTimer _lookTimer;
 
-    readonly AttractScenePacMan _pacMan;
+    private readonly AttractScenePacMan _pacMan;
 
-    readonly AttractGhost _blinky;
+    private readonly AttractGhost _blinky;
 
-    readonly StartAndEndPos _pacPositions;
-    readonly EggTimer _pacTimer;
-    readonly LoopingTimer _tearTimer;
+    private readonly StartAndEndPos _pacPositions;
+    private readonly EggTimer _pacTimer;
+    private readonly LoopingTimer _tearTimer;
 
-    readonly StartAndEndPos _blinkyPositions;
-    readonly EggTimer _blinkyTimer;
+    private readonly StartAndEndPos _blinkyPositions;
+    private readonly EggTimer _blinkyTimer;
 
-    readonly Vector2 _centerPoint = new(120, 140);
+    private readonly Vector2 _centerPoint = new(120, 140);
 
-    readonly Vector2[] _tearFrames;
-    readonly Vector2[] _blinkyLookFrames;
+    private readonly Vector2[] _tearFrames;
+    private readonly Vector2[] _blinkyLookFrames;
 
-    readonly Size _tearSize = new(13, 13);
-    readonly Vector2 _tearOffset = new(7, 6.5f);
+    private readonly Size _tearSize = new(13, 13);
+    private readonly Vector2 _tearOffset = new(7, 6.5f);
 
     public GhostTearAct(IGameSoundPlayer gameSoundPlayer, IMediator mediator)
     {
@@ -51,8 +51,8 @@ public class GhostTearAct : IAct
         _stage = Stage.MovingBlinky;
         _animFrame = 0;
 
-        _tearFrames = new[]
-        {
+        _tearFrames =
+        [
             new Vector2(589, 98),
             new Vector2(609, 98),
             new Vector2(622, 98),
@@ -60,22 +60,22 @@ public class GhostTearAct : IAct
             new Vector2(636, 98),
             new Vector2(636, 98),
             new Vector2(649, 98)
-        };
+        ];
 
-        _blinkyLookFrames = new[]
-        {
+        _blinkyLookFrames =
+        [
             new Vector2(584, 113),
             new Vector2(600, 113)
-        };
+        ];
 
-        _blinkyTimer = new(4500.Milliseconds(), blinkyCaught);
+        _blinkyTimer = new(4500.Milliseconds(), BlinkyCaught);
 
         _tearTimer = new(
             500.Milliseconds(),
             () => {
                 if (_stage == Stage.TearingBlinky)
                 {
-                    updateTearAnimation();
+                    UpdateTearAnimation();
                 }
             });
 
@@ -120,10 +120,10 @@ public class GhostTearAct : IAct
 
         if (_stage == Stage.MovingBlinky)
         {
-            lerpBlinky();
+            LerpBlinky();
         }
 
-        lerpPacMan();
+        LerpPacMan();
 
         await _pacMan.Update(timing);
         await _blinky.Update(timing);
@@ -141,22 +141,22 @@ public class GhostTearAct : IAct
         await _snagSprite.Draw(canvas);
     }
 
-    void lerpBlinky()
+    private void LerpBlinky()
     {
         var pc = _blinkyTimer.Progress;
         _blinky.Position = Vector2.Lerp(_blinkyPositions.Start, _blinkyPositions.End, pc);
     }
 
-    void lerpPacMan()
+    private void LerpPacMan()
     {
         var pc = _pacTimer.Progress;
 
         _pacMan.Position = Vector2.Lerp(_pacPositions.Start, _pacPositions.End, pc);
     }
 
-    void blinkyCaught() => _stage = Stage.TearingBlinky;
+    private void BlinkyCaught() => _stage = Stage.TearingBlinky;
 
-    void updateTearAnimation()
+    private void UpdateTearAnimation()
     {
         ++_animFrame;
         if (_animFrame < _tearFrames.Length)
@@ -176,15 +176,15 @@ public class GhostTearAct : IAct
 
         _animFrame = 0;
         _blinky.Visible = false;
-        setLookingBlinky(0);
+        SetLookingBlinky(0);
 
-        _lookTimer = new(1500.Milliseconds(), async () => await updateBlinkyLookAnimation());
+        _lookTimer = new(1500.Milliseconds(), async () => await UpdateBlinkyLookAnimation());
 
         _lookingBlinky.Visible = true;
         _stage = Stage.BlinkyLooking;
     }
 
-    void setLookingBlinky(int frame) =>
+    private void SetLookingBlinky(int frame) =>
         _lookingBlinky = new(
             _blinky.Position,
             _blinky.Size,
@@ -194,7 +194,7 @@ public class GhostTearAct : IAct
             Visible = true
         };
 
-    async ValueTask updateBlinkyLookAnimation()
+    private async ValueTask UpdateBlinkyLookAnimation()
     {
         ++_animFrame;
 
@@ -207,6 +207,6 @@ public class GhostTearAct : IAct
             return;
         }
 
-        setLookingBlinky(_animFrame);
+        SetLookingBlinky(_animFrame);
     }
 }

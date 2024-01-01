@@ -4,8 +4,8 @@ namespace PacMan.GameComponents.GameActs;
 
 public class BlazorLogo
 {
-    readonly GeneralSprite _blazorLogo;
-    readonly Tweener _colorTweener;
+    private readonly GeneralSprite _blazorLogo;
+    private readonly Tweener _colorTweener;
 
     public BlazorLogo()
     {

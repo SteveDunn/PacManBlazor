@@ -7,12 +7,13 @@ namespace PacMan.GameComponents.Events;
 /// </summary>
 public readonly struct LevelFinishedEvent : INotification
 {
+    [UsedImplicitly]
     public class Handler : INotificationHandler<LevelFinishedEvent>
     {
-        readonly IMediator _mediator;
-        readonly IGame _game;
-        readonly IGameStats _gameStats;
-        readonly IHaveTheMazeCanvases _mazeCanvases;
+        private readonly IMediator _mediator;
+        private readonly IGame _game;
+        private readonly IGameStats _gameStats;
+        private readonly IHaveTheMazeCanvases _mazeCanvases;
 
         public Handler(IMediator mediator, IGame game, IGameStats gameStats, IHaveTheMazeCanvases mazeCanvases)
         {
@@ -47,11 +48,12 @@ public readonly struct LevelFinishedEvent : INotification
                     return;
                 }
 
+                // ReSharper disable once SwitchExpressionHandlesSomeKnownEnumValuesWithExceptionInDefault
                 var act = cutScene switch
                 {
-                    IntroCutScene.BigPac => await getAct("BigPacChaseAct"),
-                    IntroCutScene.GhostSnagged => await getAct("GhostTearAct"),
-                    IntroCutScene.TornGhostAndWorm => await getAct("TornGhostChaseAct"),
+                    IntroCutScene.BigPac => await GetAct("BigPacChaseAct"),
+                    IntroCutScene.GhostSnagged => await GetAct("GhostTearAct"),
+                    IntroCutScene.TornGhostAndWorm => await GetAct("TornGhostChaseAct"),
 
                     // ReSharper disable once HeapView.BoxingAllocation
                     _ => throw new InvalidOperationException($"Don't know how to handle cut scene of {cutScene}")
@@ -68,6 +70,6 @@ public readonly struct LevelFinishedEvent : INotification
         }
 
         [SuppressMessage("ReSharper", "HeapView.BoxingAllocation")]
-        async Task<IAct> getAct(string name) => await _mediator.Send(new GetActRequest(name));
+        private async Task<IAct> GetAct(string name) => await _mediator.Send(new GetActRequest(name));
     }
 }

@@ -2,7 +2,7 @@
 
 public class TimedSpriteList
 {
-    readonly List<TimedSprite> _sprites;
+    private readonly List<TimedSprite> _sprites;
 
     public TimedSpriteList()
     {

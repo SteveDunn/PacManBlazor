@@ -2,7 +2,7 @@
 
 public class ScoreSprite : GeneralSprite
 {
-    static readonly Dictionary<int, (Vector2 Pos, int Width)> _scorePositions =
+    private static readonly Dictionary<int, (Vector2 Pos, int Width)> _scorePositions =
         new()
         {
             { 100, (new(456, 148), 15) },

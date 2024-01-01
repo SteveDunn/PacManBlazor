@@ -2,7 +2,7 @@
 
 public class Acts : IActs
 {
-    readonly Dictionary<string, IAct> _acts;
+    private readonly Dictionary<string, IAct> _acts;
 
     public Acts(IEnumerable<IAct> acts)
     {

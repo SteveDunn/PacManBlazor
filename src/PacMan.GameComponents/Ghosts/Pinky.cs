@@ -4,8 +4,8 @@ namespace PacMan.GameComponents.Ghosts;
 
 public class Pinky : Ghost
 {
-    readonly IMaze _maze;
-    readonly IPacMan _pacman;
+    private readonly IMaze _maze;
+    private readonly IPacMan _pacman;
 
     public Pinky(IGameStats gameStats, IMediator mediator, IMaze maze, IPacMan pacman, IHumanInterfaceParser input) : base(
         gameStats,
@@ -23,7 +23,7 @@ public class Pinky : Ghost
 
     public override ValueTask<CellIndex> GetScatterTarget() => new(new CellIndex(2, 0));
 
-    public override ValueTask<CellIndex> GetChaseTarget() => getChaseTargetCell();
+    public override ValueTask<CellIndex> GetChaseTarget() => GetChaseTargetCell();
 
     public override void Reset()
     {
@@ -33,13 +33,13 @@ public class Pinky : Ghost
 
         State = GhostState.Normal;
         MovementMode = GhostMovementMode.InHouse;
-        SetMover(new(this, _maze, CurrentPlayerStats.ghostHouseDoor));
+        SetMover(new(this, _maze, CurrentPlayerStats.GhostHouseDoor));
     }
 
     // Pac-Man’s current position and orientation, and selecting the location four tiles straight
     // ahead of him. Works when PacMan is facing left, down, or right, but when facing upwards,
     // it's also four tiles to the left
-    ValueTask<CellIndex> getChaseTargetCell()
+    private ValueTask<CellIndex> GetChaseTargetCell()
     {
         var pacDir = _pacman.Direction;
 

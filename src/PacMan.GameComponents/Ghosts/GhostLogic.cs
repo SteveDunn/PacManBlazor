@@ -2,15 +2,15 @@
 
 public class GhostLogic
 {
-    readonly DistanceAndDirectionComparer _distanceAndDirectionComparer = new();
+    private readonly DistanceAndDirectionComparer _distanceAndDirectionComparer = new();
 
-    readonly List<Direction> _availableDirections = new(4);
-    readonly List<DistanceAndDirection> _distanceAndDirections = new(4);
+    private readonly List<Direction> _availableDirections = new(4);
+    private readonly List<DistanceAndDirection> _distanceAndDirections = new(4);
 
-    readonly IMaze _maze;
-    readonly Ghost _ghost;
+    private readonly IMaze _maze;
+    private readonly Ghost _ghost;
 
-    CellIndex _lastDecisionMadeAt;
+    private CellIndex _lastDecisionMadeAt;
 
     public GhostLogic(IMaze maze, Ghost ghost)
     {
@@ -42,42 +42,18 @@ public class GhostLogic
             return _ghost.Direction.Current;
         }
 
-        Direction decision = calculateWhichWayToGo(nextTile, targetCell);
+        Direction decision = CalculateWhichWayToGo(nextTile, targetCell);
 
         _lastDecisionMadeAt = cellPosition;
 
         return decision;
     }
 
-    Direction calculateWhichWayToGo(Tile tile, CellIndex targetCell)
+    private Direction CalculateWhichWayToGo(Tile tile, CellIndex targetCell)
     {
         CellIndex cellPosition = tile.Index;
 
-        DirectionChoices choices = _maze.GetChoicesAtCellPosition(cellPosition);
-
-        Direction dir = _ghost.Direction.Next;
-
-        _availableDirections.Clear();
-
-        if (choices.IsSet(Direction.Up) && dir != Direction.Down)
-        {
-            _availableDirections.Add(Direction.Up);
-        }
-
-        if (choices.IsSet(Direction.Left) && dir != Direction.Right)
-        {
-            _availableDirections.Add(Direction.Left);
-        }
-
-        if (choices.IsSet(Direction.Down) && dir != Direction.Up)
-        {
-            _availableDirections.Add(Direction.Down);
-        }
-
-        if (choices.IsSet(Direction.Right) && dir != Direction.Left)
-        {
-            _availableDirections.Add(Direction.Right);
-        }
+        RefreshAvailableDirections(tile);
 
         if (_availableDirections.Count == 1)
         {
@@ -98,7 +74,7 @@ public class GhostLogic
         if (_availableDirections.Count == 0)
         {
             // when a ghost turns to frightened, their direction is switched immediately
-            // which means that they're current direction is reversed.  The above
+            // which means that their current direction is reversed.  The above
             // logic doesn't cater for this, so we just tell it to continue the way
             // it's going
             if (_ghost.State == GhostState.Frightened)
@@ -109,12 +85,41 @@ public class GhostLogic
             throw new InvalidOperationException("No choices to pick from!");
         }
 
-        dir = pickShortest(tile, targetCell, _availableDirections);
-
-        return dir;
+        return PickShortest(tile, targetCell, _availableDirections);
     }
 
-    Direction pickShortest(Tile ghostTile, CellIndex targetCell, List<Direction> choices)
+    private void RefreshAvailableDirections(Tile tile)
+    {
+        CellIndex cellPosition = tile.Index;
+
+        DirectionChoices choices = _maze.GetChoicesAtCellPosition(cellPosition);
+
+        Direction dir = _ghost.Direction.Next;
+
+        _availableDirections.Clear();
+
+        if (choices.CanGoUp && dir != Direction.Down)
+        {
+            _availableDirections.Add(Direction.Up);
+        }
+
+        if (choices.CanGoLeft && dir != Direction.Right)
+        {
+            _availableDirections.Add(Direction.Left);
+        }
+
+        if (choices.CanGoDown && dir != Direction.Up)
+        {
+            _availableDirections.Add(Direction.Down);
+        }
+
+        if (choices.CanGoRight && dir != Direction.Left)
+        {
+            _availableDirections.Add(Direction.Right);
+        }
+    }
+
+    private Direction PickShortest(Tile ghostTile, CellIndex targetCell, List<Direction> choices)
     {
         if (choices.Count == 0)
         {
@@ -143,7 +148,7 @@ public class GhostLogic
         return _distanceAndDirections[0].Direction;
     }
 
-    class DistanceAndDirectionComparer : IComparer<DistanceAndDirection>
+    private class DistanceAndDirectionComparer : IComparer<DistanceAndDirection>
     {
         public int Compare(DistanceAndDirection l, DistanceAndDirection r)
         {
@@ -154,14 +159,14 @@ public class GhostLogic
                 return (int)dist;
             }
 
-            int ret = weightDir(l.Direction) - weightDir(r.Direction);
+            int ret = WeightDir(l.Direction) - WeightDir(r.Direction);
 
             return ret;
         }
     }
 
     // From the spec: To break the tie, the ghost prefers directions in this order: up, left, down, right
-    static int weightDir(Direction direction) =>
+    private static int WeightDir(Direction direction) =>
         direction switch
         {
             Direction.Up => 0,

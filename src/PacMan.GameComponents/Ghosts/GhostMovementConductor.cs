@@ -2,16 +2,17 @@
 
 public class GhostMovementConductor
 {
-    int _index;
+    private int _index;
 
-    readonly List<ModeAndDuration> _items;
+    private readonly List<ModeAndDuration> _items;
 
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
     public GhostMovementConductor(GhostsLevelPatternProperties properties)
     {
         _index = -1;
 
-        _items = new() {
+        _items =
+        [
             new(GhostMovementMode.Scatter, properties.Scatter1.Seconds()),
             new(GhostMovementMode.Chase, properties.Chase1.Seconds()),
             new(GhostMovementMode.Scatter, properties.Scatter2.Seconds()),
@@ -20,9 +21,9 @@ public class GhostMovementConductor
             new(GhostMovementMode.Chase, properties.Chase3.Seconds()),
             new(GhostMovementMode.Scatter, properties.Scatter4.Seconds()),
             new(GhostMovementMode.Chase, properties.Chase4.Seconds())
-        };
+        ];
 
-        incrementIndex();
+        IncrementIndex();
     }
 
     public void Update(CanvasTimingInformation context)
@@ -33,11 +34,11 @@ public class GhostMovementConductor
 
         if (item.Duration < TimeSpan.Zero)
         {
-            incrementIndex();
+            IncrementIndex();
         }
     }
 
-    void incrementIndex()
+    private void IncrementIndex()
     {
         _index += 1;
 

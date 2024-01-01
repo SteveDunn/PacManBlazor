@@ -2,12 +2,13 @@
 
 public readonly struct DemoStartedEvent : INotification
 {
+    [UsedImplicitly]
     public class Handler : INotificationHandler<DemoStartedEvent>
     {
-        readonly IGameSoundPlayer _gameSoundPlayer;
-        readonly IGameStats _gameStats;
-        readonly IMediator _mediator;
-        readonly IHaveTheMazeCanvases _mazeCanvases;
+        private readonly IGameSoundPlayer _gameSoundPlayer;
+        private readonly IGameStats _gameStats;
+        private readonly IMediator _mediator;
+        private readonly IHaveTheMazeCanvases _mazeCanvases;
 
         public Handler(
             IGameSoundPlayer gameSoundPlayer,

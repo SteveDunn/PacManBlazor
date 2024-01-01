@@ -1,7 +1,6 @@
 ﻿// ReSharper disable HeapView.ObjectAllocation.Evident
 
 using System.Reflection;
-using MediatR;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using PacMan.GameComponents;
 using PacMan.GameComponents.Audio;
@@ -11,7 +10,7 @@ using PacMan.GameComponents.Requests;
 
 namespace PacMan;
 
-class Program
+internal class Program
 {
     public static async Task Main(string[] args)
     {
@@ -82,9 +81,11 @@ class Program
 
         services.AddMediatR(
             c =>
-                c.AsSingleton(),
-            thisAssembly,
-            componentsAssembly);
+            {
+                c.Lifetime = ServiceLifetime.Singleton;
+                c.RegisterServicesFromAssembly(thisAssembly);
+                c.RegisterServicesFromAssembly(componentsAssembly);
+            });
 
         services.AddSingleton(new HttpClient {BaseAddress = new(builder.HostEnvironment.BaseAddress)});
 

@@ -2,30 +2,28 @@
 
 public class DirectionChoices
 {
-    readonly Dictionary<Direction, bool> _lookup;
+    private readonly Dictionary<Direction, bool> _lookup = new();
 
-    public DirectionChoices()
-    {
-        _lookup = new();
-    }
-
-    public int Possibilities { get; private set; }
+    public bool AnyAvailable { get; private set; }
 
     public void Set(Direction direction)
     {
         _lookup[direction] = true;
 
-        Possibilities = calcPossibilities();
+        AnyAvailable = CalcPossibilities();
     }
 
     public void Unset(Direction direction)
     {
         _lookup[direction] = false;
 
-        Possibilities = calcPossibilities();
+        AnyAvailable = CalcPossibilities();
     }
 
-    public bool IsSet(Direction direction) => _lookup[direction];
+    public bool CanGoUp => _lookup[Direction.Up];
+    public bool CanGoDown => _lookup[Direction.Down];
+    public bool CanGoLeft => _lookup[Direction.Left];
+    public bool CanGoRight => _lookup[Direction.Right];
 
     public void ClearAll()
     {
@@ -35,30 +33,6 @@ public class DirectionChoices
         _lookup[Direction.Right] = false;
     }
 
-    int calcPossibilities()
-    {
-        int count = 0;
-
-        if (_lookup[Direction.Up])
-        {
-            ++count;
-        }
-
-        if (_lookup[Direction.Down])
-        {
-            ++count;
-        }
-
-        if (_lookup[Direction.Left])
-        {
-            ++count;
-        }
-
-        if (_lookup[Direction.Right])
-        {
-            ++count;
-        }
-
-        return count;
-    }
+    private bool CalcPossibilities() => 
+        CanGoUp || CanGoDown || CanGoLeft || CanGoRight;
 }

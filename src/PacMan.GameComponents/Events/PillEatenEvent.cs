@@ -9,12 +9,13 @@ public readonly struct PillEatenEvent : INotification
 
     public CellIndex CellIndex { get; }
 
+    [UsedImplicitly]
     public class Handler : INotificationHandler<PillEatenEvent>
     {
-        readonly IGameStats _gameStats;
-        readonly IGameSoundPlayer _gameSoundPlayer;
-        readonly IPacMan _pacman;
-        readonly IMediator _mediator;
+        private readonly IGameStats _gameStats;
+        private readonly IGameSoundPlayer _gameSoundPlayer;
+        private readonly IPacMan _pacman;
+        private readonly IMediator _mediator;
 
         public Handler(IGameStats gameStats, IGameSoundPlayer gameSoundPlayer, IPacMan pacman, IMediator mediator)
         {
@@ -38,10 +39,10 @@ public readonly struct PillEatenEvent : INotification
             await _gameStats.PillEaten(notification.CellIndex);
 
             _pacman.PillEaten();
-            await checkForNoMorePills();
+            await CheckForNoMorePills();
         }
 
-        async Task checkForNoMorePills()
+        private async Task CheckForNoMorePills()
         {
             if (_gameStats.CurrentPlayerStats.LevelStats.PillsRemaining == 0)
             {

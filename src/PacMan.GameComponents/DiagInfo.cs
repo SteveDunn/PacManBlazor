@@ -2,8 +2,8 @@
 
 public static class DiagInfo
 {
-    static float _lastTimestamp;
-    static TimeSpan _lastTimeKeyboardChecked;
+    private static float _lastTimestamp;
+    private static TimeSpan _lastTimeKeyboardChecked;
 
     public static bool ShouldShow { get; private set; }
 
