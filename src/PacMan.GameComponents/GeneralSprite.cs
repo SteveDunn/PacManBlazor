@@ -4,10 +4,10 @@ namespace PacMan.GameComponents;
 
 public class GeneralSprite : ISprite
 {
-    readonly Vector2 _frame1;
-    readonly Vector2 _frame2;
-    readonly TwoFrameAnimation? _animator;
-    Vector2 _currentFrame;
+    private readonly Vector2 _frame1;
+    private readonly Vector2 _frame2;
+    private readonly TwoFrameAnimation? _animator;
+    private Vector2 _currentFrame;
 
     public GeneralSprite(
         Vector2 pos,

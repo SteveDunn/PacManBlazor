@@ -2,9 +2,9 @@
 
 public class TimedSprite
 {
-    double _timeToLive;
+    private double _timeToLive;
 
-    readonly ISprite _sprite;
+    private readonly ISprite _sprite;
 
     public TimedSprite(int timeToLive, ISprite sprite)
     {

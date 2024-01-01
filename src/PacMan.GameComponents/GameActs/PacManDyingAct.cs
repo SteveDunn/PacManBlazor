@@ -4,15 +4,15 @@
 /// or the 'attract act' for the next player that's alive.
 public class PacManDyingAct : IAct
 {
-    readonly IMediator _mediator;
-    readonly IGhostCollection _ghostCollection;
-    readonly IGameSoundPlayer _gameSoundPlayer;
-    readonly IPacMan _pacman;
-    readonly IMaze _maze;
+    private readonly IMediator _mediator;
+    private readonly IGhostCollection _ghostCollection;
+    private readonly IGameSoundPlayer _gameSoundPlayer;
+    private readonly IPacMan _pacman;
+    private readonly IMaze _maze;
 
-    int _step;
-    LoopingTimer _timer = LoopingTimer.DoNothing;
-    bool _finished;
+    private int _step;
+    private LoopingTimer _timer = LoopingTimer.DoNothing;
+    private bool _finished;
 
     public PacManDyingAct(IMediator mediator, IGhostCollection ghostCollection, IGameSoundPlayer gameSoundPlayer, IPacMan pacman, IMaze maze)
     {

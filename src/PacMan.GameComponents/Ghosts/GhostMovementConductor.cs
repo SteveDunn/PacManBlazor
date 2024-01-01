@@ -2,9 +2,9 @@
 
 public class GhostMovementConductor
 {
-    int _index;
+    private int _index;
 
-    readonly List<ModeAndDuration> _items;
+    private readonly List<ModeAndDuration> _items;
 
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
     public GhostMovementConductor(GhostsLevelPatternProperties properties)
@@ -38,7 +38,7 @@ public class GhostMovementConductor
         }
     }
 
-    void IncrementIndex()
+    private void IncrementIndex()
     {
         _index += 1;
 

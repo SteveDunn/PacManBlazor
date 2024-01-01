@@ -2,20 +2,20 @@
 
 public class GhostFrightSession
 {
-    readonly TimeSpan _eachFlashDurationMs = TimeSpan.FromMilliseconds(166);
-    readonly LoopingTimer _timer;
+    private readonly TimeSpan _eachFlashDurationMs = TimeSpan.FromMilliseconds(166);
+    private readonly LoopingTimer _timer;
 
-    int _amountOfGhostsEaten;
+    private int _amountOfGhostsEaten;
 
-    TimeSpan _timeLeft;
+    private TimeSpan _timeLeft;
 
     // 1s = 1000ms
     // 1/60th second = 16.66ms
     // 1 frame = 16.66ms
     // each flash takes 1/6th of a second (or 10 frames), 166ms
     // so there can be 6 flashes a second
-    TimeSpan _timeLeftToStartFlashing;
-    bool _tickTock;
+    private TimeSpan _timeLeftToStartFlashing;
+    private bool _tickTock;
 
     public GhostFrightSession(LevelProps levelProps)
     {

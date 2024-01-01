@@ -8,8 +8,8 @@ public class CanvasWrapper
 {
     public static readonly CanvasTextFormat _10point = new("assets/css/joystix.ttf#Joystix", 10);
 
-    readonly Canvas2DContext _canvas2DContext;
-    readonly Point _origin = new(0, 0);
+    private readonly Canvas2DContext _canvas2DContext;
+    private readonly Point _origin = new(0, 0);
 
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
     protected CanvasWrapper(Canvas2DContext canvas2DContext) =>

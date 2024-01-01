@@ -5,11 +5,11 @@ namespace PacMan.GameComponents;
 
 public class AttractScenePacMan : ISprite
 {
-    readonly Dictionary<Direction, FramePair> _velocitiesLookup;
-    readonly TwoFrameAnimation _animDirection;
+    private readonly Dictionary<Direction, FramePair> _velocitiesLookup;
+    private readonly TwoFrameAnimation _animDirection;
 
-    Vector2 _frame1InSpriteMap;
-    Vector2 _frame2InSpriteMap;
+    private Vector2 _frame1InSpriteMap;
+    private Vector2 _frame2InSpriteMap;
 
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
     public AttractScenePacMan()
@@ -55,7 +55,7 @@ public class AttractScenePacMan : ISprite
 
     public Direction Direction { private get; set; }
 
-    ValueTask UpdateAnimation(CanvasTimingInformation context)
+    private ValueTask UpdateAnimation(CanvasTimingInformation context)
     {
         _animDirection.Run(context);
 
@@ -64,7 +64,7 @@ public class AttractScenePacMan : ISprite
         return default;
     }
 
-    void SetSpriteSheetPointers()
+    private void SetSpriteSheetPointers()
     {
         _frame1InSpriteMap = _velocitiesLookup[Direction].First;
         _frame2InSpriteMap = _velocitiesLookup[Direction].Second;

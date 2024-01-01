@@ -11,13 +11,13 @@ namespace PacMan.GameComponents;
 
 public class LevelStats
 {
-    const int _startingAmountOfPills = 244;
+    private const int _startingAmountOfPills = 244;
 
-    const int _maxLevel = 20;
+    private const int _maxLevel = 20;
 
-    readonly char[] _currentMap;
+    private readonly char[] _currentMap;
 
-    static readonly LevelProps[] _levelProps =
+    private static readonly LevelProps[] _levelProps =
     [
         new(
             CutScene: IntroCutScene.None,
@@ -379,7 +379,8 @@ public class LevelStats
     ];
 
     // todo: move to another class (and related properties)
-    [SuppressMessage(category: "ReSharper", checkId: "StringLiteralTypo")] static readonly char[] _map = (
+    [SuppressMessage(category: "ReSharper", checkId: "StringLiteralTypo")]
+    private static readonly char[] _map = (
 
         // 0,0                     29,0
 
@@ -509,7 +510,7 @@ public class LevelStats
         _currentMap[index] = '+';
     }
 
-    static int GetArrayIndex(CellIndex point) => (point.Y * 29) + point.X;
+    private static int GetArrayIndex(CellIndex point) => (point.Y * 29) + point.X;
 
     public char GetCellContent(CellIndex point) => _currentMap[GetArrayIndex(point: point)];
 }

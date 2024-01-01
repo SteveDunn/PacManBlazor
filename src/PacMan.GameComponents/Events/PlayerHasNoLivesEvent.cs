@@ -8,8 +8,8 @@ public readonly struct PlayerHasNoLivesEvent : INotification
     [UsedImplicitly]
     public class Handler : INotificationHandler<PlayerHasNoLivesEvent>
     {
-        readonly IMediator _mediator;
-        readonly IGame _game;
+        private readonly IMediator _mediator;
+        private readonly IGame _game;
 
         public Handler(IGame game, IMediator mediator) => (_game, _mediator) = (game, mediator);
 

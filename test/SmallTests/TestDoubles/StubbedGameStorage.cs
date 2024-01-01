@@ -4,7 +4,7 @@ namespace SmallTests.TestDoubles;
 
 public class StubbedGameStorage : IGameStorage
 {
-    int _highScore = 10_000;
+    private int _highScore = 10_000;
 
     public ValueTask<int> GetHighScore() => ValueTask.FromResult(_highScore);
 

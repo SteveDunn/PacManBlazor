@@ -9,9 +9,9 @@ public readonly struct PacManEatenEvent : INotification
     [UsedImplicitly]
     public class Handler : INotificationHandler<PacManEatenEvent>
     {
-        readonly IMediator _mediator;
-        readonly IGame _game;
-        readonly IGameStats _gameStats;
+        private readonly IMediator _mediator;
+        private readonly IGame _game;
+        private readonly IGameStats _gameStats;
 
         public Handler(IGame game, IGameStats gameStats, IMediator mediator)
         {

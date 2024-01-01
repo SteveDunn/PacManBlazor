@@ -2,8 +2,8 @@
 
 public class GhostSpritesheet
 {
-    readonly Dictionary<GhostNickname, GhostSpritesheetInfo> _entries;
-    readonly FrightenedSpritesheet _frightened;
+    private readonly Dictionary<GhostNickname, GhostSpritesheetInfo> _entries;
+    private readonly FrightenedSpritesheet _frightened;
 
     public GhostSpritesheet()
     {

@@ -4,13 +4,13 @@
 /// Transitions into either the cut-scene act if a 'cut-scene' is due, or the 'player intro' act.
 public class LevelFinishedAct : IAct
 {
-    readonly IMediator _mediator;
-    readonly IGhostCollection _ghostCollection;
-    readonly IPacMan _pacman;
-    readonly IMaze _maze;
-    int _step;
-    LoopingTimer _timer = LoopingTimer.DoNothing;
-    bool _finished;
+    private readonly IMediator _mediator;
+    private readonly IGhostCollection _ghostCollection;
+    private readonly IPacMan _pacman;
+    private readonly IMaze _maze;
+    private int _step;
+    private LoopingTimer _timer = LoopingTimer.DoNothing;
+    private bool _finished;
 
     public LevelFinishedAct(IMediator mediator, IGhostCollection ghostCollection, IPacMan pacman, IMaze maze)
     {

@@ -4,17 +4,17 @@ namespace PacMan.GameComponents;
 
 public class PlayerStats
 {
-    readonly IMediator _mediator;
+    private readonly IMediator _mediator;
 
-    Score _score = Score.Zero;
-    bool _alreadyDecreasedInitialLives;
-    GhostHouseDoor _ghostHouseDoor;
-    LevelStats _levelStats;
-    int _levelNumber;
+    private Score _score = Score.Zero;
+    private bool _alreadyDecreasedInitialLives;
+    private GhostHouseDoor _ghostHouseDoor;
+    private LevelStats _levelStats;
+    private int _levelNumber;
 
-    GhostMovementConductor _ghostMovementConductor;
+    private GhostMovementConductor _ghostMovementConductor;
 
-    readonly List<int> _extraLives;
+    private readonly List<int> _extraLives;
 
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
     public PlayerStats(int playerIndex, IMediator mediator)

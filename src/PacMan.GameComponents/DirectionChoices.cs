@@ -2,7 +2,7 @@
 
 public class DirectionChoices
 {
-    readonly Dictionary<Direction, bool> _lookup;
+    private readonly Dictionary<Direction, bool> _lookup;
 
     public DirectionChoices()
     {
@@ -35,7 +35,7 @@ public class DirectionChoices
         _lookup[Direction.Right] = false;
     }
 
-    int CalcPossibilities()
+    private int CalcPossibilities()
     {
         int count = 0;
 

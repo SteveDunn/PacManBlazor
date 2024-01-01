@@ -7,20 +7,20 @@ namespace PacMan.GameComponents.GameActs;
 public class BigPacChaseAct : IAct
 {
     // these need to send playerstartingevent when finished
-    readonly IMediator _mediator;
-    readonly IGameSoundPlayer _gameSoundPlayer;
-    readonly AttractScenePacMan _pacMan;
-    readonly GeneralSprite _bigPacMan;
+    private readonly IMediator _mediator;
+    private readonly IGameSoundPlayer _gameSoundPlayer;
+    private readonly AttractScenePacMan _pacMan;
+    private readonly GeneralSprite _bigPacMan;
 
-    readonly AttractGhost _blinky;
+    private readonly AttractGhost _blinky;
 
-    StartAndEndPos _pacPositions;
-    EggTimer _pacTimer;
+    private StartAndEndPos _pacPositions;
+    private EggTimer _pacTimer;
 
-    StartAndEndPos _blinkyPositions;
-    EggTimer _blinkyTimer;
+    private StartAndEndPos _blinkyPositions;
+    private EggTimer _blinkyTimer;
 
-    bool _finished;
+    private bool _finished;
 
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
     public BigPacChaseAct(IMediator mediator, IGameSoundPlayer gameSoundPlayer)
@@ -88,14 +88,14 @@ public class BigPacChaseAct : IAct
         await _bigPacMan.Draw(canvas);
     }
 
-    void LerpBlinky()
+    private void LerpBlinky()
     {
         float pc = _blinkyTimer.Progress;
 
         _blinky.Position = Vector2.Lerp(_blinkyPositions.Start, _blinkyPositions.End, pc);
     }
 
-    void LerpPacMan()
+    private void LerpPacMan()
     {
         float pc = _pacTimer.Progress;
 
@@ -103,7 +103,7 @@ public class BigPacChaseAct : IAct
         _bigPacMan.Position = Vector2.Lerp(_pacPositions.Start, _pacPositions.End, pc);
     }
 
-    void ReverseChase()
+    private void ReverseChase()
     {
         _blinkyTimer = new(4600.Milliseconds(), static () => { });
 

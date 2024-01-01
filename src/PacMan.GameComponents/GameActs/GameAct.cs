@@ -5,17 +5,17 @@
 /// </summary>
 public class GameAct : IAct
 {
-    readonly ICoinBox _coinBox;
-    readonly IMediator _mediator;
-    readonly IHumanInterfaceParser _input;
-    readonly IGameSoundPlayer _gameSoundPlayer;
-    readonly IGameStats _gameStats;
-    readonly IGhostCollection _ghostCollection;
-    readonly IMaze _maze;
-    readonly IPacMan _pacman;
-    readonly IFruit _fruit;
+    private readonly ICoinBox _coinBox;
+    private readonly IMediator _mediator;
+    private readonly IHumanInterfaceParser _input;
+    private readonly IGameSoundPlayer _gameSoundPlayer;
+    private readonly IGameStats _gameStats;
+    private readonly IGhostCollection _ghostCollection;
+    private readonly IMaze _maze;
+    private readonly IPacMan _pacman;
+    private readonly IFruit _fruit;
 
-    bool _paused;
+    private bool _paused;
 
     public GameAct(
         ICoinBox coinBox,

@@ -2,20 +2,20 @@
 
 public class TornGhostChaseAct : IAct
 {
-    readonly IMediator _mediator;
-    readonly IGameSoundPlayer _gameSoundPlayer;
-    readonly AttractScenePacMan _pacMan;
-    readonly GeneralSprite _worm;
+    private readonly IMediator _mediator;
+    private readonly IGameSoundPlayer _gameSoundPlayer;
+    private readonly AttractScenePacMan _pacMan;
+    private readonly GeneralSprite _worm;
 
-    readonly GeneralSprite _blinky;
+    private readonly GeneralSprite _blinky;
 
-    readonly StartAndEndPos _pacPositions;
-    readonly EggTimer _pacTimer;
+    private readonly StartAndEndPos _pacPositions;
+    private readonly EggTimer _pacTimer;
 
-    StartAndEndPos _ghostStartAndEndPos;
-    EggTimer _ghostTimer;
+    private StartAndEndPos _ghostStartAndEndPos;
+    private EggTimer _ghostTimer;
 
-    bool _finished;
+    private bool _finished;
 
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
     public TornGhostChaseAct(IMediator mediator, IGameSoundPlayer gameSoundPlayer)
@@ -92,21 +92,21 @@ public class TornGhostChaseAct : IAct
         await _worm.Draw(canvas);
     }
 
-    void LerpBlinky()
+    private void LerpBlinky()
     {
         var pc = _ghostTimer.Progress;
         _blinky.Position = Vector2.Lerp(_ghostStartAndEndPos.Start, _ghostStartAndEndPos.End, pc);
         _worm.Position = Vector2.Lerp(_ghostStartAndEndPos.Start, _ghostStartAndEndPos.End, pc);
     }
 
-    void LerpPacMan()
+    private void LerpPacMan()
     {
         var pc = _pacTimer.Progress;
 
         _pacMan.Position = Vector2.Lerp(_pacPositions.Start, _pacPositions.End, pc);
     }
 
-    void ReverseChase()
+    private void ReverseChase()
     {
         _ghostTimer = new(4600.Milliseconds(), async () =>
         {

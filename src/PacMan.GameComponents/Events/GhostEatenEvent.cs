@@ -13,9 +13,9 @@ public readonly struct GhostEatenEvent : INotification
 
     public class Handler : INotificationHandler<GhostEatenEvent>
     {
-        readonly IGame _game;
-        readonly IGameStats _gameStats;
-        readonly IGameSoundPlayer _gameSoundPlayer;
+        private readonly IGame _game;
+        private readonly IGameStats _gameStats;
+        private readonly IGameSoundPlayer _gameSoundPlayer;
 
         public Handler(IGame game, IGameStats gameStats, IGameSoundPlayer gameSoundPlayer)
         {

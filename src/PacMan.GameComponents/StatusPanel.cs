@@ -5,19 +5,19 @@ namespace PacMan.GameComponents;
 
 public class StatusPanel : IStatusPanel
 {
-    readonly IGameStats _gameStats;
-    readonly ICoinBox _coinBox;
+    private readonly IGameStats _gameStats;
+    private readonly ICoinBox _coinBox;
 
     // ReSharper disable once HeapView.ObjectAllocation.Evident
-    readonly StringBuilder _sb = new();
+    private readonly StringBuilder _sb = new();
 
-    readonly Vector2 _creditTextPoint = new(10, 00);
+    private readonly Vector2 _creditTextPoint = new(10, 00);
 
-    readonly LoopingTimer _timer;
+    private readonly LoopingTimer _timer;
 
-    readonly SimpleFruit _fruit;
+    private readonly SimpleFruit _fruit;
 
-    bool _tickTock = true;
+    private bool _tickTock = true;
 
     public StatusPanel(IGameStats gameStats, ICoinBox coinBox)
     {
@@ -49,7 +49,7 @@ public class StatusPanel : IStatusPanel
         }
     }
 
-    async ValueTask DrawPlayerLives(CanvasWrapper ds)
+    private async ValueTask DrawPlayerLives(CanvasWrapper ds)
     {
         int x = 0;
 
@@ -66,14 +66,14 @@ public class StatusPanel : IStatusPanel
         }
     }
 
-    ValueTask DrawCredits(CanvasWrapper ds)
+    private ValueTask DrawCredits(CanvasWrapper ds)
     {
         _sb.Clear();
         return ds.DrawMyText(_sb.Append("CREDIT ").Append(_coinBox.Credits).ToString(), _creditTextPoint, Colors.White);
     }
 
     // drawSprite max 7 fruit from max level 21
-    async ValueTask DrawFruit(CanvasWrapper ds)
+    private async ValueTask DrawFruit(CanvasWrapper ds)
     {
         if (_gameStats.IsDemo)
         {

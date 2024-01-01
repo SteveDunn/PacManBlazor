@@ -4,8 +4,8 @@ namespace PacMan.GameComponents.Ghosts;
 
 public class Blinky : Ghost
 {
-    readonly IPacMan _pacman;
-    readonly ValueTask<CellIndex> _scatterTarget;
+    private readonly IPacMan _pacman;
+    private readonly ValueTask<CellIndex> _scatterTarget;
 
     public Blinky(IGameStats gameStats, IMediator mediator, IMaze maze, IPacMan pacman, IHumanInterfaceParser input) : base(
         gameStats,
@@ -44,7 +44,7 @@ public class Blinky : Ghost
     // Pac-Man’s current position and orientation, and selecting the location four tiles straight
     // ahead of him. Works when PacMan is facing left, down, or right, but when facing upwards,
     // it's also four tiles to the left
-    ValueTask<CellIndex> GetChaseTargetCell()
+    private ValueTask<CellIndex> GetChaseTargetCell()
     {
         CellIndex pacCellPos = _pacman.Tile.Index;
 

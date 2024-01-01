@@ -2,10 +2,10 @@
 
 public class DotCounter
 {
-    readonly string _name;
-    readonly int _limit;
+    private readonly string _name;
+    private readonly int _limit;
 
-    bool _timedOut;
+    private bool _timedOut;
 
     public DotCounter(int limit, string name)
     {

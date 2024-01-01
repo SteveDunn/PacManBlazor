@@ -7,19 +7,19 @@ namespace PacMan.GameComponents.Ghosts;
 public abstract class Ghost : SimpleGhost, IGhost
 {
     protected int HouseOffset;
-    GhostMover? _mover;
+    private GhostMover? _mover;
 
-    readonly IGameStats _gameStats;
-    readonly IMediator _mediator;
-    readonly IHumanInterfaceParser _input;
-    readonly IMaze _maze;
-    readonly IPacMan _pacman;
-    readonly Vector2 _startingPoint;
-    readonly Direction _startingDirection;
+    private readonly IGameStats _gameStats;
+    private readonly IMediator _mediator;
+    private readonly IHumanInterfaceParser _input;
+    private readonly IMaze _maze;
+    private readonly IPacMan _pacman;
+    private readonly Vector2 _startingPoint;
+    private readonly Direction _startingDirection;
 
-    Action? _whenInCenterOfNextTile;
+    private Action? _whenInCenterOfNextTile;
 
-    bool _isMoving;
+    private bool _isMoving;
 
     public abstract Color GetColor();
 
@@ -76,7 +76,7 @@ public abstract class Ghost : SimpleGhost, IGhost
         }
     }
 
-    static Direction SwitchDirectionForChaseOrScatter(Direction current) =>
+    private static Direction SwitchDirectionForChaseOrScatter(Direction current) =>
         current switch
         {
             Up => Down,
@@ -114,7 +114,7 @@ public abstract class Ghost : SimpleGhost, IGhost
 
     public int OffsetInHouse => HouseOffset;
 
-    void RecenterInLane()
+    private void RecenterInLane()
     {
         if (MovementMode is not (GhostMovementMode.Chase or GhostMovementMode.Scatter))
         {
@@ -177,7 +177,7 @@ public abstract class Ghost : SimpleGhost, IGhost
         }
     }
 
-    float GetSpeed()
+    private float GetSpeed()
     {
         if (MovementMode == GhostMovementMode.InHouse)
         {
@@ -295,12 +295,12 @@ public abstract class Ghost : SimpleGhost, IGhost
 // await session.DrawText("X", ((await GetChaseTarget()).ToVector2() * Vector2s.Eight).ToPoint(), Spritesheet.Reference);
     }
 
-    async Task DrawLine(Vector2 cellIndex, Vector2 moverTargetCell, CanvasWrapper session)
+    private async Task DrawLine(Vector2 cellIndex, Vector2 moverTargetCell, CanvasWrapper session)
     {
         await session.DrawLine(cellIndex, moverTargetCell, GetColor());
     }
 
-    void SetNextScatterOrChaseMoverAndMode()
+    private void SetNextScatterOrChaseMoverAndMode()
     {
         GhostMovementMode nextMode = CurrentPlayerStats.GhostMovementMode;
 
@@ -327,7 +327,7 @@ public abstract class Ghost : SimpleGhost, IGhost
     }
 
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
-    void SetMoverAndMode()
+    private void SetMoverAndMode()
     {
         var isScatterOrChase = MovementMode 
             is GhostMovementMode.Undecided
@@ -371,7 +371,7 @@ public abstract class Ghost : SimpleGhost, IGhost
         throw new InvalidOperationException("Don't know what mover to create and set!");
     }
 
-    async ValueTask CollisionDetection()
+    private async ValueTask CollisionDetection()
     {
         if (Tile.Index != _pacman.Tile.Index)
         {
@@ -401,5 +401,5 @@ public abstract class Ghost : SimpleGhost, IGhost
     protected void SetMover(GhostInsideHouseMover mover) => _mover = mover;
 
     // ReSharper disable once HeapView.ObjectAllocation.Evident
-    GhostMover GetMover() => _mover ?? throw new InvalidOperationException("no mover");
+    private GhostMover GetMover() => _mover ?? throw new InvalidOperationException("no mover");
 }

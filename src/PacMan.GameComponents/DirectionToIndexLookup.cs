@@ -2,7 +2,7 @@
 
 public static class DirectionToIndexLookup
 {
-    static readonly Dictionary<Direction, Vector2> _lookup;
+    private static readonly Dictionary<Direction, Vector2> _lookup;
 
     static DirectionToIndexLookup()
     {

@@ -2,7 +2,7 @@
 
 public class TwoFrameAnimation
 {
-    readonly LoopingTimer _timer;
+    private readonly LoopingTimer _timer;
 
     public TwoFrameAnimation(TimeSpan switchEvery)
     {

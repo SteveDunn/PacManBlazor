@@ -22,13 +22,13 @@ public static class Keys
 public class HumanInterfaceParser : IHumanInterfaceParser
 {
     // ReSharper disable once HeapView.ObjectAllocation.Evident
-    readonly bool[] _keysCurrentlyDown = new bool[256];
+    private readonly bool[] _keysCurrentlyDown = new bool[256];
 
-    readonly TimeSpan[] _keyPresses;
-    readonly TimeSpan[] _swipes;
+    private readonly TimeSpan[] _keyPresses;
+    private readonly TimeSpan[] _swipes;
 
-    TimeSpan _timeTapped;
-    TimeSpan _timeLongPressed;
+    private TimeSpan _timeTapped;
+    private TimeSpan _timeLongPressed;
 
     public HumanInterfaceParser()
     {
@@ -41,10 +41,10 @@ public class HumanInterfaceParser : IHumanInterfaceParser
         _totalGameTime = 0.Seconds();
     }
 
-    TimeSpan _totalGameTime;
+    private TimeSpan _totalGameTime;
 
     // 20 milliseconds when 60 fps - should be 120 for 30 fps = e.g. fps * 2
-    static TimeSpan GetRetention() => (60 / Constants.FramesPerSecond * 20).Milliseconds();
+    private static TimeSpan GetRetention() => (60 / Constants.FramesPerSecond * 20).Milliseconds();
 
     public bool IsRightKeyDown => IsKeyCurrentlyDown(Keys.Right);
 

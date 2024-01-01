@@ -4,9 +4,9 @@ namespace PacMan.GameComponents.Ghosts;
 
 public class Clyde : Ghost
 {
-    readonly IMaze _maze;
-    readonly IPacMan _pacman;
-    readonly ValueTask<CellIndex> _scatterTarget = new(new CellIndex(0, 29));
+    private readonly IMaze _maze;
+    private readonly IPacMan _pacman;
+    private readonly ValueTask<CellIndex> _scatterTarget = new(new CellIndex(0, 29));
 
     public Clyde(IGameStats gameStats, IMediator mediator, IMaze maze, IPacMan pacman, IHumanInterfaceParser input) : base(
         gameStats,
@@ -48,7 +48,7 @@ public class Clyde : Ghost
     // Pac-Man’s current position and orientation, and selecting the location four tiles straight
     // ahead of him. Works when PacMan is facing left, down, or right, but when facing upwards,
     // it's also four tiles to the left
-    ValueTask<CellIndex> _getChaseTargetCell()
+    private ValueTask<CellIndex> _getChaseTargetCell()
     {
         CellIndex pacCellPos = _pacman.Tile.Index;
 

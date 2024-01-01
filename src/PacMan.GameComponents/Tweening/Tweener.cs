@@ -9,11 +9,11 @@ public delegate void TweenEndHandler();
 
 public class Tweener
 {
-    readonly TweeningFunction _tweeningFunction;
-    float _from;
-    readonly float _duration;
+    private readonly TweeningFunction _tweeningFunction;
+    private float _from;
+    private readonly float _duration;
 
-    bool _hasEnded;
+    private bool _hasEnded;
 
     public event TweenEndHandler? Ended;
 
@@ -52,10 +52,10 @@ public class Tweener
         private set;
     }
 
-    float _change;
+    private float _change;
 
-    float _elapsed;
-    float _to;
+    private float _elapsed;
+    private float _to;
 
     public bool Running
     {
@@ -80,7 +80,7 @@ public class Tweener
         }
     }
 
-    void OnEnd()
+    private void OnEnd()
     {
         _hasEnded = true;
 

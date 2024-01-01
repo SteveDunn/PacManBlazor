@@ -2,14 +2,14 @@
 
 public class EggTimer
 {
-    readonly Action _whenFinished;
-    readonly TimeSpan _duration;
+    private readonly Action _whenFinished;
+    private readonly TimeSpan _duration;
 
-    bool _isPaused;
-    bool _isFinished;
-    TimeSpan _currentTime;
+    private bool _isPaused;
+    private bool _isFinished;
+    private TimeSpan _currentTime;
 
-    static void DoNothing()
+    private static void DoNothing()
     {
     }
 
@@ -25,7 +25,7 @@ public class EggTimer
 
     public void Reset() => _currentTime = _duration;
 
-    double GetPercentProgress()
+    private double GetPercentProgress()
     {
         TimeSpan msGone = _duration - _currentTime;
 

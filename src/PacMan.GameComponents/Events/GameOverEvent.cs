@@ -9,10 +9,10 @@ public readonly struct GameOverEvent : INotification
     [UsedImplicitly]
     public class Handler : INotificationHandler<GameOverEvent>
     {
-        readonly IMediator _mediator;
-        readonly IGameStorage _storage;
-        readonly IGame _game;
-        readonly IGameStats _gameStats;
+        private readonly IMediator _mediator;
+        private readonly IGameStorage _storage;
+        private readonly IGame _game;
+        private readonly IGameStats _gameStats;
 
         public Handler(IGame game, IGameStats gameStats, IMediator mediator, IGameStorage storage)
         {

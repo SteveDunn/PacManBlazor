@@ -2,7 +2,7 @@
 
 public class TimerList
 {
-    readonly List<EggTimer> _timers;
+    private readonly List<EggTimer> _timers;
 
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
     public TimerList() => _timers = new();

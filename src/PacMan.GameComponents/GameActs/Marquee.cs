@@ -6,7 +6,7 @@ namespace PacMan.GameComponents.GameActs;
 
 public class Marquee
 {
-    enum State
+    private enum State
     {
         Idle,
         ScrollingIn,
@@ -14,16 +14,16 @@ public class Marquee
         ScrollingOut
     }
 
-    readonly MarqueeText[] _texts;
-    MarqueeText _current;
-    int _index;
-    State _state;
-    EggTimer _timer;
-    Vector2 _pos;
-    readonly TweeningFunction _tweeningFunction;
-    Tweener? _tweener;
-    readonly Tweener _colorTweener;
-    Color _color;
+    private readonly MarqueeText[] _texts;
+    private MarqueeText _current;
+    private int _index;
+    private State _state;
+    private EggTimer _timer;
+    private Vector2 _pos;
+    private readonly TweeningFunction _tweeningFunction;
+    private Tweener? _tweener;
+    private readonly Tweener _colorTweener;
+    private Color _color;
 
     public Marquee(MarqueeText[] texts)
     {
@@ -44,7 +44,7 @@ public class Marquee
         };
     }
 
-    void SelectNext()
+    private void SelectNext()
     {
         if (++_index >= _texts.Length)
         {
@@ -89,7 +89,7 @@ public class Marquee
         }
     }
 
-    ValueTask ScrollingIn()
+    private ValueTask ScrollingIn()
     {
         Debug.Assert(_tweener != null, $"{nameof(_tweener)} != null");
 
@@ -104,7 +104,7 @@ public class Marquee
         return default;
     }
 
-    ValueTask ScrollingOut()
+    private ValueTask ScrollingOut()
     {
         Debug.Assert(_tweener != null, $"{nameof(_tweener)} != null");
 
@@ -120,7 +120,7 @@ public class Marquee
         return default;
     }
 
-    ValueTask Idle()
+    private ValueTask Idle()
     {
         if (_timer.Finished)
         {
@@ -132,7 +132,7 @@ public class Marquee
         return default;
     }
 
-    ValueTask Stationary()
+    private ValueTask Stationary()
     {
         if (_timer.Finished)
         {

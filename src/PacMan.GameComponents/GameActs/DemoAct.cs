@@ -6,13 +6,13 @@
 [UsedImplicitly]
 public class DemoAct : IAct
 {
-    readonly IMediator _mediator;
-    readonly IFruit _fruit;
-    readonly IMaze _maze;
-    readonly IPacMan _pacman;
-    readonly IGhostCollection _ghostCollection;
-    readonly IHumanInterfaceParser _input;
-    readonly IGameStats _gameStats;
+    private readonly IMediator _mediator;
+    private readonly IFruit _fruit;
+    private readonly IMaze _maze;
+    private readonly IPacMan _pacman;
+    private readonly IGhostCollection _ghostCollection;
+    private readonly IHumanInterfaceParser _input;
+    private readonly IGameStats _gameStats;
 
     public DemoAct(
         IMediator mediator,

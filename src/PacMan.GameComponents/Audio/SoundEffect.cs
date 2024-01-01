@@ -4,14 +4,14 @@ namespace PacMan.GameComponents.Audio;
 
 public class SoundEffect
 {
-    bool _loop;
-    float _previousVolume = 0.5f;
+    private bool _loop;
+    private float _previousVolume = 0.5f;
 
-    readonly IJSRuntime _runtime;
-    readonly string _name;
+    private readonly IJSRuntime _runtime;
+    private readonly string _name;
 
     // ReSharper disable once HeapView.ObjectAllocation.Evident
-    static readonly object[] _setVolumeInvokeArray = new object[2];
+    private static readonly object[] _setVolumeInvokeArray = new object[2];
 
     public SoundEffect(IJSRuntime runtime, string name)
     {

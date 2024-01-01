@@ -2,9 +2,9 @@
 
 public class GhostSpritesheetInfo
 {
-    const int _width = 16;
+    private const int _width = 16;
 
-    readonly Dictionary<Direction, FramePair> _frames;
+    private readonly Dictionary<Direction, FramePair> _frames;
 
     public GhostSpritesheetInfo(Vector2 position)
     {

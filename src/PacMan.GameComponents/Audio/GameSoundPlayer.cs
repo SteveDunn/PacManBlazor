@@ -11,13 +11,13 @@ namespace PacMan.GameComponents.Audio;
 /// </summary>
 public class GameSoundPlayer : IGameSoundPlayer
 {
-    readonly ISoundLoader _loader;
-    readonly IGameStats _gameStats;
-    SoundEffect[] _sirens;
-    SoundEffect _frightened;
-    SoundEffect _ghostEyes;
-    bool _loaded;
-    bool _enabled;
+    private readonly ISoundLoader _loader;
+    private readonly IGameStats _gameStats;
+    private SoundEffect[] _sirens;
+    private SoundEffect _frightened;
+    private SoundEffect _ghostEyes;
+    private bool _loaded;
+    private bool _enabled;
 
     public GameSoundPlayer(ISoundLoader loader, IGameStats gameStats)
     {
@@ -82,7 +82,7 @@ public class GameSoundPlayer : IGameSoundPlayer
         await HandleEyes(thereAreEyes);
     }
 
-    async ValueTask HandleFright(PlayerStats currentPlayerStats, bool thereAreEyes)
+    private async ValueTask HandleFright(PlayerStats currentPlayerStats, bool thereAreEyes)
     {
         ThrowIfNotLoaded();
 
@@ -106,7 +106,7 @@ public class GameSoundPlayer : IGameSoundPlayer
         }
     }
 
-    async ValueTask HandleSiren(int pillsEaten, bool thereAreEyes)
+    private async ValueTask HandleSiren(int pillsEaten, bool thereAreEyes)
     {
         ThrowIfNotLoaded();
 
@@ -146,7 +146,7 @@ public class GameSoundPlayer : IGameSoundPlayer
         await PlaySiren(level);
     }
 
-    async ValueTask PlaySiren(int level)
+    private async ValueTask PlaySiren(int level)
     {
         ThrowIfNotLoaded();
 
@@ -165,7 +165,7 @@ public class GameSoundPlayer : IGameSoundPlayer
         }
     }
 
-    async ValueTask HandleEyes(bool thereAreEyes)
+    private async ValueTask HandleEyes(bool thereAreEyes)
     {
         ThrowIfNotLoaded();
 
@@ -273,7 +273,7 @@ public class GameSoundPlayer : IGameSoundPlayer
 
     public ValueTask Munch2() => Play(SoundName.Munch2);
 
-    async ValueTask Play(SoundName soundName)
+    private async ValueTask Play(SoundName soundName)
     {
         ThrowIfNotLoaded(); 
         
@@ -296,7 +296,7 @@ public class GameSoundPlayer : IGameSoundPlayer
         _loader.GetSoundEffect(val).MarkAsFinished();
     }
 
-    void ThrowIfNotLoaded()
+    private void ThrowIfNotLoaded()
     {
         if (!_loaded)
         {

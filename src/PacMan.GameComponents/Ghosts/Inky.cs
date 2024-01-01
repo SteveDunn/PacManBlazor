@@ -4,10 +4,10 @@ namespace PacMan.GameComponents.Ghosts;
 
 public class Inky : Ghost
 {
-    readonly IMediator _mediator;
-    readonly IMaze _maze;
-    readonly IPacMan _pacman;
-    readonly GetBlinkyRequest _getBlinkyRequest;
+    private readonly IMediator _mediator;
+    private readonly IMaze _maze;
+    private readonly IPacMan _pacman;
+    private readonly GetBlinkyRequest _getBlinkyRequest;
 
     public override Color GetColor() => Color.Aqua;
 
@@ -46,7 +46,7 @@ public class Inky : Ghost
     // in his current direction of travel.
     // From there, imagine drawing a vector from Blinky’s position to this tile, and then doubling
     // the length of the vector. The tile that this new, extended vector ends on will be Inky’s actual target
-    async ValueTask<CellIndex> GetChaseTargetCell()
+    private async ValueTask<CellIndex> GetChaseTargetCell()
     {
         // ReSharper disable once HeapView.BoxingAllocation
         var blinky = await _mediator.Send(_getBlinkyRequest);

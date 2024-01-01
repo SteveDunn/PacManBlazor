@@ -4,7 +4,7 @@ namespace PacMan.GameComponents;
 
 public class SoundLoader : ISoundLoader
 {
-    Dictionary<SoundName, SoundEffect> _sounds = new();
+    private Dictionary<SoundName, SoundEffect> _sounds = new();
 
     public SoundEffect GetSoundEffect(SoundName name) => _sounds[name];
 

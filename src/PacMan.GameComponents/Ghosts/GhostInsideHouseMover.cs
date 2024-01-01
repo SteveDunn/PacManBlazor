@@ -3,17 +3,17 @@
 /// Moves the ghosts while they are inside of the house
 public class GhostInsideHouseMover : GhostMover
 {
-    readonly GhostHouseDoor _door;
-    readonly Vector2[] _routeOut;
-    readonly Vector2 _topPos;
-    readonly Vector2 _bottomPos;
+    private readonly GhostHouseDoor _door;
+    private readonly Vector2[] _routeOut;
+    private readonly Vector2 _topPos;
+    private readonly Vector2 _bottomPos;
 
-    Vector2 _cellToMoveFrom;
-    Vector2 _cellToMoveTo;
+    private Vector2 _cellToMoveFrom;
+    private Vector2 _cellToMoveTo;
 
-    bool _readyToExit;
-    int _indexInRouteOut;
-    bool _finished;
+    private bool _readyToExit;
+    private int _indexInRouteOut;
+    private bool _finished;
 
     public GhostInsideHouseMover(
         Ghost ghost,
@@ -51,7 +51,7 @@ public class GhostInsideHouseMover : GhostMover
         _routeOut = [centerOfUpDown, Maze.PixelCenterOfHouse, Maze.PixelHouseEntrancePoint];
     }
 
-    void WhenAtTargetCell()
+    private void WhenAtTargetCell()
     {
         _cellToMoveFrom = _cellToMoveTo;
 

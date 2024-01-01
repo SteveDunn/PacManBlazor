@@ -12,7 +12,7 @@ public class Maze : ISprite, IMaze
     // the point where the ghost goes to before going up and out of the house
     public readonly static Vector2 PixelCenterOfHouse = Tile.ToCenterCanvas(new(13.5f, 14));
 
-    readonly static CellIndex[] _specialIntersections =
+    private readonly static CellIndex[] _specialIntersections =
     [
         new(12, 11),
         new(15, 11),
@@ -20,7 +20,7 @@ public class Maze : ISprite, IMaze
         new(15, 26)
     ];
 
-    readonly static CellIndex[] _powerPillPositions =
+    private readonly static CellIndex[] _powerPillPositions =
     [
         new(1, 3),
         new(26, 3),
@@ -28,20 +28,20 @@ public class Maze : ISprite, IMaze
         new(26, 23)
     ];
 
-    readonly LoopingTimer _timer;
+    private readonly LoopingTimer _timer;
 
-    readonly DirectionChoices _directionChoices = new();
-    readonly PowerPill _powerPill;
-    readonly GeneralSprite _whiteMazeCanvas;
+    private readonly DirectionChoices _directionChoices = new();
+    private readonly PowerPill _powerPill;
+    private readonly GeneralSprite _whiteMazeCanvas;
 
-    bool _tickTock = true;
+    private bool _tickTock = true;
 
-    bool _flashing;
+    private bool _flashing;
 
-    readonly static Size _spritesheetSize = new(225, 248);
-    readonly static Rectangle _mazeRect = new(0, 0, 225, 248);
+    private readonly static Size _spritesheetSize = new(225, 248);
+    private readonly static Rectangle _mazeRect = new(0, 0, 225, 248);
 
-    readonly static Direction[] _directions =
+    private readonly static Direction[] _directions =
     [
         Direction.Left,
         Direction.Right,
@@ -49,8 +49,8 @@ public class Maze : ISprite, IMaze
         Direction.Down
     ];
 
-    MazeCanvas? _currentPlayerCanvas;
-    LevelStats? _levelStats;
+    private MazeCanvas? _currentPlayerCanvas;
+    private LevelStats? _levelStats;
 
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
     public Maze()
@@ -114,7 +114,7 @@ public class Maze : ISprite, IMaze
     }
 
     [MemberNotNull(nameof(_currentPlayerCanvas))]
-    void EnsureCanvas()
+    private void EnsureCanvas()
     {
         if (_currentPlayerCanvas == null)
         {
@@ -124,7 +124,7 @@ public class Maze : ISprite, IMaze
 
     public Vector2 Origin { get; }
 
-    async ValueTask DrawPowerPills(CanvasWrapper session)
+    private async ValueTask DrawPowerPills(CanvasWrapper session)
     {
         EnsureLevelStats();
 
@@ -140,7 +140,7 @@ public class Maze : ISprite, IMaze
     }
 
     [MemberNotNull(nameof(_levelStats))]
-    void EnsureLevelStats()
+    private void EnsureLevelStats()
     {
         if (_levelStats == null)
         {
@@ -207,7 +207,7 @@ public class Maze : ISprite, IMaze
         return _directionChoices;
     }
 
-    bool IsAWall(Tile tile) => GetTileContent(tile) == TileContent.Wall;
+    private bool IsAWall(Tile tile) => GetTileContent(tile) == TileContent.Wall;
 
     public void StartFlashing() => _flashing = true;
 

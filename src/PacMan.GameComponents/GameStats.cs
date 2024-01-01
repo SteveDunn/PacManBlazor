@@ -2,12 +2,12 @@
 
 public class GameStats : IGameStats
 {
-    readonly IMediator _mediator;
-    readonly IGameStorage _storage;
-    int _currentPlayerIndex;
+    private readonly IMediator _mediator;
+    private readonly IGameStorage _storage;
+    private int _currentPlayerIndex;
 
-    List<PlayerStats> _playerStats;
-    int _ghostsThatAreEyes;
+    private List<PlayerStats> _playerStats;
+    private int _ghostsThatAreEyes;
 
     public GameStats(IMediator mediator, IGameStorage storage)
     {
@@ -128,7 +128,7 @@ public class GameStats : IGameStats
         }
     }
 
-    void UpdateHighScore()
+    private void UpdateHighScore()
     {
         for (int i = 0; i < _playerStats.Count; i++)
         {

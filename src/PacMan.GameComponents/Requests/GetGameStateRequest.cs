@@ -6,7 +6,7 @@ public readonly struct GetGameStateRequest : IRequest<GameState>
 {
     public class Handler : IRequestHandler<GetGameStateRequest, GameState>
     {
-        readonly IGhostCollection _ghostCollection;
+        private readonly IGhostCollection _ghostCollection;
 
         public Handler(IGhostCollection ghostCollection)
         {

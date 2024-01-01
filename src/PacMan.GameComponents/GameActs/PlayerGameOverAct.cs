@@ -3,10 +3,10 @@
 /// Draws game over and player X
 public class PlayerGameOverAct : IAct
 {
-    readonly IMediator _mediator;
-    readonly IGameStats _gameStats;
+    private readonly IMediator _mediator;
+    private readonly IGameStats _gameStats;
 
-    IAct? _gameOverAct;
+    private IAct? _gameOverAct;
 
     public PlayerGameOverAct(IMediator mediator, IGameStats gameStats)
     {
@@ -14,7 +14,7 @@ public class PlayerGameOverAct : IAct
         _gameStats = gameStats;
     }
 
-    async Task<IAct> ResolveGameOverAct()
+    private async Task<IAct> ResolveGameOverAct()
     {
         if (_gameOverAct != null)
         {

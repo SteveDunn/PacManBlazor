@@ -4,14 +4,14 @@ namespace PacMan.GameComponents;
 
 public class GhostHouseDoor
 {
-    readonly IMediator _mediator;
+    private readonly IMediator _mediator;
 
-    readonly Dictionary<GhostNickname, DotCounter> _ghostCounters;
-    readonly GlobalDotCounter _globalCounter;
-    readonly DotCounter _nullCounter;
+    private readonly Dictionary<GhostNickname, DotCounter> _ghostCounters;
+    private readonly GlobalDotCounter _globalCounter;
+    private readonly DotCounter _nullCounter;
 
-    DotCounter _activeCounter;
-    TimeSpan _pillConsumptionTimeIdle;
+    private DotCounter _activeCounter;
+    private TimeSpan _pillConsumptionTimeIdle;
 
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
     public GhostHouseDoor(int level, IMediator mediator)
@@ -66,7 +66,7 @@ public class GhostHouseDoor
         }
     }
 
-    void WhenNoPillsEaten()
+    private void WhenNoPillsEaten()
     {
         _pillConsumptionTimeIdle = TimeSpan.Zero;
         _activeCounter.SetTimedOut();
@@ -74,7 +74,7 @@ public class GhostHouseDoor
         SwitchToUseCounterOfNextGhost();
     }
 
-    void SwitchToUseCounterOfNextGhost()
+    private void SwitchToUseCounterOfNextGhost()
     {
         if (_activeCounter == _globalCounter)
         {
@@ -137,7 +137,7 @@ public class GhostHouseDoor
         SwitchActive(_globalCounter);
     }
 
-    void SwitchActive(DotCounter counter)
+    private void SwitchActive(DotCounter counter)
     {
         _activeCounter.Deactivate();
 

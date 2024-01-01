@@ -4,36 +4,36 @@ namespace PacMan.GameComponents;
 
 public class PacMan : ISprite, IPacMan
 {
-    readonly IMaze _maze;
-    readonly IHumanInterfaceParser _input;
-    readonly IMediator _mediator;
+    private readonly IMaze _maze;
+    private readonly IHumanInterfaceParser _input;
+    private readonly IMediator _mediator;
     public static readonly Vector2 FacingLeftSpritesheetPos = new(455, 16);
 
-    CellIndex _lastDemoKeyPressAt = CellIndex.Zero;
+    private CellIndex _lastDemoKeyPressAt = CellIndex.Zero;
 
-    CellIndex _pillEatenAt = CellIndex.Zero;
+    private CellIndex _pillEatenAt = CellIndex.Zero;
 
-    LifeStatus _lifeStatus;
+    private LifeStatus _lifeStatus;
 
-    Vector2 _spriteSheetPos;
+    private Vector2 _spriteSheetPos;
 
-    Direction _direction;
-    float _dyingFramePointer;
+    private Direction _direction;
+    private float _dyingFramePointer;
 
-    Vector2 _frame1InSpriteMap;
-    Vector2 _frame2InSpriteMap;
-    TwoFrameAnimation _animDirection;
+    private Vector2 _frame1InSpriteMap;
+    private Vector2 _frame2InSpriteMap;
+    private TwoFrameAnimation _animDirection;
 
-    float _speed = Constants.PacManBaseSpeed;
+    private float _speed = Constants.PacManBaseSpeed;
 
-    bool _isDemoMode;
+    private bool _isDemoMode;
 
-    readonly Dictionary<Direction, FramePointers> _framePointers;
-    readonly List<Vector2> _dyingFrames;
-    readonly DemoKeyPresses _demoKeyPresses;
-    readonly Tile _tile;
-    readonly KeyPressedEvent _keyPress;
-    PlayerStats? _currentPlayerStats;
+    private readonly Dictionary<Direction, FramePointers> _framePointers;
+    private readonly List<Vector2> _dyingFrames;
+    private readonly DemoKeyPresses _demoKeyPresses;
+    private readonly Tile _tile;
+    private readonly KeyPressedEvent _keyPress;
+    private PlayerStats? _currentPlayerStats;
 
     public PacMan(IMaze maze, IHumanInterfaceParser input, IMediator mediator)
     {
@@ -77,7 +77,7 @@ public class PacMan : ISprite, IPacMan
         Reset();
     }
 
-    void ResetAll(bool isDemoMode = false)
+    private void ResetAll(bool isDemoMode = false)
     {
         Visible = true;
         _demoKeyPresses.Reset();
@@ -114,7 +114,7 @@ public class PacMan : ISprite, IPacMan
 
     public Direction Direction => _direction;
 
-    void UpdateAnimation(CanvasTimingInformation args)
+    private void UpdateAnimation(CanvasTimingInformation args)
     {
         if (Math.Abs(_speed) < .0001)
         {
@@ -128,7 +128,7 @@ public class PacMan : ISprite, IPacMan
         _spriteSheetPos = _animDirection.Flag ? _frame1InSpriteMap : _frame2InSpriteMap;
     }
 
-    void HandleDying()
+    private void HandleDying()
     {
         _dyingFramePointer += .15f;
 
@@ -225,7 +225,7 @@ public class PacMan : ISprite, IPacMan
         _pillEatenAt = _tile.Index;
     }
 
-    void HandleDirection()
+    private void HandleDirection()
     {
         if (_maze.CanContinueInDirection(_keyPress.Direction, _tile))
         {
@@ -233,7 +233,7 @@ public class PacMan : ISprite, IPacMan
         }
     }
 
-    async ValueTask HandleWhatIsUnderCell()
+    private async ValueTask HandleWhatIsUnderCell()
     {
         TileContent contents = _maze.GetTileContent(_tile);
 
@@ -256,7 +256,7 @@ public class PacMan : ISprite, IPacMan
         }
     }
 
-    void RecordInput(CanvasTimingInformation context)
+    private void RecordInput(CanvasTimingInformation context)
     {
         Direction requestedDirection = _direction;
 
@@ -321,7 +321,7 @@ public class PacMan : ISprite, IPacMan
     }
 
     // debt: SD: refactor into something common as this is also used for the ghosts
-    void RecenterInLane()
+    private void RecenterInLane()
     {
         var tileCenter = _tile.CenterPos;
 

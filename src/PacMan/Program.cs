@@ -10,7 +10,7 @@ using PacMan.GameComponents.Requests;
 
 namespace PacMan;
 
-class Program
+internal class Program
 {
     public static async Task Main(string[] args)
     {
