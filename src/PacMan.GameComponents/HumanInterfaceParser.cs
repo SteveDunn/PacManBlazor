@@ -44,7 +44,7 @@ public class HumanInterfaceParser : IHumanInterfaceParser
     TimeSpan _totalGameTime;
 
     // 20 milliseconds when 60 fps - should be 120 for 30 fps = e.g. fps * 2
-    TimeSpan getRetention() => (60 / Constants.FramesPerSecond * 20).Milliseconds();
+    static TimeSpan getRetention() => (60 / Constants.FramesPerSecond * 20).Milliseconds();
 
     public bool IsRightKeyDown => IsKeyCurrentlyDown(Keys.Right);
 

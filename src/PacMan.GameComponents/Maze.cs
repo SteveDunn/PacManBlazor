@@ -100,19 +100,20 @@ public class Maze : ISprite, IMaze
             }
             else
             {
-                await session.DrawFromOther(_currentPlayerCanvas!, new(0, 0), _mazeRect);
+                await session.DrawFromOther(_currentPlayerCanvas, new(0, 0), _mazeRect);
             }
 
             return;
         }
 
-        await session.DrawFromOther(_currentPlayerCanvas!, new(0, 0), _mazeRect);
+        await session.DrawFromOther(_currentPlayerCanvas, new(0, 0), _mazeRect);
 
         await drawPowerPills(session);
 
         // this.drawGrid(8, 8, canvas);
     }
 
+    [MemberNotNull(nameof(_currentPlayerCanvas))]
     void ensureCanvas()
     {
         if (_currentPlayerCanvas == null)
@@ -129,7 +130,7 @@ public class Maze : ISprite, IMaze
 
         foreach (var p in _powerPillPositions)
         {
-            if (_levelStats!.GetCellContent(p) == '*')
+            if (_levelStats.GetCellContent(p) == '*')
             {
                 _powerPill.Position = p.ToVector2() * Vector2s.Eight;// - Vector2s.Four;
 
@@ -138,6 +139,7 @@ public class Maze : ISprite, IMaze
         }
     }
 
+    [MemberNotNull(nameof(_levelStats))]
     void ensureLevelStats()
     {
         if (_levelStats == null)
@@ -148,13 +150,14 @@ public class Maze : ISprite, IMaze
 
     public async ValueTask ClearCell(CellIndex cell)
     {
+        ensureCanvas();
         var topLeft = Tile.FromIndex(cell).TopLeft;
 
         // CanvasBitmap bitmap = _bitmapsForPlayers[_gameStats.CurrentPlayerStats.PlayerIndex];
 
         // await bitmap.BeginBatch();
 
-        await _currentPlayerCanvas!.Clear((int) topLeft.X, (int) topLeft.Y, 8, 8);
+        await _currentPlayerCanvas.Clear((int) topLeft.X, (int) topLeft.Y, 8, 8);
 
         // await bitmap.FillRect((int)topLeft.X, (int)topLeft.Y, 8, 8, Color.Black);
         // await bitmap.EndBatch();
@@ -213,7 +216,7 @@ public class Maze : ISprite, IMaze
     public TileContent GetTileContent(Tile cell)
     {
         ensureLevelStats();
-        var a = _levelStats!.GetCellContent(cell.Index);
+        var a = _levelStats.GetCellContent(cell.Index);
 
         if (a == ' ')
         {

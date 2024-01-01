@@ -3,6 +3,7 @@ using Blazor.Extensions.Canvas.Canvas2D;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using PacMan.GameComponents.Ghosts;
+// ReSharper disable NullableWarningSuppressionIsUsed
 
 namespace PacMan.GameComponents;
 
@@ -73,6 +74,7 @@ public class Game : IGame
         _initialised = true;
     }
 
+    [SuppressMessage("ReSharper", "NullableWarningSuppressionIsUsed")]
     async ValueTask update()
     {
         ensureInitialised();

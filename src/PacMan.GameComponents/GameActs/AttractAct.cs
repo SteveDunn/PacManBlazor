@@ -18,11 +18,11 @@ public class AttractAct : IAct
 
     struct Instruction
     {
-        public TimeSpan When;
-        public SimpleGhost Ghost;
-        public string Text;
-        public Vector2 Where;
-        public Color Color;
+        public required TimeSpan When { get; init; }
+        public SimpleGhost? Ghost { get; init; }
+        public required string Text { get; init; }
+        public required Vector2 Where { get; init; }
+        public required Color Color { get; init; }
     }
 
     readonly SimpleGhost _blinky;
@@ -200,7 +200,7 @@ public class AttractAct : IAct
                 break;
             }
 
-            var ghost = inst.Ghost;
+            SimpleGhost? ghost = inst.Ghost;
 
             if (ghost != null)
             {
@@ -234,7 +234,7 @@ public class AttractAct : IAct
         {
             TimeSpan clock = 1500.Milliseconds();
 
-            _instructions.Add(new() {
+            _instructions.Add(new Instruction {
                 When = clock,
                 Where = new(32, 12),
                 Text = "CHARACTER / NICKNAME",

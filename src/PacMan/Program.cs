@@ -1,7 +1,6 @@
 ﻿// ReSharper disable HeapView.ObjectAllocation.Evident
 
 using System.Reflection;
-using MediatR;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using PacMan.GameComponents;
 using PacMan.GameComponents.Audio;
