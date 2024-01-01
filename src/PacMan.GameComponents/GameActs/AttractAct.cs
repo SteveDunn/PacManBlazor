@@ -135,40 +135,8 @@ public class AttractAct : IAct
 
         _drawUpTo = timing.TotalTime - _startTime;
 
-        if (_input.WasKeyPressedAndReleased(Keys.Left))
+        if (await TryHandleInput())
         {
-            await StartDemoGame();
-            return ActUpdateResult.Running;
-        }
-
-        if (_input.WasKeyPressedAndReleased(Keys.Five))
-        {
-            await _gameSoundPlayer.Enable();
-            await _mediator.Publish(new CoinInsertedEvent());
-
-            return ActUpdateResult.Running;
-        }
-
-        if (_input.WasKeyPressedAndReleased(Keys.Space) ||
-            _input.WasKeyPressedAndReleased(Keys.One) ||
-            _input.WasTapped)
-        {
-            await _gameSoundPlayer.Enable();
-            _coinBox.CoinInserted();
-            await _mediator.Publish(new NewGameEvent(1));
-
-            return ActUpdateResult.Running;
-        }
-
-        if (_input.WasKeyPressedAndReleased(Keys.Two) || _input.WasLongPress)
-        {
-            _coinBox.CoinInserted();
-
-            _coinBox.CoinInserted();
-            _coinBox.CoinInserted();
-
-            await _mediator.Publish(new NewGameEvent(2));
-
             return ActUpdateResult.Running;
         }
 
@@ -189,6 +157,48 @@ public class AttractAct : IAct
         }
 
         return ActUpdateResult.Running;
+
+        async Task<bool> TryHandleInput()
+        {
+            if (_input.WasKeyPressedAndReleased(Keys.Left))
+            {
+                await StartDemoGame();
+                return true;
+            }
+
+            if (_input.WasKeyPressedAndReleased(Keys.Five))
+            {
+                await _gameSoundPlayer.Enable();
+                await _mediator.Publish(new CoinInsertedEvent());
+
+                return true;
+            }
+
+            if (_input.WasKeyPressedAndReleased(Keys.Space) ||
+                _input.WasKeyPressedAndReleased(Keys.One) ||
+                _input.WasTapped)
+            {
+                await _gameSoundPlayer.Enable();
+                _coinBox.CoinInserted();
+                await _mediator.Publish(new NewGameEvent(1));
+
+                return true;
+            }
+
+            if (_input.WasKeyPressedAndReleased(Keys.Two) || _input.WasLongPress)
+            {
+                _coinBox.CoinInserted();
+
+                _coinBox.CoinInserted();
+                _coinBox.CoinInserted();
+
+                await _mediator.Publish(new NewGameEvent(2));
+
+                return true;
+            }
+            
+            return false;
+        }
     }
 
     public async ValueTask Draw(CanvasWrapper session)
