@@ -20,7 +20,7 @@
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
-		<PackageReference Include="Vogen" Version="3.0.23" />
+		<PackageReference Include="Vogen" Version="4.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
