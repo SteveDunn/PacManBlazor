@@ -33,13 +33,13 @@ namespace SmallTests
         public void Increase()
         {
             var s = Score.Zero;
-            s.IncreaseBy(Points.From(10));
+            s = s.IncreaseBy(Points.From(10));
             
             s.Value.Should().Be(10);
             
             Score.Zero.Value.Should().Be(0);
             
-            s.IncreaseBy(Points.From(10));
+            s = s.IncreaseBy(Points.From(10));
             s.Value.Should().Be(20);
         }
 
@@ -47,7 +47,7 @@ namespace SmallTests
         public void Implicit_int()
         {
             var s = Score.Zero;
-            s.IncreaseBy(Points.From(10));
+            s = s.IncreaseBy(Points.From(10));
 
             int val = s;
             val.Should().Be(10);

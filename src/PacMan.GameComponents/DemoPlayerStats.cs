@@ -7,7 +7,7 @@ public class DemoPlayerStats : PlayerStats
         Lives = 1;
     }
 
-    protected override ValueTask IncreaseScoreBy(Points amount)
+    protected override ValueTask IncreaseScoreBy(Points points)
     {
         return default;
     }

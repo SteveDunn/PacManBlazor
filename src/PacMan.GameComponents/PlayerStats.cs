@@ -14,7 +14,7 @@ public class PlayerStats
 
     private GhostMovementConductor _ghostMovementConductor;
 
-    private readonly List<int> _extraLives;
+    private readonly List<Score> _extraLives;
 
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
     public PlayerStats(int playerIndex, IMediator mediator)
@@ -28,7 +28,7 @@ public class PlayerStats
         Lives = Constants.PacManLives;
         _levelNumber = -1;
 
-        _extraLives = [10_000];
+        _extraLives = [Score.From(10_000)];
         _levelStats = new(0);
         _ghostHouseDoor = new(0, _mediator);
 
@@ -41,7 +41,7 @@ public class PlayerStats
 
     public void Update(CanvasTimingInformation timing)
     {
-        if (FrightSession != null && !FrightSession.IsFinished)
+        if (FrightSession is {IsFinished: false})
         {
             FrightSession.Update(timing);
         }
@@ -80,9 +80,9 @@ public class PlayerStats
     /// </summary>
     public int Lives { get; protected set; }
 
-    protected virtual async ValueTask IncreaseScoreBy(Points amount)
+    protected virtual async ValueTask IncreaseScoreBy(Points points)
     {
-        Score.IncreaseBy(amount);
+        Score = Score.IncreaseBy(points);
 
         if (_extraLives.Count == 0)
         {
