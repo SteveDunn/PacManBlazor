@@ -21,7 +21,7 @@ The game basically manipulates the HTML 5 canvas from C# code via the interop pr
 
 # FAQ
 
-## How does it interactive with the canvas?
+## How does it interact with the canvas?
 
 It uses the .NET NuGet package [`Blazor.Extensions.Canvas`](https://www.nuget.org/packages/Blazor.Extensions.Canvas/)
 
