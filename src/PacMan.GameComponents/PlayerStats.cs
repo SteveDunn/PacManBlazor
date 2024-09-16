@@ -14,7 +14,7 @@ public class PlayerStats
 
     private GhostMovementConductor _ghostMovementConductor;
 
-    private readonly List<Score> _extraLives;
+    private readonly List<int> _extraLives;
 
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Evident")]
     public PlayerStats(int playerIndex, IMediator mediator)
@@ -28,7 +28,7 @@ public class PlayerStats
         Lives = Constants.PacManLives;
         _levelNumber = -1;
 
-        _extraLives = [Score.From(10_000)];
+        _extraLives = [10_000];
         _levelStats = new(0);
         _ghostHouseDoor = new(0, _mediator);
 
@@ -82,7 +82,7 @@ public class PlayerStats
 
     protected virtual async ValueTask IncreaseScoreBy(Points points)
     {
-        Score = Score.IncreaseBy(points);
+        Score.IncreaseBy(points);
 
         if (_extraLives.Count == 0)
         {
