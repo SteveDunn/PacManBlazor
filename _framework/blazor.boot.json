@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "PacMan",
   "resources": {
-    "hash": "sha256-5uHx+pGcX7vh4bNKGdMeO4wX+lLW9Js5RBSoy97E+l4=",
+    "hash": "sha256-UIPtn8AIHVU43+gPNhUsCgiAIdO+9DWNIk8B8QKqR6I=",
     "jsModuleNative": {
       "dotnet.native.8.0.8.746giovk6l.js": "sha256-juC5sA7gHTLXFEhAKgdM2/RavswpwCtDfjYGsAz2FXg="
     },
@@ -37,8 +37,8 @@
       "Microsoft.JSInterop.wasm": "sha256-YrrPPJg6rA/Bmx1sladSdAwoqL78YSP+3xcjhBg0bnc=",
       "Microsoft.JSInterop.WebAssembly.wasm": "sha256-ZyIqQss3I64BQC2gc7JEDrkYq14vXKEXuw5vBJ5oFYM=",
       "netstandard.wasm": "sha256-F+oD1PwyhiLEPPrbcolhV1lpPi0WM28QE77dH+RR5DA=",
-      "PacMan.GameComponents.wasm": "sha256-50OVQ2Yn4sf6d1YXaKahvcA9O+arySHKiLTxeENg5CY=",
-      "PacMan.wasm": "sha256-XMMR0Ykv2AoNPfu2Du2PVVIjNdQQWzJHJINpvhgA1pU=",
+      "PacMan.GameComponents.wasm": "sha256-ap/iMVjsyo3GxxAhbxp6OxxWQpd2pZw85x9SJsUIc3Q=",
+      "PacMan.wasm": "sha256-LRaPtXmIFQMtayq0MtPQdYErZoo82PYtbLTP9tWf+Nw=",
       "System.Collections.Concurrent.wasm": "sha256-vsMJf2eZHUr/Q0fQaARXi06Fd3v3vn4KpRxxYx3Nvjw=",
       "System.Collections.NonGeneric.wasm": "sha256-TVm6KmHultADY31ZQgqlVaIOLQJmJPJbbxxxOhfCKn0=",
       "System.Collections.Specialized.wasm": "sha256-cCSktdOY8K/3JTieaYlYygD68LK8qF4j+zcdQJBZ3/0=",
