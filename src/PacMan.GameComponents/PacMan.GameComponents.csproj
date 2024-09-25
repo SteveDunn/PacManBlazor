@@ -14,8 +14,8 @@
 		<PackageReference Include="Blazor.Extensions.Canvas" Version="1.1.1" />
 		<PackageReference Include="jetbrains.annotations" Version="2024.2.0" />
 		<PackageReference Include="MediatR" Version="12.4.1" />
-		<PackageReference Include="Microsoft.JSInterop" Version="8.0.5" />
-		<PackageReference Include="MinVer" Version="5.0.0">
+		<PackageReference Include="Microsoft.JSInterop" Version="8.0.8" />
+		<PackageReference Include="MinVer" Version="6.0.0">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
