@@ -21,6 +21,8 @@ _NCrunch_PacMan
 
 # AWS User-specific
 .idea/**/aws.xml
+.idea/**/aws*
+
 
 # Generated files
 .idea/**/contentModel.xml
