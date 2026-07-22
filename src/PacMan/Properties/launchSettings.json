@@ -19,6 +19,7 @@
     "PacManWa": {
       "commandName": "Project",
       "launchBrowser": true,
+      "browser": "chrome",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
